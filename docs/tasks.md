@@ -2,13 +2,13 @@
 
 ## Setup Phase
 
-- [ ] Initialize Vite React TypeScript project
+- [x] Initialize Vite React TypeScript project
   - Run `npm create vite@latest ev-charge-tracker -- --template react-ts` and set up basic project structure
-- [ ] Install core dependencies
+- [x] Install core dependencies
   - Install dexie, dexie-react-hooks, react-router-dom, recharts, date-fns
-- [ ] Set up Tailwind CSS
+- [x] Set up Tailwind CSS
   - Install and configure tailwindcss, postcss, autoprefixer with `npx tailwindcss init -p`
-- [ ] Install and configure Vite PWA plugin
+- [x] Install and configure Vite PWA plugin
   - Install vite-plugin-pwa and configure in vite.config.ts for service worker generation
 
 ## Data Layer

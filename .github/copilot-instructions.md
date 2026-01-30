@@ -1,5 +1,7 @@
 # EV Charge Tracker - AI Coding Agent Instructions
 
+**For project context and design rationale, see [design-outline.md](../docs/design-outline.md)**
+
 ## Universal Rules
 
 - Guard clauses, early returns, avoid deep nesting
@@ -21,5 +23,8 @@
 - Keep logic in helpers/hooks not Components
 - CSS Modules preferred
 
-**For project context and design rationale, see [design-outline.md](../docs/design-outline.md)**
+## Task-Specific Rules
+
+- Only complete one task at a time before asking for next unless instructed otherwise
+
 **For task breakdown and implementation plan, see [tasks.md](../docs/tasks.md)**
