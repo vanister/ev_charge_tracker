@@ -22,10 +22,17 @@
 - [x] Create utility functions
   - Add generateId(), seedDefaultLocations(), getDefaultSettings() in src/data/utils.ts
 
-## Data Access Hooks
+## Context Providers & Hooks
 
-- [ ] Implement useAppReady hook
-  - Create hook to check if settings exist and if onboarding is complete
+- [ ] Implement DatabaseProvider context
+  - Create context to provide single Dexie db instance to entire app
+- [ ] Implement AppInitializationProvider context
+  - Create context to handle app initialization (settings check, location seeding, persistent storage request)
+  - Provide isLoading, needsOnboarding, settings to app
+- [ ] Implement useDatabase hook
+  - Create hook to access db from DatabaseContext
+- [ ] Implement useAppInitialization hook
+  - Create hook to access initialization state from AppInitializationContext
 - [ ] Implement useSettings hook
   - Create hook with useLiveQuery for settings CRUD operations and completeOnboarding()
 - [ ] Implement useVehicles hook

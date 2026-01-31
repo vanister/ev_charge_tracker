@@ -354,19 +354,45 @@ graph TB
 
 ## Data Access Pattern
 
+### Context Providers
+
+```
+DatabaseProvider
+  - Provides: db (Dexie instance)
+  - Used by: All hooks and AppInitializationProvider
+  - Why: Single source of truth, prevents multiple Dexie instances
+
+AppInitializationProvider
+  - Provides: isLoading, needsOnboarding, settings
+  - Uses: DatabaseProvider's db
+  - Handles on mount:
+    * Create default settings if none exist
+    * Seed default locations if none exist
+    * Request persistent storage (navigator.storage.persist)
+  - Why: Centralized initialization, runs once at app root
+
+App Structure:
+  <DatabaseProvider>
+    <AppInitializationProvider>
+      <Router />
+    </AppInitializationProvider>
+  </DatabaseProvider>
+```
+
 ### Custom Hooks
 ```
-useAppReady() {
-  settings = useLiveQuery(GET settings)
-  
-  return {
-    isLoading: settings === undefined,
-    needsOnboarding: settings?.onboardingComplete === false,
-    settings
-  }
+useDatabase() {
+  // Access db from DatabaseContext
+  return { db }
+}
+
+useAppInitialization() {
+  // Access initialization state from AppInitializationContext
+  return { isLoading, needsOnboarding, settings }
 }
 
 useVehicles(activeOnly?) {
+  db = useDatabase()
   return {
     vehicles: REACTIVE from IndexedDB,
     createVehicle(data),
@@ -376,6 +402,7 @@ useVehicles(activeOnly?) {
 }
 
 useLocations(activeOnly?) {
+  db = useDatabase()
   return {
     locations: REACTIVE from IndexedDB,
     createLocation(data),
@@ -386,6 +413,7 @@ useLocations(activeOnly?) {
 
 useSessions(filters?) {
   // filters: { vehicleId?, locationId?, dateRange? }
+  db = useDatabase()
   return {
     sessions: REACTIVE from IndexedDB,
     createSession(data),
@@ -395,6 +423,7 @@ useSessions(filters?) {
 }
 
 useSettings() {
+  db = useDatabase()
   return {
     settings: REACTIVE from IndexedDB,
     updateSettings(data),
@@ -405,6 +434,7 @@ useSettings() {
 useStats(filters?) {
   // filters: { vehicleId?, locationId?, dateRange? }
   // Computed from sessions
+  db = useDatabase()
   return {
     totalKwh,
     totalCostCents,
@@ -480,7 +510,8 @@ npm install -D vite-plugin-pwa
 ```
 src/
   components/      # Reusable UI components
-  hooks/           # useVehicles, useSessions, useSettings, useLocations, useStats, useAppReady
+  contexts/        # DatabaseProvider, AppInitializationProvider
+  hooks/           # useVehicles, useSessions, useSettings, useLocations, useStats
   data/            # db.ts, data-types.ts, constants.ts, utils.ts
   pages/           # Route components
 public/

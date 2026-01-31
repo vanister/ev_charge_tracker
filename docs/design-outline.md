@@ -15,9 +15,10 @@ Vite + React 19 + TypeScript + Dexie.js (IndexedDB) + Tailwind + vite-plugin-pwa
 ```
 src/
   data/db.ts          # Dexie schema
-  constants.ts   # LOCATION_TYPES
+  constants.ts   # DEFAULT_LOCATIONS
   types/             # TS interfaces
-  hooks/             # useAppReady, useVehicles, useSessions, useSettings, useStats
+  contexts/          # DatabaseProvider, AppInitializationProvider
+  hooks/             # useVehicles, useSessions, useSettings, useLocations, useStats
   pages/             # Route components
   components/        # UI components
 ```
@@ -62,15 +63,23 @@ DEFAULT_LOCATIONS = [
 
 ## Hooks Pattern
 
-All hooks use `useLiveQuery()` and return CRUD operations:
+Providers for initialization:
 
 ```typescript
+DatabaseProvider → provides db instance
+AppInitializationProvider → provides { isLoading, needsOnboarding, settings }
+```
+
+All data hooks use `useLiveQuery()` and return CRUD operations:
+
+```typescript
+useDatabase() → { db }
+useAppInitialization() → { isLoading, needsOnboarding, settings }
 useVehicles(activeOnly?) → { vehicles, createVehicle, updateVehicle, deleteVehicle }
-useSessions(filters?)    → { sessions, createSession, updateSession, deleteSession }
-useSettings()            → { settings, updateSettings, completeOnboarding }
+useSessions(filters?) → { sessions, createSession, updateSession, deleteSession }
+useSettings() → { settings, updateSettings, completeOnboarding }
 useLocations(activeOnly?) → { locations, createLocation, updateLocation, deleteLocation }
-useStats(filters?)       → { totalKwh, totalCostCents, avgRate, byLocation, byDate }
-useAppReady()            → { isLoading, needsOnboarding, settings }
+useStats(filters?) → { totalKwh, totalCostCents, avgRate, byLocation, byDate }
 ```
 
 Filters: `{ vehicleId?, locationId?, dateRange? }`
