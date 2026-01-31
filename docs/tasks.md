@@ -13,12 +13,12 @@
 
 ## Data Layer
 
-- [ ] Create TypeScript types and interfaces
-  - Define Vehicle, ChargingSession, Settings, LocationType types in src/types/
-- [ ] Set up Dexie database schema
-  - Create src/lib/db.ts with vehicles, sessions, settings stores and indexes
-- [ ] Create constants file
-  - Define LOCATION_TYPES map with labels, icons, colors in src/lib/constants.ts
+- [x] Create TypeScript types and interfaces
+  - Define Vehicle, ChargingSession, Settings, LocationType types in src/data/data-types.d.ts
+- [x] Set up Dexie database schema
+  - Create src/data/db.ts with vehicles, sessions, settings stores and indexes
+- [x] Create constants file
+  - Define LOCATION_TYPES map with labels, icons, colors in src/data/constants.ts
 
 ## Data Access Hooks
 

@@ -124,10 +124,10 @@ Settings
 ### Location Type Display Map
 ```
 LOCATION_TYPES = {
-  HOME:  { key: 'HOME',  label: 'Home',  icon: 'ðŸ ', color: 'blue' },
-  WORK:  { key: 'WORK',  label: 'Work',  icon: 'ðŸ¢', color: 'purple' },
-  OTHER: { key: 'OTHER', label: 'Other', icon: 'ðŸ“', color: 'pink' },
-  DC:    { key: 'DC',    label: 'DC',    icon: 'âš¡', color: 'amber' }
+  HOME:  { key: 'HOME',  label: 'Home',  icon: 'icon-name', color: 'blue' },
+  WORK:  { key: 'WORK',  label: 'Work',  icon: 'icon-name', color: 'purple' },
+  OTHER: { key: 'OTHER', label: 'Other', icon: 'icon-name', color: 'pink' },
+  DC:    { key: 'DC',    label: 'DC',    icon: 'icon-name', color: 'amber' }
 }
 ```
 
@@ -433,12 +433,10 @@ npm install -D vite-plugin-pwa
 ```
 src/
   components/      # Reusable UI components
-  hooks/           # useVehicles, useSessions, useSettings, useStats
-  lib/
-    db.ts          # Dexie database setup
-    constants.ts   # Location types, defaults
+  hooks/           # Shared hooks such as: useVehicles, useSessions, useSettings, useStats
+  data/            # The data access layer
   pages/           # Route components
-  types/           # TypeScript interfaces
+  types/           # Shared types
 public/
   icons/           # PWA icons (192, 512, etc.)
   favicon.ico
@@ -451,7 +449,7 @@ BUILD:
   PWA plugin generates service worker + manifest
 
 DEPLOY:
-  Any static host (Vercel, Netlify, GitHub Pages)
+  Any free static host (Vercel, Netlify, GitHub Pages)
   Must be served over HTTPS for PWA features
 
 USER_INSTALL:
