@@ -1,42 +1,35 @@
-import type { LocationTypeConfig, Settings } from './data-types';
+import type { Settings } from './data-types';
 
-// todo - replace icons with proper SVGs or similar later
-export const LOCATION_TYPES: Record<string, LocationTypeConfig> = {
-  HOME: {
-    key: 'HOME',
-    label: 'Home',
+export const DEFAULT_LOCATIONS = [
+  {
+    name: 'Home',
     icon: '🏠',
-    color: 'blue'
+    color: 'blue',
+    defaultRate: 0.12
   },
-  WORK: {
-    key: 'WORK',
-    label: 'Work',
+  {
+    name: 'Work',
     icon: '🏢',
-    color: 'purple'
+    color: 'purple',
+    defaultRate: 0.0
   },
-  OTHER: {
-    key: 'OTHER',
-    label: 'Other',
+  {
+    name: 'Other',
     icon: '📍',
-    color: 'pink'
+    color: 'pink',
+    defaultRate: 0.15
   },
-  DC: {
-    key: 'DC',
-    label: 'DC',
+  {
+    name: 'DC Fast',
     icon: '⚡',
-    color: 'amber'
+    color: 'amber',
+    defaultRate: 0.35
   }
-};
+];
 
 export const DEFAULT_VEHICLE_ICON = '🚗';
 
 export const DEFAULT_SETTINGS: Settings = {
   key: 'app-settings',
-  defaultRates: {
-    HOME: 0.12,
-    WORK: 0.0,
-    OTHER: 0.15,
-    DC: 0.35
-  },
   onboardingComplete: false
 };

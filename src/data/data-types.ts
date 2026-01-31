@@ -1,17 +1,11 @@
-export type DefaultRates = {
-  HOME: number;
-  WORK: number;
-  OTHER: number;
-  DC: number;
-};
-
-export type LocationTypeKey = keyof DefaultRates;
-
-export type LocationTypeConfig = {
-  key: LocationTypeKey;
-  label: string;
+export type Location = {
+  id: string;
+  name: string;
   icon: string;
   color: string;
+  defaultRate: number;
+  createdAt: number;
+  isActive: boolean;
 };
 
 export type Vehicle = {
@@ -28,7 +22,7 @@ export type Vehicle = {
 export type ChargingSession = {
   id: string;
   vehicleId: string;
-  locationType: LocationTypeKey;
+  locationId: string;
   energyKwh: number;
   ratePerKwh: number;
   costCents: number;
@@ -38,6 +32,5 @@ export type ChargingSession = {
 
 export type Settings = {
   key: 'app-settings';
-  defaultRates: DefaultRates;
   onboardingComplete: boolean;
 };

@@ -56,6 +56,7 @@ DISTRIBUTION:
 ```mermaid
 erDiagram
     Vehicle ||--o{ ChargingSession : has
+    Location ||--o{ ChargingSession : has
     Settings ||--|| Settings : singleton
     
     Vehicle {
@@ -69,10 +70,20 @@ erDiagram
         boolean isActive
     }
     
+    Location {
+        uuid id PK
+        string name
+        string icon
+        string color
+        number defaultRatePerKwh
+        timestamp createdAt
+        boolean isActive
+    }
+    
     ChargingSession {
         uuid id PK
         uuid vehicleId FK
-        enum locationType
+        uuid locationId FK
         number energyKwh
         number ratePerKwh
         number costCents
@@ -82,7 +93,6 @@ erDiagram
     
     Settings {
         string key PK
-        object defaultRates
         boolean onboardingComplete
     }
 ```
@@ -121,14 +131,17 @@ Settings
   - onboardingComplete: boolean
 ```
 
-### Location Type Display Map
+### Default Locations
 ```
-LOCATION_TYPES = {
-  HOME:  { key: 'HOME',  label: 'Home',  icon: 'icon-name', color: 'blue' },
-  WORK:  { key: 'WORK',  label: 'Work',  icon: 'icon-name', color: 'purple' },
-  OTHER: { key: 'OTHER', label: 'Other', icon: 'icon-name', color: 'pink' },
-  DC:    { key: 'DC',    label: 'DC',    icon: 'icon-name', color: 'amber' }
-}
+DEFAULT_LOCATIONS = [
+  { name: 'Home',    icon: '🏠', color: 'blue',   defaultRate: 0.12 },
+  { name: 'Work',    icon: '🏢', color: 'purple', defaultRate: 0.0 },
+  { name: 'Other',   icon: '📍', color: 'pink',   defaultRate: 0.15 },
+  { name: 'DC Fast', icon: '⚡', color: 'amber',  defaultRate: 0.35 }
+]
+
+// Seeded on first launch, user can add/edit/delete
+// Deletion prevented if sessions reference the location
 ```
 
 ### Database Schema
@@ -138,9 +151,15 @@ STORE: vehicles
   INDEX: isActive
   INDEX: createdAt
 
+STORE: locations
+  INDEX: id (primary)
+  INDEX: isActive
+  INDEX: createdAt
+
 STORE: sessions
   INDEX: id (primary)
   INDEX: vehicleId
+  INDEX: locationId
   INDEX: chargedAt
   INDEX: [vehicleId, chargedAt] (compound)
 
@@ -158,16 +177,19 @@ STORE: settings
 flowchart TD
     A[App Launch] --> B{Settings exist?}
     B -->|No| C[Create default settings]
-    C --> D{onboardingComplete?}
+    C --> D{Locations exist?}
     B -->|Yes| D
-    D -->|No| E[Show Onboarding]
-    D -->|Yes| F[Show Dashboard]
+    D -->|No| E[Seed default locations]
+    E --> F{onboardingComplete?}
+    D -->|Yes| F
+    F -->|No| G[Show Onboarding]
+    F -->|Yes| H[Show Dashboard]
     
-    E --> G[Welcome Screen]
-    G --> H[Set Default Rates]
-    H --> I[Add First Vehicle]
-    I --> J[Mark onboarding complete]
-    J --> F
+    G --> I[Welcome Screen]
+    I --> J[Review/Edit Locations]
+    J --> K[Add First Vehicle]
+    K --> L[Mark onboarding complete]
+    L --> H
 ```
 
 ### Default Settings Initialization
@@ -175,14 +197,15 @@ flowchart TD
 ON_FIRST_LAUNCH:
   CREATE settings {
     key: 'app-settings',
-    defaultRates: {
-      HOME: 0.12,
-      WORK: 0.00,
-      OTHER: 0.15,
-      DC: 0.35
-    },
     onboardingComplete: false
   }
+  
+  SEED locations [
+    { name: 'Home',    icon: '🏠', color: 'blue',   defaultRate: 0.12 },
+    { name: 'Work',    icon: '🏢', color: 'purple', defaultRate: 0.0 },
+    { name: 'Other',   icon: '📍', color: 'pink',   defaultRate: 0.15 },
+    { name: 'DC Fast', icon: '⚡', color: 'amber',  defaultRate: 0.35 }
+  ]
 ```
 
 ### Onboarding Screens
@@ -191,9 +214,11 @@ SCREEN 1: Welcome
   - App name and purpose
   - "Get Started" button
 
-SCREEN 2: Default Rates
-  - Pre-filled with common defaults
-  - Explain these can be changed later
+SCREEN 2: Review/Edit Locations
+  - Show 4 seeded default locations
+  - Allow edit (name, icon, color, rate)
+  - Allow add new locations
+  - Explain these can be changed later in Settings
   - "Next" button
 
 SCREEN 3: First Vehicle
@@ -304,6 +329,7 @@ graph TB
         Vehicles[("vehicles")]
         Sessions[("sessions")]
         Settings[("settings")]
+        Locations[("locations")]
     end
     
     subgraph ServiceWorker["Service Worker"]
@@ -349,8 +375,17 @@ useVehicles(activeOnly?) {
   }
 }
 
+useLocations(activeOnly?) {
+  return {
+    locations: REACTIVE from IndexedDB,
+    createLocation(data),
+    updateLocation(id, data),
+    deleteLocation(id) // only if no sessions
+  }
+}
+
 useSessions(filters?) {
-  // filters: { vehicleId?, locationType?, dateRange? }
+  // filters: { vehicleId?, locationId?, dateRange? }
   return {
     sessions: REACTIVE from IndexedDB,
     createSession(data),
@@ -367,14 +402,15 @@ useSettings() {
   }
 }
 
-useStats(vehicleId?, dateRange?) {
+useStats(filters?) {
+  // filters: { vehicleId?, locationId?, dateRange? }
   // Computed from sessions
   return {
     totalKwh,
     totalCostCents,
     avgRatePerKwh,
-    byLocation: { HOME: kwh, WORK: kwh, ... },
-    byDate: [{ date, HOME, WORK, OTHER, DC }, ...]
+    byLocation: { [locationId]: { name, kwh, cost }, ... },
+    byDate: [{ date, [locationId]: kwh }, ...]
   }
 }
 ```
@@ -403,10 +439,21 @@ ON_DELETE_VEHICLE:
     DELETE vehicle
 ```
 
+### Location Deletion
+```
+ON_DELETE_LOCATION:
+  sessionCount = COUNT sessions WHERE locationId = id
+  
+  if sessionCount > 0:
+    SHOW error "Cannot delete location with existing sessions"
+  else:
+    SET location.isActive = false (soft delete)
+```
+
 ### Default Rate Application
 ```
 ON_ADD_SESSION:
-  locationType selected â†’ pre-fill rate from settings.defaultRates[type]
+  location selected → pre-fill rate from location.defaultRate
   User can override rate for this session
   "Use default rate" checkbox controls whether rate field is editable
 ```
@@ -433,10 +480,9 @@ npm install -D vite-plugin-pwa
 ```
 src/
   components/      # Reusable UI components
-  hooks/           # Shared hooks such as: useVehicles, useSessions, useSettings, useStats
-  data/            # The data access layer
+  hooks/           # useVehicles, useSessions, useSettings, useLocations, useStats, useAppReady
+  data/            # db.ts, data-types.ts, constants.ts, utils.ts
   pages/           # Route components
-  types/           # Shared types
 public/
   icons/           # PWA icons (192, 512, etc.)
   favicon.ico
@@ -469,6 +515,8 @@ USER_INSTALL:
 | Cost stored as cents       | Avoid floating point math issues                    |
 | Cost never recalculates    | Historical accuracy (learned from Tesla's mistakes) |
 | Soft delete for vehicles   | Preserve session history integrity                  |
+| Soft delete for locations  | Preserve session history integrity                  |
+| Dynamic location store     | User can customize locations, rates, add new ones   |
 | Emoji for vehicle icons    | Universal, no asset management, user-friendly       |
 | Onboarding flow            | Ensure valid state before main app usage            |
 | Persistent storage request | Reduce chance of data loss                          |

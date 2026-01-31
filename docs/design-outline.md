@@ -27,34 +27,37 @@ src/
 ```typescript
 // data/db.ts
 vehicles: '++id, isActive, createdAt';
-sessions: '++id, vehicleId, chargedAt, [vehicleId+chargedAt]';
+sessions: '++id, vehicleId, locationId, chargedAt, [vehicleId+chargedAt]';
 settings: 'key'; // singleton: key = 'app-settings'
+locations: '++id, isActive, createdAt';
 ```
 
 ## Location Types
 
 ```typescript
-// src/constants.ts
-LOCATION_TYPES = {
-  HOME: { key: 'HOME', label: 'Home', icon: '🏠', color: 'blue' },
-  WORK: { key: 'WORK', label: 'Work', icon: '🏢', color: 'purple' },
-  OTHER: { key: 'OTHER', label: 'Other', icon: '📍', color: 'pink' },
-  DC: { key: 'DC', label: 'DC', icon: '⚡', color: 'amber' }
-};
+// data/db.ts - locations store
+// Dynamic store, user can add/edit/delete locations
+// Default locations seeded on first launch:
+DEFAULT_LOCATIONS = [
+  { name: 'Home', icon: '🏠', color: 'blue', defaultRate: 0.12 },
+  { name: 'Work', icon: '🏢', color: 'purple', defaultRate: 0.0 },
+  { name: 'Other', icon: '📍', color: 'pink', defaultRate: 0.15 },
+  { name: 'DC Fast', icon: '⚡', color: 'amber', defaultRate: 0.35 }
+];
 ```
 
 ## Routing & Navigation
 
 ```
 /                      → Dashboard (redirects to /onboarding if needed)
-/onboarding            → 3-step flow (Welcome → Rates → First Vehicle)
+/onboarding            → 3-step flow (Welcome → Review/Edit Locations → First Vehicle)
 /sessions              → List with filters
 /sessions/add          → Form (create)
 /sessions/:id/edit     → Form (edit)
 /vehicles              → List
 /vehicles/add          → Form (create)
 /vehicles/:id/edit     → Form (edit)
-/settings              → Default rates, storage info
+/settings              → Locations management, storage info
 ```
 
 ## Hooks Pattern
@@ -65,27 +68,34 @@ All hooks use `useLiveQuery()` and return CRUD operations:
 useVehicles(activeOnly?) → { vehicles, createVehicle, updateVehicle, deleteVehicle }
 useSessions(filters?)    → { sessions, createSession, updateSession, deleteSession }
 useSettings()            → { settings, updateSettings, completeOnboarding }
+useLocations(activeOnly?) → { locations, createLocation, updateLocation, deleteLocation }
 useStats(filters?)       → { totalKwh, totalCostCents, avgRate, byLocation, byDate }
 useAppReady()            → { isLoading, needsOnboarding, settings }
 ```
 
-Filters: `{ vehicleId?, locationType?, dateRange? }`
+Filters: `{ vehicleId?, locationId?, dateRange? }`
 
 ## First Launch
 
 1. Settings exist? If no → create defaults
-2. `settings.onboardingComplete`? If false → `/onboarding`
-3. Otherwise → Dashboard
+2. Locations exist? If no → seed default locations
+3. `settings.onboardingComplete`? If false → `/onboarding`
+4. Otherwise → Dashboard
 
 **Default settings**:
 
 ```json
 {
   "key": "app-settings",
-  "defaultRates": { "HOME": 0.12, "WORK": 0.0, "OTHER": 0.15, "DC": 0.35 },
   "onboardingComplete": false
 }
 ```
+
+**Default locations** (seeded on first launch):
+- Home (🏠, blue, $0.12/kWh)
+- Work (🏢, purple, $0.00/kWh)
+- Other (📍, pink, $0.15/kWh)
+- DC Fast (⚡, amber, $0.35/kWh)
 
 ## PWA Config
 
@@ -114,7 +124,7 @@ Icons: `public/icons/` → 192x192, 512x512, 180x180, 32x32, 16x16
 
 ### Session Form
 
-When `locationType` selected → auto-fill `ratePerKwh` from `settings.defaultRates[locationType]` (user can override)
+When location selected → auto-fill `ratePerKwh` from `location.defaultRate` (user can override)
 
 ### Vehicle Deletion
 
@@ -122,6 +132,15 @@ When `locationType` selected → auto-fill `ratePerKwh` from `settings.defaultRa
 const sessionCount = await db.sessions.where('vehicleId').equals(id).count();
 if (sessionCount > 0) {
   // Error: "Cannot delete - vehicle has N sessions"
+}
+```
+
+### Location Deletion
+
+```typescript
+const sessionCount = await db.sessions.where('locationId').equals(id).count();
+if (sessionCount > 0) {
+  // Error: "Cannot delete - location has N sessions"
 }
 ```
 

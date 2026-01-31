@@ -14,11 +14,13 @@
 ## Data Layer
 
 - [x] Create TypeScript types and interfaces
-  - Define Vehicle, ChargingSession, Settings, LocationType types in src/data/data-types.d.ts
+  - Define Vehicle, ChargingSession, Settings, Location types in src/data/data-types.ts
 - [x] Set up Dexie database schema
-  - Create src/data/db.ts with vehicles, sessions, settings stores and indexes
+  - Create src/data/db.ts with vehicles, sessions, settings, locations stores and indexes
 - [x] Create constants file
-  - Define LOCATION_TYPES map with labels, icons, colors in src/data/constants.ts
+  - Define DEFAULT_LOCATIONS seed templates in src/data/constants.ts
+- [x] Create utility functions
+  - Add generateId(), seedDefaultLocations(), getDefaultSettings() in src/data/utils.ts
 
 ## Data Access Hooks
 
@@ -28,29 +30,31 @@
   - Create hook with useLiveQuery for settings CRUD operations and completeOnboarding()
 - [ ] Implement useVehicles hook
   - Create hook with useLiveQuery for vehicle CRUD operations, including soft delete logic
+- [ ] Implement useLocations hook
+  - Create hook with useLiveQuery for location CRUD operations, including soft delete logic and deletion validation
 - [ ] Implement useSessions hook
-  - Create hook with useLiveQuery for session CRUD with filters (vehicleId, locationType, dateRange)
+  - Create hook with useLiveQuery for session CRUD with filters (vehicleId, locationId, dateRange)
 - [ ] Implement useStats hook
-  - Create hook to compute totalKwh, totalCost, avgRate, byLocation, byDate from sessions
+  - Create hook to compute totalKwh, totalCost, avgRate, byLocation (with names), byDate from sessions
 
 ## Routing & Pages
 
 - [ ] Set up React Router structure
   - Configure routes: /, /onboarding, /sessions, /sessions/add, /sessions/:id/edit, /vehicles, /vehicles/add, /vehicles/:id/edit, /settings
 - [ ] Create Onboarding flow pages
-  - Build 3-step onboarding: Welcome screen, Default rates setup, First vehicle creation
+  - Build 3-step onboarding: Welcome screen, Review/Edit Locations, First vehicle creation
 - [ ] Build Dashboard page
   - Create main dashboard with stats summary, recent sessions, empty state handling
 - [ ] Build SessionsList page
   - Create sessions list with filters, sorting, empty states, edit/delete actions
 - [ ] Build SessionForm component
-  - Create form for adding/editing sessions with cost calculation (energyKwh × ratePerKwh × 100)
+  - Create form for adding/editing sessions with cost calculation (energyKwh × ratePerKwh × 100), location selector with rate auto-fill
 - [ ] Build VehiclesList page
   - Create vehicles list with add/edit/delete actions, handle deletion validation
 - [ ] Build VehicleForm component
   - Create form for adding/editing vehicles with emoji icon picker
 - [ ] Build Settings page
-  - Create settings page for default rates, storage info (navigator.storage.estimate), app info
+  - Create settings page with locations management section (add/edit/delete locations), storage info (navigator.storage.estimate), app info
 
 ## UI Components
 
@@ -73,9 +77,11 @@
 ## Business Logic & Testing
 
 - [ ] Implement app initialization flow
-  - Create logic to check settings, redirect to onboarding if needed, create default settings on first launch
+  - Create logic to check settings, seed locations if needed, redirect to onboarding if needed, create default settings on first launch
 - [ ] Add vehicle deletion safety checks
   - Prevent deletion of vehicles with sessions, offer cascade delete option
+- [ ] Add location deletion safety checks
+  - Prevent deletion of locations with sessions
 - [ ] Test offline functionality
   - Verify all features work without network, test service worker caching
 - [ ] Build and deploy to static hosting
