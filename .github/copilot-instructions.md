@@ -22,6 +22,7 @@
 - Single-purpose components
 - Keep logic in helpers/hooks not Components
 - CSS Modules preferred
+- Named exports only
 
 ## Task-Specific Rules
 
