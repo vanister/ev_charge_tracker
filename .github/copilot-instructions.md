@@ -23,6 +23,7 @@
 - Keep logic in helpers/hooks not Components
 - CSS Modules preferred
 - Named exports only
+- Use `type` for typing, `interface` for true interfaces
 
 ## Task-Specific Rules
 
