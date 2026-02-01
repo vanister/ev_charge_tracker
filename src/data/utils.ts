@@ -1,13 +1,11 @@
-import { db } from './db';
 import { DEFAULT_LOCATIONS, DEFAULT_SETTINGS } from './constants';
-import type { Location, Settings } from './data-types';
+import type { EvChargTrackerDb, Location, Settings } from './data-types';
 
 export function generateId(generator: Crypto = crypto): string {
   return generator.randomUUID();
 }
 
-// todo - inject db instead of importing directly
-export async function seedDefaultLocations(): Promise<void> {
+export async function seedDefaultLocations(db: EvChargTrackerDb): Promise<void> {
   const existingCount = await db.locations.count();
 
   if (existingCount > 0) {

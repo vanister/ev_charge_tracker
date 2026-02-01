@@ -1,3 +1,5 @@
+import type { Dexie, EntityTable } from 'dexie';
+
 export type Location = {
   id: string;
   name: string;
@@ -33,4 +35,11 @@ export type ChargingSession = {
 export type Settings = {
   key: 'app-settings';
   onboardingComplete: boolean;
+};
+
+export type EvChargTrackerDb = Dexie & {
+  vehicles: EntityTable<Vehicle, 'id'>;
+  sessions: EntityTable<ChargingSession, 'id'>;
+  settings: EntityTable<Settings, 'key'>;
+  locations: EntityTable<Location, 'id'>;
 };

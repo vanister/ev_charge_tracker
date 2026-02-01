@@ -32,9 +32,9 @@ export function AppInitializationProvider({
           setSettings(existingSettings);
         }
 
-        await seedDefaultLocations();
+        await seedDefaultLocations(db);
 
-        if (storage && storage.persist) {
+        if (storage?.persist) {
           await storage.persist();
         }
       } catch (err) {
@@ -46,7 +46,7 @@ export function AppInitializationProvider({
     }
 
     initialize();
-  }, [db, storage]);
+  }, []);
 
   const needsOnboarding = !settings?.onboardingComplete;
 

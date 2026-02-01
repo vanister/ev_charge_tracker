@@ -28,6 +28,7 @@
 - Use `type` for typing, `interface` for true interfaces
 - Components should live in their own files
 - No index barrel files
+- Dates handled with date-fns
 
 ## Task-Specific Rules
 
