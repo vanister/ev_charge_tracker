@@ -10,8 +10,10 @@
 - No documentation such as JSDocs or XML Comments unless explicitly asked to provide
 - Simple, concise, single-purpose code
 - print to 100 char line limit
-- Follow SOLID principles,
-- Test-minded, but don't write tests unless asked to do so.
+- Follow SOLID principles
+- Follow KISS principle
+- Test-minded, but don't write tests unless asked to do so
+- Leverage dependency injection and inversion of control when possible
 
 ## Project Rules
 
@@ -24,6 +26,8 @@
 - CSS Modules preferred
 - Named exports only
 - Use `type` for typing, `interface` for true interfaces
+- Components should live in their own files
+- No index barrel files
 
 ## Task-Specific Rules
 

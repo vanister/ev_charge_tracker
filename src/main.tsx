@@ -1,10 +1,17 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import { App } from './App.tsx';
+import { db } from './data/db';
+import { DatabaseProvider } from './providers/DatabaseProvider';
+import { AppInitializationProvider } from './providers/AppInitializationProvider';
+import { App } from './App';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <DatabaseProvider db={db}>
+      <AppInitializationProvider>
+        <App />
+      </AppInitializationProvider>
+    </DatabaseProvider>
   </StrictMode>
 );

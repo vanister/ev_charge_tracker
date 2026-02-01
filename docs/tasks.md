@@ -24,9 +24,9 @@
 
 ## 3. Context Providers & Hooks
 
-1. [ ] Implement DatabaseProvider context
+1. [x] Implement DatabaseProvider context
    - Create context to provide single Dexie db instance to entire app
-2. [ ] Implement AppInitializationProvider context
+2. [x] Implement AppInitializationProvider context
    - Create context to handle app initialization (settings check, location seeding, persistent storage request)
    - Provide isLoading, needsOnboarding, settings to app
 3. [ ] Implement useDatabase hook
