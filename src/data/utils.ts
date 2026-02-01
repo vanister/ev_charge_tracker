@@ -13,17 +13,17 @@ export async function seedDefaultLocations(db: EvChargTrackerDb): Promise<void> 
   }
 
   const now = Date.now();
-  const locations: Location[] = DEFAULT_LOCATIONS.map((template) => ({
+  const locations: Location[] = DEFAULT_LOCATIONS.map(({ name, color, icon, defaultRate }) => ({
     id: generateId(),
-    name: template.name,
-    icon: template.icon,
-    color: template.color,
-    defaultRate: template.defaultRate,
+    name,
+    icon,
+    color,
+    defaultRate,
     createdAt: now,
     isActive: true
   }));
 
-  await db.locations.bulkAdd(locations);
+  await db.locations.bulkPut(locations);
 }
 
 export function getDefaultSettings(): Settings {

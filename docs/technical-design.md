@@ -17,6 +17,7 @@ A fully offline PWA for tracking EV charging sessions. Designed to function as a
 - **Tailwind CSS** - Utility-first CSS framework (bundled via PostCSS)
 
 ### Additional
+- **Lucide React** - Tree-shakeable SVG icon components
 - **Recharts** - Chart components
 - **React Router** - Client-side routing
 - **date-fns** - Date utilities
@@ -106,7 +107,7 @@ Vehicle
   - make: string? (e.g., "Tesla")
   - model: string? (e.g., "Model 3")
   - year: number? (e.g., 2023)
-  - icon: string (emoji, default "ðŸš—")
+  - icon: IconName (Lucide icon identifier, default "car")
   - createdAt: timestamp
   - isActive: boolean (soft delete)
 
@@ -134,10 +135,10 @@ Settings
 ### Default Locations
 ```
 DEFAULT_LOCATIONS = [
-  { name: 'Home',    icon: '🏠', color: 'blue',   defaultRate: 0.12 },
-  { name: 'Work',    icon: '🏢', color: 'purple', defaultRate: 0.0 },
-  { name: 'Other',   icon: '📍', color: 'pink',   defaultRate: 0.15 },
-  { name: 'DC Fast', icon: '⚡', color: 'amber',  defaultRate: 0.35 }
+  { name: 'Home',    icon: 'home',     color: 'blue',   defaultRate: 0.12 },
+  { name: 'Work',    icon: 'building', color: 'purple', defaultRate: 0.0 },
+  { name: 'Other',   icon: 'map-pin',  color: 'pink',   defaultRate: 0.15 },
+  { name: 'DC Fast', icon: 'zap',      color: 'amber',  defaultRate: 0.35 }
 ]
 
 // Seeded on first launch, user can add/edit/delete
@@ -201,10 +202,10 @@ ON_FIRST_LAUNCH:
   }
   
   SEED locations [
-    { name: 'Home',    icon: '🏠', color: 'blue',   defaultRate: 0.12 },
-    { name: 'Work',    icon: '🏢', color: 'purple', defaultRate: 0.0 },
-    { name: 'Other',   icon: '📍', color: 'pink',   defaultRate: 0.15 },
-    { name: 'DC Fast', icon: '⚡', color: 'amber',  defaultRate: 0.35 }
+    { name: 'Home',    icon: 'home',     color: 'blue',   defaultRate: 0.12 },
+    { name: 'Work',    icon: 'building', color: 'purple', defaultRate: 0.0 },
+    { name: 'Other',   icon: 'map-pin',  color: 'pink',   defaultRate: 0.15 },
+    { name: 'DC Fast', icon: 'zap',      color: 'amber',  defaultRate: 0.35 }
   ]
 ```
 
@@ -224,7 +225,7 @@ SCREEN 2: Review/Edit Locations
 SCREEN 3: First Vehicle
   - Required: name
   - Optional: make, model, year
-  - Icon picker (emoji grid)
+  - Icon picker (Lucide icon grid)
   - "Add Vehicle" â†’ mark onboarding complete â†’ go to Dashboard
 ```
 
@@ -539,15 +540,15 @@ USER_INSTALL:
 
 ## Key Design Decisions
 
-| Decision                   | Rationale                                           |
-| -------------------------- | --------------------------------------------------- |
-| Offline-only               | Privacy, no backend costs, instant performance      |
-| IndexedDB via Dexie        | Reactive queries, good DX, handles large datasets   |
-| Cost stored as cents       | Avoid floating point math issues                    |
-| Cost never recalculates    | Historical accuracy (learned from Tesla's mistakes) |
-| Soft delete for vehicles   | Preserve session history integrity                  |
-| Soft delete for locations  | Preserve session history integrity                  |
-| Dynamic location store     | User can customize locations, rates, add new ones   |
-| Emoji for vehicle icons    | Universal, no asset management, user-friendly       |
-| Onboarding flow            | Ensure valid state before main app usage            |
-| Persistent storage request | Reduce chance of data loss                          |
+| Decision                   | Rationale                                            |
+| -------------------------- | ---------------------------------------------------- |
+| Offline-only               | Privacy, no backend costs, instant performance       |
+| IndexedDB via Dexie        | Reactive queries, good DX, handles large datasets    |
+| Cost stored as cents       | Avoid floating point math issues                     |
+| Cost never recalculates    | Historical accuracy (learned from Tesla's mistakes)  |
+| Soft delete for vehicles   | Preserve session history integrity                   |
+| Soft delete for locations  | Preserve session history integrity                   |
+| Dynamic location store     | User can customize locations, rates, add new ones    |
+| Lucide icons               | Tree-shakeable SVG, consistent rendering, accessible |
+| Onboarding flow            | Ensure valid state before main app usage             |
+| Persistent storage request | Reduce chance of data loss                           |
