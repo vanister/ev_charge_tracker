@@ -1,5 +1,5 @@
-import { DEFAULT_LOCATIONS, DEFAULT_SETTINGS, DEFAULT_SETTINGS_KEY } from './constants';
-import type { EvChargTrackerDb, Location, Settings } from './data-types';
+import { DEFAULT_LOCATIONS, DEFAULT_SETTINGS, DEFAULT_SETTINGS_KEY } from '../data/constants';
+import type { EvChargTrackerDb, Location, Settings } from '../data/data-types';
 
 export function generateId(generator: Crypto = crypto): string {
   return generator.randomUUID();

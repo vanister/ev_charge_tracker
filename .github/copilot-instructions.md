@@ -14,6 +14,7 @@
 - Follow KISS principle
 - Test-minded, but don't write tests unless asked to do so
 - Leverage dependency injection and inversion of control when possible
+- Keep exceptions truly exceptional, return results or error objects instead of throwing
 
 ## Project Rules
 

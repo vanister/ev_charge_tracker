@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, type ReactNode } from 'react';
 import { useDatabase } from '../hooks/useDatabase';
-import { getSettings, seedDefaultLocations } from '../data/utils';
 import type { Settings } from '../data/data-types';
 import { AppInitializationContext } from '../contexts/AppInitializationContext';
+import { getSettings, seedDefaultLocations } from '../utilities/dataUtils';
 
 type AppInitializationProviderProps = {
   children: ReactNode;
@@ -18,7 +18,7 @@ export function AppInitializationProvider({
   const [settings, setSettings] = useState<Settings | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Prevent double initialization in React 18+ Strict Mode (development only)
+  // Prevent double initialization in React Strict Mode (development only)
   // db and storage are stable references outside React lifecycle
   const initialized = useRef(false);
 

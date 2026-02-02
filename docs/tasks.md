@@ -28,18 +28,18 @@
    - Create context to provide single Dexie db instance to entire app
 2. [x] Implement AppInitializationProvider context
    - Create context to handle app initialization (settings check, location seeding, persistent storage request)
-   - Provide isLoading, needsOnboarding, settings to app
-3. [ ] Implement useDatabase hook
+   - Provide isInitialized, needsOnboarding, settings to app
+3. [x] Implement useDatabase hook
    - Create hook to access db from DatabaseContext
-4. [ ] Implement useAppInitialization hook
+4. [x] Implement useAppInitialization hook
    - Create hook to access initialization state from AppInitializationContext
-5. [ ] Implement useSettings hook
+5. [x] Implement useSettings hook
    - Create hook with useLiveQuery for settings CRUD operations and completeOnboarding()
-6. [ ] Implement useVehicles hook
+6. [x] Implement useVehicles hook
    - Create hook with useLiveQuery for vehicle CRUD operations, including soft delete logic
-7. [ ] Implement useLocations hook
+7. [x] Implement useLocations hook
    - Create hook with useLiveQuery for location CRUD operations, including soft delete logic and deletion validation
-8. [ ] Implement useSessions hook
+8. [x] Implement useSessions hook
    - Create hook with useLiveQuery for session CRUD with filters (vehicleId, locationId, dateRange)
 9. [ ] Implement useStats hook
    - Create hook to compute totalKwh, totalCost, avgRate, byLocation (with names), byDate from sessions
