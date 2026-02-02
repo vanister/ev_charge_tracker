@@ -1,5 +1,7 @@
 import type { Location, Settings } from './data-types';
 
+export const DB_NAME = 'EVChargeTrackerDB';
+
 export const DEFAULT_LOCATIONS: Omit<Location, 'id' | 'createdAt' | 'isActive'>[] = [
   {
     name: 'Home',
@@ -28,8 +30,9 @@ export const DEFAULT_LOCATIONS: Omit<Location, 'id' | 'createdAt' | 'isActive'>[
 ];
 
 export const DEFAULT_VEHICLE_ICON = 'car';
+export const DEFAULT_SETTINGS_KEY = 'app-settings';
 
 export const DEFAULT_SETTINGS: Settings = {
-  key: 'app-settings',
+  key: DEFAULT_SETTINGS_KEY,
   onboardingComplete: false
 };

@@ -3,13 +3,13 @@ import { InitializationError } from './components/InitializationError';
 import { InitializationLoading } from './components/InitializationLoading';
 
 export function App() {
-  const { isLoading, error } = useAppInitialization();
+  const { isInitialized, error } = useAppInitialization();
 
   if (error) {
     return <InitializationError error={error} />;
   }
 
-  if (isLoading) {
+  if (!isInitialized) {
     return <InitializationLoading />;
   }
 

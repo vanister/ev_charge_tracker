@@ -1,7 +1,8 @@
 import Dexie from 'dexie';
 import type { EvChargTrackerDb } from './data-types';
+import { DB_NAME } from './constants';
 
-export const db = new Dexie('EVChargeTrackerDB') as EvChargTrackerDb;
+export const db = new Dexie(DB_NAME) as EvChargTrackerDb;
 
 // todo - get version from env
 db.version(1).stores({
