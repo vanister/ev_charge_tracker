@@ -202,9 +202,9 @@ ON_FIRST_LAUNCH:
   }
   
   SEED locations [
-    { name: 'Home',    icon: 'home',     color: 'blue',   defaultRate: 0.12 },
-    { name: 'Work',    icon: 'building', color: 'purple', defaultRate: 0.0 },
-    { name: 'Other',   icon: 'map-pin',  color: 'pink',   defaultRate: 0.15 },
+    { name: 'Home',    icon: 'home',     color: 'blue',   defaultRate: 0.15 },
+    { name: 'Work',    icon: 'building', color: 'purple', defaultRate: 0.17 },
+    { name: 'Other',   icon: 'map-pin',  color: 'pink',   defaultRate: 0.11 },
     { name: 'DC Fast', icon: 'zap',      color: 'amber',  defaultRate: 0.35 }
   ]
 ```
@@ -342,15 +342,15 @@ graph TB
 
 ## Routing Structure
 ```
-/                    â†’ Dashboard (redirects to /onboarding if needed)
-/onboarding          â†’ Onboarding flow (3 steps)
-/sessions            â†’ SessionsList
-/sessions/add        â†’ SessionForm (create)
-/sessions/:id/edit   â†’ SessionForm (edit)
-/vehicles            â†’ VehiclesList  
-/vehicles/add        â†’ VehicleForm (create)
-/vehicles/:id/edit   â†’ VehicleForm (edit)
-/settings            â†’ Settings
+/                    # Dashboard (redirects to /onboarding if needed)
+/onboarding          # Onboarding flow (3 steps)
+/sessions            # SessionsList
+/sessions/add        # SessionForm (create)
+/sessions/:id/edit   # SessionForm (edit)
+/vehicles            # VehiclesList  
+/vehicles/add        # VehicleForm (create)
+/vehicles/:id/edit   # VehicleForm (edit)
+/settings            # Settings
 ```
 
 ## Data Access Pattern

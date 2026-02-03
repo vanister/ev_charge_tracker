@@ -1,8 +1,5 @@
 import type { Dexie, EntityTable } from 'dexie';
-
-export type IconName = 'home' | 'building' | 'map-pin' | 'zap' | 'car';
-
-export type IconSize = 'sm' | 'md' | 'lg';
+import type { IconName } from '../components/Icon';
 
 export type Location = {
   id: string;
@@ -20,7 +17,7 @@ export type Vehicle = {
   make?: string;
   model?: string;
   year?: number;
-  icon: IconName;
+  icon: string;
   createdAt: number;
   isActive: boolean;
 };

@@ -1,5 +1,29 @@
-import { Home, Building, MapPin, Zap, Car } from 'lucide-react';
-import type { IconName, IconSize } from '../data/data-types';
+import {
+  Home,
+  Building,
+  MapPin,
+  Zap,
+  Car,
+  Menu,
+  X,
+  Plus,
+  ChevronLeft,
+  Settings
+} from 'lucide-react';
+
+export type IconName =
+  | 'home'
+  | 'building'
+  | 'map-pin'
+  | 'zap'
+  | 'car'
+  | 'menu'
+  | 'x'
+  | 'plus'
+  | 'chevron-left'
+  | 'settings';
+
+type IconSize = 'sm' | 'md' | 'lg';
 
 type IconProps = {
   name: IconName;
@@ -39,6 +63,16 @@ export function Icon(props: IconProps) {
       return <Zap className={combinedClassName} />;
     case 'car':
       return <Car className={combinedClassName} />;
+    case 'menu':
+      return <Menu className={combinedClassName} />;
+    case 'x':
+      return <X className={combinedClassName} />;
+    case 'plus':
+      return <Plus className={combinedClassName} />;
+    case 'chevron-left':
+      return <ChevronLeft className={combinedClassName} />;
+    case 'settings':
+      return <Settings className={combinedClassName} />;
     default:
       return null;
   }
