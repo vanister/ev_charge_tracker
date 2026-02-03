@@ -8,7 +8,10 @@ import {
   X,
   Plus,
   ChevronLeft,
-  Settings
+  Settings,
+  Sun,
+  Moon,
+  Monitor
 } from 'lucide-react';
 
 export type IconName =
@@ -21,7 +24,10 @@ export type IconName =
   | 'x'
   | 'plus'
   | 'chevron-left'
-  | 'settings';
+  | 'settings'
+  | 'sun'
+  | 'moon'
+  | 'monitor';
 
 type IconSize = 'sm' | 'md' | 'lg';
 
@@ -39,10 +45,10 @@ const sizeClasses: Record<IconSize, string> = {
 };
 
 const colorClasses: Record<string, string> = {
-  blue: 'text-blue-600',
-  purple: 'text-purple-600',
-  pink: 'text-pink-600',
-  amber: 'text-amber-600'
+  teal: 'text-teal-500',
+  slate: 'text-slate-500',
+  purple: 'text-purple-400',
+  orange: 'text-orange-400'
 };
 
 export function Icon(props: IconProps) {
@@ -73,6 +79,12 @@ export function Icon(props: IconProps) {
       return <ChevronLeft className={combinedClassName} />;
     case 'settings':
       return <Settings className={combinedClassName} />;
+    case 'sun':
+      return <Sun className={combinedClassName} />;
+    case 'moon':
+      return <Moon className={combinedClassName} />;
+    case 'monitor':
+      return <Monitor className={combinedClassName} />;
     default:
       return null;
   }
