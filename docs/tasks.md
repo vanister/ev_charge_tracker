@@ -41,8 +41,6 @@
    - Create hook with useLiveQuery for location CRUD operations, including soft delete logic and deletion validation
 8. [x] Implement useSessions hook
    - Create hook with useLiveQuery for session CRUD with filters (vehicleId, locationId, dateRange)
-9. [ ] Implement useStats hook
-   - Create hook to compute totalKwh, totalCost, avgRate, byLocation (with names), byDate from sessions
 
 ## 4. Routing & Pages
 
@@ -52,6 +50,8 @@
    - Build 3-step onboarding: Welcome screen, Review/Edit Locations, First vehicle creation
 3. [ ] Build Dashboard page
    - Create main dashboard with stats summary, recent sessions, empty state handling
+   - Implement useStats hook
+   - Create hook to compute totalKwh, totalCost, avgRate, byLocation (with names), byDate from sessions
 4. [ ] Build SessionsList page
    - Create sessions list with filters, sorting, empty states, edit/delete actions
 5. [ ] Build SessionForm component
