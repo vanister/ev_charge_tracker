@@ -30,6 +30,7 @@
 - Components should live in their own files
 - No index barrel files
 - Dates handled with date-fns
+- Import ordering: CSS first → external deps → internal deps
 - Run `npm run build` to verify no build errors after changes
 
 ## Task-Specific Rules
