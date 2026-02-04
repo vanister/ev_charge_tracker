@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, type ReactNode } from 'react';
 import { useDatabase } from '../hooks/useDatabase';
 import type { Settings } from '../data/data-types';
 import { AppInitializationContext } from '../contexts/AppInitializationContext';
-import { getSettings, seedDefaultLocations } from '../utilities/dataUtils';
+import { getSettings as loadSettings, seedDefaultLocations } from '../utilities/dataUtils';
 
 type AppInitializationProviderProps = {
   children: ReactNode;
@@ -20,19 +20,19 @@ export function AppInitializationProvider({
 
   // Prevent double initialization in React Strict Mode (development only)
   // db and storage are stable references outside React lifecycle
-  const initialized = useRef(false);
+  const initializing = useRef(false);
 
   useEffect(() => {
-    if (initialized.current) {
+    if (initializing.current) {
       return;
     }
 
-    initialized.current = true;
+    initializing.current = true;
 
     async function initialize() {
       try {
         // todo: make settings reactive with useLiveQuery in dedicated useSettings() hook
-        const settings = await getSettings(db);
+        const settings = await loadSettings(db);
         setSettings(settings);
 
         await seedDefaultLocations(db);
@@ -54,7 +54,7 @@ export function AppInitializationProvider({
   const needsOnboarding = !settings?.onboardingComplete;
 
   return (
-    <AppInitializationContext.Provider value={{ isInitialized, needsOnboarding, settings, error }}>
+    <AppInitializationContext.Provider value={{ isInitialized, needsOnboarding, error }}>
       {children}
     </AppInitializationContext.Provider>
   );
