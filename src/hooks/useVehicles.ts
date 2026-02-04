@@ -19,7 +19,7 @@ export function useVehicles(activeOnly = true) {
     return db.vehicles.orderBy('createdAt').toArray();
   }, [activeOnly]);
 
-  async function createVehicle(input: CreateVehicleInput): Promise<Result<Vehicle>> {
+  const createVehicle = async (input: CreateVehicleInput): Promise<Result<Vehicle>> => {
     const vehicle: Vehicle = {
       ...input,
       icon: input.icon ?? DEFAULT_VEHICLE_ICON,
@@ -35,9 +35,9 @@ export function useVehicles(activeOnly = true) {
       console.error('Failed to create vehicle:', err);
       return failure('Failed to create vehicle');
     }
-  }
+  };
 
-  async function updateVehicle(id: string, input: UpdateVehicleInput): Promise<Result<Vehicle>> {
+  const updateVehicle = async (id: string, input: UpdateVehicleInput): Promise<Result<Vehicle>> => {
     try {
       const existing = await db.vehicles.get(id);
 
@@ -53,9 +53,9 @@ export function useVehicles(activeOnly = true) {
       console.error('Failed to update vehicle:', err);
       return failure('Failed to update vehicle');
     }
-  }
+  };
 
-  async function deleteVehicle(id: string): Promise<Result<void>> {
+  const deleteVehicle = async (id: string): Promise<Result<void>> => {
     try {
       const sessionCount = await db.sessions.where('vehicleId').equals(id).count();
 
@@ -74,7 +74,7 @@ export function useVehicles(activeOnly = true) {
       console.error('Failed to delete vehicle:', err);
       return failure('Failed to delete vehicle');
     }
-  }
+  };
 
   return {
     vehicles: vehicles ?? [],

@@ -4,8 +4,8 @@ import type { Location } from '../data/data-types';
 import { generateId } from '../utilities/dataUtils';
 import { success, failure, type Result } from '../utilities/resultUtils';
 
-type CreateLocationInput = Omit<Location, 'id' | 'createdAt' | 'isActive'>;
-type UpdateLocationInput = Partial<Omit<Location, 'id' | 'createdAt'>>;
+type NewLocation = Omit<Location, 'id' | 'createdAt' | 'isActive'>;
+type UpdateLocation = Partial<Omit<Location, 'id' | 'createdAt'>>;
 
 export function useLocations(activeOnly = true) {
   const { db } = useDatabase();
@@ -18,9 +18,9 @@ export function useLocations(activeOnly = true) {
     return await db.locations.orderBy('createdAt').toArray();
   }, [activeOnly]);
 
-  async function createLocation(input: CreateLocationInput): Promise<Result<Location>> {
+  const createLocation = async (loc: NewLocation): Promise<Result<Location>> => {
     const location: Location = {
-      ...input,
+      ...loc,
       id: generateId(),
       createdAt: Date.now(),
       isActive: true
@@ -33,9 +33,9 @@ export function useLocations(activeOnly = true) {
       console.error('Failed to create location:', err);
       return failure('Failed to create location');
     }
-  }
+  };
 
-  async function updateLocation(id: string, input: UpdateLocationInput): Promise<Result<Location>> {
+  const updateLocation = async (id: string, loc: UpdateLocation): Promise<Result<Location>> => {
     try {
       const existing = await db.locations.get(id);
 
@@ -43,7 +43,7 @@ export function useLocations(activeOnly = true) {
         return failure('Location not found');
       }
 
-      const updated: Location = { ...existing, ...input };
+      const updated: Location = { ...existing, ...loc };
 
       await db.locations.put(updated);
       return success(updated);
@@ -51,9 +51,9 @@ export function useLocations(activeOnly = true) {
       console.error('Failed to update location:', err);
       return failure('Failed to update location');
     }
-  }
+  };
 
-  async function deleteLocation(id: string): Promise<Result<void>> {
+  const deleteLocation = async (id: string): Promise<Result<void>> => {
     try {
       const sessionCount = await db.sessions.where('locationId').equals(id).count();
 
@@ -72,7 +72,7 @@ export function useLocations(activeOnly = true) {
       console.error('Failed to delete location:', err);
       return failure('Failed to delete location');
     }
-  }
+  };
 
   return {
     locations: locations ?? [],

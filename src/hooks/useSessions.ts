@@ -46,7 +46,7 @@ export function useSessions(filters?: SessionFilters) {
     return results;
   }, [filters]);
 
-  async function createSession(input: CreateSessionInput): Promise<Result<ChargingSession>> {
+  const createSession = async (input: CreateSessionInput): Promise<Result<ChargingSession>> => {
     const costCents = Math.round(input.energyKwh * input.ratePerKwh * 100);
 
     const session: ChargingSession = {
@@ -62,12 +62,12 @@ export function useSessions(filters?: SessionFilters) {
       console.error('Failed to create session:', err);
       return failure('Failed to create session');
     }
-  }
+  };
 
-  async function updateSession(
+  const updateSession = async (
     id: string,
     input: UpdateSessionInput
-  ): Promise<Result<ChargingSession>> {
+  ): Promise<Result<ChargingSession>> => {
     try {
       const existing = await db.sessions.get(id);
 
@@ -94,9 +94,9 @@ export function useSessions(filters?: SessionFilters) {
       console.error('Failed to update session:', err);
       return failure('Failed to update session');
     }
-  }
+  };
 
-  async function deleteSession(id: string): Promise<Result<void>> {
+  const deleteSession = async (id: string): Promise<Result<void>> => {
     try {
       await db.sessions.delete(id);
       return success(undefined);
@@ -104,7 +104,7 @@ export function useSessions(filters?: SessionFilters) {
       console.error('Failed to delete session:', err);
       return failure('Failed to delete session');
     }
-  }
+  };
 
   return {
     sessions: sessions ?? [],

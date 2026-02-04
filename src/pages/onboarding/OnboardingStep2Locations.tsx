@@ -1,4 +1,4 @@
-import { useState, useEffect, type FormEvent } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocations } from '../../hooks/useLocations';
 import { Icon } from '../../components/Icon';
 import { Loader2 } from 'lucide-react';
@@ -41,7 +41,7 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
     setError('');
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setIsLoading(true);

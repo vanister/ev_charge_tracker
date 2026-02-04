@@ -11,9 +11,9 @@ export function useSettings() {
     return db.settings.get(DEFAULT_SETTINGS_KEY);
   }, []);
 
-  async function updateSettings(
+  const updateSettings = async (
     updates: Partial<Omit<Settings, 'key'>>
-  ): Promise<Result<Settings>> {
+  ): Promise<Result<Settings>> => {
     try {
       const current = await db.settings.get(DEFAULT_SETTINGS_KEY);
 
@@ -32,11 +32,11 @@ export function useSettings() {
       console.error('Failed to update settings:', err);
       return failure('Failed to update settings');
     }
-  }
+  };
 
-  async function completeOnboarding(): Promise<Result<Settings>> {
+  const completeOnboarding = async (): Promise<Result<Settings>> => {
     return updateSettings({ onboardingComplete: true });
-  }
+  };
 
   return {
     settings: settings,

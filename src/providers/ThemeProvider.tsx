@@ -10,14 +10,14 @@ type ThemeProviderProps = {
 
 const THEME_STORAGE_KEY = 'ev-charge-tracker-theme';
 
-function getSystemTheme(): 'light' | 'dark' {
+const getSystemTheme = (): 'light' | 'dark' => {
   if (typeof window === 'undefined') {
     return 'light';
   }
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
+};
 
-function getStoredTheme(): ThemeMode {
+const getStoredTheme = (): ThemeMode => {
   if (typeof window === 'undefined') {
     return 'system';
   }
@@ -26,9 +26,9 @@ function getStoredTheme(): ThemeMode {
     return stored;
   }
   return 'system';
-}
+};
 
-function applyTheme(theme: ThemeMode, systemTheme: 'light' | 'dark'): void {
+const applyTheme = (theme: ThemeMode, systemTheme: 'light' | 'dark'): void => {
   const root = document.documentElement;
   const isDark = theme === 'dark' || (theme === 'system' && systemTheme === 'dark');
 
@@ -37,7 +37,7 @@ function applyTheme(theme: ThemeMode, systemTheme: 'light' | 'dark'): void {
   } else {
     root.classList.remove('dark');
   }
-}
+};
 
 export function ThemeProvider(props: ThemeProviderProps) {
   const { children } = props;
@@ -49,10 +49,10 @@ export function ThemeProvider(props: ThemeProviderProps) {
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    function handleChange(event: MediaQueryListEvent) {
+    const handleChange = (event: MediaQueryListEvent) => {
       const newSystemTheme = event.matches ? 'dark' : 'light';
       setSystemTheme(newSystemTheme);
-    }
+    };
 
     mediaQuery.addEventListener('change', handleChange);
 
