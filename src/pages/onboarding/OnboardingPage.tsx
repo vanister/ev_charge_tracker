@@ -12,6 +12,7 @@ export function OnboardingPage() {
   const { createVehicle } = useVehicles();
   const { completeOnboarding } = useSettings();
 
+  // todo - move this down to the step 3 component
   async function handleVehicleComplete(vehicleData: {
     name?: string;
     make: string;
@@ -32,6 +33,7 @@ export function OnboardingPage() {
     }
 
     navigate('/', { replace: true });
+
     return { success: true };
   }
 
