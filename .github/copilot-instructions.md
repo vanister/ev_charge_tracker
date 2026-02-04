@@ -19,7 +19,8 @@
 ## Project Rules
 
 - 2-space indent, functional paradigm, pure functions (justify impure)
-- Named function declarations over arrows (unless clarity improves)
+- Arrows functions for compononents and callbacks
+- Named functions for helpers and utilities
 - Arrow functions require parens, destructure objects
 - Components: `export function Component(props: ComponentProps) {...}`
 - Single-purpose components

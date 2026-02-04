@@ -2,6 +2,8 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import type { ThemeMode } from '../types/shared-types';
 
+// todo - clean up this file
+
 type ThemeProviderProps = {
   children: ReactNode;
 };
@@ -63,11 +65,11 @@ export function ThemeProvider(props: ThemeProviderProps) {
     applyTheme(theme, systemTheme);
   }, [theme, systemTheme]);
 
-  async function updateTheme(newTheme: ThemeMode): Promise<void> {
+  const updateTheme = async (newTheme: ThemeMode): Promise<void> => {
     setTheme(newTheme);
     localStorage.setItem(THEME_STORAGE_KEY, newTheme);
     applyTheme(newTheme, systemTheme);
-  }
+  };
 
   return (
     <ThemeContext.Provider value={{ theme, resolvedTheme, updateTheme }}>

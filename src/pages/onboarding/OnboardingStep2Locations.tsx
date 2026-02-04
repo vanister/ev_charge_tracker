@@ -34,14 +34,14 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
     );
   }, [locations, locationForms.length]);
 
-  function handleLocationFormChange(id: string, field: 'name' | 'defaultRate', value: string) {
+  const handleLocationFormChange = (id: string, field: 'name' | 'defaultRate', value: string) => {
     setLocationForms((prev) =>
       prev.map((loc) => (loc.id === id ? { ...loc, [field]: value } : loc))
     );
     setError('');
-  }
+  };
 
-  async function handleSubmit(e: FormEvent) {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     setIsLoading(true);
@@ -70,7 +70,7 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div>

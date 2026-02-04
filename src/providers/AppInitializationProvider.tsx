@@ -27,7 +27,7 @@ export function AppInitializationProvider({
 
     initializing.current = true;
 
-    async function initialize() {
+    const initialize = async () => {
       try {
         await loadSettings(db);
         await seedDefaultLocations(db);
@@ -41,7 +41,7 @@ export function AppInitializationProvider({
       } finally {
         setIsInitialized(true);
       }
-    }
+    };
 
     initialize();
   }, []);

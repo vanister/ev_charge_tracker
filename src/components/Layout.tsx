@@ -35,17 +35,17 @@ export function Layout(props: LayoutProps) {
   const location = useLocation();
   const { theme, updateTheme } = useTheme();
 
-  function toggleMenu() {
+  const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-  }
+  };
 
-  function closeMenu() {
+  const closeMenu = () => {
     setIsMenuOpen(false);
-  }
+  };
 
-  async function handleThemeChange(newTheme: ThemeMode) {
+  const handleThemeChange = async (newTheme: ThemeMode) => {
     await updateTheme(newTheme);
-  }
+  };
 
   return (
     <div className="min-h-screen bg-background">

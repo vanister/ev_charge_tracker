@@ -13,13 +13,13 @@ export function OnboardingPage() {
   const { completeOnboarding } = useSettings();
 
   // todo - move this down to the step 3 component
-  async function handleVehicleComplete(vehicleData: {
+  const handleVehicleComplete = async (vehicleData: {
     name?: string;
     make: string;
     model: string;
     year: number;
     icon: string;
-  }) {
+  }) => {
     const vehicleResult = await createVehicle(vehicleData);
 
     if (!vehicleResult.success) {
@@ -35,7 +35,7 @@ export function OnboardingPage() {
     navigate('/', { replace: true });
 
     return { success: true };
-  }
+  };
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4 py-8">

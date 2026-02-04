@@ -22,7 +22,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>('');
 
-  async function handleSubmit(e: FormEvent) {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     setIsLoading(true);
@@ -47,7 +47,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
       setError('An unexpected error occurred');
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div>
