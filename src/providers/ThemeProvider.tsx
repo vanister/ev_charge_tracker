@@ -1,48 +1,19 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import type { ThemeMode } from '../types/shared-types';
-
-// todo - clean up this file
+import { THEME_STORAGE_KEY } from '../constants';
+import { getSystemTheme, getStoredTheme, applyTheme } from '../utilities/themeUtils';
 
 type ThemeProviderProps = {
   children: ReactNode;
 };
 
-const THEME_STORAGE_KEY = 'ev-charge-tracker-theme';
-
-const getSystemTheme = (): 'light' | 'dark' => {
-  if (typeof window === 'undefined') {
-    return 'light';
-  }
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-};
-
-const getStoredTheme = (): ThemeMode => {
-  if (typeof window === 'undefined') {
-    return 'system';
-  }
-  const stored = localStorage.getItem(THEME_STORAGE_KEY);
-  if (stored === 'light' || stored === 'dark' || stored === 'system') {
-    return stored;
-  }
-  return 'system';
-};
-
-const applyTheme = (theme: ThemeMode, systemTheme: 'light' | 'dark'): void => {
-  const root = document.documentElement;
-  const isDark = theme === 'dark' || (theme === 'system' && systemTheme === 'dark');
-
-  if (isDark) {
-    root.classList.add('dark');
-  } else {
-    root.classList.remove('dark');
-  }
-};
-
 export function ThemeProvider(props: ThemeProviderProps) {
   const { children } = props;
-  const [theme, setTheme] = useState<ThemeMode>(getStoredTheme);
-  const [systemTheme, setSystemTheme] = useState<'light' | 'dark'>(getSystemTheme);
+  const [systemTheme, setSystemTheme] = useState<'light' | 'dark'>(() => getSystemTheme(window));
+  const [theme, setTheme] = useState<ThemeMode>(() =>
+    getStoredTheme(localStorage, THEME_STORAGE_KEY)
+  );
 
   const resolvedTheme: 'light' | 'dark' = theme === 'system' ? systemTheme : theme;
 
@@ -62,13 +33,13 @@ export function ThemeProvider(props: ThemeProviderProps) {
   }, []);
 
   useEffect(() => {
-    applyTheme(theme, systemTheme);
+    applyTheme(document.documentElement, theme, systemTheme);
   }, [theme, systemTheme]);
 
   const updateTheme = async (newTheme: ThemeMode): Promise<void> => {
     setTheme(newTheme);
     localStorage.setItem(THEME_STORAGE_KEY, newTheme);
-    applyTheme(newTheme, systemTheme);
+    applyTheme(document.documentElement, newTheme, systemTheme);
   };
 
   return (
