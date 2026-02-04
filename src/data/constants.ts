@@ -7,22 +7,22 @@ export const DEFAULT_LOCATIONS: Omit<Location, 'id' | 'createdAt' | 'isActive'>[
     name: 'Home',
     icon: 'home',
     color: 'teal',
-    defaultRate: 0.12
+    defaultRate: 0.15
   },
   {
     name: 'Work',
     icon: 'building',
     color: 'slate',
-    defaultRate: 0.0
+    defaultRate: 0.17
   },
   {
     name: 'Other',
     icon: 'map-pin',
     color: 'purple',
-    defaultRate: 0.15
+    defaultRate: 0.11
   },
   {
-    name: 'DC Fast',
+    name: 'DC Fast Charger',
     icon: 'zap',
     color: 'orange',
     defaultRate: 0.35

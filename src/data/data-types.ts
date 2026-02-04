@@ -13,10 +13,10 @@ export type Location = {
 
 export type Vehicle = {
   id: string;
-  name: string;
-  make?: string;
-  model?: string;
-  year?: number;
+  name?: string;
+  make: string;
+  model: string;
+  year: number;
   icon: string;
   createdAt: number;
   isActive: boolean;

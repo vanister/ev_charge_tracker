@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useAppInitialization } from './hooks/useAppInitialization';
+import { useSettings } from './hooks/useSettings';
 import { InitializationLoading } from './components/InitializationLoading';
 import { Layout } from './components/Layout';
 import { ErrorPage } from './pages/ErrorPage';
@@ -8,8 +9,11 @@ import { OnboardingPage } from './pages/OnboardingPage';
 import { Dashboard } from './pages/Dashboard';
 
 export function App() {
-  const { isInitialized, needsOnboarding, error } = useAppInitialization();
+  const { isInitialized, error } = useAppInitialization();
+  const { settings } = useSettings();
   const navigate = useNavigate();
+
+  const needsOnboarding = !settings?.onboardingComplete;
 
   useEffect(() => {
     if (isInitialized && needsOnboarding) {
@@ -23,7 +27,7 @@ export function App() {
     }
   }, [error, navigate]);
 
-  if (!isInitialized) {
+  if (!isInitialized || !settings) {
     return <InitializationLoading />;
   }
 

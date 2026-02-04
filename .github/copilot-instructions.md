@@ -31,7 +31,7 @@
 - No index barrel files
 - Dates handled with date-fns
 - Import ordering: CSS first → external deps → internal deps
-- Run `npm run build` to verify no build errors after changes
+- Run `npm run build` to verify no build errors after major changes
 
 ## Task-Specific Rules
 

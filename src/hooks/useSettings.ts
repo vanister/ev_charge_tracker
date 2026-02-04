@@ -39,7 +39,7 @@ export function useSettings() {
   }
 
   return {
-    settings: settings ?? null,
+    settings: settings,
     updateSettings,
     completeOnboarding
   };

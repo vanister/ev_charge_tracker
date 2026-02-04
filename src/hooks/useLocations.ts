@@ -12,10 +12,10 @@ export function useLocations(activeOnly = true) {
 
   const locations = useLiveQuery(async () => {
     if (activeOnly) {
-      return db.locations.where('isActive').equals(1).sortBy('createdAt');
+      return await db.locations.filter((loc) => loc.isActive).sortBy('createdAt');
     }
 
-    return db.locations.orderBy('createdAt').toArray();
+    return await db.locations.orderBy('createdAt').toArray();
   }, [activeOnly]);
 
   async function createLocation(input: CreateLocationInput): Promise<Result<Location>> {

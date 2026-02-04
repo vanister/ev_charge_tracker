@@ -46,7 +46,7 @@
 
 1. [x] Set up React Router structure
    - Configure routes: /, /onboarding, /sessions, /sessions/add, /sessions/:id/edit, /vehicles, /vehicles/add, /vehicles/:id/edit, /settings
-2. [ ] Create Onboarding flow pages
+2. [x] Create Onboarding flow pages
    - Build 3-step onboarding: Welcome screen, Review/Edit Locations, First vehicle creation
 3. [ ] Build Dashboard page
    - Create main dashboard with stats summary, recent sessions, empty state handling

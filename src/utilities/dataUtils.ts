@@ -26,7 +26,7 @@ export async function seedDefaultLocations(db: EvChargTrackerDb): Promise<void> 
   await db.locations.bulkPut(locations);
 }
 
-export async function getSettings(db: EvChargTrackerDb): Promise<Settings> {
+export async function loadSettings(db: EvChargTrackerDb): Promise<Settings> {
   const existingSettings = await db.settings.get(DEFAULT_SETTINGS_KEY);
 
   if (existingSettings) {
