@@ -5,7 +5,7 @@ import { useSettings } from './hooks/useSettings';
 import { InitializationLoading } from './components/InitializationLoading';
 import { Layout } from './components/Layout';
 import { ErrorPage } from './pages/ErrorPage';
-import { OnboardingPage } from './pages/OnboardingPage';
+import { OnboardingPage } from './pages/onboarding/OnboardingPage';
 import { Dashboard } from './pages/Dashboard';
 
 export function App() {
