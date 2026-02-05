@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
+import { clsx } from 'clsx';
 import { Icon } from './Icon';
 import { useTheme } from '../hooks/useTheme';
 import type { ThemeMode } from '../types/shared-types';
@@ -86,9 +87,14 @@ export function Layout(props: LayoutProps) {
       )}
 
       <nav
-        className={`fixed top-0 left-0 bottom-0 w-4/5 max-w-xs bg-surface z-30 transition-transform duration-300 will-change-transform ${
-          isMenuOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        className={clsx(
+          'fixed top-0 left-0 bottom-0 w-4/5 max-w-xs bg-surface z-30',
+          'transition-transform duration-300 will-change-transform',
+          {
+            'translate-x-0': isMenuOpen,
+            '-translate-x-full': !isMenuOpen
+          }
+        )}
       >
         <div className="h-14 flex items-center justify-between px-4 border-b border-default">
           <h2 className="text-lg font-semibold text-body">Menu</h2>
@@ -116,9 +122,10 @@ export function Layout(props: LayoutProps) {
                 ) : (
                   <Link
                     to={link.path}
-                    className={`flex items-center px-6 py-3 ${
-                      isActive ? 'text-primary bg-primary/10 font-medium' : 'text-body-secondary'
-                    }`}
+                    className={clsx('flex items-center px-6 py-3', {
+                      'text-primary bg-primary/10 font-medium': isActive,
+                      'text-body-secondary': !isActive
+                    })}
                   >
                     <Icon name={link.icon} size="md" className="mr-3" />
                     <span className="text-base">{link.label}</span>
@@ -134,33 +141,39 @@ export function Layout(props: LayoutProps) {
           <div className="grid grid-cols-3 gap-2">
             <button
               onClick={() => handleThemeChange('light')}
-              className={`flex flex-col items-center gap-1 py-2 px-2 rounded-lg transition-colors ${
-                theme === 'light'
-                  ? 'bg-primary text-white'
-                  : 'bg-surface text-body-secondary hover:bg-primary/10'
-              }`}
+              className={clsx(
+                'flex flex-col items-center gap-1 py-2 px-2 rounded-lg transition-colors',
+                {
+                  'bg-primary text-white': theme === 'light',
+                  'bg-surface text-body-secondary hover:bg-primary/10': theme !== 'light'
+                }
+              )}
             >
               <Icon name="sun" size="sm" />
               <span className="text-xs">Light</span>
             </button>
             <button
               onClick={() => handleThemeChange('dark')}
-              className={`flex flex-col items-center gap-1 py-2 px-2 rounded-lg transition-colors ${
-                theme === 'dark'
-                  ? 'bg-primary text-white'
-                  : 'bg-surface text-body-secondary hover:bg-primary/10'
-              }`}
+              className={clsx(
+                'flex flex-col items-center gap-1 py-2 px-2 rounded-lg transition-colors',
+                {
+                  'bg-primary text-white': theme === 'dark',
+                  'bg-surface text-body-secondary hover:bg-primary/10': theme !== 'dark'
+                }
+              )}
             >
               <Icon name="moon" size="sm" />
               <span className="text-xs">Dark</span>
             </button>
             <button
               onClick={() => handleThemeChange('system')}
-              className={`flex flex-col items-center gap-1 py-2 px-2 rounded-lg transition-colors ${
-                theme === 'system'
-                  ? 'bg-primary text-white'
-                  : 'bg-surface text-body-secondary hover:bg-primary/10'
-              }`}
+              className={clsx(
+                'flex flex-col items-center gap-1 py-2 px-2 rounded-lg transition-colors',
+                {
+                  'bg-primary text-white': theme === 'system',
+                  'bg-surface text-body-secondary hover:bg-primary/10': theme !== 'system'
+                }
+              )}
             >
               <Icon name="monitor" size="sm" />
               <span className="text-xs">System</span>

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useLocations } from '../../hooks/useLocations';
 import { Icon } from '../../components/Icon';
-import { Loader2 } from 'lucide-react';
 import { OnboardingHeader } from './OnboardingHeader';
+import { OnboardingNavigationButtons } from './OnboardingNavigationButtons';
 
 type LocationFormData = {
   id: string;
@@ -150,29 +150,12 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
           </div>
         )}
 
-        <div className="flex justify-between gap-3">
-          <button
-            type="button"
-            onClick={props.onBack}
-            disabled={isLoading}
-            className="px-6 py-3 bg-surface text-body border border-default rounded-lg
-              font-medium hover:bg-background transition-colors disabled:opacity-50
-              disabled:cursor-not-allowed"
-          >
-            Back
-          </button>
-
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="px-6 py-3 bg-primary text-white rounded-lg font-medium
-              hover:bg-primary/90 transition-colors disabled:opacity-50
-              disabled:cursor-not-allowed flex items-center justify-center gap-2"
-          >
-            {isLoading && <Loader2 className="w-5 h-5 animate-spin" />}
-            {isLoading ? 'Saving...' : 'Continue'}
-          </button>
-        </div>
+        <OnboardingNavigationButtons
+          onBack={props.onBack}
+          continueLabel="Continue"
+          isLoading={isLoading}
+          loadingLabel="Saving..."
+        />
       </form>
     </div>
   );

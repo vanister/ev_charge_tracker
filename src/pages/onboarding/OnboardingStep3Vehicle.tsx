@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Loader2 } from 'lucide-react';
 import { useVehicles } from '../../hooks/useVehicles';
 import { OnboardingHeader } from './OnboardingHeader';
+import { OnboardingNavigationButtons } from './OnboardingNavigationButtons';
 
 type OnboardingStep3VehicleProps = {
   onBack: () => void;
@@ -73,25 +73,12 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
           ))}
         </div>
 
-        <div className="flex justify-between gap-3 pt-2">
-          <button
-            type="button"
-            onClick={props.onBack}
-            className="px-6 py-3 bg-surface text-body border border-default rounded-lg
-              font-medium hover:bg-background transition-colors"
-          >
-            Back
-          </button>
-
-          <button
-            type="button"
-            onClick={props.onComplete}
-            className="px-6 py-3 bg-primary text-white rounded-lg font-medium
-              hover:bg-primary/90 transition-colors"
-          >
-            Continue
-          </button>
-        </div>
+        <OnboardingNavigationButtons
+          onBack={props.onBack}
+          continueLabel="Continue"
+          continueType="button"
+          onContinue={props.onComplete}
+        />
       </div>
     );
   }
@@ -182,29 +169,12 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
           </div>
         )}
 
-        <div className="flex justify-between gap-3 pt-2">
-          <button
-            type="button"
-            onClick={props.onBack}
-            disabled={isLoading}
-            className="px-6 py-3 bg-surface text-body border border-default rounded-lg
-              font-medium hover:bg-background transition-colors disabled:opacity-50
-              disabled:cursor-not-allowed"
-          >
-            Back
-          </button>
-
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="px-6 py-3 bg-primary text-white rounded-lg font-medium
-              hover:bg-primary/90 transition-colors disabled:opacity-50
-              disabled:cursor-not-allowed flex items-center justify-center gap-2"
-          >
-            {isLoading && <Loader2 className="w-5 h-5 animate-spin" />}
-            {isLoading ? 'Creating...' : 'Create Vehicle'}
-          </button>
-        </div>
+        <OnboardingNavigationButtons
+          onBack={props.onBack}
+          continueLabel="Create Vehicle"
+          isLoading={isLoading}
+          loadingLabel="Creating..."
+        />
       </form>
     </div>
   );
