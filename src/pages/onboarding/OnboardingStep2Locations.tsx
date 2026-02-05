@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocations } from '../../hooks/useLocations';
 import { Icon } from '../../components/Icon';
 import { Loader2 } from 'lucide-react';
+import { OnboardingHeader } from './OnboardingHeader';
 
 type LocationFormData = {
   id: string;
@@ -74,12 +75,10 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
 
   return (
     <div>
-      <div className="mb-6 text-center">
-        <h2 className="text-2xl sm:text-3xl font-bold text-body mb-3">Review Charging Locations</h2>
-        <p className="text-base text-body-secondary">
-          We've added common charging locations. Customize the names and rates to match your needs.
-        </p>
-      </div>
+      <OnboardingHeader
+        title="Review Charging Locations"
+        description="We've added common charging locations. Customize the names and rates to match your needs."
+      />
 
       <form onSubmit={handleSubmit}>
         <div className="space-y-4 mb-6">

@@ -1,3 +1,5 @@
+import { OnboardingHeader } from './OnboardingHeader';
+
 type OnboardingStep1WelcomeProps = {
   onContinue: () => void;
 };
@@ -5,16 +7,11 @@ type OnboardingStep1WelcomeProps = {
 export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
   return (
     <div className="text-center">
-      <div className="mb-6">
-        <h1 className="text-3xl sm:text-4xl font-bold text-body mb-4">EV Charge Tracker</h1>
-        <p className="text-lg text-body-secondary mb-3">
-          Track your electric vehicle charging sessions with ease.
-        </p>
-        <p className="text-base text-body-tertiary">
-          Work completely offline, manage multiple vehicles, and analyze your charging costs across
-          different locations.
-        </p>
-      </div>
+      <OnboardingHeader
+        title="EV Charge Tracker"
+        description="Track your electric vehicle charging sessions with ease."
+        subDescription="Work completely offline, manage multiple vehicles, and analyze your charging costs across different locations."
+      />
 
       <button
         onClick={props.onContinue}

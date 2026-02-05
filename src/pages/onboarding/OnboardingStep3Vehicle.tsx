@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { useVehicles } from '../../hooks/useVehicles';
+import { OnboardingHeader } from './OnboardingHeader';
 
 type OnboardingStep3VehicleProps = {
   onBack: () => void;
@@ -46,13 +47,10 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
   if (hasVehicles) {
     return (
       <div>
-        <div className="mb-6 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-body mb-3">Vehicles Ready</h2>
-          <p className="text-base text-body-secondary">
-            You already have {vehicles.length} vehicle{vehicles.length > 1 ? 's' : ''} in your
-            garage.
-          </p>
-        </div>
+        <OnboardingHeader
+          title="Vehicles Ready"
+          description={`You already have ${vehicles.length} vehicle${vehicles.length > 1 ? 's' : ''} in your garage.`}
+        />
 
         <div className="space-y-3 mb-6">
           {vehicles.map((vehicle) => (
@@ -100,12 +98,10 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
 
   return (
     <div>
-      <div className="mb-6 text-center">
-        <h2 className="text-2xl sm:text-3xl font-bold text-body mb-3">Add Your Vehicle</h2>
-        <p className="text-base text-body-secondary">
-          Let's add your first electric vehicle to start tracking charges.
-        </p>
-      </div>
+      <OnboardingHeader
+        title="Add Your Vehicle"
+        description="Let's add your first electric vehicle to start tracking charges."
+      />
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-8 gap-4">
