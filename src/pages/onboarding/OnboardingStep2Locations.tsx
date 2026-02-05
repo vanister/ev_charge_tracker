@@ -151,7 +151,7 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
           </div>
         )}
 
-        <div className="flex gap-3">
+        <div className="flex justify-between gap-3">
           <button
             type="button"
             onClick={props.onBack}
@@ -166,7 +166,7 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
           <button
             type="submit"
             disabled={isLoading}
-            className="flex-1 px-6 py-3 bg-primary text-white rounded-lg font-medium
+            className="px-6 py-3 bg-primary text-white rounded-lg font-medium
               hover:bg-primary/90 transition-colors disabled:opacity-50
               disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >

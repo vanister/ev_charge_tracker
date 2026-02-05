@@ -4,6 +4,8 @@ import { Icon } from './Icon';
 import { useTheme } from '../hooks/useTheme';
 import type { ThemeMode } from '../types/shared-types';
 
+// todo - clean this up!
+
 type ActionButton = {
   label: string;
   onClick: () => void;

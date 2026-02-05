@@ -1,18 +1,18 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useSettings } from '../../hooks/useSettings';
 import { OnboardingStep1Welcome } from './OnboardingStep1Welcome';
 import { OnboardingStep2Locations } from './OnboardingStep2Locations';
 import { OnboardingStep3Vehicle } from './OnboardingStep3Vehicle';
+import { useNavigate } from 'react-router-dom';
 
 export function OnboardingPage() {
-  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const { completeOnboarding } = useSettings();
+  const navigate = useNavigate();
 
   const handleComplete = async () => {
     await completeOnboarding();
-    await navigate('/', { replace: true });
+    await navigate('/', { replace: true }); // Redirect to main app after onboarding
   };
 
   return (

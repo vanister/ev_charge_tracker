@@ -47,7 +47,6 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
     return (
       <div>
         <div className="mb-6 text-center">
-          <div className="text-5xl mb-4">✅</div>
           <h2 className="text-2xl sm:text-3xl font-bold text-body mb-3">Vehicles Ready</h2>
           <p className="text-base text-body-secondary">
             You already have {vehicles.length} vehicle{vehicles.length > 1 ? 's' : ''} in your
@@ -76,7 +75,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
           ))}
         </div>
 
-        <div className="flex gap-3 pt-2">
+        <div className="flex justify-between gap-3 pt-2">
           <button
             type="button"
             onClick={props.onBack}
@@ -89,7 +88,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
           <button
             type="button"
             onClick={props.onComplete}
-            className="flex-1 px-6 py-3 bg-primary text-white rounded-lg font-medium
+            className="px-6 py-3 bg-primary text-white rounded-lg font-medium
               hover:bg-primary/90 transition-colors"
           >
             Continue
@@ -102,7 +101,6 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
   return (
     <div>
       <div className="mb-6 text-center">
-        <div className="text-5xl mb-4">🚗</div>
         <h2 className="text-2xl sm:text-3xl font-bold text-body mb-3">Add Your Vehicle</h2>
         <p className="text-base text-body-secondary">
           Let's add your first electric vehicle to start tracking charges.
@@ -188,7 +186,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
           </div>
         )}
 
-        <div className="flex gap-3 pt-2">
+        <div className="flex justify-between gap-3 pt-2">
           <button
             type="button"
             onClick={props.onBack}
@@ -203,7 +201,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
           <button
             type="submit"
             disabled={isLoading}
-            className="flex-1 px-6 py-3 bg-primary text-white rounded-lg font-medium
+            className="px-6 py-3 bg-primary text-white rounded-lg font-medium
               hover:bg-primary/90 transition-colors disabled:opacity-50
               disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
