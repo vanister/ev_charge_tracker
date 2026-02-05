@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useAppInitialization } from './hooks/useAppInitialization';
-import { InitializationLoading } from './components/InitializationLoading';
+import { FullscreenLoader } from './components/FullscreenLoader';
 import { RequireOnboarding } from './components/RequireOnboarding';
 import { Layout } from './components/Layout';
 import { ErrorPage } from './pages/ErrorPage';
@@ -19,7 +19,7 @@ export function App() {
   }, [error, isInitialized, navigate]);
 
   if (!isInitialized) {
-    return <InitializationLoading />;
+    return <FullscreenLoader />;
   }
 
   return (

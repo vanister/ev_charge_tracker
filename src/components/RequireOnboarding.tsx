@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useSettings } from '../hooks/useSettings';
-import { InitializationLoading } from './InitializationLoading';
+import { FullscreenLoader } from './FullscreenLoader';
 
 export function RequireOnboarding() {
   const { settings } = useSettings();
@@ -18,7 +18,7 @@ export function RequireOnboarding() {
   }, [navigate, settings]);
 
   if (!settings?.onboardingComplete) {
-    return <InitializationLoading />;
+    return <FullscreenLoader />;
   }
 
   return <Outlet />;
