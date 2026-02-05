@@ -30,9 +30,9 @@ export const DEFAULT_LOCATIONS: Omit<Location, 'id' | 'createdAt' | 'isActive'>[
 ];
 
 export const DEFAULT_VEHICLE_ICON = 'car';
-export const DEFAULT_SETTINGS_KEY = 'app-settings';
+export const SETTINGS_KEY = 'app-settings';
 
 export const DEFAULT_SETTINGS: Settings = {
-  key: DEFAULT_SETTINGS_KEY,
+  key: SETTINGS_KEY,
   onboardingComplete: false
 };

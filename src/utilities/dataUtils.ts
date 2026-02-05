@@ -1,4 +1,4 @@
-import { DEFAULT_LOCATIONS, DEFAULT_SETTINGS, DEFAULT_SETTINGS_KEY } from '../data/constants';
+import { DEFAULT_LOCATIONS, DEFAULT_SETTINGS, SETTINGS_KEY } from '../data/constants';
 import type { EvChargTrackerDb, Location, Settings } from '../data/data-types';
 
 export function generateId(generator: Crypto = crypto): string {
@@ -20,14 +20,14 @@ export async function seedDefaultLocations(db: EvChargTrackerDb): Promise<void> 
     color,
     defaultRate,
     createdAt: now,
-    isActive: true
+    isActive: 1
   }));
 
   await db.locations.bulkPut(locations);
 }
 
 export async function loadSettings(db: EvChargTrackerDb): Promise<Settings> {
-  const existingSettings = await db.settings.get(DEFAULT_SETTINGS_KEY);
+  const existingSettings = await db.settings.get(SETTINGS_KEY);
 
   if (existingSettings) {
     return existingSettings;

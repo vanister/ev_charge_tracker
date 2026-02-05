@@ -13,19 +13,21 @@ export function App() {
   const { settings } = useSettings();
   const navigate = useNavigate();
 
-  const needsOnboarding = !settings?.onboardingComplete;
-
   useEffect(() => {
-    if (isInitialized && needsOnboarding) {
+    if (!isInitialized || !settings) {
+      return;
+    }
+
+    if (!settings.onboardingComplete) {
       navigate('/onboarding', { replace: true });
     }
-  }, [isInitialized, needsOnboarding, navigate]);
+  }, [isInitialized, settings, navigate]);
 
   useEffect(() => {
-    if (error) {
+    if (isInitialized && error) {
       navigate('/error', { replace: true, state: { error } });
     }
-  }, [error, navigate]);
+  }, [error, isInitialized, navigate]);
 
   if (!isInitialized || !settings) {
     return <InitializationLoading />;

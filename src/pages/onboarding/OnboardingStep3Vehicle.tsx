@@ -1,20 +1,14 @@
-import { useState, type FormEvent } from 'react';
+import { useState } from 'react';
 import { Loader2 } from 'lucide-react';
-
-type VehicleData = {
-  name?: string;
-  make: string;
-  model: string;
-  year: number;
-  icon: string;
-};
+import { useVehicles } from '../../hooks/useVehicles';
 
 type OnboardingStep3VehicleProps = {
   onBack: () => void;
-  onComplete: (vehicleData: VehicleData) => Promise<{ success: boolean; error?: string }>;
+  onComplete: () => Promise<void>;
 };
 
 export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
+  const { createVehicle, vehicles } = useVehicles();
   const [vehicleName, setVehicleName] = useState('');
   const [vehicleMake, setVehicleMake] = useState('');
   const [vehicleModel, setVehicleModel] = useState('');
@@ -22,13 +16,15 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>('');
 
-  const handleSubmit = async (e: FormEvent) => {
+  const hasVehicles = vehicles && vehicles.length > 0;
+
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
 
     setIsLoading(true);
     setError('');
 
-    const vehicleData: VehicleData = {
+    const vehicleData = {
       name: vehicleName.trim() || undefined,
       make: vehicleMake.trim(),
       model: vehicleModel.trim(),
@@ -36,18 +32,72 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
       icon: '🚗'
     };
 
-    try {
-      const result = await props.onComplete(vehicleData);
+    const result = await createVehicle(vehicleData);
 
-      if (!result.success) {
-        setError(result.error || 'Failed to complete setup');
-        setIsLoading(false);
-      }
-    } catch {
-      setError('An unexpected error occurred');
+    if (!result.success) {
+      setError(result.error || 'Failed to create vehicle');
       setIsLoading(false);
+      return;
     }
+
+    await props.onComplete();
   };
+
+  if (hasVehicles) {
+    return (
+      <div>
+        <div className="mb-6 text-center">
+          <div className="text-5xl mb-4">✅</div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-body mb-3">Vehicles Ready</h2>
+          <p className="text-base text-body-secondary">
+            You already have {vehicles.length} vehicle{vehicles.length > 1 ? 's' : ''} in your
+            garage.
+          </p>
+        </div>
+
+        <div className="space-y-3 mb-6">
+          {vehicles.map((vehicle) => (
+            <div
+              key={vehicle.id}
+              className="p-4 bg-surface border border-default rounded-lg flex items-center gap-3"
+            >
+              <div className="text-3xl">{vehicle.icon}</div>
+              <div className="flex-1">
+                <div className="font-medium text-body">
+                  {vehicle.name || `${vehicle.year} ${vehicle.make} ${vehicle.model}`}
+                </div>
+                {vehicle.name && (
+                  <div className="text-sm text-body-secondary">
+                    {vehicle.year} {vehicle.make} {vehicle.model}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex gap-3 pt-2">
+          <button
+            type="button"
+            onClick={props.onBack}
+            className="px-6 py-3 bg-surface text-body border border-default rounded-lg
+              font-medium hover:bg-background transition-colors"
+          >
+            Back
+          </button>
+
+          <button
+            type="button"
+            onClick={props.onComplete}
+            className="flex-1 px-6 py-3 bg-primary text-white rounded-lg font-medium
+              hover:bg-primary/90 transition-colors"
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -60,25 +110,28 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="vehicle-name" className="block text-sm font-medium text-body mb-1">
-            Vehicle Name
-          </label>
-          <input
-            id="vehicle-name"
-            type="text"
-            value={vehicleName}
-            onChange={(e) => setVehicleName(e.target.value)}
-            className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-              text-body placeholder-body-tertiary focus:outline-none
-              focus:ring-2 focus:ring-primary focus:border-transparent"
-            placeholder="My EV (optional)"
-            autoFocus
-          />
-        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-8 gap-4">
+          <div className="sm:col-span-2">
+            <label htmlFor="vehicle-year" className="block text-sm font-medium text-body mb-1">
+              Year <span className="text-red-500">*</span>
+            </label>
+            <input
+              id="vehicle-year"
+              type="number"
+              min="1900"
+              max="2100"
+              required
+              value={vehicleYear}
+              onChange={(e) => setVehicleYear(e.target.value)}
+              className="w-full px-3 py-2 bg-surface border border-default rounded-lg
+                text-body placeholder-body-tertiary focus:outline-none
+                focus:ring-2 focus:ring-primary focus:border-transparent"
+              placeholder="2024"
+              autoFocus
+            />
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
+          <div className="sm:col-span-3">
             <label htmlFor="vehicle-make" className="block text-sm font-medium text-body mb-1">
               Make <span className="text-red-500">*</span>
             </label>
@@ -95,7 +148,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
             />
           </div>
 
-          <div>
+          <div className="sm:col-span-3">
             <label htmlFor="vehicle-model" className="block text-sm font-medium text-body mb-1">
               Model <span className="text-red-500">*</span>
             </label>
@@ -114,21 +167,18 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
         </div>
 
         <div>
-          <label htmlFor="vehicle-year" className="block text-sm font-medium text-body mb-1">
-            Year <span className="text-red-500">*</span>
+          <label htmlFor="vehicle-name" className="block text-sm font-medium text-body mb-1">
+            Vehicle Name
           </label>
           <input
-            id="vehicle-year"
-            type="number"
-            min="1900"
-            max="2100"
-            required
-            value={vehicleYear}
-            onChange={(e) => setVehicleYear(e.target.value)}
+            id="vehicle-name"
+            type="text"
+            value={vehicleName}
+            onChange={(e) => setVehicleName(e.target.value)}
             className="w-full px-3 py-2 bg-surface border border-default rounded-lg
               text-body placeholder-body-tertiary focus:outline-none
               focus:ring-2 focus:ring-primary focus:border-transparent"
-            placeholder="2024"
+            placeholder="My EV (optional)"
           />
         </div>
 

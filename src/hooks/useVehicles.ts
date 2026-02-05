@@ -25,7 +25,7 @@ export function useVehicles(activeOnly = true) {
       icon: input.icon ?? DEFAULT_VEHICLE_ICON,
       id: generateId(),
       createdAt: Date.now(),
-      isActive: true
+      isActive: 1
     };
 
     try {
@@ -63,7 +63,7 @@ export function useVehicles(activeOnly = true) {
         return failure(`Cannot delete vehicle with ${sessionCount} existing sessions`);
       }
 
-      const result = await updateVehicle(id, { isActive: false });
+      const result = await updateVehicle(id, { isActive: 0 });
 
       if (!result.success) {
         return failure(result.error);

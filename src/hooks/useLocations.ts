@@ -12,7 +12,7 @@ export function useLocations(activeOnly = true) {
 
   const locations = useLiveQuery(async () => {
     if (activeOnly) {
-      return await db.locations.filter((loc) => loc.isActive).sortBy('createdAt');
+      return await db.locations.where('isActive').equals(1).sortBy('createdAt');
     }
 
     return await db.locations.orderBy('createdAt').toArray();
@@ -23,7 +23,7 @@ export function useLocations(activeOnly = true) {
       ...loc,
       id: generateId(),
       createdAt: Date.now(),
-      isActive: true
+      isActive: 1
     };
 
     try {
@@ -61,7 +61,7 @@ export function useLocations(activeOnly = true) {
         return failure(`Cannot delete location with ${sessionCount} existing sessions`);
       }
 
-      const result = await updateLocation(id, { isActive: false });
+      const result = await updateLocation(id, { isActive: 0 });
 
       if (!result.success) {
         return failure(result.error);

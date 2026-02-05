@@ -8,7 +8,7 @@ export type Location = {
   color: string;
   defaultRate: number;
   createdAt: number;
-  isActive: boolean;
+  isActive: 0 | 1;
 };
 
 export type Vehicle = {
@@ -19,7 +19,7 @@ export type Vehicle = {
   year: number;
   icon: string;
   createdAt: number;
-  isActive: boolean;
+  isActive: 0 | 1;
 };
 
 export type ChargingSession = {

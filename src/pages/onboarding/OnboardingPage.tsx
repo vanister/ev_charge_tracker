@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useVehicles } from '../../hooks/useVehicles';
 import { useSettings } from '../../hooks/useSettings';
 import { OnboardingStep1Welcome } from './OnboardingStep1Welcome';
 import { OnboardingStep2Locations } from './OnboardingStep2Locations';
@@ -9,32 +8,11 @@ import { OnboardingStep3Vehicle } from './OnboardingStep3Vehicle';
 export function OnboardingPage() {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
-  const { createVehicle } = useVehicles();
   const { completeOnboarding } = useSettings();
 
-  // todo - move this down to the step 3 component
-  const handleVehicleComplete = async (vehicleData: {
-    name?: string;
-    make: string;
-    model: string;
-    year: number;
-    icon: string;
-  }) => {
-    const vehicleResult = await createVehicle(vehicleData);
-
-    if (!vehicleResult.success) {
-      return { success: false, error: vehicleResult.error || 'Failed to create vehicle' };
-    }
-
-    const onboardingResult = await completeOnboarding();
-
-    if (!onboardingResult.success) {
-      return { success: false, error: onboardingResult.error || 'Failed to complete onboarding' };
-    }
-
-    navigate('/', { replace: true });
-
-    return { success: true };
+  const handleComplete = async () => {
+    await completeOnboarding();
+    await navigate('/', { replace: true });
   };
 
   return (
@@ -58,10 +36,7 @@ export function OnboardingPage() {
 
         {/* Step 3: Create First Vehicle */}
         {currentStep === 3 && (
-          <OnboardingStep3Vehicle
-            onBack={() => setCurrentStep(2)}
-            onComplete={handleVehicleComplete}
-          />
+          <OnboardingStep3Vehicle onBack={() => setCurrentStep(2)} onComplete={handleComplete} />
         )}
       </div>
     </div>

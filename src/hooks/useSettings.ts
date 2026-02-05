@@ -1,21 +1,21 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useDatabase } from './useDatabase';
 import type { Settings } from '../data/data-types';
-import { DEFAULT_SETTINGS_KEY } from '../data/constants';
+import { SETTINGS_KEY } from '../data/constants';
 import { success, failure, type Result } from '../utilities/resultUtils';
 
 export function useSettings() {
   const { db } = useDatabase();
 
   const settings = useLiveQuery(async () => {
-    return db.settings.get(DEFAULT_SETTINGS_KEY);
-  }, []);
+    return db.settings.get(SETTINGS_KEY);
+  });
 
   const updateSettings = async (
     updates: Partial<Omit<Settings, 'key'>>
   ): Promise<Result<Settings>> => {
     try {
-      const current = await db.settings.get(DEFAULT_SETTINGS_KEY);
+      const current = await db.settings.get(SETTINGS_KEY);
 
       if (!current) {
         return failure('Settings not found');
@@ -39,7 +39,7 @@ export function useSettings() {
   };
 
   return {
-    settings: settings,
+    settings,
     updateSettings,
     completeOnboarding
   };
