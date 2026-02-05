@@ -172,8 +172,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
         <OnboardingNavigationButtons
           onBack={props.onBack}
           continueLabel="Create Vehicle"
-          isLoading={isLoading}
-          loadingLabel="Creating..."
+          disabled={isLoading}
         />
       </form>
     </div>

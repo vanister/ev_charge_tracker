@@ -6,26 +6,16 @@ type OnboardingNavigationButtonsProps = {
   continueLabel: string;
   continueType?: 'button' | 'submit';
   onContinue?: () => void;
-  isLoading?: boolean;
-  loadingLabel?: string;
   disabled?: boolean;
 };
 
 export function OnboardingNavigationButtons(props: OnboardingNavigationButtonsProps) {
-  const {
-    onBack,
-    continueLabel,
-    continueType = 'submit',
-    onContinue,
-    isLoading = false,
-    loadingLabel,
-    disabled = false
-  } = props;
+  const { onBack, continueLabel, continueType = 'submit', onContinue, disabled = false } = props;
 
   return (
     <div className="flex justify-between gap-3">
       {onBack && (
-        <Button variant="secondary" onClick={onBack} disabled={isLoading}>
+        <Button variant="secondary" onClick={onBack} disabled={disabled}>
           Back
         </Button>
       )}
@@ -33,8 +23,6 @@ export function OnboardingNavigationButtons(props: OnboardingNavigationButtonsPr
         variant="primary"
         type={continueType}
         onClick={onContinue}
-        isLoading={isLoading}
-        loadingText={loadingLabel}
         disabled={disabled}
         className={clsx(!onBack && 'ml-auto')}
       >

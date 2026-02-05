@@ -153,8 +153,7 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
         <OnboardingNavigationButtons
           onBack={props.onBack}
           continueLabel="Continue"
-          isLoading={isLoading}
-          loadingLabel="Saving..."
+          disabled={isLoading}
         />
       </form>
     </div>
