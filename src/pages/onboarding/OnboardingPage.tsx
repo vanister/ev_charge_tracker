@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSettings } from '../../hooks/useSettings';
+import { OnboardingStepIndicator } from './OnboardingStepIndicator';
 import { OnboardingStep1Welcome } from './OnboardingStep1Welcome';
 import { OnboardingStep2Locations } from './OnboardingStep2Locations';
 import { OnboardingStep3Vehicle } from './OnboardingStep3Vehicle';
@@ -17,12 +18,9 @@ export function OnboardingPage() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4 py-8">
-      <div className="max-w-2xl w-full pb-32">
-        {/* Step indicator */}
-        <div className="mb-6">
-          <p className="text-sm text-body-secondary text-center">Step {currentStep} of 3</p>
-        </div>
+      <OnboardingStepIndicator currentStep={currentStep} totalSteps={3} />
 
+      <div className="max-w-2xl w-full pt-16 pb-32">
         {/* Step 1: Welcome */}
         {currentStep === 1 && <OnboardingStep1Welcome onContinue={() => setCurrentStep(2)} />}
 
