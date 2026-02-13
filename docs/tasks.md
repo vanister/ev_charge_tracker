@@ -70,10 +70,6 @@ The foundation is complete! Next priorities:
    - Configure routes: /, /onboarding, /sessions, /sessions/add, /sessions/:id/edit, /vehicles, /vehicles/add, /vehicles/:id/edit, /settings
 2. [x] Create Onboarding flow pages
    - Build 3-step onboarding: Welcome screen, Review/Edit Locations, First vehicle creation
-3. [ ] Build Dashboard page
-   - Create main dashboard with stats summary, recent sessions, empty state handling
-   - Implement useStats hook
-   - Create hook to compute totalKwh, totalCost, avgRate, byLocation (with names), byDate from sessions
 4. [ ] Build SessionsList page
    - Create sessions list with filters, sorting, empty states, edit/delete actions
 5. [ ] Build SessionForm component
@@ -82,7 +78,11 @@ The foundation is complete! Next priorities:
    - Create vehicles list with add/edit/delete actions, handle deletion validation
 7. [ ] Build VehicleForm component
    - Create form for adding/editing vehicles with emoji icon picker
-8. [ ] Build Settings page
+8. [ ] Build Dashboard page
+   - Create main dashboard with stats summary, recent sessions, empty state handling
+   - Implement useStats hook
+   - Create hook to compute totalKwh, totalCost, avgRate, byLocation (with names), byDate from sessions
+9. [ ] Build Settings page
    - Create settings page with locations management section (add/edit/delete locations), storage info (navigator.storage.estimate), app info
 
 ## 5. UI Components
