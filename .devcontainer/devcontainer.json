@@ -1,0 +1,28 @@
+{
+  "name": "React Frontend",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:24",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Anthropic.claude-code",
+        "dbaeumer.vscode-eslint",
+        "GitHub.copilot-chat",
+        "yzhang.markdown-all-in-one",
+        "esbenp.prettier-vscode",
+        "vitest.explorer",
+        "vscode-icons-team.vscode-icons"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 2,
+        "files.watcherExclude": {
+          "**/node_modules/**": true,
+          "**/.git/**": true
+        },
+        "workbench.iconTheme": "vscode-icons"
+      }
+    }
+  },
+  "postCreateCommand": "npm install"
+}
