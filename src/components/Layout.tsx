@@ -122,6 +122,7 @@ export function Layout(props: LayoutProps) {
                 ) : (
                   <Link
                     to={link.path}
+                    onClick={closeMenu}
                     className={clsx('flex items-center px-6 py-3', {
                       'text-primary bg-primary/10 font-medium': isActive,
                       'text-body-secondary': !isActive
