@@ -11,7 +11,12 @@ import {
   Settings,
   Sun,
   Moon,
-  Monitor
+  Monitor,
+  Edit,
+  Trash2,
+  Calendar,
+  Filter,
+  ChevronDown
 } from 'lucide-react';
 
 export type IconName =
@@ -27,7 +32,12 @@ export type IconName =
   | 'settings'
   | 'sun'
   | 'moon'
-  | 'monitor';
+  | 'monitor'
+  | 'edit'
+  | 'trash-2'
+  | 'calendar'
+  | 'filter'
+  | 'chevron-down';
 
 type IconSize = 'sm' | 'md' | 'lg';
 
@@ -85,6 +95,16 @@ export function Icon(props: IconProps) {
       return <Moon className={combinedClassName} />;
     case 'monitor':
       return <Monitor className={combinedClassName} />;
+    case 'edit':
+      return <Edit className={combinedClassName} />;
+    case 'trash-2':
+      return <Trash2 className={combinedClassName} />;
+    case 'calendar':
+      return <Calendar className={combinedClassName} />;
+    case 'filter':
+      return <Filter className={combinedClassName} />;
+    case 'chevron-down':
+      return <ChevronDown className={combinedClassName} />;
     default:
       return null;
   }

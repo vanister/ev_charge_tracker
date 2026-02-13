@@ -27,7 +27,7 @@ type NavLink = {
 
 const navLinks: NavLink[] = [
   { path: '/', label: 'Dashboard', icon: 'home' },
-  { path: '/sessions', label: 'Sessions', icon: 'zap', disabled: true },
+  { path: '/sessions', label: 'Sessions', icon: 'zap' },
   { path: '/vehicles', label: 'Vehicles', icon: 'car', disabled: true },
   { path: '/settings', label: 'Settings', icon: 'settings', disabled: true }
 ];

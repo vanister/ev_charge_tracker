@@ -7,6 +7,7 @@ import { Layout } from './components/Layout';
 import { ErrorPage } from './pages/ErrorPage';
 import { OnboardingPage } from './pages/onboarding/OnboardingPage';
 import { Dashboard } from './pages/Dashboard';
+import { SessionsList } from './pages/sessions/SessionsList';
 
 export function App() {
   const { isInitialized, error } = useAppInitialization();
@@ -32,10 +33,11 @@ export function App() {
           <Route index element={<Dashboard />} />
         </Route>
 
-        {/* TODO: Implement Sessions routes
-          <Route path="/sessions" element={<Layout title="Sessions" />}>
-            <Route index element={<SessionsListPage />} />
-          </Route>
+        <Route path="/sessions" element={<Layout title="Sessions" />}>
+          <Route index element={<SessionsList />} />
+        </Route>
+
+        {/* TODO: Implement Session Form routes
           <Route path="/sessions/add" element={<Layout title="Add Session" />}>
             <Route index element={<SessionFormPage />} />
           </Route>
