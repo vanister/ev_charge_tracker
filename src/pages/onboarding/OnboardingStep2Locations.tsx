@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocations } from '../../hooks/useLocations';
 import { Icon } from '../../components/Icon';
 import { OnboardingHeader } from './OnboardingHeader';
+import { OnboardingFooter } from './OnboardingFooter';
 import { OnboardingNavigationButtons } from './OnboardingNavigationButtons';
 
 type LocationFormData = {
@@ -150,11 +151,13 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
           </div>
         )}
 
-        <OnboardingNavigationButtons
-          onBack={props.onBack}
-          continueLabel="Continue"
-          disabled={isLoading}
-        />
+        <OnboardingFooter>
+          <OnboardingNavigationButtons
+            onBack={props.onBack}
+            continueLabel="Continue"
+            disabled={isLoading}
+          />
+        </OnboardingFooter>
       </form>
     </div>
   );

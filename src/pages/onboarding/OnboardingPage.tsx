@@ -17,7 +17,7 @@ export function OnboardingPage() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4 py-8">
-      <div className="max-w-2xl w-full">
+      <div className="max-w-2xl w-full pb-32">
         {/* Step indicator */}
         <div className="mb-6">
           <p className="text-sm text-body-secondary text-center">Step {currentStep} of 3</p>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useVehicles } from '../../hooks/useVehicles';
 import { OnboardingHeader } from './OnboardingHeader';
+import { OnboardingFooter } from './OnboardingFooter';
 import { OnboardingNavigationButtons } from './OnboardingNavigationButtons';
 
 type OnboardingStep3VehicleProps = {
@@ -73,12 +74,14 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
           ))}
         </div>
 
-        <OnboardingNavigationButtons
-          onBack={props.onBack}
-          continueLabel="Continue"
-          continueType="button"
-          onContinue={props.onComplete}
-        />
+        <OnboardingFooter>
+          <OnboardingNavigationButtons
+            onBack={props.onBack}
+            continueLabel="Continue"
+            continueType="button"
+            onContinue={props.onComplete}
+          />
+        </OnboardingFooter>
       </div>
     );
   }
@@ -169,11 +172,13 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
           </div>
         )}
 
-        <OnboardingNavigationButtons
-          onBack={props.onBack}
-          continueLabel="Create Vehicle"
-          disabled={isLoading}
-        />
+        <OnboardingFooter>
+          <OnboardingNavigationButtons
+            onBack={props.onBack}
+            continueLabel="Create Vehicle"
+            disabled={isLoading}
+          />
+        </OnboardingFooter>
       </form>
     </div>
   );
