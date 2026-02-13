@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useVehicles } from '../../hooks/useVehicles';
-import { OnboardingHeader } from './OnboardingHeader';
+import { OnboardingPageHeader } from './OnboardingPageHeader';
 import { OnboardingFooter } from './OnboardingFooter';
 import { OnboardingNavigationButtons } from './OnboardingNavigationButtons';
 
@@ -48,7 +48,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
   if (hasVehicles) {
     return (
       <div>
-        <OnboardingHeader
+        <OnboardingPageHeader
           title="Vehicles Ready"
           description={`You already have ${vehicles.length} vehicle${vehicles.length > 1 ? 's' : ''} in your garage.`}
         />
@@ -88,7 +88,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
 
   return (
     <div>
-      <OnboardingHeader
+      <OnboardingPageHeader
         title="Add Your Vehicle"
         description="Let's add your first electric vehicle to start tracking charges."
       />

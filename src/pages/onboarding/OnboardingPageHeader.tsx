@@ -4,7 +4,7 @@ type OnboardingHeaderProps = {
   subDescription?: string;
 };
 
-export function OnboardingHeader(props: OnboardingHeaderProps) {
+export function OnboardingPageHeader(props: OnboardingHeaderProps) {
   return (
     <div className="mb-6 text-center">
       <h2 className="text-2xl sm:text-3xl font-bold text-body mb-3">{props.title}</h2>

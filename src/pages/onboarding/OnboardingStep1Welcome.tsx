@@ -1,4 +1,4 @@
-import { OnboardingHeader } from './OnboardingHeader';
+import { OnboardingPageHeader } from './OnboardingPageHeader';
 import { OnboardingFooter } from './OnboardingFooter';
 import { Button } from '../../components/Button';
 
@@ -9,7 +9,7 @@ type OnboardingStep1WelcomeProps = {
 export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
   return (
     <div className="text-center">
-      <OnboardingHeader
+      <OnboardingPageHeader
         title="EV Charge Tracker"
         description="Track your electric vehicle charging sessions with ease."
         subDescription="Work completely offline, manage multiple vehicles, and analyze your charging costs across different locations."

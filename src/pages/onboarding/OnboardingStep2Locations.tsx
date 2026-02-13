@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocations } from '../../hooks/useLocations';
 import { Icon } from '../../components/Icon';
-import { OnboardingHeader } from './OnboardingHeader';
+import { OnboardingPageHeader } from './OnboardingPageHeader';
 import { OnboardingFooter } from './OnboardingFooter';
 import { OnboardingNavigationButtons } from './OnboardingNavigationButtons';
 
@@ -76,7 +76,7 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
 
   return (
     <div>
-      <OnboardingHeader
+      <OnboardingPageHeader
         title="Review Charging Locations"
         description="We've added common charging locations. Customize the names and rates to match your needs."
       />
