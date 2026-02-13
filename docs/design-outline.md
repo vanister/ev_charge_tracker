@@ -1,3 +1,7 @@
+# EV Charge Tracker - Design Outline
+
+> **Status**: Foundation Complete - Core data layer, hooks, providers, and onboarding flow are implemented. Dashboard and feature pages are in progress.
+
 ## Tech Stack
 
 Vite + React 19 + TypeScript + Dexie.js (IndexedDB) + Tailwind + vite-plugin-pwa
@@ -36,14 +40,14 @@ locations: '++id, isActive, createdAt';
 ## Location Types
 
 ```typescript
-// data/db.ts - locations store
+// data/constants.ts - DEFAULT_LOCATIONS
 // Dynamic store, user can add/edit/delete locations
 // Default locations seeded on first launch:
 DEFAULT_LOCATIONS = [
-  { name: 'Home', icon: '🏠', color: 'blue', defaultRate: 0.12 },
-  { name: 'Work', icon: '🏢', color: 'purple', defaultRate: 0.0 },
-  { name: 'Other', icon: '📍', color: 'pink', defaultRate: 0.15 },
-  { name: 'DC Fast', icon: '⚡', color: 'amber', defaultRate: 0.35 }
+  { name: 'Home',              icon: 'home',     color: 'teal',   defaultRate: 0.15 },
+  { name: 'Work',              icon: 'building', color: 'slate',  defaultRate: 0.17 },
+  { name: 'Other',             icon: 'map-pin',  color: 'purple', defaultRate: 0.11 },
+  { name: 'DC Fast Charger',   icon: 'zap',      color: 'orange', defaultRate: 0.35 }
 ];
 ```
 
@@ -101,10 +105,10 @@ Filters: `{ vehicleId?, locationId?, dateRange? }`
 ```
 
 **Default locations** (seeded on first launch):
-- Home (🏠, blue, $0.12/kWh)
-- Work (🏢, purple, $0.00/kWh)
-- Other (📍, pink, $0.15/kWh)
-- DC Fast (⚡, amber, $0.35/kWh)
+- Home (🏠 home icon, teal, $0.15/kWh)
+- Work (🏢 building icon, slate, $0.17/kWh)
+- Other (📍 map-pin icon, purple, $0.11/kWh)
+- DC Fast Charger (⚡ zap icon, orange, $0.35/kWh)
 
 ## PWA Config
 
@@ -171,4 +175,4 @@ Test offline: DevTools → Network → Offline mode
 
 ## Styling
 
-Tailwind utilities. Colors: `blue-600` primary, location-specific (`blue-*`, `purple-*`, `pink-*`, `amber-*`)
+Tailwind utilities with CSS variables for theming. Theme colors: `teal-500` primary, location-specific (`teal-*`, `slate-*`, `purple-*`, `orange-*`). Full dark/light mode support.

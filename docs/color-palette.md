@@ -21,10 +21,10 @@ The EV Charge Tracker uses the **Clean Eco** theme - an environmental, calming c
 
 These colors categorize charging locations and remain consistent across themes:
 
-- **Home** 🏠: `#14b8a6` (teal-500) - Soft Teal
-- **Work** 🏢: `#64748b` (slate-500) - Slate Blue
-- **Other** 📍: `#c084fc` (purple-400) - Lavender
-- **DC Fast** ⚡: `#fb923c` (orange-400) - Bright Orange
+- **Home** 🏠: `#14b8a6` (teal-500) - Teal
+- **Work** 🏢: `#64748b` (slate-500) - Slate
+- **Other** 📍: `#c084fc` (purple-400) - Purple
+- **DC Fast Charger** ⚡: `#fb923c` (orange-400) - Orange
 
 ## Neutral Colors
 

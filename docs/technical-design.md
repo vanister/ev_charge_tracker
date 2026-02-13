@@ -1,5 +1,7 @@
 # EV Charge Tracker - Technical Architecture v3
 
+> **Implementation Status**: Core foundation complete with database schema, all hooks, providers, contexts, and 3-step onboarding flow fully functional. Dashboard, session management, and vehicle management UIs are next in the roadmap.
+
 ## Overview
 
 A fully offline PWA for tracking EV charging sessions. Designed to function as a native-like app without app store distribution, with all data stored locally on-device.
@@ -135,10 +137,10 @@ Settings
 ### Default Locations
 ```
 DEFAULT_LOCATIONS = [
-  { name: 'Home',    icon: 'home',     color: 'blue',   defaultRate: 0.12 },
-  { name: 'Work',    icon: 'building', color: 'purple', defaultRate: 0.0 },
-  { name: 'Other',   icon: 'map-pin',  color: 'pink',   defaultRate: 0.15 },
-  { name: 'DC Fast', icon: 'zap',      color: 'amber',  defaultRate: 0.35 }
+  { name: 'Home',            icon: 'home',     color: 'teal',   defaultRate: 0.15 },
+  { name: 'Work',            icon: 'building', color: 'slate',  defaultRate: 0.17 },
+  { name: 'Other',           icon: 'map-pin',  color: 'purple', defaultRate: 0.11 },
+  { name: 'DC Fast Charger', icon: 'zap',      color: 'orange', defaultRate: 0.35 }
 ]
 
 // Seeded on first launch, user can add/edit/delete
@@ -202,10 +204,10 @@ ON_FIRST_LAUNCH:
   }
   
   SEED locations [
-    { name: 'Home',    icon: 'home',     color: 'blue',   defaultRate: 0.15 },
-    { name: 'Work',    icon: 'building', color: 'purple', defaultRate: 0.17 },
-    { name: 'Other',   icon: 'map-pin',  color: 'pink',   defaultRate: 0.11 },
-    { name: 'DC Fast', icon: 'zap',      color: 'amber',  defaultRate: 0.35 }
+    { name: 'Home',            icon: 'home',     color: 'teal',   defaultRate: 0.15 },
+    { name: 'Work',            icon: 'building', color: 'slate',  defaultRate: 0.17 },
+    { name: 'Other',           icon: 'map-pin',  color: 'purple', defaultRate: 0.11 },
+    { name: 'DC Fast Charger', icon: 'zap',      color: 'orange', defaultRate: 0.35 }
   ]
 ```
 
