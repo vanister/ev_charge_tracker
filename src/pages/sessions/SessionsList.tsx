@@ -4,6 +4,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import { useLocations } from '../../hooks/useLocations';
+import { usePageTitle } from '../../hooks/usePageTitle';
 import { SessionsFilter } from './SessionsFilter';
 import { SessionDateGroup } from './SessionDateGroup';
 import { SessionsEmptyState } from './SessionsEmptyState';
@@ -11,10 +12,11 @@ import { formatDate } from '../../utilities/dateUtils';
 import { createVehicleMap, createLocationMap, groupSessionsByDate } from './sessionHelpers';
 
 export function SessionsList() {
+  usePageTitle('Sessions');
+
   const navigate = useNavigate();
   const [selectedVehicleId, setSelectedVehicleId] = useState<string | undefined>();
   const [selectedLocationId, setSelectedLocationId] = useState<string | undefined>();
-
   const { vehicles } = useVehicles();
   const { locations } = useLocations();
   const { getSessionList, deleteSession } = useSessions();

@@ -10,7 +10,10 @@ type UpdateLocation = Partial<Omit<Location, 'id' | 'createdAt'>>;
 export function useLocations(activeOnly = true) {
   const { db } = useDatabase();
 
-  // todo - apply the same pattern here as useSessions with explicit getLocationList and getLocation functions instead of useLiveQuery in the hook, and then useLiveQuery in the components that need it. This will give us more flexibility to fetch active vs all locations, and also to fetch a single location by id when needed without having to fetch the entire list first
+  // todo - apply the same pattern here as useSessions with explicit getLocationList and getLocation
+  // functions instead of useLiveQuery in the hook, and then useLiveQuery in the components that need it.
+  // This will give us more flexibility to fetch active vs all locations, and also to fetch a single
+  // location by id when needed without having to fetch the entire list first
   const locations = useLiveQuery(async () => {
     if (activeOnly) {
       return await db.locations.where('isActive').equals(1).sortBy('createdAt');

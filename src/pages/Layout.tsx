@@ -3,6 +3,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { clsx } from 'clsx';
 import { Icon } from '../components/Icon';
 import { useTheme } from '../hooks/useTheme';
+import { LayoutConfigProvider } from '../providers/LayoutConfigProvider';
 import type { ThemeMode } from '../types/shared-types';
 
 type NavLink = {
@@ -19,21 +20,11 @@ const navLinks: NavLink[] = [
   { path: '/settings', label: 'Settings', icon: 'settings', disabled: true }
 ];
 
-const getPageTitle = (pathname: string): string => {
-  if (pathname === '/') return 'Dashboard';
-  if (pathname === '/sessions') return 'Sessions';
-  if (pathname === '/sessions/add') return 'Add Session';
-  if (pathname.startsWith('/sessions/') && pathname.endsWith('/edit')) return 'Edit Session';
-  if (pathname === '/vehicles') return 'Vehicles';
-  if (pathname === '/settings') return 'Settings';
-  return 'EV Charge Tracker';
-};
-
 export function Layout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const { theme, updateTheme } = useTheme();
-  const title = getPageTitle(location.pathname);
+  const [title, setTitle] = useState<string>('EV Charge Tracker');
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -154,7 +145,9 @@ export function Layout() {
       </nav>
 
       <main className="pt-14">
-        <Outlet />
+        <LayoutConfigProvider value={{ title, setTitle }}>
+          <Outlet />
+        </LayoutConfigProvider>
       </main>
     </div>
   );

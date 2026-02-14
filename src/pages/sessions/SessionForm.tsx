@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import { useLocations } from '../../hooks/useLocations';
+import { usePageTitle } from '../../hooks/usePageTitle';
 import { useImmerState } from '../../hooks/useImmerState';
 import { Button } from '../../components/Button';
 import { Icon } from '../../components/Icon';
@@ -47,6 +48,8 @@ export function SessionForm() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const isEditMode = !!id;
+
+  usePageTitle(isEditMode ? 'Edit Session' : 'Add Session');
 
   const { getSession, createSession, updateSession } = useSessions();
   const { vehicles } = useVehicles(true);
