@@ -3,7 +3,7 @@ import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useAppInitialization } from './hooks/useAppInitialization';
 import { FullscreenLoader } from './components/FullscreenLoader';
 import { RequireOnboarding } from './components/RequireOnboarding';
-import { Layout } from './pages/Layout';
+import { Layout } from './pages/layout/Layout';
 import { ErrorPage } from './pages/ErrorPage';
 import { Onboarding } from './pages/onboarding/Onboarding';
 import { Dashboard } from './pages/Dashboard';
