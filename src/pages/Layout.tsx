@@ -1,22 +1,9 @@
 import { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { clsx } from 'clsx';
-import { Icon } from './Icon';
+import { Icon } from '../components/Icon';
 import { useTheme } from '../hooks/useTheme';
 import type { ThemeMode } from '../types/shared-types';
-
-// todo - clean this up!
-
-type ActionButton = {
-  label: string;
-  onClick: () => void;
-  disabled?: boolean;
-};
-
-type LayoutProps = {
-  title: string;
-  actionButton?: ActionButton;
-};
 
 type NavLink = {
   path: string;
@@ -32,11 +19,21 @@ const navLinks: NavLink[] = [
   { path: '/settings', label: 'Settings', icon: 'settings', disabled: true }
 ];
 
-export function Layout(props: LayoutProps) {
-  const { title, actionButton } = props;
+const getPageTitle = (pathname: string): string => {
+  if (pathname === '/') return 'Dashboard';
+  if (pathname === '/sessions') return 'Sessions';
+  if (pathname === '/sessions/add') return 'Add Session';
+  if (pathname.startsWith('/sessions/') && pathname.endsWith('/edit')) return 'Edit Session';
+  if (pathname === '/vehicles') return 'Vehicles';
+  if (pathname === '/settings') return 'Settings';
+  return 'EV Charge Tracker';
+};
+
+export function Layout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const { theme, updateTheme } = useTheme();
+  const title = getPageTitle(location.pathname);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -63,28 +60,10 @@ export function Layout(props: LayoutProps) {
 
         <h1 className="text-lg font-semibold text-body">{title}</h1>
 
-        <div className="w-14 flex items-center justify-end">
-          {actionButton ? (
-            <button
-              onClick={actionButton.onClick}
-              disabled={actionButton.disabled}
-              className="text-primary font-medium px-2 disabled:text-disabled"
-            >
-              {actionButton.label}
-            </button>
-          ) : (
-            <div />
-          )}
-        </div>
+        <div className="w-14" />
       </header>
 
-      {isMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-20"
-          onClick={closeMenu}
-          aria-label="Close menu"
-        />
-      )}
+      {isMenuOpen && <div className="fixed inset-0 bg-black/50 z-20" onClick={closeMenu} aria-label="Close menu" />}
 
       <nav
         className={clsx(
@@ -142,39 +121,30 @@ export function Layout(props: LayoutProps) {
           <div className="grid grid-cols-3 gap-2">
             <button
               onClick={() => handleThemeChange('light')}
-              className={clsx(
-                'flex flex-col items-center gap-1 py-2 px-2 rounded-lg transition-colors',
-                {
-                  'bg-primary text-white': theme === 'light',
-                  'bg-surface text-body-secondary hover:bg-primary/10': theme !== 'light'
-                }
-              )}
+              className={clsx('flex flex-col items-center gap-1 py-2 px-2 rounded-lg transition-colors', {
+                'bg-primary text-white': theme === 'light',
+                'bg-surface text-body-secondary hover:bg-primary/10': theme !== 'light'
+              })}
             >
               <Icon name="sun" size="sm" />
               <span className="text-xs">Light</span>
             </button>
             <button
               onClick={() => handleThemeChange('dark')}
-              className={clsx(
-                'flex flex-col items-center gap-1 py-2 px-2 rounded-lg transition-colors',
-                {
-                  'bg-primary text-white': theme === 'dark',
-                  'bg-surface text-body-secondary hover:bg-primary/10': theme !== 'dark'
-                }
-              )}
+              className={clsx('flex flex-col items-center gap-1 py-2 px-2 rounded-lg transition-colors', {
+                'bg-primary text-white': theme === 'dark',
+                'bg-surface text-body-secondary hover:bg-primary/10': theme !== 'dark'
+              })}
             >
               <Icon name="moon" size="sm" />
               <span className="text-xs">Dark</span>
             </button>
             <button
               onClick={() => handleThemeChange('system')}
-              className={clsx(
-                'flex flex-col items-center gap-1 py-2 px-2 rounded-lg transition-colors',
-                {
-                  'bg-primary text-white': theme === 'system',
-                  'bg-surface text-body-secondary hover:bg-primary/10': theme !== 'system'
-                }
-              )}
+              className={clsx('flex flex-col items-center gap-1 py-2 px-2 rounded-lg transition-colors', {
+                'bg-primary text-white': theme === 'system',
+                'bg-surface text-body-secondary hover:bg-primary/10': theme !== 'system'
+              })}
             >
               <Icon name="monitor" size="sm" />
               <span className="text-xs">System</span>

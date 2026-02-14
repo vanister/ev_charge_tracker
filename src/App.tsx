@@ -3,7 +3,7 @@ import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useAppInitialization } from './hooks/useAppInitialization';
 import { FullscreenLoader } from './components/FullscreenLoader';
 import { RequireOnboarding } from './components/RequireOnboarding';
-import { Layout } from './components/Layout';
+import { Layout } from './pages/Layout';
 import { ErrorPage } from './pages/ErrorPage';
 import { Onboarding } from './pages/onboarding/Onboarding';
 import { Dashboard } from './pages/Dashboard';
@@ -30,41 +30,24 @@ export function App() {
       <Route path="/onboarding" element={<Onboarding />} />
 
       <Route element={<RequireOnboarding />}>
-        <Route path="/" element={<Layout title="Dashboard" />}>
-          <Route index element={<Dashboard />} />
-        </Route>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/sessions" element={<SessionsList />} />
+          <Route path="/sessions/add" element={<SessionForm />} />
+          <Route path="/sessions/:id/edit" element={<SessionForm />} />
 
-        <Route path="/sessions" element={<Layout title="Sessions" />}>
-          <Route index element={<SessionsList />} />
-        </Route>
-
-        <Route path="/sessions/add" element={<Layout title="Add Session" />}>
-          <Route index element={<SessionForm />} />
-        </Route>
-
-        <Route path="/sessions/:id/edit" element={<Layout title="Edit Session" />}>
-          <Route index element={<SessionForm />} />
-        </Route>
-
-        {/* TODO: Implement Vehicles routes
-          <Route path="/vehicles" element={<Layout title="Vehicles" />}>
-            <Route index element={<VehiclesListPage />} />
-          </Route>
-          <Route path="/vehicles/add" element={<Layout title="Add Vehicle" />}>
-            <Route index element={<VehicleFormPage />} />
-          </Route>
-          <Route path="/vehicles/:id/edit" element={<Layout title="Edit Vehicle" />}>
-            <Route index element={<VehicleFormPage />} />
-          </Route>
+          {/* TODO: Implement Vehicles routes
+          <Route path="/vehicles" element={<VehiclesListPage />} />
+          <Route path="/vehicles/add" element={<VehicleFormPage />} />
+          <Route path="/vehicles/:id/edit" element={<VehicleFormPage />} />
           */}
 
-        {/* TODO: Implement Settings route
-          <Route path="/settings" element={<Layout title="Settings" />}>
-            <Route index element={<SettingsPage />} />
-          </Route>
+          {/* TODO: Implement Settings route
+          <Route path="/settings" element={<SettingsPage />} />
           */}
 
-        <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
       </Route>
     </Routes>
   );
