@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useVehicles } from '../../hooks/useVehicles';
-import { OnboardingPageHeader } from './OnboardingPageHeader';
+import { OnboardingHeader } from './OnboardingHeader';
 import { OnboardingFooter } from './OnboardingFooter';
 import { OnboardingNavigationButtons } from './OnboardingNavigationButtons';
 
@@ -48,17 +48,14 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
   if (hasVehicles) {
     return (
       <div>
-        <OnboardingPageHeader
+        <OnboardingHeader
           title="Vehicles Ready"
           description={`You already have ${vehicles.length} vehicle${vehicles.length > 1 ? 's' : ''} in your garage.`}
         />
 
         <div className="space-y-3 mb-6">
           {vehicles.map((vehicle) => (
-            <div
-              key={vehicle.id}
-              className="p-4 bg-surface border border-default rounded-lg flex items-center gap-3"
-            >
+            <div key={vehicle.id} className="p-4 bg-surface border border-default rounded-lg flex items-center gap-3">
               <div className="text-3xl">{vehicle.icon}</div>
               <div className="flex-1">
                 <div className="font-medium text-body">
@@ -88,7 +85,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
 
   return (
     <div>
-      <OnboardingPageHeader
+      <OnboardingHeader
         title="Add Your Vehicle"
         description="Let's add your first electric vehicle to start tracking charges."
       />
@@ -173,11 +170,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
         )}
 
         <OnboardingFooter>
-          <OnboardingNavigationButtons
-            onBack={props.onBack}
-            continueLabel="Create Vehicle"
-            disabled={isLoading}
-          />
+          <OnboardingNavigationButtons onBack={props.onBack} continueLabel="Create Vehicle" disabled={isLoading} />
         </OnboardingFooter>
       </form>
     </div>

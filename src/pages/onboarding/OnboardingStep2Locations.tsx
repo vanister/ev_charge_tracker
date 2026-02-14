@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocations } from '../../hooks/useLocations';
 import { Icon } from '../../components/Icon';
-import { OnboardingPageHeader } from './OnboardingPageHeader';
+import { OnboardingHeader } from './OnboardingHeader';
 import { OnboardingFooter } from './OnboardingFooter';
 import { OnboardingNavigationButtons } from './OnboardingNavigationButtons';
 
@@ -37,9 +37,7 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
   }, [locations, locationForms.length]);
 
   const handleLocationFormChange = (id: string, field: 'name' | 'defaultRate', value: string) => {
-    setLocationForms((prev) =>
-      prev.map((loc) => (loc.id === id ? { ...loc, [field]: value } : loc))
-    );
+    setLocationForms((prev) => prev.map((loc) => (loc.id === id ? { ...loc, [field]: value } : loc)));
     setError('');
   };
 
@@ -76,7 +74,7 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
 
   return (
     <div>
-      <OnboardingPageHeader
+      <OnboardingHeader
         title="Review Charging Locations"
         description="We've added common charging locations. Customize the names and rates to match your needs."
       />
@@ -96,10 +94,7 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
 
                   <div className="flex-1 space-y-3">
                     <div>
-                      <label
-                        htmlFor={`location-name-${index}`}
-                        className="block text-sm font-medium text-body mb-1"
-                      >
+                      <label htmlFor={`location-name-${index}`} className="block text-sm font-medium text-body mb-1">
                         Location Name
                       </label>
                       <input
@@ -116,10 +111,7 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
                     </div>
 
                     <div>
-                      <label
-                        htmlFor={`location-rate-${index}`}
-                        className="block text-sm font-medium text-body mb-1"
-                      >
+                      <label htmlFor={`location-rate-${index}`} className="block text-sm font-medium text-body mb-1">
                         Default Rate ($/kWh)
                       </label>
                       <input
@@ -129,9 +121,7 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
                         min="0"
                         required
                         value={form.defaultRate}
-                        onChange={(e) =>
-                          handleLocationFormChange(form.id, 'defaultRate', e.target.value)
-                        }
+                        onChange={(e) => handleLocationFormChange(form.id, 'defaultRate', e.target.value)}
                         className="w-full px-3 py-2 bg-surface border border-default rounded-lg
                           text-body placeholder-body-tertiary focus:outline-none
                           focus:ring-2 focus:ring-primary focus:border-transparent"
@@ -152,11 +142,7 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
         )}
 
         <OnboardingFooter>
-          <OnboardingNavigationButtons
-            onBack={props.onBack}
-            continueLabel="Continue"
-            disabled={isLoading}
-          />
+          <OnboardingNavigationButtons onBack={props.onBack} continueLabel="Continue" disabled={isLoading} />
         </OnboardingFooter>
       </form>
     </div>

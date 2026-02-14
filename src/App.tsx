@@ -5,7 +5,7 @@ import { FullscreenLoader } from './components/FullscreenLoader';
 import { RequireOnboarding } from './components/RequireOnboarding';
 import { Layout } from './components/Layout';
 import { ErrorPage } from './pages/ErrorPage';
-import { OnboardingPage } from './pages/onboarding/OnboardingPage';
+import { Onboarding } from './pages/onboarding/Onboarding';
 import { Dashboard } from './pages/Dashboard';
 import { SessionsList } from './pages/sessions/SessionsList';
 import { SessionForm } from './pages/sessions/SessionForm';
@@ -27,7 +27,7 @@ export function App() {
   return (
     <Routes>
       <Route path="/error" element={<ErrorPage />} />
-      <Route path="/onboarding" element={<OnboardingPage />} />
+      <Route path="/onboarding" element={<Onboarding />} />
 
       <Route element={<RequireOnboarding />}>
         <Route path="/" element={<Layout title="Dashboard" />}>
