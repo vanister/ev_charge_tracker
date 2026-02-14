@@ -8,6 +8,7 @@ import { ErrorPage } from './pages/ErrorPage';
 import { OnboardingPage } from './pages/onboarding/OnboardingPage';
 import { Dashboard } from './pages/Dashboard';
 import { SessionsList } from './pages/sessions/SessionsList';
+import { SessionForm } from './pages/sessions/SessionForm';
 
 export function App() {
   const { isInitialized, error } = useAppInitialization();
@@ -37,14 +38,13 @@ export function App() {
           <Route index element={<SessionsList />} />
         </Route>
 
-        {/* TODO: Implement Session Form routes
-          <Route path="/sessions/add" element={<Layout title="Add Session" />}>
-            <Route index element={<SessionFormPage />} />
-          </Route>
-          <Route path="/sessions/:id/edit" element={<Layout title="Edit Session" />}>
-            <Route index element={<SessionFormPage />} />
-          </Route>
-          */}
+        <Route path="/sessions/add" element={<Layout title="Add Session" />}>
+          <Route index element={<SessionForm />} />
+        </Route>
+
+        <Route path="/sessions/:id/edit" element={<Layout title="Edit Session" />}>
+          <Route index element={<SessionForm />} />
+        </Route>
 
         {/* TODO: Implement Vehicles routes
           <Route path="/vehicles" element={<Layout title="Vehicles" />}>

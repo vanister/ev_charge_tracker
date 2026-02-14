@@ -5,12 +5,12 @@
 - **Phase 1 - Setup**: ✅ Complete (4/4)
 - **Phase 2 - Data Layer**: ✅ Complete (4/4)
 - **Phase 3 - Context Providers & Hooks**: ✅ Complete (8/8)
-- **Phase 4 - Routing & Pages**: 🚧 In Progress (3/8)
+- **Phase 4 - Routing & Pages**: 🚧 In Progress (4/8)
 - **Phase 5 - UI Components**: ⏳ Not Started (0/2)
 - **Phase 6 - PWA Features**: 🚧 In Progress (1/4)
 - **Phase 7 - Business Logic & Testing**: 🚧 In Progress (1/5)
 
-**Overall Progress**: 21/35 tasks complete (60%)
+**Overall Progress**: 22/35 tasks complete (63%)
 
 ### Next Up
 The foundation is complete! Next priorities:
@@ -72,7 +72,7 @@ The foundation is complete! Next priorities:
    - Build 3-step onboarding: Welcome screen, Review/Edit Locations, First vehicle creation
 4. [x] Build SessionsList page
    - Create sessions list with filters, sorting, empty states, edit/delete actions
-5. [ ] Build SessionForm component
+5. [x] Build SessionForm component
    - Create form for adding/editing sessions with cost calculation (energyKwh × ratePerKwh × 100), location selector with rate auto-fill
 6. [ ] Build VehiclesList page
    - Create vehicles list with add/edit/delete actions, handle deletion validation

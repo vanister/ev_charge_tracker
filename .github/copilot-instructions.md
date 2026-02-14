@@ -18,12 +18,13 @@
 
 ## Project Rules
 
-- 2-space indent, functional paradigm, pure functions (justify impure)
+- Follow the rules in the [prettierrc](../.prettierrc) config file for formatting
 - Arrow functions for components, callbacks, and internal functions in hooks/components
 - Named functions only for standalone helpers and utilities in separate utility files
 - Arrow functions require parens, destructure objects
 - Components: `export function Component(props: ComponentProps) {...}`
 - Single-purpose components
+- Break down complex components into smaller ones, but avoid over-abstraction
 - Keep logic in helpers/hooks not Components
 - CSS Modules preferred
 - Named exports only
@@ -32,6 +33,7 @@
 - No index barrel files
 - Dates handled with date-fns
 - Import ordering: CSS first → external deps → internal deps
+- No primitive constructors for coercion: use `+value` not `Number(value)`, `!!value` not `Boolean(value)`, `` `${value}` `` not `String(value)`
 - Run `npm run build` to verify no build errors after major changes
 
 ## Task-Specific Rules

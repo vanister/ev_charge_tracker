@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLiveQuery } from 'dexie-react-hooks';
 import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import { useLocations } from '../../hooks/useLocations';
@@ -16,20 +17,26 @@ export function SessionsList() {
 
   const { vehicles } = useVehicles();
   const { locations } = useLocations();
-  const { sessions, deleteSession } = useSessions({
-    vehicleId: selectedVehicleId,
-    locationId: selectedLocationId
-  });
+  const { getSessionList, deleteSession } = useSessions();
+
+  const sessions = useLiveQuery(
+    () =>
+      getSessionList({
+        vehicleId: selectedVehicleId,
+        locationId: selectedLocationId
+      }),
+    [getSessionList, selectedVehicleId, selectedLocationId]
+  );
 
   const vehicleMap = useMemo(() => createVehicleMap(vehicles), [vehicles]);
   const locationMap = useMemo(() => createLocationMap(locations), [locations]);
   const sessionsByDate = useMemo(
-    () => groupSessionsByDate(sessions, vehicleMap, locationMap),
+    () => groupSessionsByDate(sessions ?? [], vehicleMap, locationMap),
     [sessions, vehicleMap, locationMap]
   );
 
   const hasActiveFilters = Boolean(selectedVehicleId || selectedLocationId);
-  const hasSessions = sessions.length > 0;
+  const hasSessions = (sessions ?? []).length > 0;
 
   const handleEdit = (id: string) => {
     navigate(`/sessions/${id}/edit`);
