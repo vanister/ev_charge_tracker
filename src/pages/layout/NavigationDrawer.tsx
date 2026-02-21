@@ -19,7 +19,7 @@ export function NavigationDrawer(props: NavigationDrawerProps) {
     <nav
       className={clsx(
         'fixed top-0 left-0 bottom-0 w-4/5 max-w-xs bg-surface z-30',
-        'transition-transform duration-300 will-change-transform',
+        'transition-all duration-300 ease-in-out',
         {
           'translate-x-0': isOpen,
           '-translate-x-full': !isOpen

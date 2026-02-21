@@ -48,11 +48,13 @@
   --color-location-orange: oklch(0.75 0.15 50.5); /* orange-400 */
 }
 
-/* Smooth theme transitions */
-* {
-  transition-property: background-color, color, border-color;
-  transition-duration: 150ms;
-  transition-timing-function: ease;
+/* Smooth theme transitions - in base layer so utilities can override transition-property */
+@layer base {
+  * {
+    transition-property: background-color, color, border-color;
+    transition-duration: 150ms;
+    transition-timing-function: ease;
+  }
 }
 
 /* Semantic Tailwind classes */

@@ -28,7 +28,7 @@ export function Layout() {
   return (
     <div className="min-h-screen bg-background">
       <AppHeader title={title} onMenuOpen={handleMenuToggle} />
-      <MenuOverlay isOpen={isMenuOpen} onClose={handleMenuClose} />
+      <MenuOverlay isOpen={isMenuOpen} onClick={handleMenuClose} />
       <NavigationDrawer
         isOpen={isMenuOpen}
         currentPath={location.pathname}
