@@ -9,6 +9,8 @@ import { Onboarding } from './pages/onboarding/Onboarding';
 import { Dashboard } from './pages/Dashboard';
 import { SessionsList } from './pages/sessions/SessionsList';
 import { SessionForm } from './pages/sessions/SessionForm';
+import { VehiclesList } from './pages/vehicles/VehiclesList';
+import { VehicleDetails } from './pages/vehicles/VehicleDetails';
 
 export function App() {
   const { isInitialized, error } = useAppInitialization();
@@ -36,11 +38,9 @@ export function App() {
           <Route path="/sessions/add" element={<SessionForm />} />
           <Route path="/sessions/:id/edit" element={<SessionForm />} />
 
-          {/* TODO: Implement Vehicles routes
-          <Route path="/vehicles" element={<VehiclesListPage />} />
-          <Route path="/vehicles/add" element={<VehicleFormPage />} />
-          <Route path="/vehicles/:id/edit" element={<VehicleFormPage />} />
-          */}
+          <Route path="/vehicles" element={<VehiclesList />} />
+          <Route path="/vehicles/add" element={<VehicleDetails />} />
+          <Route path="/vehicles/:id/edit" element={<VehicleDetails />} />
 
           {/* TODO: Implement Settings route
           <Route path="/settings" element={<SettingsPage />} />

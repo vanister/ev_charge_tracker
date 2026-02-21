@@ -5,8 +5,8 @@ import { DEFAULT_VEHICLE_ICON } from '../data/constants';
 import { generateId } from '../utilities/dataUtils';
 import { success, failure, type Result } from '../utilities/resultUtils';
 
-type CreateVehicleInput = Omit<Vehicle, 'id' | 'createdAt' | 'isActive'>;
-type UpdateVehicleInput = Partial<Omit<Vehicle, 'id' | 'createdAt'>>;
+export type CreateVehicleInput = Omit<Vehicle, 'id' | 'createdAt' | 'isActive'>;
+export type UpdateVehicleInput = Partial<Omit<Vehicle, 'id' | 'createdAt'>>;
 
 export function useVehicles(activeOnly = true) {
   const { db } = useDatabase();
