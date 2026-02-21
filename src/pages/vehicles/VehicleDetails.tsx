@@ -102,7 +102,7 @@ export function VehicleDetails() {
 
   if (!formState.isInitialized) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
+      <div className="flex items-center justify-center min-h-100">
         <div className="text-body-secondary">Loading...</div>
       </div>
     );
