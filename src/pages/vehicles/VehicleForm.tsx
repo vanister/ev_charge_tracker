@@ -1,20 +1,17 @@
-import { Button } from '../../components/Button';
 import type { VehicleFormData } from './vehicleHelpers';
 
 type VehicleFormProps = {
+  id?: string;
   formData: VehicleFormData;
   onChange: (field: keyof VehicleFormData, value: string) => void;
   onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void;
-  onCancel?: () => void;
   isLoading: boolean;
   error: string;
-  submitLabel: string;
-  cancelLabel?: string;
 };
 
 export function VehicleForm(props: VehicleFormProps) {
   return (
-    <form onSubmit={props.onSubmit} className="space-y-4">
+    <form id={props.id} onSubmit={props.onSubmit} className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-8 gap-4">
         <div className="sm:col-span-2">
           <label htmlFor="vehicle-year" className="block text-sm font-medium text-body mb-1">
@@ -112,17 +109,6 @@ export function VehicleForm(props: VehicleFormProps) {
           <p className="text-sm text-red-500">{props.error}</p>
         </div>
       )}
-
-      <div className="flex gap-3 pt-2">
-        {props.onCancel && (
-          <Button type="button" variant="secondary" onClick={props.onCancel} disabled={props.isLoading}>
-            {props.cancelLabel || 'Cancel'}
-          </Button>
-        )}
-        <Button type="submit" variant="primary" fullWidth={!props.onCancel} disabled={props.isLoading}>
-          {props.isLoading ? 'Saving...' : props.submitLabel}
-        </Button>
-      </div>
     </form>
   );
 }

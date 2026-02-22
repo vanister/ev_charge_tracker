@@ -27,7 +27,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
     setError('');
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setIsLoading(true);
@@ -45,6 +45,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
     await props.onComplete();
   };
 
+  // todo - DRY this up
   if (hasVehicles) {
     return (
       <div>
@@ -75,7 +76,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
           <OnboardingNavigationButtons
             onBack={props.onBack}
             continueLabel="Continue"
-            continueType="button"
+            type="button"
             onContinue={props.onComplete}
           />
         </OnboardingFooter>
@@ -91,15 +92,23 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
       />
 
       <VehicleForm
+        id="onboarding-vehicle-form"
         formData={formData}
         onChange={handleFieldChange}
         onSubmit={handleSubmit}
-        onCancel={props.onBack}
         isLoading={isLoading}
         error={error}
-        submitLabel="Create Vehicle"
-        cancelLabel="Back"
       />
+
+      <OnboardingFooter>
+        <OnboardingNavigationButtons
+          onBack={props.onBack}
+          continueLabel={isLoading ? 'Saving...' : 'Create Vehicle'}
+          type="submit"
+          form="onboarding-vehicle-form"
+          disabled={isLoading}
+        />
+      </OnboardingFooter>
     </div>
   );
 }

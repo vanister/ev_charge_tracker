@@ -4,13 +4,14 @@ import { clsx } from 'clsx';
 type OnboardingNavigationButtonsProps = {
   onBack?: () => void;
   continueLabel: string;
-  continueType?: 'button' | 'submit';
+  type?: 'button' | 'submit';
+  form?: string;
   onContinue?: () => void;
   disabled?: boolean;
 };
 
 export function OnboardingNavigationButtons(props: OnboardingNavigationButtonsProps) {
-  const { onBack, continueLabel, continueType = 'submit', onContinue, disabled = false } = props;
+  const { onBack, continueLabel, type = 'submit', form, onContinue, disabled = false } = props;
 
   return (
     <div className="flex justify-between gap-3">
@@ -21,7 +22,8 @@ export function OnboardingNavigationButtons(props: OnboardingNavigationButtonsPr
       )}
       <Button
         variant="primary"
-        type={continueType}
+        type={type}
+        form={form}
         onClick={onContinue}
         disabled={disabled}
         className={clsx(!onBack && 'ml-auto')}

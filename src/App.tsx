@@ -8,7 +8,7 @@ import { ErrorPage } from './pages/ErrorPage';
 import { Onboarding } from './pages/onboarding/Onboarding';
 import { Dashboard } from './pages/Dashboard';
 import { SessionsList } from './pages/sessions/SessionsList';
-import { SessionForm } from './pages/sessions/SessionForm';
+import { SessionDetails } from './pages/sessions/SessionDetails';
 import { VehiclesList } from './pages/vehicles/VehiclesList';
 import { VehicleDetails } from './pages/vehicles/VehicleDetails';
 
@@ -35,8 +35,8 @@ export function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/sessions" element={<SessionsList />} />
-          <Route path="/sessions/add" element={<SessionForm />} />
-          <Route path="/sessions/:id/edit" element={<SessionForm />} />
+          <Route path="/sessions/add" element={<SessionDetails />} />
+          <Route path="/sessions/:id/edit" element={<SessionDetails />} />
 
           <Route path="/vehicles" element={<VehiclesList />} />
           <Route path="/vehicles/add" element={<VehicleDetails />} />

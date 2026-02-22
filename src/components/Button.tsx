@@ -5,6 +5,7 @@ type ButtonProps = {
   children: React.ReactNode;
   onClick?: () => void;
   type?: 'button' | 'submit';
+  form?: string;
   disabled?: boolean;
   fullWidth?: boolean;
   className?: string;
@@ -16,6 +17,7 @@ export function Button(props: ButtonProps) {
     children,
     onClick,
     type = 'button',
+    form,
     disabled = false,
     fullWidth = false,
     className = ''
@@ -29,6 +31,7 @@ export function Button(props: ButtonProps) {
   return (
     <button
       type={type}
+      form={form}
       onClick={onClick}
       disabled={disabled}
       className={clsx(
