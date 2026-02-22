@@ -7,6 +7,7 @@ import { success, failure, type Result } from '../utilities/resultUtils';
 type NewLocation = Omit<Location, 'id' | 'createdAt' | 'isActive'>;
 type UpdateLocation = Partial<Omit<Location, 'id' | 'createdAt'>>;
 
+// todo - invert activeOnly
 export function useLocations(activeOnly = true) {
   const { db } = useDatabase();
 

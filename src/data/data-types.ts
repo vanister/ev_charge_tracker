@@ -1,6 +1,8 @@
 import type { Dexie, EntityTable } from 'dexie';
 import type { IconName } from '../components/Icon';
 
+export type ActiveState = 0 | 1;
+
 export type Location = {
   id: string;
   name: string;
@@ -8,7 +10,8 @@ export type Location = {
   color: string;
   defaultRate: number;
   createdAt: number;
-  isActive: 0 | 1;
+  isActive: ActiveState;
+  order?: number;
 };
 
 export type Vehicle = {
@@ -19,7 +22,7 @@ export type Vehicle = {
   year: number;
   icon: string;
   createdAt: number;
-  isActive: 0 | 1;
+  isActive: ActiveState;
 };
 
 export type ChargingSession = {

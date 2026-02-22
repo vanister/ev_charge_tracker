@@ -1,5 +1,5 @@
 import { DEFAULT_LOCATIONS, DEFAULT_SETTINGS, SETTINGS_KEY } from '../data/constants';
-import type { EvChargTrackerDb, Location, Settings } from '../data/data-types';
+import type { ActiveState, EvChargTrackerDb, Location, Settings } from '../data/data-types';
 
 export function generateId(generator: Crypto = crypto): string {
   return generator.randomUUID();
@@ -13,15 +13,16 @@ export async function seedDefaultLocations(db: EvChargTrackerDb): Promise<void> 
   }
 
   const now = Date.now();
-  const locations: Location[] = DEFAULT_LOCATIONS.map(({ name, color, icon, defaultRate }) => ({
+  const locations: Location[] = DEFAULT_LOCATIONS.map(({ name, color, icon, defaultRate, order }) => ({
     id: generateId(),
     name,
     icon,
     color,
     defaultRate,
     createdAt: now,
-    isActive: 1
-  }));
+    isActive: 1 as ActiveState,
+    order
+  })).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
   await db.locations.bulkPut(locations);
 }

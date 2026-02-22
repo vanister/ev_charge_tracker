@@ -94,7 +94,7 @@ export function Settings() {
                   </span>
                 </div>
                 {storagePercent !== null && (
-                  <div className="h-2 bg-background rounded-full overflow-hidden">
+                  <div className="h-2 bg-border rounded-full overflow-hidden">
                     <div
                       className="h-full bg-primary rounded-full transition-all"
                       style={{ width: `${storagePercent}%` }}
