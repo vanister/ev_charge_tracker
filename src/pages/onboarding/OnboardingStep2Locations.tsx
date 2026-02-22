@@ -88,7 +88,7 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
             return (
               <div key={form.id} className="p-4 bg-background rounded-lg border border-default">
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 mt-2">
+                  <div className="shrink-0 mt-2">
                     <Icon name={location.icon} size="lg" color={location.color} />
                   </div>
 
