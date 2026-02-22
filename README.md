@@ -1,6 +1,6 @@
 # EV Charge Tracker
 
-A fully offline Progressive Web App (PWA) for tracking electric vehicle charging sessions. All data is stored locally on your device using IndexedDB—no internet connection required after installation.
+An offline, mobile-optimized, Progressive Web App (PWA) for tracking electric vehicle charging sessions. All data is stored locally on your device using IndexedDB. No internet connection required after installation.
 
 ## Features
 
@@ -29,7 +29,7 @@ A fully offline Progressive Web App (PWA) for tracking electric vehicle charging
 
 ### Prerequisites
 
-- Node.js 18+ and npm
+- Node.js 20+ and npm
 
 ### Installation
 
@@ -64,58 +64,48 @@ The production build will be in the `dist/` directory, ready to deploy to any st
 ```
 src/
 ├── components/       # Reusable UI components
-│   ├── Button.tsx
-│   ├── Icon.tsx
-│   ├── Layout.tsx
 │   └── ...
 ├── contexts/         # React contexts
-│   ├── AppInitializationContext.ts
-│   ├── DatabaseContext.ts
-│   └── ThemeContext.ts
-├── data/            # Database and data layer
-│   ├── db.ts        # Dexie schema
-│   ├── data-types.ts
-│   └── constants.ts
-├── hooks/           # Custom React hooks
-│   ├── useAppInitialization.ts
-│   ├── useDatabase.ts
-│   ├── useVehicles.ts
-│   ├── useSessions.ts
-│   ├── useLocations.ts
-│   └── useSettings.ts
-├── pages/           # Page components
-│   ├── Dashboard.tsx
-│   ├── ErrorPage.tsx
-│   └── onboarding/
-├── providers/       # Context providers
-│   ├── AppInitializationProvider.tsx
-│   ├── DatabaseProvider.tsx
-│   └── ThemeProvider.tsx
-├── types/           # TypeScript types
-├── utilities/       # Utility functions
-└── App.tsx          # Main app component
+│   └── ...
+├── data/             # Database schema and data layer
+│   └── ...
+├── hooks/            # Custom React hooks
+│   └── ...
+├── pages/            # Page components
+│   ├── layout/       # App shell (header, nav, drawer)
+│   ├── onboarding/   # 3-step onboarding wizard
+│   ├── sessions/     # Session list, form, details
+│   ├── settings/     # Settings, locations management
+│   ├── vehicles/     # Vehicle list, form, details
+│   └── ...
+├── providers/        # Context providers
+│   └── ...
+├── types/            # Shared TypeScript types
+├── utilities/        # Pure utility functions
+└── App.tsx           # Root component and router
 ```
 
 ## Development Status
 
 ### ✅ Completed
 
-- Setup & Dependencies
+- Setup & dependencies
 - Database schema with Dexie.js
-- Core data hooks (CRUD operations)
+- Core data hooks (vehicles, sessions, locations, settings)
+- App initialization, routing, and layout shell
 - Onboarding flow (3-step wizard)
-- Theme system with dark/light mode
-- App initialization & routing structure
-- PWA configuration
+- Theme system (dark/light/system mode)
+- Session logging and management (list, add, edit, delete)
+- Vehicle management (list, add, edit, delete with safety checks)
+- Settings page with location management and storage info
+- PWA configuration and persistent storage request
 
-### 🚧 In Progress
+### 🚧 In Progress / Not Started
 
-- Dashboard page
-- Session logging and management
-- Vehicle management UI
-- Settings page
-- Charts and analytics
-- PWA icons and installation prompts
+- Dashboard page with stats and recent sessions
+- Charts and analytics (Recharts)
+- PWA icons and service worker update notification
+- Testing and deployment
 
 See [docs/tasks.md](docs/tasks.md) for the complete development roadmap.
 
