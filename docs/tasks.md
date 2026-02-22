@@ -5,12 +5,13 @@
 - **Phase 1 - Setup**: ✅ Complete (4/4)
 - **Phase 2 - Data Layer**: ✅ Complete (4/4)
 - **Phase 3 - Context Providers & Hooks**: ✅ Complete (8/8)
-- **Phase 4 - Routing & Pages**: 🚧 In Progress (6/8)
+- **Phase 4 - Routing & Pages**: 🚧 In Progress (7/8)
 - **Phase 5 - UI Components**: ⏳ Not Started (0/2)
-- **Phase 6 - PWA Features**: 🚧 In Progress (2/4)
-- **Phase 7 - Business Logic & Testing**: 🚧 In Progress (3/5)
+- **Phase 6 - Tech Debt / Cleanup**: ⏳ Not Started (0/4)
+- **Phase 7 - PWA Features**: 🚧 In Progress (2/4)
+- **Phase 8 - Business Logic & Testing**: 🚧 In Progress (3/5)
 
-**Overall Progress**: 27/35 tasks complete (77%)
+**Overall Progress**: 28/39 tasks complete (72%)
 
 ### Next Up
 The foundation is complete! Next priorities:
@@ -78,7 +79,7 @@ The foundation is complete! Next priorities:
    - Create vehicles list with add/edit/delete actions, handle deletion validation
 7. [x] Build VehicleForm component
    - Create form for adding/editing vehicles with emoji icon picke
-8. [ ] Build Settings page
+8. [x] Build Settings page
    - Create settings page with locations management section (add/edit/delete locations), storage info (navigator.storage.estimate), app info
 9. [ ] Build Dashboard page
    - Create main dashboard with stats summary, recent sessions, empty state handling
@@ -92,7 +93,14 @@ The foundation is complete! Next priorities:
 2. [ ] Implement charts with Recharts
    - Create energy usage by location chart and timeline chart for dashboard
 
-## 6. PWA Features
+## 6. Tech Debt / Cleanup
+
+1. [ ] Organize the types that are sprinkled throughout the components and helpers into feature level types or global types
+2. [ ] Check for opportunities to use the `useImmerState` hook
+3. [ ] More specific error pages
+4. [ ] Clean up helpers by removing the useless `build*Input` helpers
+
+## 7. PWA Features
 
 1. [ ] Generate PWA icons
    - Create icons in public/icons/: 192x192, 512x512, 180x180, 32x32, 16x16
@@ -103,7 +111,7 @@ The foundation is complete! Next priorities:
 4. [ ] Add service worker update notification
    - Detect new service worker and show 'Update available' UI with reload action
 
-## 7. Business Logic & Testing
+## 8. Business Logic & Testing
 
 1. [x] Implement app initialization flow
    - Create logic to check settings, seed locations if needed, redirect to onboarding if needed, create default settings on first launch
