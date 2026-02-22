@@ -1,6 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useDatabase } from './useDatabase';
-import type { Location } from '../data/data-types';
+import type { ActiveState, Location } from '../data/data-types';
 import { generateId } from '../utilities/dataUtils';
 import { success, failure, type Result } from '../utilities/resultUtils';
 
@@ -8,7 +8,7 @@ type NewLocation = Omit<Location, 'id' | 'createdAt' | 'isActive'>;
 type UpdateLocation = Partial<Omit<Location, 'id' | 'createdAt'>>;
 
 // todo - invert activeOnly
-export function useLocations(activeOnly = true) {
+export function useLocations(all = false) {
   const { db } = useDatabase();
 
   // todo - apply the same pattern here as useSessions with explicit getLocationList and getLocation
@@ -16,19 +16,19 @@ export function useLocations(activeOnly = true) {
   // This will give us more flexibility to fetch active vs all locations, and also to fetch a single
   // location by id when needed without having to fetch the entire list first
   const locations = useLiveQuery(async () => {
-    if (activeOnly) {
-      return await db.locations.where('isActive').equals(1).sortBy('createdAt');
+    if (all) {
+      return await db.locations.orderBy('order').toArray();
     }
 
-    return await db.locations.orderBy('createdAt').toArray();
-  }, [activeOnly]);
+    return await db.locations.where('isActive').equals(1).sortBy('order');
+  }, [all]);
 
   const createLocation = async (loc: NewLocation): Promise<Result<Location>> => {
     const location: Location = {
       ...loc,
       id: generateId(),
       createdAt: Date.now(),
-      isActive: 1
+      isActive: 1 as ActiveState
     };
 
     try {
