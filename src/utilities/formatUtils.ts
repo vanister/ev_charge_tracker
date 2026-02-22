@@ -1,24 +1,24 @@
-export function formatCost(costCents: number): string {
+export function formatCost(costCents: number, decimalPlaces: number = 2): string {
   const dollars = costCents / 100;
-  return `$${dollars.toFixed(2)}`;
+  return `$${dollars.toFixed(decimalPlaces)}`;
 }
 
-export function formatEnergy(kwh: number): string {
-  return `${kwh.toFixed(2)} kWh`;
+export function formatEnergy(kwh: number, decimalPlaces: number = 1): string {
+  return `${kwh.toFixed(decimalPlaces)} kWh`;
 }
 
-export function formatRate(ratePerKwh: number): string {
-  return `$${ratePerKwh.toFixed(3)}/kWh`;
+export function formatRate(ratePerKwh: number, decimalPlaces: number = 2): string {
+  return `$${ratePerKwh.toFixed(decimalPlaces)}/kWh`;
 }
 
-export function formatBytes(bytes: number): string {
+export function formatBytes(bytes: number, decimalPlaces: number = 1): string {
   if (bytes < 1024 * 1024) {
-    return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / 1024).toFixed(decimalPlaces)} KB`;
   }
 
   if (bytes < 1024 * 1024 * 1024) {
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    return `${(bytes / (1024 * 1024)).toFixed(decimalPlaces)} MB`;
   }
 
-  return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+  return `${(bytes / (1024 * 1024 * 1024)).toFixed(decimalPlaces)} GB`;
 }
