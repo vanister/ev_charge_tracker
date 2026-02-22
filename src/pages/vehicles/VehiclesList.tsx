@@ -3,6 +3,7 @@ import { useVehicles } from '../../hooks/useVehicles';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { Button } from '../../components/Button';
 import { EmptyState } from '../../components/EmptyState';
+import { SectionHeader } from '../../components/SectionHeader';
 import { VehicleItem } from './VehicleItem';
 import { useMemo } from 'react';
 
@@ -44,11 +45,13 @@ export function VehiclesList() {
   return (
     <div className="min-h-screen bg-background px-4 py-6">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-end justify-end mb-6">
-          <Link to="/vehicles/add">
-            <Button variant="primary">Add Vehicle</Button>
-          </Link>
-        </div>
+        <SectionHeader
+          action={
+            <Link to="/vehicles/add">
+              <Button variant="primary">Add Vehicle</Button>
+            </Link>
+          }
+        />
 
         <div className="space-y-3">
           {sortedVehicles.map((vehicle) => (

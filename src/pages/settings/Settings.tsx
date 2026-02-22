@@ -5,6 +5,7 @@ import { usePageTitle } from '../../hooks/usePageTitle';
 import { useImmerState } from '../../hooks/useImmerState';
 import { Button } from '../../components/Button';
 import { Icon } from '../../components/Icon';
+import { SectionHeader } from '../../components/SectionHeader';
 import { EmptyState } from '../../components/EmptyState';
 import { LocationItem } from './LocationItem';
 import { formatBytes } from '../../utilities/formatUtils';
@@ -58,12 +59,14 @@ export function Settings() {
     <div className="min-h-screen bg-background px-4 py-6">
       <div className="max-w-2xl mx-auto space-y-8">
         <section>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-body">Locations</h2>
-            <Link to="/settings/locations/add">
-              <Button variant="primary">Add Location</Button>
-            </Link>
-          </div>
+          <SectionHeader
+            title="Locations"
+            action={
+              <Link to="/settings/locations/add">
+                <Button variant="primary">Add Location</Button>
+              </Link>
+            }
+          />
 
           {locations.length === 0 ? (
             <EmptyState
@@ -83,7 +86,7 @@ export function Settings() {
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-body mb-4">Storage</h2>
+          <SectionHeader title="Storage" />
           <div className="p-4 bg-surface border border-default rounded-lg space-y-3">
             {state.storageUsed !== null && state.storageQuota !== null ? (
               <>
@@ -109,7 +112,7 @@ export function Settings() {
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-body mb-4">About</h2>
+          <SectionHeader title="About" />
           <div className="p-4 bg-surface border border-default rounded-lg">
             <div className="flex items-center gap-3 mb-3">
               <div className="p-2 bg-primary/10 rounded-lg">

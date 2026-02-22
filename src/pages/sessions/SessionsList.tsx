@@ -1,10 +1,12 @@
 import { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import { useLocations } from '../../hooks/useLocations';
 import { usePageTitle } from '../../hooks/usePageTitle';
+import { Button } from '../../components/Button';
+import { SectionHeader } from '../../components/SectionHeader';
 import { SessionsFilter } from './SessionsFilter';
 import { SessionDateGroup } from './SessionDateGroup';
 import { SessionsEmptyState } from './SessionsEmptyState';
@@ -81,6 +83,14 @@ export function SessionsList() {
 
   return (
     <div className="min-h-screen bg-background px-4 py-6">
+      <SectionHeader
+        action={
+          <Link to="/sessions/add">
+            <Button variant="primary">Add Session</Button>
+          </Link>
+        }
+      />
+
       <SessionsFilter
         vehicles={vehicles}
         locations={locations}
