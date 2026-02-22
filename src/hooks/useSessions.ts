@@ -25,9 +25,7 @@ export function useSessions() {
 
       if (filters?.vehicleId && filters?.locationId) {
         const allSessions = await query.reverse().toArray();
-        return allSessions.filter(
-          (s) => s.vehicleId === filters.vehicleId && s.locationId === filters.locationId
-        );
+        return allSessions.filter((s) => s.vehicleId === filters.vehicleId && s.locationId === filters.locationId);
       }
 
       if (filters?.vehicleId) {

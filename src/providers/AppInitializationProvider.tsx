@@ -1,17 +1,14 @@
 import { useState, useEffect, useRef, type ReactNode } from 'react';
 import { useDatabase } from '../hooks/useDatabase';
 import { AppInitializationContext } from '../contexts/AppInitializationContext';
-import { loadSettings, seedDefaultLocations } from '../utilities/dataUtils';
+import { loadSettings, seedDefaultLocations } from '../data/repositories';
 
 type AppInitializationProviderProps = {
   children: ReactNode;
   storage?: StorageManager;
 };
 
-export function AppInitializationProvider({
-  children,
-  storage = navigator.storage
-}: AppInitializationProviderProps) {
+export function AppInitializationProvider({ children, storage = navigator.storage }: AppInitializationProviderProps) {
   const { db } = useDatabase();
   const [isInitialized, setIsInitialized] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -47,8 +44,6 @@ export function AppInitializationProvider({
   }, []);
 
   return (
-    <AppInitializationContext.Provider value={{ isInitialized, error }}>
-      {children}
-    </AppInitializationContext.Provider>
+    <AppInitializationContext.Provider value={{ isInitialized, error }}>{children}</AppInitializationContext.Provider>
   );
 }

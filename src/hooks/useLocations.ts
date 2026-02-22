@@ -1,8 +1,8 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useDatabase } from './useDatabase';
 import type { ActiveState, Location } from '../data/data-types';
-import { generateId } from '../utilities/dataUtils';
 import { success, failure, type Result } from '../utilities/resultUtils';
+import { generateId } from '../utilities/dataUtils';
 
 type NewLocation = Omit<Location, 'id' | 'createdAt' | 'isActive'>;
 type UpdateLocation = Partial<Omit<Location, 'id' | 'createdAt'>>;
