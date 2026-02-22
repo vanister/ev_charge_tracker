@@ -1,6 +1,6 @@
 # EV Charge Tracker - Design Outline
 
-> **Status**: Foundation Complete - Core data layer, hooks, providers, and onboarding flow are implemented. Dashboard and feature pages are in progress.
+> **Status**: Core Complete (77%) - Data layer, hooks, providers, onboarding, sessions, and vehicle management are fully implemented. Persistent storage and deletion safety checks are done. Remaining: Dashboard page, Settings page, PWA icons, and service worker update notification.
 
 ## Tech Stack
 

@@ -7,10 +7,10 @@
 - **Phase 3 - Context Providers & Hooks**: ✅ Complete (8/8)
 - **Phase 4 - Routing & Pages**: 🚧 In Progress (6/8)
 - **Phase 5 - UI Components**: ⏳ Not Started (0/2)
-- **Phase 6 - PWA Features**: 🚧 In Progress (1/4)
-- **Phase 7 - Business Logic & Testing**: 🚧 In Progress (1/5)
+- **Phase 6 - PWA Features**: 🚧 In Progress (2/4)
+- **Phase 7 - Business Logic & Testing**: 🚧 In Progress (3/5)
 
-**Overall Progress**: 24/35 tasks complete (69%)
+**Overall Progress**: 27/35 tasks complete (77%)
 
 ### Next Up
 The foundation is complete! Next priorities:
@@ -77,13 +77,13 @@ The foundation is complete! Next priorities:
 6. [x] Build VehiclesList page
    - Create vehicles list with add/edit/delete actions, handle deletion validation
 7. [x] Build VehicleForm component
-   - Create form for adding/editing vehicles with emoji icon picker
-8. [ ] Build Dashboard page
+   - Create form for adding/editing vehicles with emoji icon picke
+8. [ ] Build Settings page
+   - Create settings page with locations management section (add/edit/delete locations), storage info (navigator.storage.estimate), app info
+9. [ ] Build Dashboard page
    - Create main dashboard with stats summary, recent sessions, empty state handling
    - Implement useStats hook
    - Create hook to compute totalKwh, totalCost, avgRate, byLocation (with names), byDate from sessions
-9. [ ] Build Settings page
-   - Create settings page with locations management section (add/edit/delete locations), storage info (navigator.storage.estimate), app info
 
 ## 5. UI Components
 
@@ -98,7 +98,7 @@ The foundation is complete! Next priorities:
    - Create icons in public/icons/: 192x192, 512x512, 180x180, 32x32, 16x16
 2. [x] Configure PWA manifest
    - Set up manifest.json with name, icons, theme colors, display mode in vite.config.ts
-3. [ ] Implement persistent storage request
+3. [x] Implement persistent storage request
    - Add navigator.storage.persist() call on app init, show storage quota in settings
 4. [ ] Add service worker update notification
    - Detect new service worker and show 'Update available' UI with reload action
@@ -107,9 +107,9 @@ The foundation is complete! Next priorities:
 
 1. [x] Implement app initialization flow
    - Create logic to check settings, seed locations if needed, redirect to onboarding if needed, create default settings on first launch
-2. [ ] Add vehicle deletion safety checks
+2. [x] Add vehicle deletion safety checks
    - Prevent deletion of vehicles with sessions, offer cascade delete option
-3. [ ] Add location deletion safety checks
+3. [x] Add location deletion safety checks
    - Prevent deletion of locations with sessions
 4. [ ] Test offline functionality
    - Verify all features work without network, test service worker caching
