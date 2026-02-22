@@ -11,6 +11,8 @@ import { SessionsList } from './pages/sessions/SessionsList';
 import { SessionDetails } from './pages/sessions/SessionDetails';
 import { VehiclesList } from './pages/vehicles/VehiclesList';
 import { VehicleDetails } from './pages/vehicles/VehicleDetails';
+import { Settings } from './pages/settings/Settings';
+import { LocationDetails } from './pages/settings/LocationDetails';
 
 export function App() {
   const { isInitialized, error } = useAppInitialization();
@@ -42,9 +44,9 @@ export function App() {
           <Route path="/vehicles/add" element={<VehicleDetails />} />
           <Route path="/vehicles/:id/edit" element={<VehicleDetails />} />
 
-          {/* TODO: Implement Settings route
-          <Route path="/settings" element={<SettingsPage />} />
-          */}
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/settings/locations/add" element={<LocationDetails />} />
+          <Route path="/settings/locations/:id/edit" element={<LocationDetails />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
