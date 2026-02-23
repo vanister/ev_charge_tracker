@@ -1,4 +1,4 @@
-import { useLiveQuery } from 'dexie-react-hooks';
+import { useCallback } from 'react';
 import { useDatabase } from './useDatabase';
 import type { Vehicle } from '../data/data-types';
 import { DEFAULT_VEHICLE_ICON } from '../data/constants';
@@ -8,16 +8,26 @@ import { success, failure, type Result } from '../utilities/resultUtils';
 export type CreateVehicleInput = Omit<Vehicle, 'id' | 'createdAt' | 'isActive'>;
 export type UpdateVehicleInput = Partial<Omit<Vehicle, 'id' | 'createdAt'>>;
 
-export function useVehicles(activeOnly = true) {
+export function useVehicles() {
   const { db } = useDatabase();
-  // todo - apply the same pattern here as useSessions with explicit getVehicleList and getVehicle functions instead of useLiveQuery in the hook, and then useLiveQuery in the components that need it. This will give us more flexibility to fetch active vs all vehicles, and also to fetch a single vehicle by id when needed without having to fetch the entire list first
-  const vehicles = useLiveQuery(async () => {
-    if (activeOnly) {
-      return db.vehicles.where('isActive').equals(1).sortBy('createdAt');
-    }
 
-    return db.vehicles.orderBy('createdAt').toArray();
-  }, [activeOnly]);
+  const getVehicleList = useCallback(
+    async (activeOnly = true): Promise<Vehicle[]> => {
+      if (activeOnly) {
+        return db.vehicles.where('isActive').equals(1).sortBy('createdAt');
+      }
+
+      return db.vehicles.orderBy('createdAt').toArray();
+    },
+    [db]
+  );
+
+  const getVehicle = useCallback(
+    async (id: string): Promise<Vehicle | undefined> => {
+      return db.vehicles.get(id);
+    },
+    [db]
+  );
 
   const createVehicle = async (input: CreateVehicleInput): Promise<Result<Vehicle>> => {
     const vehicle: Vehicle = {
@@ -77,7 +87,8 @@ export function useVehicles(activeOnly = true) {
   };
 
   return {
-    vehicles: vehicles ?? [],
+    getVehicleList,
+    getVehicle,
     createVehicle,
     updateVehicle,
     deleteVehicle

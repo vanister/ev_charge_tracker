@@ -1,8 +1,8 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useLiveQuery } from 'dexie-react-hooks';
 import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
+import type { ChargingSession, Vehicle, Location as AppLocation } from '../../data/data-types';
 import { useLocations } from '../../hooks/useLocations';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { Button } from '../../components/Button';
@@ -19,28 +19,36 @@ export function SessionsList() {
   const navigate = useNavigate();
   const [selectedVehicleId, setSelectedVehicleId] = useState<string | undefined>();
   const [selectedLocationId, setSelectedLocationId] = useState<string | undefined>();
-  const { vehicles } = useVehicles();
-  const { locations } = useLocations();
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [sessions, setSessions] = useState<ChargingSession[]>([]);
+  const { getLocationList } = useLocations();
+  const [locations, setLocations] = useState<AppLocation[]>([]);
+  const { getVehicleList } = useVehicles();
   const { getSessionList, deleteSession } = useSessions();
-
-  const sessions = useLiveQuery(
-    () =>
-      getSessionList({
-        vehicleId: selectedVehicleId,
-        locationId: selectedLocationId
-      }),
-    [getSessionList, selectedVehicleId, selectedLocationId]
-  );
-
   const vehicleMap = useMemo(() => createVehicleMap(vehicles), [vehicles]);
   const locationMap = useMemo(() => createLocationMap(locations), [locations]);
   const sessionsByDate = useMemo(
-    () => groupSessionsByDate(sessions ?? [], vehicleMap, locationMap),
+    () => groupSessionsByDate(sessions, vehicleMap, locationMap),
     [sessions, vehicleMap, locationMap]
   );
 
   const hasActiveFilters = Boolean(selectedVehicleId || selectedLocationId);
-  const hasSessions = (sessions ?? []).length > 0;
+  const hasSessions = sessions.length > 0;
+
+  useEffect(() => {
+    getLocationList().then(setLocations);
+  }, [getLocationList]);
+
+  useEffect(() => {
+    getVehicleList().then(setVehicles);
+  }, [getVehicleList]);
+
+  useEffect(() => {
+    getSessionList({ vehicleId: selectedVehicleId, locationId: selectedLocationId })
+      .then(setSessions)
+      .finally(() => setIsLoading(false));
+  }, [getSessionList, selectedVehicleId, selectedLocationId]);
 
   const handleEdit = (id: string) => {
     navigate(`/sessions/${id}/edit`);
@@ -57,7 +65,10 @@ export function SessionsList() {
 
     if (!result.success) {
       alert(`Failed to delete session: ${result.error}`);
+      return;
     }
+
+    setSessions((prev) => prev.filter((s) => s.id !== id));
   };
 
   const handleAddSession = () => {
@@ -69,7 +80,7 @@ export function SessionsList() {
     setSelectedLocationId(undefined);
   };
 
-  if (!hasSessions) {
+  if (!isLoading && !hasSessions) {
     return (
       <div className="h-[calc(100vh-5rem)] bg-background px-4 py-6 flex flex-col">
         <SessionsEmptyState

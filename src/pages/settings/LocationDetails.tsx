@@ -26,7 +26,7 @@ export function LocationDetails() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const isEditMode = !!id;
-  const { locations, createLocation, updateLocation } = useLocations();
+  const { getLocation, createLocation, updateLocation } = useLocations();
 
   const [formState, setFormState] = useImmerState<LocationDetailsState>({
     ...DEFAULT_FORM_STATE,
@@ -40,24 +40,35 @@ export function LocationDetails() {
       return;
     }
 
-    const location = locations.find((l) => l.id === id);
+    const loadLocation = async () => {
+      if (!id) {
+        setFormState((draft) => {
+          draft.isInitialized = true;
+        });
+        return;
+      }
 
-    if (!location) {
+      const location = await getLocation(id);
+
+      if (!location) {
+        setFormState((draft) => {
+          draft.locationNotFound = true;
+          draft.isInitialized = true;
+        });
+        return;
+      }
+
       setFormState((draft) => {
-        draft.locationNotFound = true;
+        draft.name = location.name;
+        draft.icon = location.icon;
+        draft.color = location.color;
+        draft.defaultRate = location.defaultRate.toString();
         draft.isInitialized = true;
       });
-      return;
-    }
+    };
 
-    setFormState((draft) => {
-      draft.name = location.name;
-      draft.icon = location.icon;
-      draft.color = location.color;
-      draft.defaultRate = location.defaultRate.toString();
-      draft.isInitialized = true;
-    });
-  }, [isEditMode, id, locations, formState.isInitialized, setFormState]);
+    loadLocation();
+  }, [isEditMode, id, getLocation, formState.isInitialized, setFormState]);
 
   const handleFieldChange = (field: keyof LocationFormData, value: string) => {
     setFormState((draft) => {

@@ -1,3 +1,4 @@
+import { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useVehicles } from '../../hooks/useVehicles';
 import { usePageTitle } from '../../hooks/usePageTitle';
@@ -5,14 +6,19 @@ import { Button } from '../../components/Button';
 import { EmptyState } from '../../components/EmptyState';
 import { SectionHeader } from '../../components/SectionHeader';
 import { VehicleItem } from './VehicleItem';
-import { useMemo } from 'react';
+import type { Vehicle } from '../../data/data-types';
 
 export function VehiclesList() {
   usePageTitle('Vehicles');
 
   const navigate = useNavigate();
-  const { vehicles, deleteVehicle } = useVehicles();
+  const { getVehicleList, deleteVehicle } = useVehicles();
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const sortedVehicles = useMemo(() => [...vehicles].sort((a, b) => b.createdAt - a.createdAt), [vehicles]);
+
+  useEffect(() => {
+    getVehicleList().then(setVehicles);
+  }, [getVehicleList]);
 
   const handleDelete = async (id: string) => {
     const confirmed = window.confirm('Are you sure you want to delete this vehicle?');
@@ -25,7 +31,10 @@ export function VehiclesList() {
 
     if (!result.success) {
       alert(`Failed to delete vehicle: ${result.error}`);
+      return;
     }
+
+    setVehicles((prev) => prev.filter((v) => v.id !== id));
   };
 
   if (vehicles.length === 0) {

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useVehicles } from '../../hooks/useVehicles';
+import type { Vehicle } from '../../data/data-types';
 import { useImmerState } from '../../hooks/useImmerState';
 import { OnboardingHeader } from './OnboardingHeader';
 import { OnboardingFooter } from './OnboardingFooter';
@@ -13,7 +14,12 @@ type OnboardingStep3VehicleProps = {
 };
 
 export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
-  const { createVehicle, vehicles } = useVehicles();
+  const { createVehicle, getVehicleList } = useVehicles();
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+
+  useEffect(() => {
+    getVehicleList().then(setVehicles);
+  }, [getVehicleList]);
   const [formData, setFormData] = useImmerState<VehicleFormData>(DEFAULT_VEHICLE_FORM_DATA);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>('');

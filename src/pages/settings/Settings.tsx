@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import type { Location } from '../../data/data-types';
 import { useLocations } from '../../hooks/useLocations';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { useImmerState } from '../../hooks/useImmerState';
@@ -24,7 +25,12 @@ export function Settings() {
   usePageTitle('Settings');
 
   const navigate = useNavigate();
-  const { locations, deleteLocation } = useLocations();
+  const { getLocationList, deleteLocation } = useLocations();
+  const [locations, setLocations] = useState<Location[]>([]);
+
+  useEffect(() => {
+    getLocationList().then(setLocations);
+  }, [getLocationList]);
   const [state, setState] = useImmerState<SettingsState>(DEFAULT_STATE);
 
   useEffect(() => {
@@ -47,7 +53,10 @@ export function Settings() {
 
     if (!result.success) {
       alert(`Failed to delete location: ${result.error}`);
+      return;
     }
+
+    setLocations((prev) => prev.filter((l) => l.id !== id));
   };
 
   const storagePercent =

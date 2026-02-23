@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocations } from '../../hooks/useLocations';
+import type { Location } from '../../data/data-types';
 import { Icon } from '../../components/Icon';
 import { OnboardingHeader } from './OnboardingHeader';
 import { OnboardingFooter } from './OnboardingFooter';
@@ -17,7 +18,12 @@ type OnboardingStep2LocationsProps = {
 };
 
 export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
-  const { updateLocation, locations } = useLocations();
+  const { updateLocation, getLocationList } = useLocations();
+  const [locations, setLocations] = useState<Location[]>([]);
+
+  useEffect(() => {
+    getLocationList().then(setLocations);
+  }, [getLocationList]);
   const [locationForms, setLocationForms] = useState<LocationFormData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>('');

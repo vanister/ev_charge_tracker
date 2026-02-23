@@ -1,4 +1,4 @@
-import { useLiveQuery } from 'dexie-react-hooks';
+import { useCallback } from 'react';
 import { useDatabase } from './useDatabase';
 import type { Settings } from '../data/data-types';
 import { SETTINGS_KEY } from '../data/constants';
@@ -7,9 +7,12 @@ import { success, failure, type Result } from '../utilities/resultUtils';
 export function useSettings() {
   const { db } = useDatabase();
 
-  const settings = useLiveQuery(async () => {
-    return db.settings.get(SETTINGS_KEY);
-  });
+  const getSettings = useCallback(
+    async (): Promise<Settings | undefined> => {
+      return db.settings.get(SETTINGS_KEY);
+    },
+    [db]
+  );
 
   const updateSettings = async (
     updates: Partial<Omit<Settings, 'key'>>
@@ -39,7 +42,7 @@ export function useSettings() {
   };
 
   return {
-    settings,
+    getSettings,
     updateSettings,
     completeOnboarding
   };

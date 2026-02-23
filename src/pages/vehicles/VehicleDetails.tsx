@@ -26,7 +26,7 @@ export function VehicleDetails() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const isEditMode = !!id;
-  const { vehicles, createVehicle, updateVehicle } = useVehicles();
+  const { getVehicle, createVehicle, updateVehicle } = useVehicles();
 
   const [formState, setFormState] = useImmerState<VehicleDetailsState>({
     ...DEFAULT_FORM_STATE,
@@ -40,32 +40,36 @@ export function VehicleDetails() {
       return;
     }
 
-    if (!id) {
+    const loadVehicle = async () => {
+      if (!id) {
+        setFormState((draft) => {
+          draft.isInitialized = true;
+        });
+        return;
+      }
+
+      const vehicle = await getVehicle(id);
+
+      if (!vehicle) {
+        setFormState((draft) => {
+          draft.vehicleNotFound = true;
+          draft.isInitialized = true;
+        });
+        return;
+      }
+
       setFormState((draft) => {
+        draft.year = vehicle.year.toString();
+        draft.make = vehicle.make;
+        draft.model = vehicle.model;
+        draft.name = vehicle.name || '';
+        draft.icon = vehicle.icon;
         draft.isInitialized = true;
       });
-      return;
-    }
+    };
 
-    const vehicle = vehicles.find((v) => v.id === id);
-
-    if (!vehicle) {
-      setFormState((draft) => {
-        draft.vehicleNotFound = true;
-        draft.isInitialized = true;
-      });
-      return;
-    }
-
-    setFormState((draft) => {
-      draft.year = vehicle.year.toString();
-      draft.make = vehicle.make;
-      draft.model = vehicle.model;
-      draft.name = vehicle.name || '';
-      draft.icon = vehicle.icon;
-      draft.isInitialized = true;
-    });
-  }, [isEditMode, id, vehicles, formState.isInitialized, setFormState]);
+    loadVehicle();
+  }, [isEditMode, id, getVehicle, formState.isInitialized, setFormState]);
 
   const handleFieldChange = (field: keyof VehicleFormData, value: string) => {
     setFormState((draft) => {

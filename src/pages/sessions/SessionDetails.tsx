@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import { useLocations } from '../../hooks/useLocations';
+import type { Vehicle, Location as AppLocation } from '../../data/data-types';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { useImmerState } from '../../hooks/useImmerState';
 import { Button } from '../../components/Button';
@@ -45,8 +46,18 @@ export function SessionDetails() {
   usePageTitle(isEditMode ? 'Edit Session' : 'Add Session');
 
   const { getSession, createSession, updateSession } = useSessions();
-  const { vehicles } = useVehicles(true);
-  const { locations } = useLocations(true);
+  const { getVehicleList } = useVehicles();
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+
+  useEffect(() => {
+    getVehicleList().then(setVehicles);
+  }, [getVehicleList]);
+  const { getLocationList } = useLocations();
+  const [locations, setLocations] = useState<AppLocation[]>([]);
+
+  useEffect(() => {
+    getLocationList(true).then(setLocations);
+  }, [getLocationList]);
 
   const [formState, setFormState] = useImmerState<SessionPageState>({
     ...NEW_SESSION,
