@@ -27,7 +27,7 @@ export function DashboardRecentSessions({ sessions }: DashboardRecentSessionsPro
             locationName={locationName}
             locationIcon={locationIcon}
             locationColor={locationColor}
-            showDate
+            showFullDate
           />
         ))}
       </div>

@@ -13,12 +13,20 @@ type SessionItemProps = {
   locationColor: string;
   onEdit?: (id: string) => void;
   onDelete?: (id: string) => void;
-  showDate?: boolean;
+  showFullDate?: boolean;
 };
 
 export function SessionItem(props: SessionItemProps) {
-  const { session, vehicleName, locationName, locationIcon, locationColor, onEdit, onDelete, showDate } =
-    props;
+  const {
+    session,
+    vehicleName,
+    locationName,
+    locationIcon,
+    locationColor,
+    onEdit,
+    onDelete,
+    showFullDate: showDate
+  } = props;
 
   const timestamp = showDate ? formatDateTime(session.chargedAt) : formatTime(session.chargedAt);
 
@@ -31,9 +39,7 @@ export function SessionItem(props: SessionItemProps) {
           <span className="text-body font-medium truncate">{vehicleName}</span>
         </div>
 
-        {onEdit && onDelete && (
-          <SessionItemActions sessionId={session.id} onEdit={onEdit} onDelete={onDelete} />
-        )}
+        {onEdit && onDelete && <SessionItemActions sessionId={session.id} onEdit={onEdit} onDelete={onDelete} />}
       </div>
 
       <div className="flex items-center gap-4 text-sm">
@@ -48,9 +54,7 @@ export function SessionItem(props: SessionItemProps) {
         </div>
       </div>
 
-      {session.notes && (
-        <p className="mt-2 text-sm text-body-secondary italic">{session.notes}</p>
-      )}
+      {session.notes && <p className="mt-2 text-sm text-body-secondary italic">{session.notes}</p>}
     </div>
   );
 }

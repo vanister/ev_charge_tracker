@@ -100,6 +100,7 @@ The foundation is complete! Next priorities:
 3. [ ] More specific error pages
 4. [ ] Clean up helpers by removing the useless `build*Input` helpers
 5. [ ] Standardize on a page max-width from the settings or dashboard pages
+6. [ ] Replace `Promise.then` with `async/await`
 
 ## 7. PWA Features
 

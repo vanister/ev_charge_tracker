@@ -54,6 +54,7 @@ export function useStats(): UseStatsResult {
   return { stats, recentSessions, isLoading };
 }
 
+// todo -  move these out into a helper
 function computeStats(sessions: ChargingSession[], locationMap: Map<string, Location>): SessionStats {
   const locationAccum = new Map<string, LocationStat>();
   let totalKwh = 0;
@@ -90,6 +91,7 @@ function computeStats(sessions: ChargingSession[], locationMap: Map<string, Loca
   };
 }
 
+// todo - move this into a helper
 function buildRecentSessions(
   sessions: ChargingSession[],
   vehicleMap: Map<string, Vehicle>,
