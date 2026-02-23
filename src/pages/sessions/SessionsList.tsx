@@ -86,7 +86,7 @@ export function SessionsList() {
       <SectionHeader
         action={
           <Link to="/sessions/add">
-            <Button variant="primary">Add Session</Button>
+            <Button variant="primary">Add</Button>
           </Link>
         }
       />

@@ -63,7 +63,7 @@ export function Settings() {
             title="Locations"
             action={
               <Link to="/settings/locations/add">
-                <Button variant="primary">Add Location</Button>
+                <Button variant="primary">Add</Button>
               </Link>
             }
           />

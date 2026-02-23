@@ -48,7 +48,7 @@ export function VehiclesList() {
         <SectionHeader
           action={
             <Link to="/vehicles/add">
-              <Button variant="primary">Add Vehicle</Button>
+              <Button variant="primary">Add</Button>
             </Link>
           }
         />
