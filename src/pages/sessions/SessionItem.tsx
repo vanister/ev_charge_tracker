@@ -1,8 +1,9 @@
 import type { ChargingSession } from '../../data/data-types';
 import type { IconName } from '../../components/Icon';
 import { Icon } from '../../components/Icon';
-import { formatTime } from '../../utilities/dateUtils';
+import { formatTime, formatDateTime } from '../../utilities/dateUtils';
 import { formatCost, formatEnergy } from '../../utilities/formatUtils';
+import { SessionItemActions } from './SessionItemActions';
 
 type SessionItemProps = {
   session: ChargingSession;
@@ -10,67 +11,46 @@ type SessionItemProps = {
   locationName: string;
   locationIcon: IconName;
   locationColor: string;
-  onEdit: (id: string) => void;
-  onDelete: (id: string) => void;
+  onEdit?: (id: string) => void;
+  onDelete?: (id: string) => void;
+  showDate?: boolean;
 };
 
 export function SessionItem(props: SessionItemProps) {
-  const { session, vehicleName, locationName, locationIcon, locationColor, onEdit, onDelete } =
+  const { session, vehicleName, locationName, locationIcon, locationColor, onEdit, onDelete, showDate } =
     props;
 
-  const handleEdit = () => {
-    onEdit(session.id);
-  };
-
-  const handleDelete = () => {
-    onDelete(session.id);
-  };
+  const timestamp = showDate ? formatDateTime(session.chargedAt) : formatTime(session.chargedAt);
 
   return (
     <div className="p-4 bg-surface border border-default rounded-lg">
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-body-secondary text-sm">{formatTime(session.chargedAt)}</span>
-            <span className="text-body-tertiary">•</span>
-            <span className="text-body font-medium">{vehicleName}</span>
-          </div>
-
-          <div className="flex items-center gap-2 mb-3">
-            <Icon name={locationIcon} size="sm" color={locationColor} />
-            <span className="text-body-secondary text-sm">{locationName}</span>
-          </div>
-
-          <div className="flex items-center gap-4 text-sm">
-            <span className="text-body">{formatEnergy(session.energyKwh)}</span>
-            <span className="text-body-tertiary">•</span>
-            <span className="text-body font-semibold">{formatCost(session.costCents)}</span>
-          </div>
-
-          {session.notes && (
-            <p className="mt-2 text-sm text-body-secondary italic">{session.notes}</p>
-          )}
+      <div className="flex items-center justify-between gap-2 mb-2">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-body-secondary text-sm shrink-0">{timestamp}</span>
+          <span className="text-body-tertiary shrink-0">•</span>
+          <span className="text-body font-medium truncate">{vehicleName}</span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={handleEdit}
-            className="p-2 text-body-secondary hover:text-body hover:bg-background rounded-lg transition-colors"
-            aria-label="Edit session"
-          >
-            <Icon name="edit" size="sm" />
-          </button>
-          <button
-            type="button"
-            onClick={handleDelete}
-            className="p-2 text-body-secondary hover:text-red-500 hover:bg-background rounded-lg transition-colors"
-            aria-label="Delete session"
-          >
-            <Icon name="trash-2" size="sm" />
-          </button>
+        {onEdit && onDelete && (
+          <SessionItemActions sessionId={session.id} onEdit={onEdit} onDelete={onDelete} />
+        )}
+      </div>
+
+      <div className="flex items-center gap-4 text-sm">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
+          <Icon name={locationIcon} size="sm" color={locationColor} className="shrink-0" />
+          <span className="text-body-secondary truncate">{locationName}</span>
+        </div>
+        <div className="flex items-center gap-3 shrink-0">
+          <span className="text-body">{formatEnergy(session.energyKwh)}</span>
+          <span className="text-body-tertiary">•</span>
+          <span className="text-body font-semibold">{formatCost(session.costCents)}</span>
         </div>
       </div>
+
+      {session.notes && (
+        <p className="mt-2 text-sm text-body-secondary italic">{session.notes}</p>
+      )}
     </div>
   );
 }
