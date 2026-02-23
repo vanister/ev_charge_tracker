@@ -104,6 +104,7 @@ The foundation is complete! Next priorities:
 
 1. [ ] Generate PWA icons
    - Create icons in public/icons/: 192x192, 512x512, 180x180, 32x32, 16x16
+   - All icons (including favicon) must visually match the Lucide "zap" icon used in Settings > About
 2. [x] Configure PWA manifest
    - Set up manifest.json with name, icons, theme colors, display mode in vite.config.ts
 3. [x] Implement persistent storage request

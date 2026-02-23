@@ -262,6 +262,9 @@ ICON_SIZES:
   - 180x180 (iOS touch icon)
   - 32x32, 16x16 (favicon)
 
+ICON DESIGN:
+  - All icons (including favicon) must visually match the Lucide "zap" icon used in Settings > About
+
 MANIFEST:
   name: "EV Charge Tracker"
   short_name: "Charge Tracker"
