@@ -83,8 +83,8 @@ export function SessionDetails() {
       setFormState((draft) => {
         draft.vehicleId = session.vehicleId;
         draft.locationId = session.locationId;
-        draft.energyKwh = session.energyKwh.toString();
-        draft.ratePerKwh = session.ratePerKwh.toString();
+        draft.energyKwh = session.energyKwh.toFixed(2);
+        draft.ratePerKwh = session.ratePerKwh.toFixed(2);
         draft.chargedAt = timestampToDatetimeLocal(session.chargedAt);
         draft.notes = session.notes || '';
         draft.hasManualRate = true;
@@ -105,7 +105,7 @@ export function SessionDetails() {
 
     if (location) {
       setFormState((draft) => {
-        draft.ratePerKwh = location.defaultRate.toString();
+        draft.ratePerKwh = location.defaultRate.toFixed(2);
       });
     }
   }, [formState.locationId, formState.hasManualRate, formState.isInitialized, locations, setFormState]);
@@ -115,16 +115,22 @@ export function SessionDetails() {
       draft[field] = value;
 
       // Changing location enables rate auto-fill; changing rate locks it to manual
-      if (field === 'locationId') {
-        draft.hasManualRate = false;
-      } else if (field === 'ratePerKwh') {
-        draft.hasManualRate = true;
+      switch (field) {
+        case 'locationId':
+          draft.hasManualRate = false;
+          break;
+        case 'ratePerKwh':
+          draft.hasManualRate = true;
+          break;
+        default:
+          break;
       }
     });
   };
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     setFormState((draft) => {
       draft.isLoading = true;
       draft.error = '';

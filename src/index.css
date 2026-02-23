@@ -50,6 +50,15 @@
 
 /* Smooth theme transitions - in base layer so utilities can override transition-property */
 @layer base {
+  /* color-scheme tells the browser which mode to use for native controls (inputs, scrollbars, etc.) */
+  :root {
+    color-scheme: light;
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+
   * {
     transition-property: background-color, color, border-color;
     transition-duration: 150ms;
