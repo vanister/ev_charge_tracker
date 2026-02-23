@@ -81,7 +81,7 @@ The foundation is complete! Next priorities:
    - Create form for adding/editing vehicles with emoji icon picke
 8. [x] Build Settings page
    - Create settings page with locations management section (add/edit/delete locations), storage info (navigator.storage.estimate), app info
-9. [ ] Build Dashboard page
+9. [x] Build Dashboard page
    - Create main dashboard with stats summary, recent sessions, empty state handling
    - Implement useStats hook
    - Create hook to compute totalKwh, totalCost, avgRate, byLocation (with names), byDate from sessions
@@ -99,6 +99,7 @@ The foundation is complete! Next priorities:
 2. [ ] Check for opportunities to use the `useImmerState` hook
 3. [ ] More specific error pages
 4. [ ] Clean up helpers by removing the useless `build*Input` helpers
+5. [ ] Standardize on a page max-width from the settings or dashboard pages
 
 ## 7. PWA Features
 

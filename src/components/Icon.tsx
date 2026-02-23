@@ -16,7 +16,10 @@ import {
   Trash2,
   Calendar,
   Filter,
-  ChevronDown
+  ChevronDown,
+  DollarSign,
+  TrendingUp,
+  Activity
 } from 'lucide-react';
 
 export type IconName =
@@ -37,7 +40,10 @@ export type IconName =
   | 'trash-2'
   | 'calendar'
   | 'filter'
-  | 'chevron-down';
+  | 'chevron-down'
+  | 'dollar-sign'
+  | 'trending-up'
+  | 'activity';
 
 type IconSize = 'sm' | 'md' | 'lg';
 
@@ -105,6 +111,12 @@ export function Icon(props: IconProps) {
       return <Filter className={combinedClassName} />;
     case 'chevron-down':
       return <ChevronDown className={combinedClassName} />;
+    case 'dollar-sign':
+      return <DollarSign className={combinedClassName} />;
+    case 'trending-up':
+      return <TrendingUp className={combinedClassName} />;
+    case 'activity':
+      return <Activity className={combinedClassName} />;
     default:
       return null;
   }

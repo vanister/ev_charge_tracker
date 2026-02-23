@@ -11,7 +11,7 @@ import { SessionsFilter } from './SessionsFilter';
 import { SessionDateGroup } from './SessionDateGroup';
 import { SessionsEmptyState } from './SessionsEmptyState';
 import { formatDate } from '../../utilities/dateUtils';
-import { createVehicleMap, createLocationMap, groupSessionsByDate } from './sessionHelpers';
+import { createVehicleMap, createLocationMap, groupSessionsByDate } from '../../helpers/sessionHelpers';
 
 export function SessionsList() {
   usePageTitle('Sessions');

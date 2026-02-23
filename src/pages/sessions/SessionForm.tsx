@@ -1,7 +1,7 @@
 import { Icon } from '../../components/Icon';
 import { formatCost } from '../../utilities/formatUtils';
 import type { Vehicle, Location } from '../../data/data-types';
-import { getVehicleDisplayName } from './sessionHelpers';
+import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
 
 export type SessionFormData = {
   vehicleId: string;

@@ -1,6 +1,6 @@
-import type { ChargingSession, Vehicle, Location } from '../../data/data-types';
-import type { IconName } from '../../components/Icon';
-import { getDateGroupKey } from '../../utilities/dateUtils';
+import type { ChargingSession, Vehicle, Location } from '../data/data-types';
+import type { IconName } from '../components/Icon';
+import { getDateGroupKey } from '../utilities/dateUtils';
 
 export type SessionWithMetadata = {
   session: ChargingSession;

@@ -6,7 +6,7 @@ import { RequireOnboarding } from './components/RequireOnboarding';
 import { Layout } from './pages/layout/Layout';
 import { ErrorPage } from './pages/ErrorPage';
 import { Onboarding } from './pages/onboarding/Onboarding';
-import { Dashboard } from './pages/Dashboard';
+import { Dashboard } from './pages/dashboard/Dashboard';
 import { SessionsList } from './pages/sessions/SessionsList';
 import { SessionDetails } from './pages/sessions/SessionDetails';
 import { VehiclesList } from './pages/vehicles/VehiclesList';
