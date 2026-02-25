@@ -88,6 +88,6 @@ All color changes transition smoothly over 150ms with ease timing for a polished
 
 - **CSS Variables**: Defined in `src/index.css` using Tailwind v4's `@theme` directive
 - **Theme Provider**: `src/providers/ThemeProvider.tsx` manages theme state
-- **Database Storage**: Theme preference stored in IndexedDB settings table
-- **System Detection**: Listens to `prefers-color-scheme` media query
+- **Storage**: Theme preference persisted to `localStorage` (key: `ev-charge-tracker-theme`) for instant load before IndexedDB is ready
+- **System Detection**: Listens to `prefers-color-scheme` media query for live system preference changes
 - **Root Attribute**: `data-theme="dark"` applied to `<html>` element in dark mode

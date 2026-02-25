@@ -1,10 +1,10 @@
 # EV Charge Tracker - Design Outline
 
-> **Status**: Core Complete (77%) - Data layer, hooks, providers, onboarding, sessions, and vehicle management are fully implemented. Persistent storage and deletion safety checks are done. Remaining: Dashboard page, Settings page, PWA icons, and service worker update notification.
+> **Status**: All Pages Complete (71%) - Data layer, hooks, providers, onboarding, dashboard, sessions, vehicles, settings, and theme support are all implemented. Remaining: Recharts charts, PWA icons, and service worker update notification.
 
 ## Tech Stack
 
-Vite + React 19 + TypeScript + Dexie.js (IndexedDB) + Tailwind + vite-plugin-pwa
+Vite + React 19 + TypeScript + Dexie.js (IndexedDB) + Tailwind CSS v4 + vite-plugin-pwa + Immer + React Router v7
 
 ## Core Rules
 
@@ -18,13 +18,23 @@ Vite + React 19 + TypeScript + Dexie.js (IndexedDB) + Tailwind + vite-plugin-pwa
 
 ```
 src/
-  data/db.ts          # Dexie schema
-  constants.ts   # DEFAULT_LOCATIONS
-  types/             # TS interfaces
-  contexts/          # DatabaseProvider, AppInitializationProvider
-  hooks/             # useVehicles, useSessions, useSettings, useLocations, useStats
-  pages/             # Route components
-  components/        # UI components
+  data/              # db.ts, data-types.ts, constants.ts, repositories.ts
+  types/             # shared-types.ts
+  contexts/          # Context definitions (DatabaseContext, AppInitializationContext, ThemeContext, LayoutConfigContext)
+  providers/         # Context providers (DatabaseProvider, AppInitializationProvider, ThemeProvider, LayoutConfigProvider)
+  hooks/             # useDatabase, useAppInitialization, useVehicles, useSessions, useSettings,
+                     # useLocations, useStats, useTheme, useImmerState, usePageTitle, useLayoutConfig
+  helpers/           # sessionHelpers.ts
+  utilities/         # dataUtils.ts, dateUtils.ts, formatUtils.ts, resultUtils.ts, themeUtils.ts
+  components/        # Button, EmptyState, Icon, SectionHeader, FullscreenLoader, RequireOnboarding
+  pages/
+    layout/          # Layout, AppHeader, NavigationDrawer, ThemeSelector, MenuOverlay
+    dashboard/       # Dashboard, DashboardStats, DashboardRecentSessions, DashboardStatCard
+    onboarding/      # Onboarding + step components
+    sessions/        # SessionsList, SessionDetails, SessionForm, SessionsFilter, SessionItem, etc.
+    settings/        # Settings, LocationDetails, LocationItem, LocationForm
+    vehicles/        # VehiclesList, VehicleDetails, VehicleItem, VehicleForm
+    ErrorPage.tsx
 ```
 
 ## Dexie Schema
@@ -54,15 +64,20 @@ DEFAULT_LOCATIONS = [
 ## Routing & Navigation
 
 ```
-/                      → Dashboard (redirects to /onboarding if needed)
-/onboarding            → 3-step flow (Welcome → Review/Edit Locations → First Vehicle)
-/sessions              → List with filters
-/sessions/add          → Form (create)
-/sessions/:id/edit     → Form (edit)
-/vehicles              → List
-/vehicles/add          → Form (create)
-/vehicles/:id/edit     → Form (edit)
-/settings              → Locations management, storage info
+/error                           → ErrorPage (init failures)
+/onboarding                      → 3-step flow (Welcome → Review Locations → First Vehicle)
+
+Protected (RequireOnboarding guard):
+/                                → Dashboard
+/sessions                        → List with filters, grouped by date
+/sessions/add                    → SessionDetails (create)
+/sessions/:id/edit               → SessionDetails (edit)
+/vehicles                        → VehiclesList
+/vehicles/add                    → VehicleDetails (create)
+/vehicles/:id/edit               → VehicleDetails (edit)
+/settings                        → Locations management, storage info, app info
+/settings/locations/add          → LocationDetails (create)
+/settings/locations/:id/edit     → LocationDetails (edit)
 ```
 
 ## Hooks Pattern
@@ -71,22 +86,27 @@ Providers for initialization:
 
 ```typescript
 DatabaseProvider → provides db instance
-AppInitializationProvider → provides { isLoading, needsOnboarding, settings }
+ThemeProvider → provides { theme, resolvedTheme, updateTheme }
+AppInitializationProvider → provides { isInitialized, error }
+LayoutConfigProvider → provides { title, setTitle } (inside Layout)
 ```
 
-All data hooks use `useLiveQuery()` and return CRUD operations:
+Data hooks return Promise-based CRUD operations using a **Result<T>** pattern:
 
 ```typescript
 useDatabase() → { db }
-useAppInitialization() → { isLoading, needsOnboarding, settings }
-useVehicles(activeOnly?) → { vehicles, createVehicle, updateVehicle, deleteVehicle }
-useSessions(filters?) → { sessions, createSession, updateSession, deleteSession }
-useSettings() → { settings, updateSettings, completeOnboarding }
-useLocations(activeOnly?) → { locations, createLocation, updateLocation, deleteLocation }
-useStats(filters?) → { totalKwh, totalCostCents, avgRate, byLocation, byDate }
+useAppInitialization() → { isInitialized, error }
+useVehicles() → { getVehicleList, getVehicle, createVehicle, updateVehicle, deleteVehicle }
+useSessions() → { getSessionList, getSession, createSession, updateSession, deleteSession }
+useSettings() → { getSettings, updateSettings, completeOnboarding }
+useLocations() → { getLocationList, getLocation, createLocation, updateLocation, deleteLocation }
+useStats() → { stats, recentSessions, isLoading }
+useTheme() → { theme, resolvedTheme, updateTheme }
+useImmerState(init) → [state, setState]  // setState accepts Immer draft updater
+usePageTitle(title) → { updateTitle }
 ```
 
-Filters: `{ vehicleId?, locationId?, dateRange? }`
+Session filters: `{ vehicleId?, locationId?, dateRange? }`
 
 ## First Launch
 
@@ -122,16 +142,17 @@ plugins: [
     manifest: {
       name: 'EV Charge Tracker',
       short_name: 'Charge Tracker',
-      theme_color: '#2563eb',
+      theme_color: '#14b8a6',  // teal-500
+      display: 'standalone',
       icons: [
-        /* 192, 512, 180, 32, 16 */
+        /* 192x192 (standard + maskable), 512x512 (standard + maskable) */
       ]
     }
   })
 ];
 ```
 
-Icons: `public/icons/` → 192x192, 512x512, 180x180, 32x32, 16x16
+Icons: `public/icons/` → 192x192, 512x512 (standard + maskable) — **not yet generated**
 
 ## Business Logic
 
@@ -175,4 +196,4 @@ Test offline: DevTools → Network → Offline mode
 
 ## Styling
 
-Tailwind utilities with CSS variables for theming. Theme colors: `teal-500` primary, location-specific (`teal-*`, `slate-*`, `purple-*`, `orange-*`). Full dark/light mode support.
+Tailwind CSS v4 utilities with CSS variables defined via `@theme` in `src/index.css`. Theme colors: `teal-500` primary, location-specific (`teal-*`, `slate-*`, `purple-*`, `orange-*`). Full dark/light/system mode support via ThemeProvider. See `docs/color-palette.md` for full color reference.
