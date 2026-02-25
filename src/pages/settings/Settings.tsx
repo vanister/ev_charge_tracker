@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import type { Location } from '../../data/data-types';
 import { useLocations } from '../../hooks/useLocations';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { useImmerState } from '../../hooks/useImmerState';
-import { Button } from '../../components/Button';
+import { ItemListButton } from '../../components/ItemListButton';
 import { Icon } from '../../components/Icon';
 import { SectionHeader } from '../../components/SectionHeader';
 import { EmptyState } from '../../components/EmptyState';
@@ -76,14 +76,7 @@ export function Settings() {
     <div className="min-h-screen bg-background px-4 py-6">
       <div className="max-w-2xl mx-auto space-y-8">
         <section>
-          <SectionHeader
-            title="Locations"
-            action={
-              <Link to="/settings/locations/add">
-                <Button variant="primary">Add</Button>
-              </Link>
-            }
-          />
+          <SectionHeader title="Locations" />
 
           {locations.length === 0 ? (
             <EmptyState
@@ -94,10 +87,17 @@ export function Settings() {
               onAction={() => navigate('/settings/locations/add')}
             />
           ) : (
-            <div className="space-y-3">
-              {locations.map((location) => (
-                <LocationItem key={location.id} location={location} onDelete={handleDelete} />
-              ))}
+            <div>
+              <ItemListButton
+                label="Add location"
+                onClick={() => navigate('/settings/locations/add')}
+                className="mb-3"
+              />
+              <div className="space-y-3">
+                {locations.map((location) => (
+                  <LocationItem key={location.id} location={location} onDelete={handleDelete} />
+                ))}
+              </div>
             </div>
           )}
         </section>

@@ -1,10 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useVehicles } from '../../hooks/useVehicles';
 import { usePageTitle } from '../../hooks/usePageTitle';
-import { Button } from '../../components/Button';
+import { ItemListButton } from '../../components/ItemListButton';
 import { EmptyState } from '../../components/EmptyState';
-import { SectionHeader } from '../../components/SectionHeader';
 import { VehicleItem } from './VehicleItem';
 import type { Vehicle } from '../../data/data-types';
 
@@ -62,13 +61,7 @@ export function VehiclesList() {
   return (
     <div className="min-h-screen bg-background px-4 py-6">
       <div className="max-w-4xl mx-auto">
-        <SectionHeader
-          action={
-            <Link to="/vehicles/add">
-              <Button variant="primary">Add</Button>
-            </Link>
-          }
-        />
+        <ItemListButton label="Add vehicle" onClick={() => navigate('/vehicles/add')} className="mb-6" />
 
         <div className="space-y-3">
           {sortedVehicles.map((vehicle) => (

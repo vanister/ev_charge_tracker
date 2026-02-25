@@ -1,12 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import type { ChargingSession, Vehicle, Location as AppLocation } from '../../data/data-types';
 import { useLocations } from '../../hooks/useLocations';
 import { usePageTitle } from '../../hooks/usePageTitle';
-import { Button } from '../../components/Button';
-import { SectionHeader } from '../../components/SectionHeader';
+import { ItemListButton } from '../../components/ItemListButton';
 import { SessionsFilter } from './SessionsFilter';
 import { SessionDateGroup } from './SessionDateGroup';
 import { SessionsEmptyState } from './SessionsEmptyState';
@@ -120,14 +119,6 @@ export function SessionsList() {
 
   return (
     <div className="min-h-screen bg-background px-4 py-6">
-      <SectionHeader
-        action={
-          <Link to="/sessions/add">
-            <Button variant="primary">Add</Button>
-          </Link>
-        }
-      />
-
       <SessionsFilter
         vehicles={vehicles}
         locations={locations}
@@ -146,6 +137,8 @@ export function SessionsList() {
         />
       ) : (
         <div>
+          <ItemListButton className="mb-6" label="Add session" onClick={handleAddSession} />
+
           {sessionsByDate.map(([dateKey, sessionsInGroup]) => (
             <SessionDateGroup
               key={dateKey}
