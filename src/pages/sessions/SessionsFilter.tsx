@@ -55,14 +55,14 @@ export function SessionsFilter(props: SessionsFilterProps) {
           value={selectedVehicleId || ''}
           onChange={handleVehicleChange}
           className="bg-background"
-        >
-          <option value="">All Vehicles</option>
-          {vehicles.map((vehicle) => (
-            <option key={vehicle.id} value={vehicle.id}>
-              {vehicle.icon} {getVehicleDisplayName(vehicle)}
-            </option>
-          ))}
-        </FormSelect>
+          options={[
+            { value: '', text: 'All Vehicles' },
+            ...vehicles.map((vehicle) => ({
+              value: vehicle.id,
+              text: `${vehicle.icon} ${getVehicleDisplayName(vehicle)}`
+            }))
+          ]}
+        />
 
         <FormSelect
           id="location-filter"
@@ -71,14 +71,11 @@ export function SessionsFilter(props: SessionsFilterProps) {
           value={selectedLocationId || ''}
           onChange={handleLocationChange}
           className="bg-background"
-        >
-          <option value="">All Locations</option>
-          {locations.map((location) => (
-            <option key={location.id} value={location.id}>
-              {location.name}
-            </option>
-          ))}
-        </FormSelect>
+          options={[
+            { value: '', text: 'All Locations' },
+            ...locations.map((location) => ({ value: location.id, text: location.name }))
+          ]}
+        />
       </div>
 
       {hasActiveFilters && (

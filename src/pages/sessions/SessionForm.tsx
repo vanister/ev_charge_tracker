@@ -36,14 +36,11 @@ export function SessionForm(props: SessionFormProps) {
         value={props.formData.vehicleId}
         onChange={(e) => props.onChange('vehicleId', e.target.value)}
         disabled={props.isLoading}
-      >
-        <option value="">Select a vehicle</option>
-        {props.vehicles.map((vehicle) => (
-          <option key={vehicle.id} value={vehicle.id}>
-            {getVehicleDisplayName(vehicle)}
-          </option>
-        ))}
-      </FormSelect>
+        options={[
+          { value: '', text: 'Select a vehicle' },
+          ...props.vehicles.map((vehicle) => ({ value: vehicle.id, text: getVehicleDisplayName(vehicle) }))
+        ]}
+      />
 
       <FormSelect
         id="location"
@@ -52,14 +49,11 @@ export function SessionForm(props: SessionFormProps) {
         value={props.formData.locationId}
         onChange={(e) => props.onChange('locationId', e.target.value)}
         disabled={props.isLoading}
-      >
-        <option value="">Select a location</option>
-        {props.locations.map((location) => (
-          <option key={location.id} value={location.id}>
-            {location.name}
-          </option>
-        ))}
-      </FormSelect>
+        options={[
+          { value: '', text: 'Select a location' },
+          ...props.locations.map((location) => ({ value: location.id, text: location.name }))
+        ]}
+      />
 
       <FormInput
         id="energy"
