@@ -36,6 +36,7 @@
 - No primitive constructors for coercion: use `+value` not `Number(value)`, `!!value` not `Boolean(value)`, `` `${value}` `` not `String(value)`
 - Run `npm run build` to verify no build errors after major changes
 - `React.FormEvent` is marked deprecated, use `React.SubmitEvent<T>` instead for form submit handlers
+- Use the `clsx` package for dynamic css class name creation
 
 ## Task-Specific Rules
 
