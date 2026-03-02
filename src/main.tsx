@@ -7,12 +7,12 @@ import { db } from './data/db';
 import { DatabaseProvider } from './providers/DatabaseProvider';
 import { AppInitializationProvider } from './providers/AppInitializationProvider';
 import { ThemeProvider } from './providers/ThemeProvider';
-import { ErrorBoundary } from './components/ErrorBoundary';
+import { GenericError } from './components/ErrorBoundary';
 import { App } from './App';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ErrorBoundary>
+    <GenericError>
       <DatabaseProvider db={db}>
         <ThemeProvider>
           <AppInitializationProvider>
@@ -22,6 +22,6 @@ createRoot(document.getElementById('root')!).render(
           </AppInitializationProvider>
         </ThemeProvider>
       </DatabaseProvider>
-    </ErrorBoundary>
+    </GenericError>
   </StrictMode>
 );

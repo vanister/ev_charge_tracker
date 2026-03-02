@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundary } from 'react-error-boundary';
 
 export function ErrorFallback() {
   return (
@@ -14,7 +14,7 @@ export function ErrorFallback() {
   );
 }
 
-type ErrorBoundaryProps = {
+type GenericErrorProps = {
   children: ReactNode;
 };
 
@@ -22,10 +22,10 @@ const onError = (error: unknown, info: React.ErrorInfo) => {
   console.error('Unhandled render error:', error, info);
 };
 
-export function ErrorBoundary({ children }: ErrorBoundaryProps) {
+export function GenericError({ children }: GenericErrorProps) {
   return (
-    <ReactErrorBoundary FallbackComponent={ErrorFallback} onError={onError}>
+    <ErrorBoundary FallbackComponent={ErrorFallback} onError={onError}>
       {children}
-    </ReactErrorBoundary>
+    </ErrorBoundary>
   );
 }
