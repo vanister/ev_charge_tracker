@@ -19,14 +19,13 @@
 ## Project Rules
 
 - Follow the rules in the [prettierrc](./.prettierrc) config file for formatting
-- Arrow functions for components, callbacks, and internal functions in hooks/components
+- Arrow functions for component event handlers, callbacks, and internal functions
 - Named functions only for standalone helpers and utilities in separate utility files
 - Arrow functions require parens, destructure objects
 - Components: `export function Component(props: ComponentProps) {...}`
-- Single-purpose components
+- Single-purpose components encapsulating tailwindcss
 - Break down complex components into smaller ones, but avoid over-abstraction
 - Keep logic in helpers/hooks not Components
-- CSS cia tailwindcss
 - Named exports only
 - Use `type` for typing, `interface` for true interfaces
 - Components should live in their own files
