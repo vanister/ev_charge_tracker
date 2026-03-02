@@ -1,4 +1,5 @@
 import { Icon } from '../../components/Icon';
+import { FormInput } from '../../components/FormInput';
 import type { IconName } from '../../types/shared-types';
 import { LOCATION_ICON_OPTIONS, LOCATION_COLOR_OPTIONS, type LocationFormData } from './locationHelpers';
 
@@ -14,23 +15,16 @@ type LocationFormProps = {
 export function LocationForm(props: LocationFormProps) {
   return (
     <form id={props.id} onSubmit={props.onSubmit} className="space-y-4">
-      <div>
-        <label htmlFor="location-name" className="block text-sm font-medium text-body mb-1">
-          Name <span className="text-red-500">*</span>
-        </label>
-        <input
-          id="location-name"
-          type="text"
-          required
-          value={props.formData.name}
-          onChange={(e) => props.onChange('name', e.target.value)}
-          className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-            text-body placeholder-body-tertiary focus:outline-none
-            focus:ring-2 focus:ring-primary focus:border-transparent"
-          placeholder="Home"
-          disabled={props.isLoading}
-        />
-      </div>
+      <FormInput
+        id="location-name"
+        label="Name"
+        type="text"
+        required
+        value={props.formData.name}
+        onChange={(e) => props.onChange('name', e.target.value)}
+        placeholder="Home"
+        disabled={props.isLoading}
+      />
 
       <div>
         <span className="block text-sm font-medium text-body mb-2">Icon</span>
@@ -72,25 +66,18 @@ export function LocationForm(props: LocationFormProps) {
         </div>
       </div>
 
-      <div>
-        <label htmlFor="location-rate" className="block text-sm font-medium text-body mb-1">
-          Default Rate ($/kWh) <span className="text-red-500">*</span>
-        </label>
-        <input
-          id="location-rate"
-          type="number"
-          required
-          step="0.001"
-          min="0"
-          value={props.formData.defaultRate}
-          onChange={(e) => props.onChange('defaultRate', e.target.value)}
-          className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-            text-body placeholder-body-tertiary focus:outline-none
-            focus:ring-2 focus:ring-primary focus:border-transparent"
-          placeholder="0.000"
-          disabled={props.isLoading}
-        />
-      </div>
+      <FormInput
+        id="location-rate"
+        label="Default Rate ($/kWh)"
+        type="number"
+        required
+        step="0.001"
+        min="0"
+        value={props.formData.defaultRate}
+        onChange={(e) => props.onChange('defaultRate', e.target.value)}
+        placeholder="0.000"
+        disabled={props.isLoading}
+      />
 
       {props.error && (
         <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">

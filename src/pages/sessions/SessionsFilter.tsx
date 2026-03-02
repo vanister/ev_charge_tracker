@@ -1,6 +1,7 @@
 import type { Vehicle, Location } from '../../data/data-types';
 import { Button } from '../../components/Button';
 import { Icon } from '../../components/Icon';
+import { FormSelect } from '../../components/FormSelect';
 
 type SessionsFilterProps = {
   vehicles: Vehicle[];
@@ -47,57 +48,34 @@ export function SessionsFilter(props: SessionsFilterProps) {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-        <div>
-          <label htmlFor="vehicle-filter" className="block text-sm text-body-secondary mb-2">
-            Vehicle
-          </label>
-          <div className="relative">
-            <select
-              id="vehicle-filter"
-              value={selectedVehicleId || ''}
-              onChange={handleVehicleChange}
-              className="w-full px-3 py-2 bg-background border border-default rounded-lg text-body appearance-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-            >
-              <option value="">All Vehicles</option>
-              {vehicles.map((vehicle) => (
-                <option key={vehicle.id} value={vehicle.id}>
-                  {vehicle.icon} {getVehicleDisplayName(vehicle)}
-                </option>
-              ))}
-            </select>
-            <Icon
-              name="chevron-down"
-              size="sm"
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-body-secondary pointer-events-none"
-            />
-          </div>
-        </div>
+        <FormSelect
+          id="vehicle-filter"
+          label="Vehicle"
+          labelClassName="text-body-secondary"
+          value={selectedVehicleId || ''}
+          onChange={handleVehicleChange}
+          className="bg-background"
+          options={[
+            { value: '', text: 'All Vehicles' },
+            ...vehicles.map((vehicle) => ({
+              value: vehicle.id,
+              text: `${vehicle.icon} ${getVehicleDisplayName(vehicle)}`
+            }))
+          ]}
+        />
 
-        <div>
-          <label htmlFor="location-filter" className="block text-sm text-body-secondary mb-2">
-            Location
-          </label>
-          <div className="relative">
-            <select
-              id="location-filter"
-              value={selectedLocationId || ''}
-              onChange={handleLocationChange}
-              className="w-full px-3 py-2 bg-background border border-default rounded-lg text-body appearance-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-            >
-              <option value="">All Locations</option>
-              {locations.map((location) => (
-                <option key={location.id} value={location.id}>
-                  {location.name}
-                </option>
-              ))}
-            </select>
-            <Icon
-              name="chevron-down"
-              size="sm"
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-body-secondary pointer-events-none"
-            />
-          </div>
-        </div>
+        <FormSelect
+          id="location-filter"
+          label="Location"
+          labelClassName="text-body-secondary"
+          value={selectedLocationId || ''}
+          onChange={handleLocationChange}
+          className="bg-background"
+          options={[
+            { value: '', text: 'All Locations' },
+            ...locations.map((location) => ({ value: location.id, text: location.name }))
+          ]}
+        />
       </div>
 
       {hasActiveFilters && (
