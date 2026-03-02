@@ -39,7 +39,7 @@ git clone https://github.com/vanister/ev_charge_tracker.git
 cd ev_charge_tracker
 
 # Install dependencies
-npm install
+npm ci
 
 # Start development server
 npm run dev
