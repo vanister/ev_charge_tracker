@@ -1,36 +1,45 @@
-# EV Charge Tracker - Project Memory
+# EV Charge Tracker - AI Coding Agent Instructions
 
-### Universal Rules
+**For project context and design rationale, see [design-outline.md](./docs/design-outline.md)**
+
+## Universal Rules
+
 - Guard clauses, early returns, avoid deep nesting
 - No inline returns in `if` statements
 - Comment the why not the how
-- No JSDocs or XML Comments unless explicitly asked
+- No documentation such as JSDocs or XML Comments unless explicitly asked to provide
 - Simple, concise, single-purpose code
-- 100 char line limit
-- SOLID and KISS principles
+- print to 100 char line limit
+- Follow SOLID principles
+- Follow KISS principle
 - Test-minded, but don't write tests unless asked to do so
 - Leverage dependency injection and inversion of control when possible
-- No throwing exceptions — return results or error objects instead
+- Keep exceptions truly exceptional, return results or error objects instead of throwing
 
-### Project Rules
-- Follow `.prettierrc` for formatting
-- Arrow functions for components, callbacks, and internal hook/component functions
-- Named functions only for standalone helpers/utilities in separate files
+## Project Rules
+
+- Follow the rules in the [prettierrc](./.prettierrc) config file for formatting
+- Arrow functions for components, callbacks, and internal functions in hooks/components
+- Named functions only for standalone helpers and utilities in separate utility files
 - Arrow functions require parens, destructure objects
-- Component signature: `export function Component(props: ComponentProps) {...}`
-- Single-purpose components; break down complex components but avoid over-abstraction
-- Keep logic in hooks/helpers not components
-- CSS via tailwindcss
+- Components: `export function Component(props: ComponentProps) {...}`
+- Single-purpose components
+- Break down complex components into smaller ones, but avoid over-abstraction
+- Keep logic in helpers/hooks not Components
+- CSS cia tailwindcss
 - Named exports only
-- `type` for typing, `interface` for true interfaces
-- Components in their own files; no index barrel files
+- Use `type` for typing, `interface` for true interfaces
+- Components should live in their own files
+- No index barrel files
 - Dates handled with date-fns
-- Import order: CSS → external deps → internal deps
-- No primitive constructors: use `+value`, `!!value`, `` `${value}` ``
-- Run `npm run build` after major changes to verify no build errors
-- Use `React.SubmitEvent<T>` not `React.FormEvent` (deprecated)
+- Import ordering: CSS first → external deps → internal deps
+- No primitive constructors for coercion: use `+value` not `Number(value)`, `!!value` not `Boolean(value)`, `` `${value}` `` not `String(value)`
+- Run `npm run build` to verify no build errors after major changes
+- `React.FormEvent` is marked deprecated, use `React.SubmitEvent<T>` instead for form submit handlers
 - Use the `clsx` package for dynamic css class name creation
 
-### Task-Specific Rules
-- Complete one task at a time before asking for next (unless told otherwise)
-- Mark completed tasks in `docs/tasks.md`
+## Task-Specific Rules
+
+- Only complete one task at a time before asking for next unless instructed otherwise
+- When completing a, mark it done in [tasks.md](./docs/tasks.md)
+
