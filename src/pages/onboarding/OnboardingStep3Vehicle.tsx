@@ -18,13 +18,17 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
 
   useEffect(() => {
-    getVehicleList().then((result) => {
+    const loadVehicles = async () => {
+      const result = await getVehicleList();
+
       if (result.success) {
         setVehicles(result.data);
       } else {
         console.error('Failed to load vehicles:', result.error);
       }
-    });
+    };
+
+    loadVehicles();
   }, [getVehicleList]);
   const [formData, setFormData] = useImmerState<VehicleFormData>(DEFAULT_VEHICLE_FORM_DATA);
   const [isLoading, setIsLoading] = useState(false);

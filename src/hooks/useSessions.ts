@@ -57,7 +57,8 @@ export function useSessions() {
   const getSession = useCallback(
     async (id: string): Promise<Result<ChargingSession | undefined>> => {
       try {
-        return success(await db.sessions.get(id));
+        const session = await db.sessions.get(id);
+        return success(session);
       } catch (err) {
         console.error('Failed to get session:', err);
         return failure('Failed to load session');

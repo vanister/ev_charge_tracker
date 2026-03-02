@@ -15,10 +15,12 @@ export function useVehicles() {
     async (activeOnly = true): Promise<Result<Vehicle[]>> => {
       try {
         if (activeOnly) {
-          return success(await db.vehicles.where('isActive').equals(1).sortBy('createdAt'));
+          const vehicles = await db.vehicles.where('isActive').equals(1).sortBy('createdAt');
+          return success(vehicles);
         }
 
-        return success(await db.vehicles.orderBy('createdAt').toArray());
+        const vehicles = await db.vehicles.orderBy('createdAt').toArray();
+        return success(vehicles);
       } catch (err) {
         console.error('Failed to get vehicle list:', err);
         return failure('Failed to load vehicles');
@@ -30,7 +32,8 @@ export function useVehicles() {
   const getVehicle = useCallback(
     async (id: string): Promise<Result<Vehicle | undefined>> => {
       try {
-        return success(await db.vehicles.get(id));
+        const vehicle = await db.vehicles.get(id);
+        return success(vehicle);
       } catch (err) {
         console.error('Failed to get vehicle:', err);
         return failure('Failed to load vehicle');

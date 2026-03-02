@@ -10,7 +10,8 @@ export function useSettings() {
   const getSettings = useCallback(
     async (): Promise<Result<Settings | undefined>> => {
       try {
-        return success(await db.settings.get(SETTINGS_KEY));
+        const settings = await db.settings.get(SETTINGS_KEY);
+        return success(settings);
       } catch (err) {
         console.error('Failed to get settings:', err);
         return failure('Failed to load settings');

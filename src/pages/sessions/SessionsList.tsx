@@ -37,35 +37,49 @@ export function SessionsList() {
   const hasSessions = sessions.length > 0;
 
   useEffect(() => {
-    getLocationList().then((result) => {
+    const loadLocations = async () => {
+      const result = await getLocationList();
+
       if (result.success) {
         setLocations(result.data);
       } else {
         console.error('Failed to load locations:', result.error);
       }
-    });
+    };
+
+    loadLocations();
   }, [getLocationList]);
 
   useEffect(() => {
-    getVehicleList().then((result) => {
+    const loadVehicles = async () => {
+      const result = await getVehicleList();
+
       if (result.success) {
         setVehicles(result.data);
       } else {
         console.error('Failed to load vehicles:', result.error);
       }
-    });
+    };
+
+    loadVehicles();
   }, [getVehicleList]);
 
   useEffect(() => {
-    getSessionList({ vehicleId: selectedVehicleId, locationId: selectedLocationId })
-      .then((result) => {
+    const loadSessions = async () => {
+      try {
+        const result = await getSessionList({ vehicleId: selectedVehicleId, locationId: selectedLocationId });
+
         if (result.success) {
           setSessions(result.data);
         } else {
           console.error('Failed to load sessions:', result.error);
         }
-      })
-      .finally(() => setIsLoading(false));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadSessions();
   }, [getSessionList, selectedVehicleId, selectedLocationId]);
 
   const handleEdit = (id: string) => {

@@ -42,8 +42,14 @@ export function useStats(): UseStatsResult {
   const { getLocationList } = useLocations();
 
   useEffect(() => {
-    Promise.all([getSessionList(), getVehicleList(), getLocationList(true)])
-      .then(([sessionResult, vehicleResult, locationResult]) => {
+    const loadStats = async () => {
+      try {
+        const [sessionResult, vehicleResult, locationResult] = await Promise.all([
+          getSessionList(),
+          getVehicleList(),
+          getLocationList(true)
+        ]);
+
         if (!sessionResult.success || !vehicleResult.success || !locationResult.success) {
           setError('Failed to load stats');
           return;
@@ -54,12 +60,15 @@ export function useStats(): UseStatsResult {
 
         setStats(computeStats(sessionResult.data, locationMap));
         setRecentSessions(buildRecentSessions(sessionResult.data, vehicleMap, locationMap));
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error('Failed to load stats:', err);
         setError('Failed to load stats');
-      })
-      .finally(() => setIsLoading(false));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadStats();
   }, [getSessionList, getVehicleList, getLocationList]);
 
   return { stats, recentSessions, isLoading, error };
