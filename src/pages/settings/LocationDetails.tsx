@@ -48,7 +48,17 @@ export function LocationDetails() {
         return;
       }
 
-      const location = await getLocation(id);
+      const result = await getLocation(id);
+
+      if (!result.success) {
+        setFormState((draft) => {
+          draft.locationNotFound = true;
+          draft.isInitialized = true;
+        });
+        return;
+      }
+
+      const location = result.data;
 
       if (!location) {
         setFormState((draft) => {

@@ -11,8 +11,20 @@ export function RequireOnboarding() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getSettings().then(setSettings).finally(() => setIsLoading(false));
-  }, [getSettings]);
+    const loadSettings = async () => {
+      const result = await getSettings();
+
+      if (!result.success) {
+        navigate('/error', { replace: true, state: { error: result.error } });
+        return;
+      }
+
+      setSettings(result.data);
+      setIsLoading(false);
+    };
+
+    loadSettings();
+  }, [getSettings, navigate]);
 
   useEffect(() => {
     if (!settings) {

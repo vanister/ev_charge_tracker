@@ -37,17 +37,43 @@ export function SessionsList() {
   const hasSessions = sessions.length > 0;
 
   useEffect(() => {
-    getLocationList().then(setLocations);
+    const loadLocations = async () => {
+      const result = await getLocationList();
+
+      if (result.success) {
+        setLocations(result.data);
+      }
+    };
+
+    loadLocations();
   }, [getLocationList]);
 
   useEffect(() => {
-    getVehicleList().then(setVehicles);
+    const loadVehicles = async () => {
+      const result = await getVehicleList();
+
+      if (result.success) {
+        setVehicles(result.data);
+      }
+    };
+
+    loadVehicles();
   }, [getVehicleList]);
 
   useEffect(() => {
-    getSessionList({ vehicleId: selectedVehicleId, locationId: selectedLocationId })
-      .then(setSessions)
-      .finally(() => setIsLoading(false));
+    const loadSessions = async () => {
+      try {
+        const result = await getSessionList({ vehicleId: selectedVehicleId, locationId: selectedLocationId });
+
+        if (result.success) {
+          setSessions(result.data);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadSessions();
   }, [getSessionList, selectedVehicleId, selectedLocationId]);
 
   const handleEdit = (id: string) => {

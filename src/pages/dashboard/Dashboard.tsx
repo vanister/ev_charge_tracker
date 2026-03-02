@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { useStats } from '../../hooks/useStats';
@@ -9,9 +10,15 @@ export function Dashboard() {
   usePageTitle('Dashboard');
 
   const navigate = useNavigate();
-  const { stats, recentSessions, isLoading } = useStats();
+  const { stats, recentSessions, isLoading, error } = useStats();
 
   const hasSessions = stats !== null && stats.sessionCount > 0;
+
+  useEffect(() => {
+    if (error) {
+      navigate('/error', { replace: true, state: { error } });
+    }
+  }, [error, navigate]);
 
   if (!isLoading && !hasSessions) {
     return (

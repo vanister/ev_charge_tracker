@@ -8,8 +8,14 @@ export function useSettings() {
   const { db } = useDatabase();
 
   const getSettings = useCallback(
-    async (): Promise<Settings | undefined> => {
-      return db.settings.get(SETTINGS_KEY);
+    async (): Promise<Result<Settings | undefined>> => {
+      try {
+        const settings = await db.settings.get(SETTINGS_KEY);
+        return success(settings);
+      } catch (err) {
+        console.error('Failed to get settings:', err);
+        return failure('Failed to load settings');
+      }
     },
     [db]
   );

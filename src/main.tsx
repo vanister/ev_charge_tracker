@@ -7,18 +7,21 @@ import { db } from './data/db';
 import { DatabaseProvider } from './providers/DatabaseProvider';
 import { AppInitializationProvider } from './providers/AppInitializationProvider';
 import { ThemeProvider } from './providers/ThemeProvider';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { App } from './App';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <DatabaseProvider db={db}>
-      <ThemeProvider>
-        <AppInitializationProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </AppInitializationProvider>
-      </ThemeProvider>
-    </DatabaseProvider>
+    <ErrorBoundary>
+      <DatabaseProvider db={db}>
+        <ThemeProvider>
+          <AppInitializationProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </AppInitializationProvider>
+        </ThemeProvider>
+      </DatabaseProvider>
+    </ErrorBoundary>
   </StrictMode>
 );
