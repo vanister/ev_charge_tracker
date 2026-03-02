@@ -1,3 +1,4 @@
+import { FormInput } from '../../components/FormInput';
 import type { VehicleFormData } from './vehicleHelpers';
 
 type VehicleFormProps = {
@@ -14,95 +15,66 @@ export function VehicleForm(props: VehicleFormProps) {
     <form id={props.id} onSubmit={props.onSubmit} className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-8 gap-4">
         <div className="sm:col-span-2">
-          <label htmlFor="vehicle-year" className="block text-sm font-medium text-body mb-1">
-            Year <span className="text-red-500">*</span>
-          </label>
-          <input
+          <FormInput
             id="vehicle-year"
+            label="Year"
             type="number"
             min="1900"
             max="2100"
             required
             value={props.formData.year}
             onChange={(e) => props.onChange('year', e.target.value)}
-            className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-              text-body placeholder-body-tertiary focus:outline-none
-              focus:ring-2 focus:ring-primary focus:border-transparent"
             placeholder="2024"
             disabled={props.isLoading}
           />
         </div>
 
         <div className="sm:col-span-3">
-          <label htmlFor="vehicle-make" className="block text-sm font-medium text-body mb-1">
-            Make <span className="text-red-500">*</span>
-          </label>
-          <input
+          <FormInput
             id="vehicle-make"
+            label="Make"
             type="text"
             required
             value={props.formData.make}
             onChange={(e) => props.onChange('make', e.target.value)}
-            className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-              text-body placeholder-body-tertiary focus:outline-none
-              focus:ring-2 focus:ring-primary focus:border-transparent"
             placeholder="Tesla"
             disabled={props.isLoading}
           />
         </div>
 
         <div className="sm:col-span-3">
-          <label htmlFor="vehicle-model" className="block text-sm font-medium text-body mb-1">
-            Model <span className="text-red-500">*</span>
-          </label>
-          <input
+          <FormInput
             id="vehicle-model"
+            label="Model"
             type="text"
             required
             value={props.formData.model}
             onChange={(e) => props.onChange('model', e.target.value)}
-            className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-              text-body placeholder-body-tertiary focus:outline-none
-              focus:ring-2 focus:ring-primary focus:border-transparent"
             placeholder="Model 3"
             disabled={props.isLoading}
           />
         </div>
       </div>
 
-      <div>
-        <label htmlFor="vehicle-name" className="block text-sm font-medium text-body mb-1">
-          Vehicle Name
-        </label>
-        <input
-          id="vehicle-name"
-          type="text"
-          value={props.formData.name}
-          onChange={(e) => props.onChange('name', e.target.value)}
-          className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-            text-body placeholder-body-tertiary focus:outline-none
-            focus:ring-2 focus:ring-primary focus:border-transparent"
-          placeholder="My EV (optional)"
-          disabled={props.isLoading}
-        />
-      </div>
+      <FormInput
+        id="vehicle-name"
+        label="Vehicle Name"
+        type="text"
+        value={props.formData.name}
+        onChange={(e) => props.onChange('name', e.target.value)}
+        placeholder="My EV (optional)"
+        disabled={props.isLoading}
+      />
 
-      <div>
-        <label htmlFor="vehicle-icon" className="block text-sm font-medium text-body mb-1">
-          Icon
-        </label>
-        <input
-          id="vehicle-icon"
-          type="text"
-          value={props.formData.icon}
-          onChange={(e) => props.onChange('icon', e.target.value)}
-          className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-            text-body placeholder-body-tertiary focus:outline-none
-            focus:ring-2 focus:ring-primary focus:border-transparent"
-          placeholder="🚗"
-          disabled={props.isLoading}
-        />
-      </div>
+      <FormInput
+        id="vehicle-icon"
+        label="Icon"
+        type="text"
+        value={props.formData.icon}
+        onChange={(e) => props.onChange('icon', e.target.value)}
+        placeholder="🚗"
+        disabled={props.isLoading}
+      />
 
       {props.error && (
         <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">

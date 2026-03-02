@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocations } from '../../hooks/useLocations';
 import type { Location } from '../../data/data-types';
 import { Icon } from '../../components/Icon';
+import { FormInput } from '../../components/FormInput';
 import { OnboardingHeader } from './OnboardingHeader';
 import { OnboardingFooter } from './OnboardingFooter';
 import { OnboardingNavigationButtons } from './OnboardingNavigationButtons';
@@ -107,41 +108,27 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
                   </div>
 
                   <div className="flex-1 space-y-3">
-                    <div>
-                      <label htmlFor={`location-name-${index}`} className="block text-sm font-medium text-body mb-1">
-                        Location Name
-                      </label>
-                      <input
-                        id={`location-name-${index}`}
-                        type="text"
-                        required
-                        value={form.name}
-                        onChange={(e) => handleLocationFormChange(form.id, 'name', e.target.value)}
-                        className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-                          text-body placeholder-body-tertiary focus:outline-none
-                          focus:ring-2 focus:ring-primary focus:border-transparent"
-                        placeholder="Location name"
-                      />
-                    </div>
+                    <FormInput
+                      id={`location-name-${index}`}
+                      label="Location Name"
+                      type="text"
+                      required
+                      value={form.name}
+                      onChange={(e) => handleLocationFormChange(form.id, 'name', e.target.value)}
+                      placeholder="Location name"
+                    />
 
-                    <div>
-                      <label htmlFor={`location-rate-${index}`} className="block text-sm font-medium text-body mb-1">
-                        Default Rate ($/kWh)
-                      </label>
-                      <input
-                        id={`location-rate-${index}`}
-                        type="number"
-                        step="0.01"
-                        min="0"
-                        required
-                        value={form.defaultRate}
-                        onChange={(e) => handleLocationFormChange(form.id, 'defaultRate', e.target.value)}
-                        className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-                          text-body placeholder-body-tertiary focus:outline-none
-                          focus:ring-2 focus:ring-primary focus:border-transparent"
-                        placeholder="0.00"
-                      />
-                    </div>
+                    <FormInput
+                      id={`location-rate-${index}`}
+                      label="Default Rate ($/kWh)"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      required
+                      value={form.defaultRate}
+                      onChange={(e) => handleLocationFormChange(form.id, 'defaultRate', e.target.value)}
+                      placeholder="0.00"
+                    />
                   </div>
                 </div>
               </div>

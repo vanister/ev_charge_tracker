@@ -1,4 +1,6 @@
-import { Icon } from '../../components/Icon';
+import { FormInput } from '../../components/FormInput';
+import { FormTextarea } from '../../components/FormTextarea';
+import { FormSelect } from '../../components/FormSelect';
 import { formatCost } from '../../utilities/formatUtils';
 import type { Vehicle, Location } from '../../data/data-types';
 import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
@@ -27,132 +29,83 @@ type SessionFormProps = {
 export function SessionForm(props: SessionFormProps) {
   return (
     <form id={props.id} onSubmit={props.onSubmit} className="space-y-6">
-      <div>
-        <label htmlFor="vehicle" className="block text-sm font-medium text-body mb-1">
-          Vehicle <span className="text-red-500">*</span>
-        </label>
-        <select
-          id="vehicle"
-          required
-          value={props.formData.vehicleId}
-          onChange={(e) => props.onChange('vehicleId', e.target.value)}
-          className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-            text-body appearance-none focus:outline-none focus:ring-2
-            focus:ring-primary focus:border-transparent"
-          disabled={props.isLoading}
-        >
-          <option value="">Select a vehicle</option>
-          {props.vehicles.map((vehicle) => (
-            <option key={vehicle.id} value={vehicle.id}>
-              {getVehicleDisplayName(vehicle)}
-            </option>
-          ))}
-        </select>
-      </div>
+      <FormSelect
+        id="vehicle"
+        label="Vehicle"
+        required
+        value={props.formData.vehicleId}
+        onChange={(e) => props.onChange('vehicleId', e.target.value)}
+        disabled={props.isLoading}
+      >
+        <option value="">Select a vehicle</option>
+        {props.vehicles.map((vehicle) => (
+          <option key={vehicle.id} value={vehicle.id}>
+            {getVehicleDisplayName(vehicle)}
+          </option>
+        ))}
+      </FormSelect>
 
-      <div>
-        <label htmlFor="location" className="block text-sm font-medium text-body mb-1">
-          Location <span className="text-red-500">*</span>
-        </label>
-        <div className="relative">
-          <select
-            id="location"
-            required
-            value={props.formData.locationId}
-            onChange={(e) => props.onChange('locationId', e.target.value)}
-            className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-              text-body appearance-none focus:outline-none focus:ring-2
-              focus:ring-primary focus:border-transparent"
-            disabled={props.isLoading}
-          >
-            <option value="">Select a location</option>
-            {props.locations.map((location) => (
-              <option key={location.id} value={location.id}>
-                {location.name}
-              </option>
-            ))}
-          </select>
-          <Icon
-            name="chevron-down"
-            size="sm"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-body-secondary pointer-events-none"
-          />
-        </div>
-      </div>
+      <FormSelect
+        id="location"
+        label="Location"
+        required
+        value={props.formData.locationId}
+        onChange={(e) => props.onChange('locationId', e.target.value)}
+        disabled={props.isLoading}
+      >
+        <option value="">Select a location</option>
+        {props.locations.map((location) => (
+          <option key={location.id} value={location.id}>
+            {location.name}
+          </option>
+        ))}
+      </FormSelect>
 
-      <div>
-        <label htmlFor="energy" className="block text-sm font-medium text-body mb-1">
-          Energy (kWh) <span className="text-red-500">*</span>
-        </label>
-        <input
-          id="energy"
-          type="number"
-          required
-          step="0.01"
-          min="0.01"
-          value={props.formData.energyKwh}
-          onChange={(e) => props.onChange('energyKwh', e.target.value)}
-          className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-            text-body placeholder-body-tertiary focus:outline-none
-            focus:ring-2 focus:ring-primary focus:border-transparent"
-          placeholder="0.00"
-          disabled={props.isLoading}
-        />
-      </div>
+      <FormInput
+        id="energy"
+        label="Energy (kWh)"
+        type="number"
+        required
+        step="0.01"
+        min="0.01"
+        value={props.formData.energyKwh}
+        onChange={(e) => props.onChange('energyKwh', e.target.value)}
+        placeholder="0.00"
+        disabled={props.isLoading}
+      />
 
-      <div>
-        <label htmlFor="rate" className="block text-sm font-medium text-body mb-1">
-          Rate ($/kWh) <span className="text-red-500">*</span>
-        </label>
-        <input
-          id="rate"
-          type="number"
-          required
-          step="0.001"
-          min="0.001"
-          value={props.formData.ratePerKwh}
-          onChange={(e) => props.onChange('ratePerKwh', e.target.value)}
-          className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-            text-body placeholder-body-tertiary focus:outline-none
-            focus:ring-2 focus:ring-primary focus:border-transparent"
-          placeholder="0.000"
-          disabled={props.isLoading}
-        />
-      </div>
+      <FormInput
+        id="rate"
+        label="Rate ($/kWh)"
+        type="number"
+        required
+        step="0.001"
+        min="0.001"
+        value={props.formData.ratePerKwh}
+        onChange={(e) => props.onChange('ratePerKwh', e.target.value)}
+        placeholder="0.000"
+        disabled={props.isLoading}
+      />
 
-      <div>
-        <label htmlFor="charged-at" className="block text-sm font-medium text-body mb-1">
-          Charged At <span className="text-red-500">*</span>
-        </label>
-        <input
-          id="charged-at"
-          type="datetime-local"
-          required
-          value={props.formData.chargedAt}
-          onChange={(e) => props.onChange('chargedAt', e.target.value)}
-          className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-            text-body placeholder-body-tertiary focus:outline-none
-            focus:ring-2 focus:ring-primary focus:border-transparent"
-          disabled={props.isLoading}
-        />
-      </div>
+      <FormInput
+        id="charged-at"
+        label="Charged At"
+        type="datetime-local"
+        required
+        value={props.formData.chargedAt}
+        onChange={(e) => props.onChange('chargedAt', e.target.value)}
+        disabled={props.isLoading}
+      />
 
-      <div>
-        <label htmlFor="notes" className="block text-sm font-medium text-body mb-1">
-          Notes (optional)
-        </label>
-        <textarea
-          id="notes"
-          rows={3}
-          value={props.formData.notes}
-          onChange={(e) => props.onChange('notes', e.target.value)}
-          className="w-full px-3 py-2 bg-surface border border-default rounded-lg
-            text-body placeholder-body-tertiary focus:outline-none
-            focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
-          placeholder="Add any notes about this charging session..."
-          disabled={props.isLoading}
-        />
-      </div>
+      <FormTextarea
+        id="notes"
+        label="Notes (optional)"
+        rows={3}
+        value={props.formData.notes}
+        onChange={(e) => props.onChange('notes', e.target.value)}
+        placeholder="Add any notes about this charging session..."
+        disabled={props.isLoading}
+      />
 
       <div className="p-4 bg-background border border-default rounded-lg">
         <div className="flex items-center justify-between">
