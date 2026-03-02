@@ -26,7 +26,7 @@
 - Single-purpose components
 - Break down complex components into smaller ones, but avoid over-abstraction
 - Keep logic in helpers/hooks not Components
-- CSS Modules preferred
+- CSS cia tailwindcss
 - Named exports only
 - Use `type` for typing, `interface` for true interfaces
 - Components should live in their own files
