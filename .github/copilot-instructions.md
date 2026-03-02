@@ -41,6 +41,5 @@
 ## Task-Specific Rules
 
 - Only complete one task at a time before asking for next unless instructed otherwise
-- WHen completing a, mark it done in [tasks.md](../docs/tasks.md)
+- When completing a, mark it done in [tasks.md](../docs/tasks.md)
 
-**For task breakdown and implementation plan, see [tasks.md](../docs/tasks.md)**
