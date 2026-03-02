@@ -20,7 +20,7 @@
 - Component signature: `export function Component(props: ComponentProps) {...}`
 - Single-purpose components; break down complex components but avoid over-abstraction
 - Keep logic in hooks/helpers not components
-- CSS Modules preferred
+- CSS via tailwindcss
 - Named exports only
 - `type` for typing, `interface` for true interfaces
 - Components in their own files; no index barrel files
