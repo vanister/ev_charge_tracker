@@ -29,6 +29,7 @@
 - No primitive constructors: use `+value`, `!!value`, `` `${value}` ``
 - Run `npm run build` after major changes to verify no build errors
 - Use `React.SubmitEvent<T>` not `React.FormEvent` (deprecated)
+- Use the `clsx` package for dynamic css class name creation
 
 ### Task-Specific Rules
 - Complete one task at a time before asking for next (unless told otherwise)
