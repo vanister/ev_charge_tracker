@@ -23,8 +23,6 @@ import {
 } from 'lucide-react';
 import { type IconName } from '../types/shared-types';
 
-export type { IconName };
-
 type IconSize = 'sm' | 'md' | 'lg';
 
 type IconProps = {

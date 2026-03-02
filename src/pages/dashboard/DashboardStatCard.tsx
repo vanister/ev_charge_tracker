@@ -1,4 +1,5 @@
-import { Icon, type IconName } from '../../components/Icon';
+import { Icon } from '../../components/Icon';
+import type { IconName } from '../../types/shared-types';
 
 type DashboardStatCardProps = {
   label: string;

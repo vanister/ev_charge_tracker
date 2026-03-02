@@ -1,5 +1,5 @@
 import type { ChargingSession } from '../../data/data-types';
-import type { IconName } from '../../components/Icon';
+import type { IconName } from '../../types/shared-types';
 import { Icon } from '../../components/Icon';
 import { formatTime, formatDateTime } from '../../utilities/dateUtils';
 import { formatCost, formatEnergy } from '../../utilities/formatUtils';

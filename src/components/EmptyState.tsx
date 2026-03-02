@@ -1,6 +1,6 @@
 import { Button } from './Button';
 import { Icon } from './Icon';
-import type { IconName } from './Icon';
+import type { IconName } from '../types/shared-types';
 
 type EmptyStateProps = {
   icon?: IconName;

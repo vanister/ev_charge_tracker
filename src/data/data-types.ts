@@ -1,5 +1,5 @@
 import type { Dexie, EntityTable } from 'dexie';
-import type { IconName } from '../components/Icon';
+import type { IconName } from '../types/shared-types';
 
 export type ActiveState = 0 | 1;
 

@@ -1,5 +1,5 @@
 import { Icon } from '../../components/Icon';
-import type { IconName } from '../../components/Icon';
+import type { IconName } from '../../types/shared-types';
 import { LOCATION_ICON_OPTIONS, LOCATION_COLOR_OPTIONS, type LocationFormData } from './locationHelpers';
 
 type LocationFormProps = {

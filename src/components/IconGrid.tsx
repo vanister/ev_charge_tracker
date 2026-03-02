@@ -1,5 +1,8 @@
+import clsx from 'clsx';
+
 import { ALL_ICONS } from '../types/shared-types';
-import { Icon, type IconName } from './Icon';
+import { Icon } from './Icon';
+import type { IconName } from '../types/shared-types';
 
 type IconGridProps = {
   selectedIcon?: IconName;
@@ -15,11 +18,11 @@ export function IconGrid({ selectedIcon, onIconSelect }: IconGridProps) {
           type="button"
           aria-label={icon}
           onClick={() => onIconSelect(icon)}
-          className={`p-3 rounded-lg border transition-colors ${
-            selectedIcon === icon
-              ? 'border-primary bg-primary/10 ring-2 ring-primary text-primary'
-              : 'border-default bg-surface text-body-secondary hover:border-default-hover hover:bg-background'
-          }`}
+          className={clsx('p-3 rounded-lg border transition-colors', {
+            'border-primary bg-primary/10 ring-2 ring-primary text-primary': selectedIcon === icon,
+            'border-default bg-surface text-body-secondary hover:border-default-hover hover:bg-background':
+              selectedIcon !== icon
+          })}
         >
           <Icon name={icon} size="md" />
         </button>
