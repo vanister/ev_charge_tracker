@@ -22,7 +22,13 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
   const [locations, setLocations] = useState<Location[]>([]);
 
   useEffect(() => {
-    getLocationList().then(setLocations);
+    getLocationList().then((result) => {
+      if (result.success) {
+        setLocations(result.data);
+      } else {
+        console.error('Failed to load locations:', result.error);
+      }
+    });
   }, [getLocationList]);
   const [locationForms, setLocationForms] = useState<LocationFormData[]>([]);
   const [isLoading, setIsLoading] = useState(false);

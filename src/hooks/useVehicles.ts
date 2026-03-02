@@ -12,19 +12,29 @@ export function useVehicles() {
   const { db } = useDatabase();
 
   const getVehicleList = useCallback(
-    async (activeOnly = true): Promise<Vehicle[]> => {
-      if (activeOnly) {
-        return db.vehicles.where('isActive').equals(1).sortBy('createdAt');
-      }
+    async (activeOnly = true): Promise<Result<Vehicle[]>> => {
+      try {
+        if (activeOnly) {
+          return success(await db.vehicles.where('isActive').equals(1).sortBy('createdAt'));
+        }
 
-      return db.vehicles.orderBy('createdAt').toArray();
+        return success(await db.vehicles.orderBy('createdAt').toArray());
+      } catch (err) {
+        console.error('Failed to get vehicle list:', err);
+        return failure('Failed to load vehicles');
+      }
     },
     [db]
   );
 
   const getVehicle = useCallback(
-    async (id: string): Promise<Vehicle | undefined> => {
-      return db.vehicles.get(id);
+    async (id: string): Promise<Result<Vehicle | undefined>> => {
+      try {
+        return success(await db.vehicles.get(id));
+      } catch (err) {
+        console.error('Failed to get vehicle:', err);
+        return failure('Failed to load vehicle');
+      }
     },
     [db]
   );

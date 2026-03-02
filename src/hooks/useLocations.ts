@@ -11,19 +11,29 @@ export function useLocations() {
   const { db } = useDatabase();
 
   const getLocationList = useCallback(
-    async (all = false): Promise<Location[]> => {
-      if (all) {
-        return db.locations.orderBy('order').toArray();
-      }
+    async (all = false): Promise<Result<Location[]>> => {
+      try {
+        if (all) {
+          return success(await db.locations.orderBy('order').toArray());
+        }
 
-      return db.locations.where('isActive').equals(1).sortBy('order');
+        return success(await db.locations.where('isActive').equals(1).sortBy('order'));
+      } catch (err) {
+        console.error('Failed to get location list:', err);
+        return failure('Failed to load locations');
+      }
     },
     [db]
   );
 
   const getLocation = useCallback(
-    async (id: string): Promise<Location | undefined> => {
-      return db.locations.get(id);
+    async (id: string): Promise<Result<Location | undefined>> => {
+      try {
+        return success(await db.locations.get(id));
+      } catch (err) {
+        console.error('Failed to get location:', err);
+        return failure('Failed to load location');
+      }
     },
     [db]
   );

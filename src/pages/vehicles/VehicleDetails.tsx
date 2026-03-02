@@ -48,7 +48,17 @@ export function VehicleDetails() {
         return;
       }
 
-      const vehicle = await getVehicle(id);
+      const result = await getVehicle(id);
+
+      if (!result.success) {
+        setFormState((draft) => {
+          draft.vehicleNotFound = true;
+          draft.isInitialized = true;
+        });
+        return;
+      }
+
+      const vehicle = result.data;
 
       if (!vehicle) {
         setFormState((draft) => {

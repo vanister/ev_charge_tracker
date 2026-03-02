@@ -25,6 +25,7 @@ type UseStatsResult = {
   stats: SessionStats | null;
   recentSessions: SessionWithMetadata[];
   isLoading: boolean;
+  error: string | null;
 };
 
 // todo - move this to settings
@@ -34,6 +35,7 @@ export function useStats(): UseStatsResult {
   const [stats, setStats] = useState<SessionStats | null>(null);
   const [recentSessions, setRecentSessions] = useState<SessionWithMetadata[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const { getSessionList } = useSessions();
   const { getVehicleList } = useVehicles();
@@ -41,17 +43,26 @@ export function useStats(): UseStatsResult {
 
   useEffect(() => {
     Promise.all([getSessionList(), getVehicleList(), getLocationList(true)])
-      .then(([sessions, vehicles, locations]) => {
-        const vehicleMap = createVehicleMap(vehicles);
-        const locationMap = createLocationMap(locations);
+      .then(([sessionResult, vehicleResult, locationResult]) => {
+        if (!sessionResult.success || !vehicleResult.success || !locationResult.success) {
+          setError('Failed to load stats');
+          return;
+        }
 
-        setStats(computeStats(sessions, locationMap));
-        setRecentSessions(buildRecentSessions(sessions, vehicleMap, locationMap));
+        const vehicleMap = createVehicleMap(vehicleResult.data);
+        const locationMap = createLocationMap(locationResult.data);
+
+        setStats(computeStats(sessionResult.data, locationMap));
+        setRecentSessions(buildRecentSessions(sessionResult.data, vehicleMap, locationMap));
+      })
+      .catch((err) => {
+        console.error('Failed to load stats:', err);
+        setError('Failed to load stats');
       })
       .finally(() => setIsLoading(false));
   }, [getSessionList, getVehicleList, getLocationList]);
 
-  return { stats, recentSessions, isLoading };
+  return { stats, recentSessions, isLoading, error };
 }
 
 // todo -  move these out into a helper

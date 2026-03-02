@@ -20,36 +20,48 @@ export function useSessions() {
   const { db } = useDatabase();
 
   const getSessionList = useCallback(
-    async (filters?: SessionFilters): Promise<ChargingSession[]> => {
-      let query = db.sessions.orderBy('chargedAt');
+    async (filters?: SessionFilters): Promise<Result<ChargingSession[]>> => {
+      try {
+        let query = db.sessions.orderBy('chargedAt');
 
-      if (filters?.vehicleId && filters?.locationId) {
-        const allSessions = await query.reverse().toArray();
-        return allSessions.filter((s) => s.vehicleId === filters.vehicleId && s.locationId === filters.locationId);
+        if (filters?.vehicleId && filters?.locationId) {
+          const allSessions = await query.reverse().toArray();
+          return success(
+            allSessions.filter((s) => s.vehicleId === filters.vehicleId && s.locationId === filters.locationId)
+          );
+        }
+
+        if (filters?.vehicleId) {
+          query = db.sessions.where('vehicleId').equals(filters.vehicleId);
+        } else if (filters?.locationId) {
+          query = db.sessions.where('locationId').equals(filters.locationId);
+        }
+
+        let results = await query.reverse().toArray();
+
+        if (filters?.dateRange) {
+          results = results.filter(
+            (s) => s.chargedAt >= filters.dateRange!.start && s.chargedAt <= filters.dateRange!.end
+          );
+        }
+
+        return success(results);
+      } catch (err) {
+        console.error('Failed to get session list:', err);
+        return failure('Failed to load sessions');
       }
-
-      if (filters?.vehicleId) {
-        query = db.sessions.where('vehicleId').equals(filters.vehicleId);
-      } else if (filters?.locationId) {
-        query = db.sessions.where('locationId').equals(filters.locationId);
-      }
-
-      let results = await query.reverse().toArray();
-
-      if (filters?.dateRange) {
-        results = results.filter(
-          (s) => s.chargedAt >= filters.dateRange!.start && s.chargedAt <= filters.dateRange!.end
-        );
-      }
-
-      return results;
     },
     [db]
   );
 
   const getSession = useCallback(
-    async (id: string): Promise<ChargingSession | undefined> => {
-      return await db.sessions.get(id);
+    async (id: string): Promise<Result<ChargingSession | undefined>> => {
+      try {
+        return success(await db.sessions.get(id));
+      } catch (err) {
+        console.error('Failed to get session:', err);
+        return failure('Failed to load session');
+      }
     },
     [db]
   );

@@ -29,7 +29,13 @@ export function Settings() {
   const [locations, setLocations] = useState<Location[]>([]);
 
   useEffect(() => {
-    getLocationList().then(setLocations);
+    getLocationList().then((result) => {
+      if (result.success) {
+        setLocations(result.data);
+      } else {
+        console.error('Failed to load locations:', result.error);
+      }
+    });
   }, [getLocationList]);
   const [state, setState] = useImmerState<SettingsState>(DEFAULT_STATE);
 

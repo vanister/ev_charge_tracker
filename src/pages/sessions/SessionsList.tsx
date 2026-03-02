@@ -37,16 +37,34 @@ export function SessionsList() {
   const hasSessions = sessions.length > 0;
 
   useEffect(() => {
-    getLocationList().then(setLocations);
+    getLocationList().then((result) => {
+      if (result.success) {
+        setLocations(result.data);
+      } else {
+        console.error('Failed to load locations:', result.error);
+      }
+    });
   }, [getLocationList]);
 
   useEffect(() => {
-    getVehicleList().then(setVehicles);
+    getVehicleList().then((result) => {
+      if (result.success) {
+        setVehicles(result.data);
+      } else {
+        console.error('Failed to load vehicles:', result.error);
+      }
+    });
   }, [getVehicleList]);
 
   useEffect(() => {
     getSessionList({ vehicleId: selectedVehicleId, locationId: selectedLocationId })
-      .then(setSessions)
+      .then((result) => {
+        if (result.success) {
+          setSessions(result.data);
+        } else {
+          console.error('Failed to load sessions:', result.error);
+        }
+      })
       .finally(() => setIsLoading(false));
   }, [getSessionList, selectedVehicleId, selectedLocationId]);
 

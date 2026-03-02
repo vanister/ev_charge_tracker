@@ -50,13 +50,25 @@ export function SessionDetails() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
 
   useEffect(() => {
-    getVehicleList().then(setVehicles);
+    getVehicleList().then((result) => {
+      if (result.success) {
+        setVehicles(result.data);
+      } else {
+        console.error('Failed to load vehicles:', result.error);
+      }
+    });
   }, [getVehicleList]);
   const { getLocationList } = useLocations();
   const [locations, setLocations] = useState<AppLocation[]>([]);
 
   useEffect(() => {
-    getLocationList(true).then(setLocations);
+    getLocationList(true).then((result) => {
+      if (result.success) {
+        setLocations(result.data);
+      } else {
+        console.error('Failed to load locations:', result.error);
+      }
+    });
   }, [getLocationList]);
 
   const [formState, setFormState] = useImmerState<SessionPageState>({
@@ -80,7 +92,18 @@ export function SessionDetails() {
         return;
       }
 
-      const session = await getSession(id);
+      const result = await getSession(id);
+
+      if (!result.success) {
+        setFormState((draft) => {
+          draft.sessionNotFound = true;
+          draft.isInitialized = true;
+        });
+
+        return;
+      }
+
+      const session = result.data;
 
       if (!session) {
         setFormState((draft) => {

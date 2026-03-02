@@ -17,7 +17,13 @@ export function VehiclesList() {
   const sortedVehicles = useMemo(() => [...vehicles].sort((a, b) => b.createdAt - a.createdAt), [vehicles]);
 
   useEffect(() => {
-    getVehicleList().then(setVehicles);
+    getVehicleList().then((result) => {
+      if (result.success) {
+        setVehicles(result.data);
+      } else {
+        console.error('Failed to load vehicles:', result.error);
+      }
+    });
   }, [getVehicleList]);
 
   const handleDelete = async (id: string) => {
