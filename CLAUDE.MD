@@ -1,9 +1,5 @@
 # EV Charge Tracker - Project Memory
 
-## Critical: Follow .github/copilot-instructions.md
-
-Always follow the rules in `.github/copilot-instructions.md` for this project.
-
 ### Universal Rules
 - Guard clauses, early returns, avoid deep nesting
 - No inline returns in `if` statements
