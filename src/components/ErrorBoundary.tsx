@@ -1,7 +1,4 @@
-import type { ReactNode } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
-
-export function ErrorFallback() {
+export function GenericError() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
       <div className="text-center p-8">
@@ -11,21 +8,5 @@ export function ErrorFallback() {
         <p className="text-sm text-muted mt-4">Please refresh the page to try again</p>
       </div>
     </div>
-  );
-}
-
-type GenericErrorProps = {
-  children: ReactNode;
-};
-
-const onError = (error: unknown, info: React.ErrorInfo) => {
-  console.error('Unhandled render error:', error, info);
-};
-
-export function GenericError({ children }: GenericErrorProps) {
-  return (
-    <ErrorBoundary FallbackComponent={ErrorFallback} onError={onError}>
-      {children}
-    </ErrorBoundary>
   );
 }

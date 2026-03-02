@@ -7,12 +7,17 @@ import { db } from './data/db';
 import { DatabaseProvider } from './providers/DatabaseProvider';
 import { AppInitializationProvider } from './providers/AppInitializationProvider';
 import { ThemeProvider } from './providers/ThemeProvider';
+import { ErrorBoundary } from 'react-error-boundary';
 import { GenericError } from './components/ErrorBoundary';
 import { App } from './App';
 
+const onError = (error: unknown, info: React.ErrorInfo) => {
+  console.error('Unhandled render error:', error, info);
+};
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <GenericError>
+    <ErrorBoundary FallbackComponent={GenericError} onError={onError}>
       <DatabaseProvider db={db}>
         <ThemeProvider>
           <AppInitializationProvider>
@@ -22,6 +27,6 @@ createRoot(document.getElementById('root')!).render(
           </AppInitializationProvider>
         </ThemeProvider>
       </DatabaseProvider>
-    </GenericError>
+    </ErrorBoundary>
   </StrictMode>
 );
