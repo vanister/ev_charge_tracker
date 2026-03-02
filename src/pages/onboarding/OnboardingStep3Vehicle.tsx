@@ -23,8 +23,6 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
 
       if (result.success) {
         setVehicles(result.data);
-      } else {
-        console.error('Failed to load vehicles:', result.error);
       }
     };
 

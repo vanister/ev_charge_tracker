@@ -55,8 +55,6 @@ export function SessionDetails() {
 
       if (result.success) {
         setVehicles(result.data);
-      } else {
-        console.error('Failed to load vehicles:', result.error);
       }
     };
 
@@ -71,8 +69,6 @@ export function SessionDetails() {
 
       if (result.success) {
         setLocations(result.data);
-      } else {
-        console.error('Failed to load locations:', result.error);
       }
     };
 

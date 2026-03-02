@@ -34,8 +34,6 @@ export function Settings() {
 
       if (result.success) {
         setLocations(result.data);
-      } else {
-        console.error('Failed to load locations:', result.error);
       }
     };
 

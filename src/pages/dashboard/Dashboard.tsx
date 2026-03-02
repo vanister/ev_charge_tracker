@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { useStats } from '../../hooks/useStats';
@@ -13,13 +14,11 @@ export function Dashboard() {
 
   const hasSessions = stats !== null && stats.sessionCount > 0;
 
-  if (!isLoading && error) {
-    return (
-      <div className="h-[calc(100vh-5rem)] bg-background px-4 py-6 flex items-center justify-center">
-        <p className="text-sm text-body-secondary">{error}</p>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (error) {
+      navigate('/error', { replace: true, state: { error } });
+    }
+  }, [error, navigate]);
 
   if (!isLoading && !hasSessions) {
     return (

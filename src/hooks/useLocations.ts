@@ -13,12 +13,10 @@ export function useLocations() {
   const getLocationList = useCallback(
     async (all = false): Promise<Result<Location[]>> => {
       try {
-        if (all) {
-          const locations = await db.locations.orderBy('order').toArray();
-          return success(locations);
-        }
+        const locations = all
+          ? await db.locations.orderBy('order').toArray()
+          : await db.locations.where('isActive').equals(1).sortBy('order');
 
-        const locations = await db.locations.where('isActive').equals(1).sortBy('order');
         return success(locations);
       } catch (err) {
         console.error('Failed to get location list:', err);

@@ -22,8 +22,6 @@ export function VehiclesList() {
 
       if (result.success) {
         setVehicles(result.data);
-      } else {
-        console.error('Failed to load vehicles:', result.error);
       }
     };
 

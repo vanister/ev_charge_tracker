@@ -42,8 +42,6 @@ export function SessionsList() {
 
       if (result.success) {
         setLocations(result.data);
-      } else {
-        console.error('Failed to load locations:', result.error);
       }
     };
 
@@ -56,8 +54,6 @@ export function SessionsList() {
 
       if (result.success) {
         setVehicles(result.data);
-      } else {
-        console.error('Failed to load vehicles:', result.error);
       }
     };
 
@@ -71,8 +67,6 @@ export function SessionsList() {
 
         if (result.success) {
           setSessions(result.data);
-        } else {
-          console.error('Failed to load sessions:', result.error);
         }
       } finally {
         setIsLoading(false);
