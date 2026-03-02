@@ -1,5 +1,5 @@
 import type { ChargingSession } from '../../data/data-types';
-import type { IconName } from '../../components/Icon';
+import type { IconName } from '../../types/shared-types';
 import { SessionItem } from './SessionItem';
 
 type SessionWithMetadata = {

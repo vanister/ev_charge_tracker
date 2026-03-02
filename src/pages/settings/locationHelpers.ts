@@ -1,4 +1,4 @@
-import type { IconName } from '../../components/Icon';
+import type { IconName } from '../../types/shared-types';
 import type { Location } from '../../data/data-types';
 
 export type LocationFormData = {

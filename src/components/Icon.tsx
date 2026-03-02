@@ -21,29 +21,7 @@ import {
   TrendingUp,
   Activity
 } from 'lucide-react';
-
-export type IconName =
-  | 'home'
-  | 'building'
-  | 'map-pin'
-  | 'zap'
-  | 'car'
-  | 'menu'
-  | 'x'
-  | 'plus'
-  | 'chevron-left'
-  | 'settings'
-  | 'sun'
-  | 'moon'
-  | 'monitor'
-  | 'edit'
-  | 'trash-2'
-  | 'calendar'
-  | 'filter'
-  | 'chevron-down'
-  | 'dollar-sign'
-  | 'trending-up'
-  | 'activity';
+import { type IconName } from '../types/shared-types';
 
 type IconSize = 'sm' | 'md' | 'lg';
 
