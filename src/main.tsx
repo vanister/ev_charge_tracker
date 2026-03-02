@@ -8,7 +8,7 @@ import { DatabaseProvider } from './providers/DatabaseProvider';
 import { AppInitializationProvider } from './providers/AppInitializationProvider';
 import { ThemeProvider } from './providers/ThemeProvider';
 import { ErrorBoundary } from 'react-error-boundary';
-import { GenericError } from './components/ErrorBoundary';
+import { GenericError } from './components/GenericError';
 import { App } from './App';
 
 const onError = (error: unknown, info: React.ErrorInfo) => {
