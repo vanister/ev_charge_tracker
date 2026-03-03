@@ -3,7 +3,7 @@ import { useVehicles } from '../../hooks/useVehicles';
 import type { Vehicle } from '../../data/data-types';
 import { useImmerState } from '../../hooks/useImmerState';
 import { OnboardingHeader } from './OnboardingHeader';
-import { OnboardingFooter } from './OnboardingFooter';
+import { FormFooter } from '../../components/FormFooter';
 import { OnboardingNavigationButtons } from './OnboardingNavigationButtons';
 import { VehicleForm } from '../vehicles/VehicleForm';
 import { DEFAULT_VEHICLE_FORM_DATA, buildVehicleInput, type VehicleFormData } from '../vehicles/vehicleHelpers';
@@ -86,14 +86,14 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
           ))}
         </div>
 
-        <OnboardingFooter>
+        <FormFooter>
           <OnboardingNavigationButtons
             onBack={props.onBack}
             continueLabel="Continue"
             type="button"
             onContinue={props.onComplete}
           />
-        </OnboardingFooter>
+        </FormFooter>
       </div>
     );
   }
@@ -114,7 +114,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
         error={error}
       />
 
-      <OnboardingFooter>
+      <FormFooter>
         <OnboardingNavigationButtons
           onBack={props.onBack}
           continueLabel={isLoading ? 'Saving...' : 'Create Vehicle'}
@@ -122,7 +122,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
           form="onboarding-vehicle-form"
           disabled={isLoading}
         />
-      </OnboardingFooter>
+      </FormFooter>
     </div>
   );
 }

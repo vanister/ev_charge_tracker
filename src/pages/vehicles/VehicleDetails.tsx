@@ -4,6 +4,7 @@ import { useVehicles } from '../../hooks/useVehicles';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { useImmerState } from '../../hooks/useImmerState';
 import { Button } from '../../components/Button';
+import { FormFooter } from '../../components/FormFooter';
 import { VehicleForm } from './VehicleForm';
 import { DEFAULT_VEHICLE_FORM_DATA, buildVehicleInput, type VehicleFormData } from './vehicleHelpers';
 
@@ -136,7 +137,7 @@ export function VehicleDetails() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
+    <div className="max-w-2xl mx-auto px-4 pt-8 pb-20">
       <h1 className="text-2xl font-bold text-body mb-6">{isEditMode ? 'Edit Vehicle' : 'Add Vehicle'}</h1>
 
       <VehicleForm
@@ -148,14 +149,16 @@ export function VehicleDetails() {
         error={formState.error}
       />
 
-      <div className="flex gap-3 mt-6">
-        <Button type="button" variant="secondary" fullWidth onClick={handleCancel} disabled={formState.isLoading}>
-          Cancel
-        </Button>
-        <Button form="vehicle-form" type="submit" variant="primary" fullWidth disabled={formState.isLoading}>
-          {formState.isLoading ? 'Saving...' : isEditMode ? 'Save Changes' : 'Add Vehicle'}
-        </Button>
-      </div>
+      <FormFooter>
+        <div className="flex gap-3">
+          <Button type="button" variant="secondary" fullWidth onClick={handleCancel} disabled={formState.isLoading}>
+            Cancel
+          </Button>
+          <Button form="vehicle-form" type="submit" variant="primary" fullWidth disabled={formState.isLoading}>
+            {formState.isLoading ? 'Saving...' : isEditMode ? 'Save Changes' : 'Add Vehicle'}
+          </Button>
+        </div>
+      </FormFooter>
     </div>
   );
 }

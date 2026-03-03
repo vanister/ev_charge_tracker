@@ -1,5 +1,5 @@
 import { OnboardingHeader } from './OnboardingHeader';
-import { OnboardingFooter } from './OnboardingFooter';
+import { FormFooter } from '../../components/FormFooter';
 import { Button } from '../../components/Button';
 
 type OnboardingStep1WelcomeProps = {
@@ -15,11 +15,11 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
         subDescription="Work completely offline, manage multiple vehicles, and analyze your charging costs across different locations."
       />
 
-      <OnboardingFooter>
+      <FormFooter>
         <Button variant="primary" onClick={props.onContinue} fullWidth className="sm:w-auto">
           Get Started
         </Button>
-      </OnboardingFooter>
+      </FormFooter>
     </div>
   );
 }
