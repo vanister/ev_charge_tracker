@@ -14,11 +14,9 @@
 **Overall Progress**: 37/48 tasks complete (77%)
 
 ### Next Up
-All pages are implemented! Next priorities:
 1. Implement charts with Recharts (energy by location, timeline)
 2. Generate PWA icons (192x192, 512x512, 180x180, 32x32, 16x16)
-3. Add service worker update notification
-4. Address tech debt (type consolidation, helpers cleanup, async/await)
+3. Test offline functionality
 
 ---
 
