@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useServiceWorkerUpdate } from '../../hooks/useServiceWorkerUpdate';
 import { useTheme } from '../../hooks/useTheme';
+import { useToast } from '../../hooks/useToast';
 import { LayoutConfigProvider } from '../../providers/LayoutConfigProvider';
-import { UpdateNotification } from '../../components/UpdateNotification';
 import { AppHeader } from './AppHeader';
 import { MenuOverlay } from './MenuOverlay';
 import { NavigationDrawer } from './NavigationDrawer';
@@ -14,7 +14,9 @@ export function Layout() {
   const { needsUpdate, applyUpdate } = useServiceWorkerUpdate();
   const location = useLocation();
   const { theme, updateTheme } = useTheme();
+  const { showToast } = useToast();
   const [title, setTitle] = useState<string>('EV Charge Tracker');
+  const updateToastShownRef = useRef(false);
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -27,6 +29,18 @@ export function Layout() {
   const handleThemeChange = async (newTheme: ThemeMode) => {
     await updateTheme(newTheme);
   };
+
+  useEffect(() => {
+    if (needsUpdate && !updateToastShownRef.current) {
+      updateToastShownRef.current = true;
+      showToast({
+        message: 'A new version is available',
+        variant: 'info',
+        duration: 'persistent',
+        action: { label: 'Reload', onClick: applyUpdate }
+      });
+    }
+  }, [needsUpdate, applyUpdate, showToast]);
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -45,8 +59,6 @@ export function Layout() {
           <Outlet />
         </LayoutConfigProvider>
       </main>
-
-      <UpdateNotification show={needsUpdate} onUpdate={applyUpdate} />
     </div>
   );
 }

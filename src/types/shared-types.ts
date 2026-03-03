@@ -33,7 +33,11 @@ export const ALL_ICONS = [
   'chevron-down',
   'dollar-sign',
   'trending-up',
-  'activity'
+  'activity',
+  'check-circle',
+  'x-circle',
+  'alert-triangle',
+  'info'
 ] as const;
 
 export type IconName = (typeof ALL_ICONS)[number];
