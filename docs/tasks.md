@@ -8,10 +8,10 @@
 - **Phase 4 - Routing & Pages**: ✅ Complete (8/8)
 - **Phase 5 - UI Components**: 🚧 In Progress (1/2)
 - **Phase 6 - Tech Debt / Cleanup**: ✅ Complete (6/6)
-- **Phase 7 - PWA Features**: 🚧 In Progress (2/4)
+- **Phase 7 - PWA Features**: 🚧 In Progress (3/4)
 - **Phase 8 - Business Logic & Testing**: 🚧 In Progress (3/5)
 
-**Overall Progress**: 36/48 tasks complete (75%)
+**Overall Progress**: 37/48 tasks complete (77%)
 
 ### Next Up
 All pages are implemented! Next priorities:
@@ -123,7 +123,7 @@ All pages are implemented! Next priorities:
    - Set up manifest with name, icons, theme_color: #14b8a6 (teal-500), display: standalone in vite.config.ts
 3. [x] Implement persistent storage request
    - Add navigator.storage.persist() call on app init, show storage quota in settings
-4. [ ] Add service worker update notification
+4. [x] Add service worker update notification
    - Detect new service worker and show 'Update available' UI with reload action
 
 ## 8. Business Logic & Testing
