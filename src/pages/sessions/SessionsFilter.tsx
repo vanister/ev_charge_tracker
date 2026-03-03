@@ -3,7 +3,7 @@ import { Button } from '../../components/Button';
 import { Icon } from '../../components/Icon';
 import { FormSelect } from '../../components/FormSelect';
 import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
-import { TIME_FILTER_OPTIONS } from '../../utilities/dateUtils';
+import { TIME_FILTER_OPTIONS } from '../../constants';
 
 type SessionsFilterProps = {
   vehicles: Vehicle[];
@@ -53,7 +53,7 @@ export function SessionsFilter(props: SessionsFilterProps) {
         <h2 className="text-sm font-semibold text-body">Filters</h2>
       </div>
 
-      <div className="mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
         <FormSelect
           id="time-range-filter"
           label="Time Range"
@@ -63,9 +63,7 @@ export function SessionsFilter(props: SessionsFilterProps) {
           className="bg-background"
           options={TIME_FILTER_OPTIONS.map(({ label, value }) => ({ value, text: label }))}
         />
-      </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
         <FormSelect
           id="vehicle-filter"
           label="Vehicle"
