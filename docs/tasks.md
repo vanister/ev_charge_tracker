@@ -136,11 +136,14 @@ All pages are implemented! Next priorities:
    - Prevent deletion of locations with sessions
 4. [ ] Test offline functionality
    - Verify all features work without network, test service worker caching
-5. [ ] Build and deploy to static hosting
-   - Configure deployment to Vercel/Netlify/GitHub Pages with HTTPS
+5. [x] Build and deploy to static hosting
+   - Configure deployment to Cloudflare Pages with HTTPS
 
 ## Post-MVP
 
 1. [ ] Support vehicle image upload
    - Allow users to upload a custom image for their vehicle instead of the default 🚗 emoji
    - Store image reference and display in VehicleItem and other vehicle displays
+2. [ ] Export, backup and restore functionality
+3. [ ] Sync ability using users storage accounts
+   - iCloud, Drive, OneDrive, etc. 
