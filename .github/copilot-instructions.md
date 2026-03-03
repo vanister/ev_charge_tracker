@@ -41,6 +41,8 @@ This is a Vite, TypeScript, React PWA app. It's mobile focused and is designed t
 - Run `npm run build` to verify no build errors after major changes
 - `React.FormEvent` is marked deprecated, use `React.SubmitEvent<T>` instead for form submit handlers
 - Use the `clsx` package for dynamic css class name creation
+- Title copilot agent task branches as "pr-review" and append a number if the branch already exists
+	- i.e. "pr-review", "pr-review-2", "pr-review-3", etc.
 
 ## Task-Specific Rules
 
