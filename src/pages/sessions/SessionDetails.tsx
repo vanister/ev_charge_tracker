@@ -176,14 +176,13 @@ export function SessionDetails() {
 
     // todo - this is biz logic, move out into a helper
     try {
-      const notes = formState.notes.trim();
       const input = {
         vehicleId: formState.vehicleId,
         locationId: formState.locationId,
         energyKwh: +formState.energyKwh,
         ratePerKwh: +formState.ratePerKwh,
         chargedAt: datetimeLocalToTimestamp(formState.chargedAt),
-        ...(notes ? { notes } : {})
+        notes: formState.notes.trim() || undefined
       };
 
       const result = isEditMode ? await updateSession(id, input) : await createSession(input);
