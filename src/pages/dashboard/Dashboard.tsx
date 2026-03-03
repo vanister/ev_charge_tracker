@@ -22,7 +22,7 @@ export function Dashboard() {
 
   if (!isLoading && !hasSessions) {
     return (
-      <div className="h-[calc(100vh-5rem)] bg-background px-4 py-6 flex flex-col">
+      <div className="flex-1 bg-background px-4 py-6 flex flex-col">
         <EmptyState
           icon="zap"
           title="No charging sessions yet"
@@ -39,7 +39,7 @@ export function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-background px-4 py-6">
+    <div className="bg-background px-4 py-6">
       <div className="max-w-2xl mx-auto">
         <DashboardStats stats={stats} />
         {recentSessions.length > 0 && <DashboardRecentSessions sessions={recentSessions} />}

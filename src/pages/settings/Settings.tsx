@@ -73,7 +73,7 @@ export function Settings() {
       : null;
 
   return (
-    <div className="min-h-screen bg-background px-4 py-6">
+    <div className="bg-background px-4 py-6">
       <div className="max-w-2xl mx-auto space-y-8">
         <section>
           <SectionHeader title="Locations" />

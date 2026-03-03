@@ -26,7 +26,7 @@ export function Layout() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen bg-background">
       <AppHeader title={title} onMenuOpen={handleMenuToggle} />
       <MenuOverlay isOpen={isMenuOpen} onClick={handleMenuClose} />
       <NavigationDrawer
@@ -37,7 +37,7 @@ export function Layout() {
         onThemeChange={handleThemeChange}
       />
 
-      <main className="pt-14">
+      <main className="pt-14 flex-1">
         <LayoutConfigProvider value={{ title, setTitle }}>
           <Outlet />
         </LayoutConfigProvider>
