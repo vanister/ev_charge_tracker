@@ -4,6 +4,7 @@ import { useLocations } from '../../hooks/useLocations';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { useImmerState } from '../../hooks/useImmerState';
 import { Button } from '../../components/Button';
+import { FormFooter } from '../../components/FormFooter';
 import { LocationForm } from './LocationForm';
 import { DEFAULT_LOCATION_FORM_DATA, buildLocationInput, type LocationFormData } from './locationHelpers';
 
@@ -137,7 +138,7 @@ export function LocationDetails() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
+    <div className="max-w-2xl mx-auto px-4 pt-8 pb-20">
       <h1 className="text-2xl font-bold text-body mb-6">
         {isEditMode ? 'Edit Location' : 'Add Location'}
       </h1>
@@ -151,14 +152,16 @@ export function LocationDetails() {
         error={formState.error}
       />
 
-      <div className="flex gap-3 mt-6">
-        <Button type="button" variant="secondary" fullWidth onClick={handleCancel} disabled={formState.isLoading}>
-          Cancel
-        </Button>
-        <Button form="location-form" type="submit" variant="primary" fullWidth disabled={formState.isLoading}>
-          {formState.isLoading ? 'Saving...' : isEditMode ? 'Save Changes' : 'Add Location'}
-        </Button>
-      </div>
+      <FormFooter>
+        <div className="flex gap-3">
+          <Button type="button" variant="secondary" fullWidth onClick={handleCancel} disabled={formState.isLoading}>
+            Cancel
+          </Button>
+          <Button form="location-form" type="submit" variant="primary" fullWidth disabled={formState.isLoading}>
+            {formState.isLoading ? 'Saving...' : isEditMode ? 'Save Changes' : 'Add Location'}
+          </Button>
+        </div>
+      </FormFooter>
     </div>
   );
 }

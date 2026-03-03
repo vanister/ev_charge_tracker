@@ -7,6 +7,7 @@ import type { Vehicle, Location as AppLocation } from '../../data/data-types';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { useImmerState } from '../../hooks/useImmerState';
 import { Button } from '../../components/Button';
+import { FormFooter } from '../../components/FormFooter';
 import { SessionForm } from './SessionForm';
 import type { SessionFormData } from './session-types';
 import { SessionFormEmptyStates } from './SessionFormEmptyStates';
@@ -225,7 +226,7 @@ export function SessionDetails() {
   const calculatedCost = calculateCostCents(+formState.energyKwh || 0, +formState.ratePerKwh || 0);
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <div className="max-w-2xl mx-auto px-6 pt-6 pb-20">
       <SessionForm
         id="session-form"
         formData={formState}
@@ -238,14 +239,16 @@ export function SessionDetails() {
         calculatedCost={calculatedCost}
       />
 
-      <div className="flex gap-3 mt-6">
-        <Button type="button" variant="secondary" fullWidth onClick={handleCancel} disabled={formState.isLoading}>
-          Cancel
-        </Button>
-        <Button form="session-form" type="submit" variant="primary" fullWidth disabled={formState.isLoading}>
-          {formState.isLoading ? 'Saving...' : isEditMode ? 'Update Session' : 'Add Session'}
-        </Button>
-      </div>
+      <FormFooter>
+        <div className="flex gap-3">
+          <Button type="button" variant="secondary" fullWidth onClick={handleCancel} disabled={formState.isLoading}>
+            Cancel
+          </Button>
+          <Button form="session-form" type="submit" variant="primary" fullWidth disabled={formState.isLoading}>
+            {formState.isLoading ? 'Saving...' : isEditMode ? 'Update Session' : 'Add Session'}
+          </Button>
+        </div>
+      </FormFooter>
     </div>
   );
 }

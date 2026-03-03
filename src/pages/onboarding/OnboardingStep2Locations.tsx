@@ -4,7 +4,7 @@ import type { Location } from '../../data/data-types';
 import { Icon } from '../../components/Icon';
 import { FormInput } from '../../components/FormInput';
 import { OnboardingHeader } from './OnboardingHeader';
-import { OnboardingFooter } from './OnboardingFooter';
+import { FormFooter } from '../../components/FormFooter';
 import { OnboardingNavigationButtons } from './OnboardingNavigationButtons';
 
 type LocationFormData = {
@@ -142,9 +142,9 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
           </div>
         )}
 
-        <OnboardingFooter>
+        <FormFooter>
           <OnboardingNavigationButtons onBack={props.onBack} continueLabel="Continue" disabled={isLoading} />
-        </OnboardingFooter>
+        </FormFooter>
       </form>
     </div>
   );
