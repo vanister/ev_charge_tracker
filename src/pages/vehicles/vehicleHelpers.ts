@@ -6,15 +6,13 @@ export type VehicleFormData = {
   make: string;
   model: string;
   name: string;
-  icon: string;
 };
 
 export const DEFAULT_VEHICLE_FORM_DATA: VehicleFormData = {
   year: '',
   make: '',
   model: '',
-  name: '',
-  icon: '🚗'
+  name: ''
 };
 
 export function getVehicleDisplayName(vehicle: Vehicle): string {
@@ -27,6 +25,6 @@ export function buildVehicleInput(formData: VehicleFormData): CreateVehicleInput
     make: formData.make.trim(),
     model: formData.model.trim(),
     name: formData.name.trim() || undefined,
-    icon: formData.icon.trim() || '🚗'
+    icon: '🚗'
   };
 }

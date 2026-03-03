@@ -33,7 +33,6 @@ export const DEFAULT_LOCATIONS: Omit<Location, 'id' | 'createdAt' | 'isActive'>[
   }
 ];
 
-export const DEFAULT_VEHICLE_ICON = 'car';
 export const SETTINGS_KEY = 'app-settings';
 
 export const DEFAULT_SETTINGS: Settings = {

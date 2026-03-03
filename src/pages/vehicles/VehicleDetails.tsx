@@ -73,7 +73,6 @@ export function VehicleDetails() {
         draft.make = vehicle.make;
         draft.model = vehicle.model;
         draft.name = vehicle.name || '';
-        draft.icon = vehicle.icon;
         draft.isInitialized = true;
       });
     };

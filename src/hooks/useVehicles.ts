@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import { useDatabase } from './useDatabase';
 import type { Vehicle } from '../data/data-types';
-import { DEFAULT_VEHICLE_ICON } from '../data/constants';
 import { generateId } from '../utilities/dataUtils';
 import { success, failure, type Result } from '../utilities/resultUtils';
 
@@ -45,7 +44,7 @@ export function useVehicles() {
   const createVehicle = async (input: CreateVehicleInput): Promise<Result<Vehicle>> => {
     const vehicle: Vehicle = {
       ...input,
-      icon: input.icon ?? DEFAULT_VEHICLE_ICON,
+      icon: '🚗',
       id: generateId(),
       createdAt: Date.now(),
       isActive: 1
@@ -68,7 +67,7 @@ export function useVehicles() {
         return failure('Vehicle not found');
       }
 
-      const updated: Vehicle = { ...existing, ...input };
+      const updated: Vehicle = { ...existing, ...input, icon: '🚗' };
 
       await db.vehicles.put(updated);
       return success(updated);

@@ -138,3 +138,9 @@ All pages are implemented! Next priorities:
    - Verify all features work without network, test service worker caching
 5. [ ] Build and deploy to static hosting
    - Configure deployment to Vercel/Netlify/GitHub Pages with HTTPS
+
+## Post-MVP
+
+1. [ ] Support vehicle image upload
+   - Allow users to upload a custom image for their vehicle instead of the default 🚗 emoji
+   - Store image reference and display in VehicleItem and other vehicle displays
