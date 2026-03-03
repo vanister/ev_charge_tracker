@@ -71,7 +71,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
         <div className="space-y-3 mb-6">
           {vehicles.map((vehicle) => (
             <div key={vehicle.id} className="p-4 bg-surface border border-default rounded-lg flex items-center gap-3">
-              <div className="text-3xl">{vehicle.icon}</div>
+              <div className="text-3xl">🚗</div>
               <div className="flex-1">
                 <div className="font-medium text-body">
                   {vehicle.name || `${vehicle.year} ${vehicle.make} ${vehicle.model}`}

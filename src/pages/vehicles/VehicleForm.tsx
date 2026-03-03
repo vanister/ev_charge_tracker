@@ -66,16 +66,6 @@ export function VehicleForm(props: VehicleFormProps) {
         disabled={props.isLoading}
       />
 
-      <FormInput
-        id="vehicle-icon"
-        label="Icon"
-        type="text"
-        value={props.formData.icon}
-        onChange={(e) => props.onChange('icon', e.target.value)}
-        placeholder="🚗"
-        disabled={props.isLoading}
-      />
-
       {props.error && (
         <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
           <p className="text-sm text-red-500">{props.error}</p>
