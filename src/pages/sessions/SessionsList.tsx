@@ -22,6 +22,7 @@ type SessionsListState = {
   isLoading: boolean;
   sessions: ChargingSession[];
   locations: AppLocation[];
+  hasAnySessions: boolean;
 };
 
 const DEFAULT_STATE: SessionsListState = {
@@ -31,7 +32,8 @@ const DEFAULT_STATE: SessionsListState = {
   vehicles: [],
   isLoading: true,
   sessions: [],
-  locations: []
+  locations: [],
+  hasAnySessions: false
 };
 
 export function SessionsList() {
@@ -41,7 +43,7 @@ export function SessionsList() {
   const [state, setState] = useImmerState<SessionsListState>(DEFAULT_STATE);
   const { getLocationList } = useLocations();
   const { getVehicleList } = useVehicles();
-  const { getSessionList, deleteSession } = useSessions();
+  const { getSessionList, deleteSession, hasAnySessions } = useSessions();
   const vehicleMap = useMemo(() => createVehicleMap(state.vehicles), [state.vehicles]);
   const locationMap = useMemo(() => createLocationMap(state.locations), [state.locations]);
   const sessionsByDate = useMemo(
@@ -50,7 +52,7 @@ export function SessionsList() {
   );
 
   const hasActiveFilters = Boolean(state.selectedVehicleId || state.selectedLocationId);
-  const hasSessions = state.sessions.length > 0;
+  const hasTimeRangeFilter = state.selectedTimeRange !== 'all';
 
   useEffect(() => {
     const loadLocations = async () => {
@@ -105,6 +107,21 @@ export function SessionsList() {
     loadSessions();
   }, [getSessionList, state.selectedVehicleId, state.selectedLocationId, state.selectedTimeRange, setState]);
 
+  // Run once on mount to distinguish "no sessions exist" from "no sessions match filter"
+  useEffect(() => {
+    const checkForSessions = async () => {
+      const result = await hasAnySessions();
+
+      if (result.success) {
+        setState((draft) => {
+          draft.hasAnySessions = result.data;
+        });
+      }
+    };
+
+    checkForSessions();
+  }, [hasAnySessions, setState]);
+
   const handleEdit = (id: string) => {
     navigate(`/sessions/${id}/edit`);
   };
@@ -157,11 +174,12 @@ export function SessionsList() {
     });
   };
 
-  if (!state.isLoading && !hasSessions) {
+  if (!state.isLoading && !state.hasAnySessions) {
     return (
       <div className="flex-1 bg-background px-4 py-6 flex flex-col">
         <SessionsEmptyState
           hasFilters={hasActiveFilters}
+          hasTimeRangeFilter={false}
           onAddSession={handleAddSession}
           onClearFilters={handleClearFilters}
         />
@@ -187,6 +205,7 @@ export function SessionsList() {
         {sessionsByDate.length === 0 ? (
           <SessionsEmptyState
             hasFilters={hasActiveFilters}
+            hasTimeRangeFilter={hasTimeRangeFilter}
             onAddSession={handleAddSession}
             onClearFilters={handleClearFilters}
           />
