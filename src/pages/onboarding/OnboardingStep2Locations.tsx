@@ -1,16 +1,31 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocations } from '../../hooks/useLocations';
 import type { Location } from '../../data/data-types';
+import { useImmerState } from '../../hooks/useImmerState';
 import { Icon } from '../../components/Icon';
 import { FormInput } from '../../components/FormInput';
 import { OnboardingHeader } from './OnboardingHeader';
 import { FormFooter } from '../../components/FormFooter';
 import { OnboardingNavigationButtons } from './OnboardingNavigationButtons';
 
-type LocationFormData = {
+type OnboardingLocationFormData = {
   id: string;
   name: string;
   defaultRate: string;
+};
+
+type Step2State = {
+  locations: Location[];
+  locationForms: OnboardingLocationFormData[];
+  isLoading: boolean;
+  error: string;
+};
+
+const DEFAULT_STATE: Step2State = {
+  locations: [],
+  locationForms: [],
+  isLoading: false,
+  error: ''
 };
 
 type OnboardingStep2LocationsProps = {
@@ -20,51 +35,57 @@ type OnboardingStep2LocationsProps = {
 
 export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
   const { updateLocation, getLocationList } = useLocations();
-  const [locations, setLocations] = useState<Location[]>([]);
+  const [state, setState] = useImmerState<Step2State>(DEFAULT_STATE);
 
   useEffect(() => {
     const loadLocations = async () => {
       const result = await getLocationList();
 
       if (result.success) {
-        setLocations(result.data);
+        setState((draft) => {
+          draft.locations = result.data;
+        });
       }
     };
 
     loadLocations();
-  }, [getLocationList]);
-  const [locationForms, setLocationForms] = useState<LocationFormData[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string>('');
+  }, [getLocationList, setState]);
 
   useEffect(() => {
-    if (locations.length === 0 || locationForms.length > 0) {
+    if (state.locations.length === 0 || state.locationForms.length > 0) {
       return;
     }
 
-    setLocationForms(
-      locations.map((loc) => ({
+    setState((draft) => {
+      draft.locationForms = state.locations.map((loc) => ({
         id: loc.id,
         name: loc.name,
         defaultRate: loc.defaultRate.toString()
-      }))
-    );
-  }, [locations, locationForms.length]);
+      }));
+    });
+  }, [state.locations, state.locationForms.length, setState]);
 
   const handleLocationFormChange = (id: string, field: 'name' | 'defaultRate', value: string) => {
-    setLocationForms((prev) => prev.map((loc) => (loc.id === id ? { ...loc, [field]: value } : loc)));
-    setError('');
+    setState((draft) => {
+      const form = draft.locationForms.find((loc) => loc.id === id);
+      if (form) {
+        form[field] = value;
+      }
+      draft.error = '';
+    });
   };
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setIsLoading(true);
-    setError('');
+    setState((draft) => {
+      draft.isLoading = true;
+      draft.error = '';
+    });
 
     try {
-      for (const form of locationForms) {
-        const location = locations.find((loc) => loc.id === form.id);
+      for (const form of state.locationForms) {
+        const location = state.locations.find((loc) => loc.id === form.id);
         if (!location) continue;
 
         const result = await updateLocation(location.id, {
@@ -73,17 +94,23 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
         });
 
         if (!result.success) {
-          setError(result.error || 'Failed to update location');
-          setIsLoading(false);
+          setState((draft) => {
+            draft.error = result.error || 'Failed to update location';
+            draft.isLoading = false;
+          });
           return;
         }
       }
 
       props.onContinue();
     } catch {
-      setError('An unexpected error occurred');
+      setState((draft) => {
+        draft.error = 'An unexpected error occurred';
+      });
     } finally {
-      setIsLoading(false);
+      setState((draft) => {
+        draft.isLoading = false;
+      });
     }
   };
 
@@ -96,8 +123,8 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
 
       <form onSubmit={handleSubmit}>
         <div className="space-y-4 mb-6">
-          {locationForms.map((form, index) => {
-            const location = locations.find((loc) => loc.id === form.id);
+          {state.locationForms.map((form, index) => {
+            const location = state.locations.find((loc) => loc.id === form.id);
             if (!location) return null;
 
             return (
@@ -136,14 +163,18 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
           })}
         </div>
 
-        {error && (
+        {state.error && (
           <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-            <p className="text-sm text-red-500">{error}</p>
+            <p className="text-sm text-red-500">{state.error}</p>
           </div>
         )}
 
         <FormFooter>
-          <OnboardingNavigationButtons onBack={props.onBack} continueLabel="Continue" disabled={isLoading} />
+          <OnboardingNavigationButtons
+            onBack={props.onBack}
+            continueLabel="Continue"
+            disabled={state.isLoading}
+          />
         </FormFooter>
       </form>
     </div>

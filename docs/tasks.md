@@ -7,11 +7,11 @@
 - **Phase 3 - Context Providers & Hooks**: ✅ Complete (11/11)
 - **Phase 4 - Routing & Pages**: ✅ Complete (8/8)
 - **Phase 5 - UI Components**: 🚧 In Progress (1/2)
-- **Phase 6 - Tech Debt / Cleanup**: ⏳ Not Started (0/5)
+- **Phase 6 - Tech Debt / Cleanup**: ✅ Complete (6/6)
 - **Phase 7 - PWA Features**: 🚧 In Progress (2/4)
 - **Phase 8 - Business Logic & Testing**: 🚧 In Progress (3/5)
 
-**Overall Progress**: 30/42 tasks complete (71%)
+**Overall Progress**: 36/48 tasks complete (75%)
 
 ### Next Up
 All pages are implemented! Next priorities:
@@ -107,12 +107,12 @@ All pages are implemented! Next priorities:
 
 ## 6. Tech Debt / Cleanup
 
-1. [ ] Organize the types that are sprinkled throughout the components and helpers into feature level types or global types
-2. [ ] Check for opportunities to use the `useImmerState` hook
-3. [ ] More specific error pages
-4. [ ] Clean up helpers by removing the useless `build*Input` helpers
-5. [ ] Standardize on a page max-width across all pages
-6. [ ] Replace `Promise.then` with `async/await`
+1. [x] Organize the types that are sprinkled throughout the components and helpers into feature level types or global types
+2. [x] Check for opportunities to use the `useImmerState` hook
+3. [x] More specific error pages
+4. [x] Clean up helpers by removing the useless `build*Input` helpers
+5. [x] Standardize on a page max-width across all pages
+6. [x] Replace `Promise.then` with `async/await`
 
 ## 7. PWA Features
 

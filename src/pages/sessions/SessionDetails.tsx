@@ -15,8 +15,7 @@ import {
   calculateCostCents,
   getDefaultDateTime,
   timestampToDatetimeLocal,
-  datetimeLocalToTimestamp,
-  buildSessionInput
+  datetimeLocalToTimestamp
 } from './sessionFormHelpers';
 
 type SessionPageState = SessionFormData & {
@@ -177,14 +176,14 @@ export function SessionDetails() {
 
     // todo - this is biz logic, move out into a helper
     try {
-      const input = buildSessionInput({
+      const input = {
         vehicleId: formState.vehicleId,
         locationId: formState.locationId,
         energyKwh: +formState.energyKwh,
         ratePerKwh: +formState.ratePerKwh,
         chargedAt: datetimeLocalToTimestamp(formState.chargedAt),
-        notes: formState.notes
-      });
+        notes: formState.notes.trim() || undefined
+      };
 
       const result = isEditMode ? await updateSession(id, input) : await createSession(input);
 

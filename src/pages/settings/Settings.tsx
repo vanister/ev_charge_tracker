@@ -42,13 +42,16 @@ export function Settings() {
   const [state, setState] = useImmerState<SettingsState>(DEFAULT_STATE);
 
   useEffect(() => {
-    navigator.storage?.estimate?.().then((estimate) => {
+    const loadStorageEstimate = async () => {
+      const estimate = await navigator.storage?.estimate?.();
       setState((draft) => {
         draft.storageUsed = estimate?.usage ?? null;
         draft.storageQuota = estimate?.quota ?? null;
       });
-    });
-  }, []);
+    };
+
+    loadStorageEstimate();
+  }, [setState]);
 
   const handleDelete = async (id: string) => {
     const confirmed = window.confirm('Are you sure you want to delete this location?');

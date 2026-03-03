@@ -6,7 +6,7 @@ import { useImmerState } from '../../hooks/useImmerState';
 import { Button } from '../../components/Button';
 import { FormFooter } from '../../components/FormFooter';
 import { VehicleForm } from './VehicleForm';
-import { DEFAULT_VEHICLE_FORM_DATA, buildVehicleInput, type VehicleFormData } from './vehicleHelpers';
+import { DEFAULT_VEHICLE_FORM_DATA, type VehicleFormData } from './vehicleHelpers';
 
 type VehicleDetailsState = VehicleFormData & {
   isLoading: boolean;
@@ -96,7 +96,13 @@ export function VehicleDetails() {
       draft.error = '';
     });
 
-    const vehicleInput = buildVehicleInput(formState);
+    const vehicleInput = {
+      year: parseInt(formState.year, 10),
+      make: formState.make.trim(),
+      model: formState.model.trim(),
+      name: formState.name.trim() || undefined,
+      icon: '🚗'
+    };
 
     const result = isEditMode ? await updateVehicle(id!, vehicleInput) : await createVehicle(vehicleInput);
 
