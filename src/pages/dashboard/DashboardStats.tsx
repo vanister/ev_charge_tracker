@@ -1,4 +1,4 @@
-import type { SessionStats } from '../../hooks/useStats';
+import type { SessionStats } from './dashboard-types';
 import { formatEnergy, formatCost, formatRate } from '../../utilities/formatUtils';
 import { DashboardStatCard } from './DashboardStatCard';
 

@@ -1,3 +1,12 @@
+export type SessionInputData = {
+  vehicleId: string;
+  locationId: string;
+  energyKwh: number;
+  ratePerKwh: number;
+  chargedAt: number;
+  notes: string;
+};
+
 export function timestampToDatetimeLocal(timestamp: number): string {
   const date = new Date(timestamp);
   const year = date.getFullYear();
@@ -20,16 +29,7 @@ export function getDefaultDateTime(): string {
   return timestampToDatetimeLocal(Date.now());
 }
 
-type SessionFormData = {
-  vehicleId: string;
-  locationId: string;
-  energyKwh: number;
-  ratePerKwh: number;
-  chargedAt: number;
-  notes: string;
-};
-
-export function buildSessionInput(formData: SessionFormData) {
+export function buildSessionInput(formData: SessionInputData) {
   const input: {
     vehicleId: string;
     locationId: string;

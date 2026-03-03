@@ -4,15 +4,7 @@ import { FormSelect } from '../../components/FormSelect';
 import { formatCost } from '../../utilities/formatUtils';
 import type { Vehicle, Location } from '../../data/data-types';
 import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
-
-export type SessionFormData = {
-  vehicleId: string;
-  locationId: string;
-  energyKwh: string;
-  ratePerKwh: string;
-  chargedAt: string;
-  notes: string;
-};
+import type { SessionFormData } from './session-types';
 
 type SessionFormProps = {
   id?: string;

@@ -1,14 +1,5 @@
-import type { ChargingSession } from '../../data/data-types';
-import type { IconName } from '../../types/shared-types';
+import type { SessionWithMetadata } from '../../helpers/sessionHelpers';
 import { SessionItem } from './SessionItem';
-
-type SessionWithMetadata = {
-  session: ChargingSession;
-  vehicleName: string;
-  locationName: string;
-  locationIcon: IconName;
-  locationColor: string;
-};
 
 type SessionDateGroupProps = {
   date: string;

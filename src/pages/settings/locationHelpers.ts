@@ -24,7 +24,7 @@ export const LOCATION_COLOR_OPTIONS: { value: string; label: string; bgClass: st
   { value: 'orange', label: 'Orange', bgClass: 'bg-orange-400' }
 ];
 
-type NewLocation = Omit<Location, 'id' | 'createdAt' | 'isActive'>;
+export type NewLocation = Omit<Location, 'id' | 'createdAt' | 'isActive'>;
 
 export function buildLocationInput(formData: LocationFormData): NewLocation {
   return {

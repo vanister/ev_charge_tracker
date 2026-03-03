@@ -1,5 +1,5 @@
 import type { Vehicle } from '../../data/data-types';
-import type { CreateVehicleInput } from '../../hooks/useVehicles';
+import type { CreateVehicleInput } from './vehicle-types';
 
 export type VehicleFormData = {
   year: string;
