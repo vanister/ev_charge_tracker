@@ -137,7 +137,7 @@ export function useSessions() {
     async (): Promise<Result<boolean>> => {
       try {
         const session = await db.sessions.limit(1).first();
-        return success(session !== undefined);
+        return success(session != null);
       } catch (err) {
         console.error('Failed to check for sessions:', err);
         return failure('Failed to check for sessions');
