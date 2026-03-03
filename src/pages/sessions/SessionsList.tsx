@@ -10,12 +10,13 @@ import { ItemListButton } from '../../components/ItemListButton';
 import { SessionsFilter } from './SessionsFilter';
 import { SessionDateGroup } from './SessionDateGroup';
 import { SessionsEmptyState } from './SessionsEmptyState';
-import { formatDate } from '../../utilities/dateUtils';
+import { formatDate, getDateRangeForTimeFilter } from '../../utilities/dateUtils';
 import { createVehicleMap, createLocationMap, groupSessionsByDate } from '../../helpers/sessionHelpers';
 
 type SessionsListState = {
   selectedVehicleId: string | undefined;
   selectedLocationId: string | undefined;
+  selectedTimeRange: string;
   vehicles: Vehicle[];
   isLoading: boolean;
   sessions: ChargingSession[];
@@ -25,6 +26,7 @@ type SessionsListState = {
 const DEFAULT_STATE: SessionsListState = {
   selectedVehicleId: undefined,
   selectedLocationId: undefined,
+  selectedTimeRange: '7d',
   vehicles: [],
   isLoading: true,
   sessions: [],
@@ -80,9 +82,11 @@ export function SessionsList() {
   useEffect(() => {
     const loadSessions = async () => {
       try {
+        const dateRange = getDateRangeForTimeFilter(state.selectedTimeRange);
         const result = await getSessionList({
           vehicleId: state.selectedVehicleId,
-          locationId: state.selectedLocationId
+          locationId: state.selectedLocationId,
+          dateRange
         });
 
         if (result.success) {
@@ -98,7 +102,7 @@ export function SessionsList() {
     };
 
     loadSessions();
-  }, [getSessionList, state.selectedVehicleId, state.selectedLocationId, setState]);
+  }, [getSessionList, state.selectedVehicleId, state.selectedLocationId, state.selectedTimeRange, setState]);
 
   const handleEdit = (id: string) => {
     navigate(`/sessions/${id}/edit`);
@@ -146,6 +150,12 @@ export function SessionsList() {
     });
   };
 
+  const handleTimeRangeChange = (value: string) => {
+    setState((draft) => {
+      draft.selectedTimeRange = value;
+    });
+  };
+
   if (!state.isLoading && !hasSessions) {
     return (
       <div className="flex-1 bg-background px-4 py-6 flex flex-col">
@@ -166,8 +176,10 @@ export function SessionsList() {
           locations={state.locations}
           selectedVehicleId={state.selectedVehicleId}
           selectedLocationId={state.selectedLocationId}
+          selectedTimeRange={state.selectedTimeRange}
           onVehicleChange={handleVehicleChange}
           onLocationChange={handleLocationChange}
+          onTimeRangeChange={handleTimeRangeChange}
           onClearFilters={handleClearFilters}
         />
 

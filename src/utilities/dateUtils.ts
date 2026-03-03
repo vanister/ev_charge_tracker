@@ -1,4 +1,46 @@
-import { format, isSameDay as dateFnsIsSameDay, startOfDay as dateFnsStartOfDay } from 'date-fns';
+import {
+  format,
+  isSameDay as dateFnsIsSameDay,
+  startOfDay as dateFnsStartOfDay,
+  subDays,
+  subMonths
+} from 'date-fns';
+
+export type TimeFilterOption = {
+  label: string;
+  value: string;
+};
+
+export const TIME_FILTER_OPTIONS: TimeFilterOption[] = [
+  { label: 'Last 7 Days', value: '7d' },
+  { label: 'Last 14 Days', value: '14d' },
+  { label: 'Last 30 Days', value: '30d' },
+  { label: 'Last 3 Months', value: '3m' },
+  { label: 'Last 6 Months', value: '6m' },
+  { label: 'Last 12 Months', value: '12m' },
+  { label: 'All', value: 'all' }
+];
+
+export function getDateRangeForTimeFilter(value: string): { start: number; end: number } | undefined {
+  const end = Date.now();
+
+  switch (value) {
+    case '7d':
+      return { start: subDays(end, 7).getTime(), end };
+    case '14d':
+      return { start: subDays(end, 14).getTime(), end };
+    case '30d':
+      return { start: subDays(end, 30).getTime(), end };
+    case '3m':
+      return { start: subMonths(end, 3).getTime(), end };
+    case '6m':
+      return { start: subMonths(end, 6).getTime(), end };
+    case '12m':
+      return { start: subMonths(end, 12).getTime(), end };
+    default:
+      return undefined;
+  }
+}
 
 export function formatDate(timestamp: number, formatStr = 'MMM dd, yyyy'): string {
   return format(timestamp, formatStr);
