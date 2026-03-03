@@ -147,3 +147,6 @@ All pages are implemented! Next priorities:
 2. [ ] Export, backup and restore functionality
 3. [ ] Sync ability using users storage accounts
    - iCloud, Drive, OneDrive, etc. 
+4. [ ] Add support for remembering user preferences
+   - Last vehicle selected
+   - Last location selected
