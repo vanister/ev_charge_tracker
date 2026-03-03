@@ -1,9 +1,6 @@
-export const THEME_STORAGE_KEY = 'ev-charge-tracker-theme';
+import type { TimeFilterOption } from './types/shared-types';
 
-export type TimeFilterOption = {
-  label: string;
-  value: string;
-};
+export const THEME_STORAGE_KEY = 'ev-charge-tracker-theme';
 
 export const TIME_FILTER_OPTIONS: TimeFilterOption[] = [
   { label: 'Last 7 Days', value: '7d' },

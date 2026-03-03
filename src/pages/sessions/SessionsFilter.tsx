@@ -4,16 +4,17 @@ import { Icon } from '../../components/Icon';
 import { FormSelect } from '../../components/FormSelect';
 import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
 import { TIME_FILTER_OPTIONS } from '../../constants';
+import type { TimeFilterValue } from '../../types/shared-types';
 
 type SessionsFilterProps = {
   vehicles: Vehicle[];
   locations: Location[];
   selectedVehicleId: string | undefined;
   selectedLocationId: string | undefined;
-  selectedTimeRange: string;
+  selectedTimeRange: TimeFilterValue;
   onVehicleChange: (id: string | undefined) => void;
   onLocationChange: (id: string | undefined) => void;
-  onTimeRangeChange: (value: string) => void;
+  onTimeRangeChange: (value: TimeFilterValue) => void;
   onClearFilters: () => void;
 };
 
@@ -43,7 +44,7 @@ export function SessionsFilter(props: SessionsFilterProps) {
   };
 
   const handleTimeRangeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    onTimeRangeChange(event.target.value);
+    onTimeRangeChange(event.target.value as TimeFilterValue);
   };
 
   return (

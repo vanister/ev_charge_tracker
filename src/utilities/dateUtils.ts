@@ -5,8 +5,9 @@ import {
   subDays,
   subMonths
 } from 'date-fns';
+import type { DateRange, TimeFilterValue } from '../types/shared-types';
 
-export function getDateRangeForTimeFilter(value: string): { start: number; end: number } | undefined {
+export function getDateRangeForTimeFilter(value: TimeFilterValue): DateRange | undefined {
   const end = Date.now();
 
   switch (value) {

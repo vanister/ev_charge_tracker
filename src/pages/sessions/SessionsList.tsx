@@ -12,11 +12,12 @@ import { SessionDateGroup } from './SessionDateGroup';
 import { SessionsEmptyState } from './SessionsEmptyState';
 import { formatDate, getDateRangeForTimeFilter } from '../../utilities/dateUtils';
 import { createVehicleMap, createLocationMap, groupSessionsByDate } from '../../helpers/sessionHelpers';
+import type { TimeFilterValue } from '../../types/shared-types';
 
 type SessionsListState = {
   selectedVehicleId: string | undefined;
   selectedLocationId: string | undefined;
-  selectedTimeRange: string;
+  selectedTimeRange: TimeFilterValue;
   vehicles: Vehicle[];
   isLoading: boolean;
   sessions: ChargingSession[];
@@ -150,7 +151,7 @@ export function SessionsList() {
     });
   };
 
-  const handleTimeRangeChange = (value: string) => {
+  const handleTimeRangeChange = (value: TimeFilterValue) => {
     setState((draft) => {
       draft.selectedTimeRange = value;
     });
