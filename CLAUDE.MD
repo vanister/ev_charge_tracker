@@ -1,5 +1,7 @@
 # EV Charge Tracker - AI Coding Agent Instructions
 
+This is a Vite, TypeScript, React PWA app. It's mobile focused and is designed ti function fully offline with persistent storage through IndexedDB and Dexie. 
+
 **For project context and design rationale, see [design-outline.md](./docs/design-outline.md)**
 
 ## Universal Rules
