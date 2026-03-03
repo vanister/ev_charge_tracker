@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import {
   Home,
   Building,
@@ -50,7 +51,7 @@ export function Icon(props: IconProps) {
 
   const sizeClass = sizeClasses[size];
   const colorClass = color ? colorClasses[color] || '' : '';
-  const combinedClassName = `${sizeClass} ${colorClass} ${className}`.trim();
+  const combinedClassName = clsx(sizeClass, colorClass, className);
 
   switch (name) {
     case 'home':

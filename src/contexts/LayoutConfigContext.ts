@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-type LayoutConfigContextValue = {
+export type LayoutConfigContextValue = {
   title: string;
   setTitle: (title: string) => void;
 };

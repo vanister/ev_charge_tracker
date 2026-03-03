@@ -3,9 +3,9 @@ import { useDatabase } from './useDatabase';
 import type { Vehicle } from '../data/data-types';
 import { generateId } from '../utilities/dataUtils';
 import { success, failure, type Result } from '../utilities/resultUtils';
+import type { CreateVehicleInput, UpdateVehicleInput } from '../pages/vehicles/vehicle-types';
 
-export type CreateVehicleInput = Omit<Vehicle, 'id' | 'createdAt' | 'isActive'>;
-export type UpdateVehicleInput = Partial<Omit<Vehicle, 'id' | 'createdAt'>>;
+export type { CreateVehicleInput, UpdateVehicleInput };
 
 export function useVehicles() {
   const { db } = useDatabase();
@@ -41,62 +41,71 @@ export function useVehicles() {
     [db]
   );
 
-  const createVehicle = async (input: CreateVehicleInput): Promise<Result<Vehicle>> => {
-    const vehicle: Vehicle = {
-      ...input,
-      icon: '🚗',
-      id: generateId(),
-      createdAt: Date.now(),
-      isActive: 1
-    };
+  const createVehicle = useCallback(
+    async (input: CreateVehicleInput): Promise<Result<Vehicle>> => {
+      const vehicle: Vehicle = {
+        ...input,
+        icon: '🚗',
+        id: generateId(),
+        createdAt: Date.now(),
+        isActive: 1
+      };
 
-    try {
-      await db.vehicles.add(vehicle);
-      return success(vehicle);
-    } catch (err) {
-      console.error('Failed to create vehicle:', err);
-      return failure('Failed to create vehicle');
-    }
-  };
-
-  const updateVehicle = async (id: string, input: UpdateVehicleInput): Promise<Result<Vehicle>> => {
-    try {
-      const existing = await db.vehicles.get(id);
-
-      if (!existing) {
-        return failure('Vehicle not found');
+      try {
+        await db.vehicles.add(vehicle);
+        return success(vehicle);
+      } catch (err) {
+        console.error('Failed to create vehicle:', err);
+        return failure('Failed to create vehicle');
       }
+    },
+    [db]
+  );
 
-      const updated: Vehicle = { ...existing, ...input, icon: '🚗' };
+  const updateVehicle = useCallback(
+    async (id: string, input: UpdateVehicleInput): Promise<Result<Vehicle>> => {
+      try {
+        const existing = await db.vehicles.get(id);
 
-      await db.vehicles.put(updated);
-      return success(updated);
-    } catch (err) {
-      console.error('Failed to update vehicle:', err);
-      return failure('Failed to update vehicle');
-    }
-  };
+        if (!existing) {
+          return failure('Vehicle not found');
+        }
 
-  const deleteVehicle = async (id: string): Promise<Result<void>> => {
-    try {
-      const sessionCount = await db.sessions.where('vehicleId').equals(id).count();
+        const updated: Vehicle = { ...existing, ...input, icon: '🚗' };
 
-      if (sessionCount > 0) {
-        return failure(`Cannot delete vehicle with ${sessionCount} existing sessions`);
+        await db.vehicles.put(updated);
+        return success(updated);
+      } catch (err) {
+        console.error('Failed to update vehicle:', err);
+        return failure('Failed to update vehicle');
       }
+    },
+    [db]
+  );
 
-      const result = await updateVehicle(id, { isActive: 0 });
+  const deleteVehicle = useCallback(
+    async (id: string): Promise<Result<void>> => {
+      try {
+        const sessionCount = await db.sessions.where('vehicleId').equals(id).count();
 
-      if (!result.success) {
-        return failure(result.error);
+        if (sessionCount > 0) {
+          return failure(`Cannot delete vehicle with ${sessionCount} existing sessions`);
+        }
+
+        const result = await updateVehicle(id, { isActive: 0 });
+
+        if (!result.success) {
+          return failure(result.error);
+        }
+
+        return success(undefined);
+      } catch (err) {
+        console.error('Failed to delete vehicle:', err);
+        return failure('Failed to delete vehicle');
       }
-
-      return success(undefined);
-    } catch (err) {
-      console.error('Failed to delete vehicle:', err);
-      return failure('Failed to delete vehicle');
-    }
-  };
+    },
+    [db, updateVehicle]
+  );
 
   return {
     getVehicleList,

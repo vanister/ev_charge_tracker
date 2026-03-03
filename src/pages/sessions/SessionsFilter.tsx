@@ -2,6 +2,7 @@ import type { Vehicle, Location } from '../../data/data-types';
 import { Button } from '../../components/Button';
 import { Icon } from '../../components/Icon';
 import { FormSelect } from '../../components/FormSelect';
+import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
 
 type SessionsFilterProps = {
   vehicles: Vehicle[];
@@ -24,7 +25,7 @@ export function SessionsFilter(props: SessionsFilterProps) {
     onClearFilters
   } = props;
 
-  const hasActiveFilters = selectedVehicleId || selectedLocationId;
+  const hasActiveFilters = !!(selectedVehicleId || selectedLocationId);
 
   const handleVehicleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -34,10 +35,6 @@ export function SessionsFilter(props: SessionsFilterProps) {
   const handleLocationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
     onLocationChange(value === '' ? undefined : value);
-  };
-
-  const getVehicleDisplayName = (vehicle: Vehicle) => {
-    return vehicle.name || `${vehicle.make} ${vehicle.model}`;
   };
 
   return (

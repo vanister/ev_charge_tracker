@@ -8,7 +8,7 @@ import { usePageTitle } from '../../hooks/usePageTitle';
 import { useImmerState } from '../../hooks/useImmerState';
 import { Button } from '../../components/Button';
 import { SessionForm } from './SessionForm';
-import type { SessionFormData } from './SessionForm';
+import type { SessionFormData } from './session-types';
 import { SessionFormEmptyStates } from './SessionFormEmptyStates';
 import {
   calculateCostCents,
