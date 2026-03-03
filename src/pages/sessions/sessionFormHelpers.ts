@@ -1,12 +1,3 @@
-export type SessionInputData = {
-  vehicleId: string;
-  locationId: string;
-  energyKwh: number;
-  ratePerKwh: number;
-  chargedAt: number;
-  notes: string;
-};
-
 export function timestampToDatetimeLocal(timestamp: number): string {
   const date = new Date(timestamp);
   const year = date.getFullYear();
@@ -27,27 +18,4 @@ export function calculateCostCents(energyKwh: number, ratePerKwh: number): numbe
 
 export function getDefaultDateTime(): string {
   return timestampToDatetimeLocal(Date.now());
-}
-
-export function buildSessionInput(formData: SessionInputData) {
-  const input: {
-    vehicleId: string;
-    locationId: string;
-    energyKwh: number;
-    ratePerKwh: number;
-    chargedAt: number;
-    notes?: string;
-  } = {
-    vehicleId: formData.vehicleId,
-    locationId: formData.locationId,
-    energyKwh: formData.energyKwh,
-    ratePerKwh: formData.ratePerKwh,
-    chargedAt: formData.chargedAt
-  };
-
-  if (formData.notes.trim()) {
-    input.notes = formData.notes.trim();
-  }
-
-  return input;
 }

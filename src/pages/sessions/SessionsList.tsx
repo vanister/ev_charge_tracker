@@ -1,10 +1,11 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import type { ChargingSession, Vehicle, Location as AppLocation } from '../../data/data-types';
 import { useLocations } from '../../hooks/useLocations';
 import { usePageTitle } from '../../hooks/usePageTitle';
+import { useImmerState } from '../../hooks/useImmerState';
 import { ItemListButton } from '../../components/ItemListButton';
 import { SessionsFilter } from './SessionsFilter';
 import { SessionDateGroup } from './SessionDateGroup';
@@ -12,68 +13,92 @@ import { SessionsEmptyState } from './SessionsEmptyState';
 import { formatDate } from '../../utilities/dateUtils';
 import { createVehicleMap, createLocationMap, groupSessionsByDate } from '../../helpers/sessionHelpers';
 
+type SessionsListState = {
+  selectedVehicleId: string | undefined;
+  selectedLocationId: string | undefined;
+  vehicles: Vehicle[];
+  isLoading: boolean;
+  sessions: ChargingSession[];
+  locations: AppLocation[];
+};
+
+const DEFAULT_STATE: SessionsListState = {
+  selectedVehicleId: undefined,
+  selectedLocationId: undefined,
+  vehicles: [],
+  isLoading: true,
+  sessions: [],
+  locations: []
+};
+
 export function SessionsList() {
   usePageTitle('Sessions');
 
   const navigate = useNavigate();
-  const [selectedVehicleId, setSelectedVehicleId] = useState<string | undefined>();
-  const [selectedLocationId, setSelectedLocationId] = useState<string | undefined>();
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [sessions, setSessions] = useState<ChargingSession[]>([]);
+  const [state, setState] = useImmerState<SessionsListState>(DEFAULT_STATE);
   const { getLocationList } = useLocations();
-  const [locations, setLocations] = useState<AppLocation[]>([]);
   const { getVehicleList } = useVehicles();
   const { getSessionList, deleteSession } = useSessions();
-  const vehicleMap = useMemo(() => createVehicleMap(vehicles), [vehicles]);
-  const locationMap = useMemo(() => createLocationMap(locations), [locations]);
+  const vehicleMap = useMemo(() => createVehicleMap(state.vehicles), [state.vehicles]);
+  const locationMap = useMemo(() => createLocationMap(state.locations), [state.locations]);
   const sessionsByDate = useMemo(
-    () => groupSessionsByDate(sessions, vehicleMap, locationMap),
-    [sessions, vehicleMap, locationMap]
+    () => groupSessionsByDate(state.sessions, vehicleMap, locationMap),
+    [state.sessions, vehicleMap, locationMap]
   );
 
-  const hasActiveFilters = Boolean(selectedVehicleId || selectedLocationId);
-  const hasSessions = sessions.length > 0;
+  const hasActiveFilters = Boolean(state.selectedVehicleId || state.selectedLocationId);
+  const hasSessions = state.sessions.length > 0;
 
   useEffect(() => {
     const loadLocations = async () => {
       const result = await getLocationList();
 
       if (result.success) {
-        setLocations(result.data);
+        setState((draft) => {
+          draft.locations = result.data;
+        });
       }
     };
 
     loadLocations();
-  }, [getLocationList]);
+  }, [getLocationList, setState]);
 
   useEffect(() => {
     const loadVehicles = async () => {
       const result = await getVehicleList();
 
       if (result.success) {
-        setVehicles(result.data);
+        setState((draft) => {
+          draft.vehicles = result.data;
+        });
       }
     };
 
     loadVehicles();
-  }, [getVehicleList]);
+  }, [getVehicleList, setState]);
 
   useEffect(() => {
     const loadSessions = async () => {
       try {
-        const result = await getSessionList({ vehicleId: selectedVehicleId, locationId: selectedLocationId });
+        const result = await getSessionList({
+          vehicleId: state.selectedVehicleId,
+          locationId: state.selectedLocationId
+        });
 
         if (result.success) {
-          setSessions(result.data);
+          setState((draft) => {
+            draft.sessions = result.data;
+          });
         }
       } finally {
-        setIsLoading(false);
+        setState((draft) => {
+          draft.isLoading = false;
+        });
       }
     };
 
     loadSessions();
-  }, [getSessionList, selectedVehicleId, selectedLocationId]);
+  }, [getSessionList, state.selectedVehicleId, state.selectedLocationId, setState]);
 
   const handleEdit = (id: string) => {
     navigate(`/sessions/${id}/edit`);
@@ -93,7 +118,9 @@ export function SessionsList() {
       return;
     }
 
-    setSessions((prev) => prev.filter((s) => s.id !== id));
+    setState((draft) => {
+      draft.sessions = draft.sessions.filter((s) => s.id !== id);
+    });
   };
 
   const handleAddSession = () => {
@@ -101,11 +128,25 @@ export function SessionsList() {
   };
 
   const handleClearFilters = () => {
-    setSelectedVehicleId(undefined);
-    setSelectedLocationId(undefined);
+    setState((draft) => {
+      draft.selectedVehicleId = undefined;
+      draft.selectedLocationId = undefined;
+    });
   };
 
-  if (!isLoading && !hasSessions) {
+  const handleVehicleChange = (id: string | undefined) => {
+    setState((draft) => {
+      draft.selectedVehicleId = id;
+    });
+  };
+
+  const handleLocationChange = (id: string | undefined) => {
+    setState((draft) => {
+      draft.selectedLocationId = id;
+    });
+  };
+
+  if (!state.isLoading && !hasSessions) {
     return (
       <div className="flex-1 bg-background px-4 py-6 flex flex-col">
         <SessionsEmptyState
@@ -119,37 +160,39 @@ export function SessionsList() {
 
   return (
     <div className="bg-background px-4 py-6">
-      <SessionsFilter
-        vehicles={vehicles}
-        locations={locations}
-        selectedVehicleId={selectedVehicleId}
-        selectedLocationId={selectedLocationId}
-        onVehicleChange={setSelectedVehicleId}
-        onLocationChange={setSelectedLocationId}
-        onClearFilters={handleClearFilters}
-      />
-
-      {sessionsByDate.length === 0 ? (
-        <SessionsEmptyState
-          hasFilters={hasActiveFilters}
-          onAddSession={handleAddSession}
+      <div className="max-w-2xl mx-auto">
+        <SessionsFilter
+          vehicles={state.vehicles}
+          locations={state.locations}
+          selectedVehicleId={state.selectedVehicleId}
+          selectedLocationId={state.selectedLocationId}
+          onVehicleChange={handleVehicleChange}
+          onLocationChange={handleLocationChange}
           onClearFilters={handleClearFilters}
         />
-      ) : (
-        <div>
-          <ItemListButton className="mb-6" label="Add session" onClick={handleAddSession} />
 
-          {sessionsByDate.map(([dateKey, sessionsInGroup]) => (
-            <SessionDateGroup
-              key={dateKey}
-              date={formatDate(sessionsInGroup[0].session.chargedAt, 'EEEE, MMM dd, yyyy')}
-              sessions={sessionsInGroup}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          ))}
-        </div>
-      )}
+        {sessionsByDate.length === 0 ? (
+          <SessionsEmptyState
+            hasFilters={hasActiveFilters}
+            onAddSession={handleAddSession}
+            onClearFilters={handleClearFilters}
+          />
+        ) : (
+          <div>
+            <ItemListButton className="mb-6" label="Add session" onClick={handleAddSession} />
+
+            {sessionsByDate.map(([dateKey, sessionsInGroup]) => (
+              <SessionDateGroup
+                key={dateKey}
+                date={formatDate(sessionsInGroup[0].session.chargedAt, 'EEEE, MMM dd, yyyy')}
+                sessions={sessionsInGroup}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

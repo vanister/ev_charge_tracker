@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useAppInitialization } from './hooks/useAppInitialization';
 import { FullscreenLoader } from './components/FullscreenLoader';
 import { RequireOnboarding } from './components/RequireOnboarding';
 import { Layout } from './pages/layout/Layout';
 import { ErrorPage } from './pages/ErrorPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 import { Onboarding } from './pages/onboarding/Onboarding';
 import { Dashboard } from './pages/dashboard/Dashboard';
 import { SessionsList } from './pages/sessions/SessionsList';
@@ -48,7 +49,7 @@ export function App() {
           <Route path="/settings/locations/add" element={<LocationDetails />} />
           <Route path="/settings/locations/:id/edit" element={<LocationDetails />} />
 
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Route>
     </Routes>

@@ -6,7 +6,8 @@ import { useImmerState } from '../../hooks/useImmerState';
 import { Button } from '../../components/Button';
 import { FormFooter } from '../../components/FormFooter';
 import { LocationForm } from './LocationForm';
-import { DEFAULT_LOCATION_FORM_DATA, buildLocationInput, type LocationFormData } from './locationHelpers';
+import { DEFAULT_LOCATION_FORM_DATA, type LocationFormData } from './locationHelpers';
+import type { IconName } from '../../types/shared-types';
 
 type LocationDetailsState = LocationFormData & {
   isLoading: boolean;
@@ -96,7 +97,12 @@ export function LocationDetails() {
       draft.error = '';
     });
 
-    const locationInput = buildLocationInput(formState);
+    const locationInput = {
+      name: formState.name.trim(),
+      icon: (formState.icon as IconName) || 'map-pin',
+      color: formState.color || 'teal',
+      defaultRate: +formState.defaultRate || 0
+    };
     const result = isEditMode
       ? await updateLocation(id!, locationInput)
       : await createLocation(locationInput);

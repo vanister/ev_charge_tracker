@@ -60,7 +60,7 @@ export function VehiclesList() {
 
   return (
     <div className="bg-background px-4 py-6">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-2xl mx-auto">
         <ItemListButton label="Add vehicle" onClick={() => navigate('/vehicles/add')} className="mb-6" />
 
         <div className="space-y-3">

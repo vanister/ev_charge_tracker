@@ -6,11 +6,22 @@ import { OnboardingHeader } from './OnboardingHeader';
 import { FormFooter } from '../../components/FormFooter';
 import { OnboardingNavigationButtons } from './OnboardingNavigationButtons';
 import { VehicleForm } from '../vehicles/VehicleForm';
-import { DEFAULT_VEHICLE_FORM_DATA, buildVehicleInput, type VehicleFormData } from '../vehicles/vehicleHelpers';
+import { DEFAULT_VEHICLE_FORM_DATA, type VehicleFormData } from '../vehicles/vehicleHelpers';
 
 type OnboardingStep3VehicleProps = {
   onBack: () => void;
   onComplete: () => Promise<void>;
+};
+
+type Step3State = VehicleFormData & {
+  isLoading: boolean;
+  error: string;
+};
+
+const DEFAULT_STATE: Step3State = {
+  ...DEFAULT_VEHICLE_FORM_DATA,
+  isLoading: false,
+  error: ''
 };
 
 export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
@@ -28,31 +39,39 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
 
     loadVehicles();
   }, [getVehicleList]);
-  const [formData, setFormData] = useImmerState<VehicleFormData>(DEFAULT_VEHICLE_FORM_DATA);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string>('');
+  const [formState, setFormState] = useImmerState<Step3State>(DEFAULT_STATE);
 
   const hasVehicles = vehicles && vehicles.length > 0;
 
   const handleFieldChange = (field: keyof VehicleFormData, value: string) => {
-    setFormData((draft) => {
+    setFormState((draft) => {
       draft[field] = value;
+      draft.error = '';
     });
-    setError('');
   };
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setIsLoading(true);
-    setError('');
+    setFormState((draft) => {
+      draft.isLoading = true;
+      draft.error = '';
+    });
 
-    const vehicleInput = buildVehicleInput(formData);
+    const vehicleInput = {
+      year: parseInt(formState.year, 10),
+      make: formState.make.trim(),
+      model: formState.model.trim(),
+      name: formState.name.trim() || undefined,
+      icon: '🚗'
+    };
     const result = await createVehicle(vehicleInput);
 
     if (!result.success) {
-      setError(result.error || 'Failed to create vehicle');
-      setIsLoading(false);
+      setFormState((draft) => {
+        draft.error = result.error || 'Failed to create vehicle';
+        draft.isLoading = false;
+      });
       return;
     }
 
@@ -107,20 +126,20 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
 
       <VehicleForm
         id="onboarding-vehicle-form"
-        formData={formData}
+        formData={formState}
         onChange={handleFieldChange}
         onSubmit={handleSubmit}
-        isLoading={isLoading}
-        error={error}
+        isLoading={formState.isLoading}
+        error={formState.error}
       />
 
       <FormFooter>
         <OnboardingNavigationButtons
           onBack={props.onBack}
-          continueLabel={isLoading ? 'Saving...' : 'Create Vehicle'}
+          continueLabel={formState.isLoading ? 'Saving...' : 'Create Vehicle'}
           type="submit"
           form="onboarding-vehicle-form"
-          disabled={isLoading}
+          disabled={formState.isLoading}
         />
       </FormFooter>
     </div>

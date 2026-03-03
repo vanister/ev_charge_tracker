@@ -25,12 +25,3 @@ export const LOCATION_COLOR_OPTIONS: { value: string; label: string; bgClass: st
 ];
 
 export type NewLocation = Omit<Location, 'id' | 'createdAt' | 'isActive'>;
-
-export function buildLocationInput(formData: LocationFormData): NewLocation {
-  return {
-    name: formData.name.trim(),
-    icon: (formData.icon as IconName) || 'map-pin',
-    color: formData.color || 'teal',
-    defaultRate: +formData.defaultRate || 0
-  };
-}
