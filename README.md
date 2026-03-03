@@ -8,20 +8,22 @@ An offline, mobile-optimized, Progressive Web App (PWA) for tracking electric ve
 - **🔋 Track Charging Sessions**: Log energy usage, costs, and locations
 - **🚗 Multiple Vehicles**: Manage multiple EVs with custom names and icons
 - **📍 Location Management**: Track charging at Home, Work, DC Fast Chargers, or custom locations
-- **📊 Analytics**: View charging history and statistics (coming soon)
+- **📊 Dashboard & Stats**: View total kWh, average rate, session count, and recent sessions
 - **🌓 Dark Mode**: Full dark/light theme support with smooth transitions
 - **💾 Local Storage**: All data stays on your device, no cloud sync
 - **📲 Install as App**: Install directly from your browser, no app store needed
+- **🔔 Auto-Update**: Service worker update notification with one-tap reload
 
 ## Technology Stack
 
 - **[Vite](https://vitejs.dev/)** - Fast build tool and dev server
 - **[React 19](https://react.dev/)** - UI framework
 - **[TypeScript](https://www.typescriptlang.org/)** - Type safety
-- **[Dexie.js](https://dexie.org/)** - IndexedDB wrapper with React hooks
-- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first styling
+- **[Dexie.js](https://dexie.org/)** - IndexedDB wrapper for offline-first storage
+- **[Tailwind CSS v4](https://tailwindcss.com/)** - Utility-first styling
 - **[Lucide React](https://lucide.dev/)** - Beautiful icon library
-- **[React Router](https://reactrouter.com/)** - Client-side routing
+- **[React Router v7](https://reactrouter.com/)** - Client-side routing
+- **[Immer](https://immerjs.github.io/immer/)** - Immutable state updates
 - **[date-fns](https://date-fns.org/)** - Date utilities
 - **[Vite PWA Plugin](https://vite-pwa-org.netlify.app/)** - Service worker generation
 
@@ -63,15 +65,13 @@ The production build will be in the `dist/` directory, ready to deploy to any st
 
 ```
 src/
-├── components/       # Reusable UI components
-│   └── ...
-├── contexts/         # React contexts
-│   └── ...
-├── data/             # Database schema and data layer
-│   └── ...
+├── components/       # Reusable UI components (Button, EmptyState, Icon, FormInput, etc.)
+├── contexts/         # React context definitions
+├── data/             # Database schema, types, constants, repositories
+├── helpers/          # Domain helpers (session, stats)
 ├── hooks/            # Custom React hooks
-│   └── ...
 ├── pages/            # Page components
+│   ├── dashboard/    # Dashboard, stats cards, recent sessions
 │   ├── layout/       # App shell (header, nav, drawer)
 │   ├── onboarding/   # 3-step onboarding wizard
 │   ├── sessions/     # Session list, form, details
@@ -79,33 +79,33 @@ src/
 │   ├── vehicles/     # Vehicle list, form, details
 │   └── ...
 ├── providers/        # Context providers
-│   └── ...
 ├── types/            # Shared TypeScript types
 ├── utilities/        # Pure utility functions
 └── App.tsx           # Root component and router
 ```
 
-## Development Status
+## Development Status (77% complete — 37/48 tasks)
 
 ### ✅ Completed
 
 - Setup & dependencies
 - Database schema with Dexie.js
-- Core data hooks (vehicles, sessions, locations, settings)
+- Core data hooks (vehicles, sessions, locations, settings, stats)
 - App initialization, routing, and layout shell
 - Onboarding flow (3-step wizard)
 - Theme system (dark/light/system mode)
 - Session logging and management (list, add, edit, delete)
 - Vehicle management (list, add, edit, delete with safety checks)
 - Settings page with location management and storage info
+- Dashboard page with stats cards and recent sessions
 - PWA configuration and persistent storage request
+- Service worker update notification
 
 ### 🚧 In Progress / Not Started
 
-- Dashboard page with stats and recent sessions
-- Charts and analytics (Recharts)
-- PWA icons and service worker update notification
-- Testing and deployment
+- Charts and analytics (Recharts — installed, not yet used)
+- PWA icons (192x192, 512x512, 180x180, 32x32, 16x16)
+- Offline functionality testing
 
 See [docs/tasks.md](docs/tasks.md) for the complete development roadmap.
 
