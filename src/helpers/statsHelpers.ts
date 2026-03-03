@@ -6,39 +6,35 @@ import type { SessionStats, LocationStat } from '../pages/dashboard/dashboard-ty
 const RECENT_SESSIONS_LIMIT = 5;
 
 export function computeStats(sessions: ChargingSession[], locationMap: Map<string, Location>): SessionStats {
-  const locationAccum = new Map<string, LocationStat>();
-  let totalKwh = 0;
-  let totalCostCents = 0;
+  const totalKwh = sessions.reduce((sum, s) => sum + s.energyKwh, 0);
+  const totalCostCents = sessions.reduce((sum, s) => sum + s.costCents, 0);
 
-  for (const session of sessions) {
-    totalKwh += session.energyKwh;
-    totalCostCents += session.costCents;
+  const byLocation = Array.from(
+    sessions
+      .reduce((accum, s) => {
+        const existing = accum.get(s.locationId);
 
-    const existing = locationAccum.get(session.locationId);
+        if (existing) {
+          existing.totalKwh += s.energyKwh;
+          existing.totalCostCents += s.costCents;
+        } else {
+          accum.set(s.locationId, {
+            locationId: s.locationId,
+            name: locationMap.get(s.locationId)?.name ?? 'Unknown',
+            totalKwh: s.energyKwh,
+            totalCostCents: s.costCents
+          });
+        }
 
-    if (existing) {
-      existing.totalKwh += session.energyKwh;
-      existing.totalCostCents += session.costCents;
-    } else {
-      locationAccum.set(session.locationId, {
-        locationId: session.locationId,
-        name: locationMap.get(session.locationId)?.name ?? 'Unknown',
-        totalKwh: session.energyKwh,
-        totalCostCents: session.costCents
-      });
-    }
-  }
+        return accum;
+      }, new Map<string, LocationStat>())
+      .values()
+  );
 
   // Avoid divide-by-zero when no sessions have energy recorded
   const avgRatePerKwh = totalKwh > 0 ? totalCostCents / 100 / totalKwh : 0;
 
-  return {
-    totalKwh,
-    totalCostCents,
-    avgRatePerKwh,
-    sessionCount: sessions.length,
-    byLocation: Array.from(locationAccum.values())
-  };
+  return { totalKwh, totalCostCents, avgRatePerKwh, sessionCount: sessions.length, byLocation };
 }
 
 export function buildRecentSessions(
@@ -46,7 +42,7 @@ export function buildRecentSessions(
   vehicleMap: Map<string, Vehicle>,
   locationMap: Map<string, Location>
 ): SessionWithMetadata[] {
-  return sessions
+  const recentSessions = sessions
     .filter((s) => vehicleMap.has(s.vehicleId) && locationMap.has(s.locationId))
     .slice(0, RECENT_SESSIONS_LIMIT)
     .map((session) => {
@@ -61,4 +57,6 @@ export function buildRecentSessions(
         locationColor: location.color
       };
     });
+
+  return recentSessions;
 }
