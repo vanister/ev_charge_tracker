@@ -46,28 +46,19 @@ export function buildRecentSessions(
   vehicleMap: Map<string, Vehicle>,
   locationMap: Map<string, Location>
 ): SessionWithMetadata[] {
-  const result: SessionWithMetadata[] = [];
+  return sessions
+    .filter((s) => vehicleMap.has(s.vehicleId) && locationMap.has(s.locationId))
+    .slice(0, RECENT_SESSIONS_LIMIT)
+    .map((session) => {
+      const vehicle = vehicleMap.get(session.vehicleId)!;
+      const location = locationMap.get(session.locationId)!;
 
-  for (const session of sessions) {
-    if (result.length >= RECENT_SESSIONS_LIMIT) {
-      break;
-    }
-
-    const vehicle = vehicleMap.get(session.vehicleId);
-    const location = locationMap.get(session.locationId);
-
-    if (!vehicle || !location) {
-      continue;
-    }
-
-    result.push({
-      session,
-      vehicleName: getVehicleDisplayName(vehicle),
-      locationName: location.name,
-      locationIcon: location.icon,
-      locationColor: location.color
+      return {
+        session,
+        vehicleName: getVehicleDisplayName(vehicle),
+        locationName: location.name,
+        locationIcon: location.icon,
+        locationColor: location.color
+      };
     });
-  }
-
-  return result;
 }

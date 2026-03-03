@@ -7,8 +7,6 @@ import type { SessionWithMetadata } from '../helpers/sessionHelpers';
 import type { SessionStats } from '../pages/dashboard/dashboard-types';
 import { computeStats, buildRecentSessions } from '../helpers/statsHelpers';
 
-export type { SessionStats };
-
 type UseStatsResult = {
   stats: SessionStats | null;
   recentSessions: SessionWithMetadata[];
