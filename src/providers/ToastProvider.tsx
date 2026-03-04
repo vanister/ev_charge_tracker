@@ -39,7 +39,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
     setToasts((draft) => {
       // Evict oldest non-persistent toast if at cap
       if (draft.length >= MAX_TOASTS) {
-        const evictIndex = draft.findIndex((t) => t.duration !== 'persistent');
+        const evictIndex = draft.findIndex((t) => !t.persistent);
         if (evictIndex !== -1) {
           clearTimer(draft[evictIndex].id);
           draft.splice(evictIndex, 1);
@@ -49,9 +49,10 @@ export function ToastProvider({ children }: ToastProviderProps) {
       draft.push(toast);
     });
 
+    const isPersistent = options.persistent ?? false;
     const duration = options.duration ?? DEFAULT_DURATION;
 
-    if (duration !== 'persistent') {
+    if (!isPersistent) {
       const timer = setTimeout(() => dismissToast(id), duration);
       timeouts.current.set(id, timer);
     }
