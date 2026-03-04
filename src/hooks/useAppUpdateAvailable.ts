@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 import { useToast } from './useToast';
 
-export function useAppUpdateAvailable() {
+export function useAppUpdateAvailable(dontToast = false) {
   const {
     needRefresh: [needsUpdate],
     updateServiceWorker
@@ -16,7 +16,7 @@ export function useAppUpdateAvailable() {
   }, [updateServiceWorker]);
 
   useEffect(() => {
-    if (!needsUpdate || toastShownRef.current) {
+    if (!needsUpdate || toastShownRef.current || dontToast) {
       return;
     }
 
@@ -27,5 +27,7 @@ export function useAppUpdateAvailable() {
       persistent: true,
       action: { label: 'Reload', onClick: applyUpdate }
     });
-  }, [needsUpdate, applyUpdate, showToast]);
+  }, [needsUpdate, applyUpdate, showToast, dontToast]);
+
+  return { needsUpdate, applyUpdate };
 }
