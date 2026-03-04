@@ -2,6 +2,9 @@ import type { TimeFilterOption } from './types/shared-types';
 
 export const THEME_STORAGE_KEY = 'ev-charge-tracker-theme';
 
+export const TOAST_MAX_COUNT = 4;
+export const TOAST_DEFAULT_DURATION = 3500;
+
 export const TIME_FILTER_OPTIONS: TimeFilterOption[] = [
   { label: 'Last 7 Days', value: '7d' },
   { label: 'Last 14 Days', value: '14d' },
