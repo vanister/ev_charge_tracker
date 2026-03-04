@@ -10,6 +10,7 @@ import { Icon } from '../../components/Icon';
 import { SectionHeader } from '../../components/SectionHeader';
 import { EmptyState } from '../../components/EmptyState';
 import { LocationItem } from './LocationItem';
+import { SettingsSection } from './SettingsSection';
 import { formatBytes } from '../../utilities/formatUtils';
 
 type SettingsState = {
@@ -107,73 +108,64 @@ export function Settings() {
           )}
         </section>
 
-        <section>
-          <SectionHeader title="Storage" />
-          <div className="p-4 bg-surface border border-default rounded-lg space-y-3">
-            {state.storageUsed !== null && state.storageQuota !== null ? (
-              <>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-body-secondary">Used</span>
-                  <span className="text-body font-medium">
-                    {formatBytes(state.storageUsed)} of {formatBytes(state.storageQuota)}
-                  </span>
+        <SettingsSection title="Storage" cardClassName="space-y-3">
+          {state.storageUsed !== null && state.storageQuota !== null ? (
+            <>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-body-secondary">Used</span>
+                <span className="text-body font-medium">
+                  {formatBytes(state.storageUsed)} of {formatBytes(state.storageQuota)}
+                </span>
+              </div>
+              {storagePercent !== null && (
+                <div className="h-2 bg-border rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-primary rounded-full transition-all"
+                    style={{ width: `${storagePercent}%` }}
+                  />
                 </div>
-                {storagePercent !== null && (
-                  <div className="h-2 bg-border rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-primary rounded-full transition-all"
-                      style={{ width: `${storagePercent}%` }}
-                    />
-                  </div>
-                )}
-              </>
-            ) : (
-              <p className="text-sm text-body-secondary">Storage information unavailable</p>
-            )}
-          </div>
-        </section>
+              )}
+            </>
+          ) : (
+            <p className="text-sm text-body-secondary">Storage information unavailable</p>
+          )}
+        </SettingsSection>
 
         {needsUpdate && (
-          <section>
-            <SectionHeader title="Update" />
-            <div className="p-4 bg-surface border border-default rounded-lg">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <Icon name="info" size="md" className="text-primary" />
-                  </div>
-                  <p className="text-sm text-body">A new version is available</p>
+          <SettingsSection title="Update">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <Icon name="info" size="md" className="text-primary" />
                 </div>
-                <button
-                  type="button"
-                  onClick={applyUpdate}
-                  className="px-3 py-1.5 bg-primary text-white text-sm font-medium rounded-lg
-                    hover:bg-primary-hover transition-colors shrink-0"
-                >
-                  Reload
-                </button>
+                <p className="text-sm text-body">A new version is available</p>
               </div>
+              <button
+                type="button"
+                onClick={applyUpdate}
+                className="px-3 py-1.5 bg-primary text-white text-sm font-medium rounded-lg
+                  hover:bg-primary-hover transition-colors shrink-0"
+              >
+                Reload
+              </button>
             </div>
-          </section>
+          </SettingsSection>
         )}
 
-        <section>
-          <SectionHeader title="About" />
-          <div className="p-4 bg-surface border border-default rounded-lg">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <Icon name="zap" size="md" className="text-primary" />
-              </div>
-              <div>
-                <p className="text-base font-semibold text-body">EV Charge Tracker</p>
-                <p className="text-sm text-body-secondary">Version 1.0.0</p>
-              </div>
+        <SettingsSection title="About">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Icon name="zap" size="md" className="text-primary" />
             </div>
-            <p className="text-sm text-body-secondary">
-              Track your electric vehicle charging sessions, costs, and usage across all your locations.
-            </p>
+            <div>
+              <p className="text-base font-semibold text-body">EV Charge Tracker</p>
+              <p className="text-sm text-body-secondary">Version 1.0.0</p>
+            </div>
           </div>
-        </section>
+          <p className="text-sm text-body-secondary">
+            Track your electric vehicle charging sessions, costs, and usage across all your locations.
+          </p>
+        </SettingsSection>
       </div>
     </div>
   );
