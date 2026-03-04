@@ -28,4 +28,6 @@ export function useAppUpdateAvailable() {
       action: { label: 'Reload', onClick: applyUpdate }
     });
   }, [needsUpdate, applyUpdate, showToast]);
+
+  return { needsUpdate, applyUpdate };
 }
