@@ -20,7 +20,11 @@ import {
   ChevronDown,
   DollarSign,
   TrendingUp,
-  Activity
+  Activity,
+  CheckCircle,
+  XCircle,
+  AlertTriangle,
+  Info
 } from 'lucide-react';
 import { type IconName } from '../types/shared-types';
 
@@ -96,6 +100,14 @@ export function Icon(props: IconProps) {
       return <TrendingUp className={combinedClassName} />;
     case 'activity':
       return <Activity className={combinedClassName} />;
+    case 'check-circle':
+      return <CheckCircle className={combinedClassName} />;
+    case 'x-circle':
+      return <XCircle className={combinedClassName} />;
+    case 'alert-triangle':
+      return <AlertTriangle className={combinedClassName} />;
+    case 'info':
+      return <Info className={combinedClassName} />;
     default:
       return null;
   }

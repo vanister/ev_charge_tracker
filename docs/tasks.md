@@ -123,6 +123,7 @@
    - Add navigator.storage.persist() call on app init, show storage quota in settings
 4. [x] Add service worker update notification
    - Detect new service worker and show 'Update available' UI with reload action
+   - Refactored to use toast system (persistent info toast with Reload action)
 
 ## 8. Business Logic & Testing
 
