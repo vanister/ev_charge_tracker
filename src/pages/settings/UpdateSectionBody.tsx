@@ -1,4 +1,5 @@
 import { useAppUpdateAvailable } from '../../hooks/useAppUpdateAvailable';
+import { Button } from '../../components/Button';
 import { Icon } from '../../components/Icon';
 
 export function UpdateSectionBody() {
@@ -24,14 +25,9 @@ export function UpdateSectionBody() {
         </div>
         <p className="text-sm text-body">A new version is available</p>
       </div>
-      <button
-        type="button"
-        onClick={applyUpdate}
-        className="px-3 py-1.5 bg-primary text-white text-sm font-medium rounded-lg
-          hover:bg-primary-hover transition-colors shrink-0"
-      >
+      <Button variant="primary" onClick={applyUpdate} className="shrink-0">
         Reload
-      </button>
+      </Button>
     </div>
   );
 }

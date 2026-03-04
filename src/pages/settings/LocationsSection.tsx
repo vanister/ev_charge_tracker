@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Location } from '../../data/data-types';
 import { useLocations } from '../../hooks/useLocations';
+import { useToast } from '../../hooks/useToast';
 import { ItemListButton } from '../../components/ItemListButton';
 import { EmptyState } from '../../components/EmptyState';
 import { LocationItem } from './LocationItem';
@@ -9,6 +10,7 @@ import { LocationItem } from './LocationItem';
 export function LocationsSectionBody() {
   const navigate = useNavigate();
   const { getLocationList, deleteLocation } = useLocations();
+  const { showToast } = useToast();
   const [locations, setLocations] = useState<Location[]>([]);
 
   useEffect(() => {
@@ -24,7 +26,7 @@ export function LocationsSectionBody() {
   }, [getLocationList]);
 
   const handleDelete = async (id: string) => {
-    const confirmed = window.confirm('Are you sure you want to delete this location?');
+    const confirmed = confirm('Are you sure you want to delete this location?');
 
     if (!confirmed) {
       return;
@@ -33,7 +35,7 @@ export function LocationsSectionBody() {
     const result = await deleteLocation(id);
 
     if (!result.success) {
-      alert(`Failed to delete location: ${result.error}`);
+      showToast({ message: `Failed to delete location: ${result.error}`, variant: 'error', persistent: true });
       return;
     }
 
