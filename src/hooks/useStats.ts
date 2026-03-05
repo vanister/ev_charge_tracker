@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSessions } from './useSessions';
 import { useVehicles } from './useVehicles';
 import { useLocations } from './useLocations';
+import { useUserPreferences } from './useUserPreferences';
 import { createVehicleMap, createLocationMap } from '../helpers/sessionHelpers';
 import type { SessionWithMetadata } from '../helpers/sessionHelpers';
 import type { SessionStats } from '../pages/dashboard/dashboard-types';
@@ -23,6 +24,7 @@ export function useStats(): UseStatsResult {
   const { getSessionList } = useSessions();
   const { getVehicleList } = useVehicles();
   const { getLocationList } = useLocations();
+  const { preferences } = useUserPreferences();
 
   useEffect(() => {
     const loadStats = async () => {
@@ -42,7 +44,9 @@ export function useStats(): UseStatsResult {
         const locationMap = createLocationMap(locationResult.data);
 
         setStats(computeStats(sessionResult.data, locationMap));
-        setRecentSessions(buildRecentSessions(sessionResult.data, vehicleMap, locationMap));
+        setRecentSessions(
+          buildRecentSessions(sessionResult.data, vehicleMap, locationMap, preferences.recentSessionsLimit)
+        );
       } catch (err) {
         console.error('Failed to load stats:', err);
         setError('Failed to load stats');
@@ -52,7 +56,7 @@ export function useStats(): UseStatsResult {
     };
 
     loadStats();
-  }, [getSessionList, getVehicleList, getLocationList]);
+  }, [getSessionList, getVehicleList, getLocationList, preferences.recentSessionsLimit]);
 
   return { stats, recentSessions, isLoading, error };
 }

@@ -39,11 +39,12 @@ export function computeStats(sessions: ChargingSession[], locationMap: Map<strin
 export function buildRecentSessions(
   sessions: ChargingSession[],
   vehicleMap: Map<string, Vehicle>,
-  locationMap: Map<string, Location>
+  locationMap: Map<string, Location>,
+  limit: number = RECENT_SESSIONS_LIMIT
 ): SessionWithMetadata[] {
   const recentSessions = sessions
     .filter((s) => vehicleMap.has(s.vehicleId) && locationMap.has(s.locationId))
-    .slice(0, RECENT_SESSIONS_LIMIT)
+    .slice(0, limit)
     .map((session) => {
       const vehicle = vehicleMap.get(session.vehicleId)!;
       const location = locationMap.get(session.locationId)!;

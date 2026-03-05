@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import { useLocations } from '../../hooks/useLocations';
+import { useUserPreferences } from '../../hooks/useUserPreferences';
 import type { Vehicle, Location as AppLocation } from '../../data/data-types';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { useImmerState } from '../../hooks/useImmerState';
@@ -75,11 +76,40 @@ export function SessionDetails() {
     loadLocations();
   }, [getLocationList]);
 
+  const { preferences, updatePreferences } = useUserPreferences();
+
   const [formState, setFormState] = useImmerState<SessionPageState>({
     ...NEW_SESSION,
     chargedAt: getDefaultDateTime(),
     isInitialized: !isEditMode
   });
+
+  // Pre-fill vehicle/location from preferences on Add Session when lists are loaded
+  useEffect(() => {
+    if (isEditMode || vehicles.length === 0 || locations.length === 0) {
+      return;
+    }
+
+    const prefVehicleId = preferences.lastVehicleId;
+    const prefLocationId = preferences.lastLocationId;
+    const vehicleExists = prefVehicleId ? vehicles.some((v) => v.id === prefVehicleId) : false;
+    const locationExists = prefLocationId ? locations.some((l) => l.id === prefLocationId) : false;
+
+    if (!vehicleExists && !locationExists) {
+      return;
+    }
+
+    setFormState((draft) => {
+      if (vehicleExists && prefVehicleId) {
+        draft.vehicleId = prefVehicleId;
+      }
+      if (locationExists && prefLocationId) {
+        draft.locationId = prefLocationId;
+      }
+    });
+    // Only run once after lists first load; preferences are stable across this effect
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditMode, vehicles, locations]);
 
   // Initialize form with session data in edit mode
   useEffect(() => {
@@ -194,6 +224,11 @@ export function SessionDetails() {
         });
         return;
       }
+
+      updatePreferences({
+        lastVehicleId: formState.vehicleId,
+        lastLocationId: formState.locationId
+      });
 
       navigate('/sessions');
     } catch {

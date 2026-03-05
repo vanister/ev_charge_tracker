@@ -1,6 +1,9 @@
 import type { IconName, LocationColorOption, TimeFilterOption } from './types/shared-types';
 
 export const THEME_STORAGE_KEY = 'ev-charge-tracker-theme';
+export const USER_PREFERENCES_STORAGE_KEY = 'ev-charge-tracker-preferences';
+
+export const RECENT_SESSIONS_LIMIT = 5;
 
 export const TOAST_MAX_COUNT = 4;
 export const TOAST_DEFAULT_DURATION = 3500;
