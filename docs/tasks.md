@@ -10,7 +10,7 @@
 - **Phase 6 - Tech Debt / Cleanup**: ✅ Complete (6/6)
 - **Phase 7 - PWA Features**: 🚧 In Progress (3/4)
 - **Phase 8 - Business Logic & Testing**: 🚧 In Progress (3/5)
-- **Phase 9 - User Preferences**: ⬜ Not Started (0/5)
+- **Phase 9 - User Preferences**: ✅ Complete (5/5)
 
 **Overall Progress**: 37/53 tasks complete (70%)
 
@@ -154,22 +154,22 @@ export type UserPreferences = {
 };
 ```
 
-1. [ ] Add `USER_PREFERENCES_STORAGE_KEY` constant to `src/constants.ts`
+1. [x] Add `USER_PREFERENCES_STORAGE_KEY` constant to `src/constants.ts`
    - Value: `'ev-charge-tracker-preferences'`
    - Follows the existing `THEME_STORAGE_KEY` naming pattern
-2. [ ] Create `useUserPreferences` hook at `src/hooks/useUserPreferences.ts`
+2. [x] Create `useUserPreferences` hook at `src/hooks/useUserPreferences.ts`
    - Reads from `localStorage` on mount, falls back to defaults if nothing stored
    - Exposes `{ preferences, updatePreferences, resetPreferences }`
    - `updatePreferences(partial: Partial<UserPreferences>)` merges and writes back to localStorage
    - `resetPreferences()` clears the key and restores defaults
    - Default values: `{ recentSessionsLimit: RECENT_SESSIONS_LIMIT }` (no vehicle/location pre-selected)
-3. [ ] Persist last vehicle and location on session save
+3. [x] Persist last vehicle and location on session save
    - In `SessionDetails`, after a successful create or update, call `updatePreferences({ lastVehicleId, lastLocationId })`
    - On the "Add Session" form (not edit), pre-select `lastVehicleId` and `lastLocationId` as the initial form values if set in preferences
-4. [ ] Wire `recentSessionsLimit` preference into `useStats`
+4. [x] Wire `recentSessionsLimit` preference into `useStats`
    - Replace hardcoded use of `RECENT_SESSIONS_LIMIT` in `buildRecentSessions` (`src/helpers/statsHelpers.ts`) with a value passed in or read from preferences
    - `useStats` hook should read `preferences.recentSessionsLimit` via `useUserPreferences` and pass it through
-5. [ ] Add a "Preferences" section to the Settings page
+5. [x] Add a "Preferences" section to the Settings page
    - Display current `recentSessionsLimit` with a simple numeric input or select (e.g. 3, 5, 10, 15)
    - Show a "Reset Preferences" button that calls `resetPreferences()`
    - Do **not** expose `lastVehicleId`/`lastLocationId` as editable — those are auto-managed

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import { useLocations } from '../../hooks/useLocations';
+import { useUserPreferences } from '../../hooks/useUserPreferences';
 import type { Vehicle, Location as AppLocation } from '../../data/data-types';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { useImmerState } from '../../hooks/useImmerState';
@@ -75,11 +76,39 @@ export function SessionDetails() {
     loadLocations();
   }, [getLocationList]);
 
+  const { preferences, updatePreferences } = useUserPreferences();
+
   const [formState, setFormState] = useImmerState<SessionPageState>({
     ...NEW_SESSION,
     chargedAt: getDefaultDateTime(),
     isInitialized: !isEditMode
   });
+
+  // Pre-fill vehicle from preferences on Add Session when the vehicle list is loaded
+  useEffect(() => {
+    if (isEditMode || vehicles.length === 0) {
+      return;
+    }
+
+    setFormState((draft) => {
+      draft.vehicleId = vehicles.find((v) => v.id === preferences.lastVehicleId)?.id ?? '';
+    });
+    // Only run once after the vehicle list first loads; preferences are stable across this effect
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditMode, vehicles]);
+
+  // Pre-fill location from preferences on Add Session when the location list is loaded
+  useEffect(() => {
+    if (isEditMode || locations.length === 0) {
+      return;
+    }
+
+    setFormState((draft) => {
+      draft.locationId = locations.find((l) => l.id === preferences.lastLocationId)?.id ?? '';
+    });
+    // Only run once after the location list first loads; preferences are stable across this effect
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditMode, locations]);
 
   // Initialize form with session data in edit mode
   useEffect(() => {
@@ -194,6 +223,11 @@ export function SessionDetails() {
         });
         return;
       }
+
+      updatePreferences({
+        lastVehicleId: formState.vehicleId,
+        lastLocationId: formState.locationId
+      });
 
       navigate('/sessions');
     } catch {
