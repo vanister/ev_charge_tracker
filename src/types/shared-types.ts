@@ -41,3 +41,5 @@ export const ALL_ICONS = [
 ] as const;
 
 export type IconName = (typeof ALL_ICONS)[number];
+
+export type LocationColorOption = { value: string; label: string; bgClass: string };
