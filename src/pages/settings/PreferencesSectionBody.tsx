@@ -22,7 +22,9 @@ export function PreferencesSectionBody() {
   };
 
   const handleReset = () => {
-    const confirmed = confirm('Are you sure you want to reset preferences to defaults?');
+    const confirmed = confirm(
+      'Are you sure you want to reset all preferences to defaults? This will also clear your saved session filters.'
+    );
 
     if (!confirmed) {
       return;

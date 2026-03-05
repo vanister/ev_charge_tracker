@@ -6,6 +6,7 @@ import type { ChargingSession, Vehicle, Location as AppLocation } from '../../da
 import { useLocations } from '../../hooks/useLocations';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { useImmerState } from '../../hooks/useImmerState';
+import { useUserPreferences } from '../../hooks/useUserPreferences';
 import { ItemListButton } from '../../components/ItemListButton';
 import { SessionsFilter } from './SessionsFilter';
 import { SessionDateGroup } from './SessionDateGroup';
@@ -40,7 +41,11 @@ export function SessionsList() {
   usePageTitle('Sessions');
 
   const navigate = useNavigate();
-  const [state, setState] = useImmerState<SessionsListState>(DEFAULT_STATE);
+  const { preferences, updatePreferences } = useUserPreferences();
+  const [state, setState] = useImmerState<SessionsListState>({
+    ...DEFAULT_STATE,
+    selectedTimeRange: (preferences.sessionsFilterTimeRange as TimeFilterValue) ?? '7d'
+  });
   const { getLocationList } = useLocations();
   const { getVehicleList } = useVehicles();
   const { getSessionList, deleteSession, hasAnySessions } = useSessions();
@@ -81,6 +86,36 @@ export function SessionsList() {
 
     loadVehicles();
   }, [getVehicleList, setState]);
+
+  // Pre-fill vehicle filter from preferences once the vehicle list is loaded
+  useEffect(() => {
+    if (state.vehicles.length === 0) {
+      return;
+    }
+
+    setState((draft) => {
+      draft.selectedVehicleId = draft.vehicles.find(
+        (v) => v.id === preferences.sessionsFilterVehicleId
+      )?.id;
+    });
+    // Only run once after the vehicle list first loads; preferences are stable across this effect
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.vehicles]);
+
+  // Pre-fill location filter from preferences once the location list is loaded
+  useEffect(() => {
+    if (state.locations.length === 0) {
+      return;
+    }
+
+    setState((draft) => {
+      draft.selectedLocationId = draft.locations.find(
+        (l) => l.id === preferences.sessionsFilterLocationId
+      )?.id;
+    });
+    // Only run once after the location list first loads; preferences are stable across this effect
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.locations]);
 
   useEffect(() => {
     const loadSessions = async () => {
@@ -154,24 +189,28 @@ export function SessionsList() {
       draft.selectedVehicleId = undefined;
       draft.selectedLocationId = undefined;
     });
+    updatePreferences({ sessionsFilterVehicleId: undefined, sessionsFilterLocationId: undefined });
   };
 
   const handleVehicleChange = (id: string | undefined) => {
     setState((draft) => {
       draft.selectedVehicleId = id;
     });
+    updatePreferences({ sessionsFilterVehicleId: id });
   };
 
   const handleLocationChange = (id: string | undefined) => {
     setState((draft) => {
       draft.selectedLocationId = id;
     });
+    updatePreferences({ sessionsFilterLocationId: id });
   };
 
   const handleTimeRangeChange = (value: TimeFilterValue) => {
     setState((draft) => {
       draft.selectedTimeRange = value;
     });
+    updatePreferences({ sessionsFilterTimeRange: value });
   };
 
   if (!state.isLoading && !state.hasAnySessions) {
