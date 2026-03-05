@@ -173,11 +173,20 @@ export type UserPreferences = {
    - Show a "Reset Preferences" button that calls `resetPreferences()`
    - Do **not** expose `lastVehicleId`/`lastLocationId` as editable — those are auto-managed
 
+## 10. Export and Restore
+
+1. Add an export and restore section to the settings page
+2. Export the entire dexie stores out into json including 
+   - version number 
+   - Dexie stores that match the the schema defined in the app
+3. Strict restore of matching database version in the app to the backup file
+4. Dangerously overwrite the existing dexie db woth the backup file
+
+
 ## Post-MVP
 
 1. [ ] Support vehicle image upload
    - Allow users to upload a custom image for their vehicle instead of the default 🚗 emoji
    - Store image reference and display in VehicleItem and other vehicle displays
-2. [ ] Export, backup and restore functionality
-3. [ ] Sync ability using users storage accounts
+2. [ ] Sync ability using users storage accounts
    - iCloud, Drive, OneDrive, etc.
