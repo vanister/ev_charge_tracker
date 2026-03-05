@@ -8,16 +8,17 @@ export function computeStats(sessions: ChargingSession[], locationMap: Map<strin
   const totalKwh = sessions.reduce((sum, s) => sum + s.energyKwh, 0);
   const totalCostCents = sessions.reduce((sum, s) => sum + s.costCents, 0);
 
+  // group by location
   const byLocation = Array.from(
     sessions
-      .reduce((accum, s) => {
-        const existing = accum.get(s.locationId);
+      .reduce((group, s) => {
+        const existing = group.get(s.locationId);
 
         if (existing) {
           existing.totalKwh += s.energyKwh;
           existing.totalCostCents += s.costCents;
         } else {
-          accum.set(s.locationId, {
+          group.set(s.locationId, {
             locationId: s.locationId,
             name: locationMap.get(s.locationId)?.name ?? 'Unknown',
             totalKwh: s.energyKwh,
@@ -25,7 +26,7 @@ export function computeStats(sessions: ChargingSession[], locationMap: Map<strin
           });
         }
 
-        return accum;
+        return group;
       }, new Map<string, LocationStat>())
       .values()
   );
