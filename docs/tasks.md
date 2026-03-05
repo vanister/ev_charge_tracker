@@ -10,8 +10,9 @@
 - **Phase 6 - Tech Debt / Cleanup**: ✅ Complete (6/6)
 - **Phase 7 - PWA Features**: 🚧 In Progress (3/4)
 - **Phase 8 - Business Logic & Testing**: 🚧 In Progress (3/5)
+- **Phase 9 - User Preferences**: ⬜ Not Started (0/5)
 
-**Overall Progress**: 37/48 tasks complete (77%)
+**Overall Progress**: 37/53 tasks complete (70%)
 
 ### Next Up
 1. Implement charts with Recharts (energy by location, timeline)
@@ -138,6 +139,41 @@
 5. [x] Build and deploy to static hosting
    - Configure deployment to Cloudflare Pages with HTTPS
 
+## 9. User Preferences
+
+Store lightweight UI preferences in `localStorage` (consistent with the existing theme storage pattern). Preferences are non-critical and can be safely reset; no Dexie schema migration required.
+
+**Storage key**: `USER_PREFERENCES_STORAGE_KEY = 'ev-charge-tracker-preferences'` (add to `src/constants.ts`)
+
+**`UserPreferences` type** (new file `src/types/preference-types.ts` or inline in the hook):
+```ts
+export type UserPreferences = {
+  lastVehicleId?: string;
+  lastLocationId?: string;
+  recentSessionsLimit: number; // defaults to RECENT_SESSIONS_LIMIT constant
+};
+```
+
+1. [ ] Add `USER_PREFERENCES_STORAGE_KEY` constant to `src/constants.ts`
+   - Value: `'ev-charge-tracker-preferences'`
+   - Follows the existing `THEME_STORAGE_KEY` naming pattern
+2. [ ] Create `useUserPreferences` hook at `src/hooks/useUserPreferences.ts`
+   - Reads from `localStorage` on mount, falls back to defaults if nothing stored
+   - Exposes `{ preferences, updatePreferences, resetPreferences }`
+   - `updatePreferences(partial: Partial<UserPreferences>)` merges and writes back to localStorage
+   - `resetPreferences()` clears the key and restores defaults
+   - Default values: `{ recentSessionsLimit: RECENT_SESSIONS_LIMIT }` (no vehicle/location pre-selected)
+3. [ ] Persist last vehicle and location on session save
+   - In `SessionDetails`, after a successful create or update, call `updatePreferences({ lastVehicleId, lastLocationId })`
+   - On the "Add Session" form (not edit), pre-select `lastVehicleId` and `lastLocationId` as the initial form values if set in preferences
+4. [ ] Wire `recentSessionsLimit` preference into `useStats`
+   - Replace hardcoded use of `RECENT_SESSIONS_LIMIT` in `buildRecentSessions` (`src/helpers/statsHelpers.ts`) with a value passed in or read from preferences
+   - `useStats` hook should read `preferences.recentSessionsLimit` via `useUserPreferences` and pass it through
+5. [ ] Add a "Preferences" section to the Settings page
+   - Display current `recentSessionsLimit` with a simple numeric input or select (e.g. 3, 5, 10, 15)
+   - Show a "Reset Preferences" button that calls `resetPreferences()`
+   - Do **not** expose `lastVehicleId`/`lastLocationId` as editable — those are auto-managed
+
 ## Post-MVP
 
 1. [ ] Support vehicle image upload
@@ -145,7 +181,4 @@
    - Store image reference and display in VehicleItem and other vehicle displays
 2. [ ] Export, backup and restore functionality
 3. [ ] Sync ability using users storage accounts
-   - iCloud, Drive, OneDrive, etc. 
-4. [ ] Add support for remembering user preferences
-   - Last vehicle selected
-   - Last location selected
+   - iCloud, Drive, OneDrive, etc.
