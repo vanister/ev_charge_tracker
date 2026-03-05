@@ -1,4 +1,4 @@
-import type { TimeFilterOption } from './types/shared-types';
+import type { IconName, LocationColorOption, TimeFilterOption } from './types/shared-types';
 
 export const THEME_STORAGE_KEY = 'ev-charge-tracker-theme';
 
@@ -13,4 +13,15 @@ export const TIME_FILTER_OPTIONS: TimeFilterOption[] = [
   { label: 'Last 6 Months', value: '6m' },
   { label: 'Last 12 Months', value: '12m' },
   { label: 'All', value: 'all' }
+];
+
+export const RECENT_SESSIONS_LIMIT = 5;
+
+export const LOCATION_ICON_OPTIONS: IconName[] = ['home', 'building', 'map-pin', 'zap', 'car'];
+
+export const LOCATION_COLOR_OPTIONS: LocationColorOption[] = [
+  { value: 'teal', label: 'Teal', bgClass: 'bg-teal-500' },
+  { value: 'slate', label: 'Slate', bgClass: 'bg-slate-500' },
+  { value: 'purple', label: 'Purple', bgClass: 'bg-purple-400' },
+  { value: 'orange', label: 'Orange', bgClass: 'bg-orange-400' }
 ];

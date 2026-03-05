@@ -2,8 +2,7 @@ import type { ChargingSession, Vehicle, Location } from '../data/data-types';
 import { getVehicleDisplayName } from './sessionHelpers';
 import type { SessionWithMetadata } from './sessionHelpers';
 import type { SessionStats, LocationStat } from '../pages/dashboard/dashboard-types';
-
-const RECENT_SESSIONS_LIMIT = 5;
+import { RECENT_SESSIONS_LIMIT } from '../constants';
 
 export function computeStats(sessions: ChargingSession[], locationMap: Map<string, Location>): SessionStats {
   const totalKwh = sessions.reduce((sum, s) => sum + s.energyKwh, 0);
