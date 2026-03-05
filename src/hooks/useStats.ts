@@ -42,11 +42,15 @@ export function useStats(): UseStatsResult {
 
         const vehicleMap = createVehicleMap(vehicleResult.data);
         const locationMap = createLocationMap(locationResult.data);
+        const recent = buildRecentSessions(
+          sessionResult.data,
+          vehicleMap,
+          locationMap,
+          preferences.recentSessionsLimit
+        );
 
         setStats(computeStats(sessionResult.data, locationMap));
-        setRecentSessions(
-          buildRecentSessions(sessionResult.data, vehicleMap, locationMap, preferences.recentSessionsLimit)
-        );
+        setRecentSessions(recent);
       } catch (err) {
         console.error('Failed to load stats:', err);
         setError('Failed to load stats');

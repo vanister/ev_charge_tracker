@@ -3,10 +3,12 @@ import { FormSelect } from '../../components/FormSelect';
 import { Button } from '../../components/Button';
 
 const LIMIT_OPTIONS = [
-  { value: '3', text: '3' },
   { value: '5', text: '5' },
   { value: '10', text: '10' },
-  { value: '15', text: '15' }
+  { value: '15', text: '15' },
+  { value: '25', text: '25' },
+  { value: '50', text: '50' },
+  { value: '100', text: '100' }
 ];
 
 export function PreferencesSectionBody() {

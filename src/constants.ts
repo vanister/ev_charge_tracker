@@ -1,9 +1,14 @@
 import type { IconName, LocationColorOption, TimeFilterOption } from './types/shared-types';
+import type { UserPreferences } from './types/preference-types';
 
 export const THEME_STORAGE_KEY = 'ev-charge-tracker-theme';
 export const USER_PREFERENCES_STORAGE_KEY = 'ev-charge-tracker-preferences';
 
 export const RECENT_SESSIONS_LIMIT = 5;
+
+export const DEFAULT_PREFERENCES: UserPreferences = {
+  recentSessionsLimit: RECENT_SESSIONS_LIMIT
+};
 
 export const TOAST_MAX_COUNT = 4;
 export const TOAST_DEFAULT_DURATION = 3500;
@@ -17,8 +22,6 @@ export const TIME_FILTER_OPTIONS: TimeFilterOption[] = [
   { label: 'Last 12 Months', value: '12m' },
   { label: 'All', value: 'all' }
 ];
-
-export const RECENT_SESSIONS_LIMIT = 5;
 
 export const LOCATION_ICON_OPTIONS: IconName[] = ['home', 'building', 'map-pin', 'zap', 'car'];
 

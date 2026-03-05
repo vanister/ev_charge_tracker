@@ -84,32 +84,43 @@ export function SessionDetails() {
     isInitialized: !isEditMode
   });
 
-  // Pre-fill vehicle/location from preferences on Add Session when lists are loaded
+  // Pre-fill vehicle from preferences on Add Session when the vehicle list is loaded
   useEffect(() => {
-    if (isEditMode || vehicles.length === 0 || locations.length === 0) {
+    if (isEditMode || vehicles.length === 0) {
       return;
     }
 
     const prefVehicleId = preferences.lastVehicleId;
-    const prefLocationId = preferences.lastLocationId;
-    const vehicleExists = prefVehicleId ? vehicles.some((v) => v.id === prefVehicleId) : false;
-    const locationExists = prefLocationId ? locations.some((l) => l.id === prefLocationId) : false;
 
-    if (!vehicleExists && !locationExists) {
+    if (!prefVehicleId || !vehicles.some((v) => v.id === prefVehicleId)) {
       return;
     }
 
     setFormState((draft) => {
-      if (vehicleExists && prefVehicleId) {
-        draft.vehicleId = prefVehicleId;
-      }
-      if (locationExists && prefLocationId) {
-        draft.locationId = prefLocationId;
-      }
+      draft.vehicleId = prefVehicleId;
     });
-    // Only run once after lists first load; preferences are stable across this effect
+    // Only run once after the vehicle list first loads; preferences are stable across this effect
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEditMode, vehicles, locations]);
+  }, [isEditMode, vehicles]);
+
+  // Pre-fill location from preferences on Add Session when the location list is loaded
+  useEffect(() => {
+    if (isEditMode || locations.length === 0) {
+      return;
+    }
+
+    const prefLocationId = preferences.lastLocationId;
+
+    if (!prefLocationId || !locations.some((l) => l.id === prefLocationId)) {
+      return;
+    }
+
+    setFormState((draft) => {
+      draft.locationId = prefLocationId;
+    });
+    // Only run once after the location list first loads; preferences are stable across this effect
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditMode, locations]);
 
   // Initialize form with session data in edit mode
   useEffect(() => {
