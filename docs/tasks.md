@@ -8,16 +8,15 @@
 - **Phase 4 - Routing & Pages**: ✅ Complete (8/8)
 - **Phase 5 - UI Components**: 🚧 In Progress (1/2)
 - **Phase 6 - Tech Debt / Cleanup**: ✅ Complete (6/6)
-- **Phase 7 - PWA Features**: 🚧 In Progress (3/4)
+- **Phase 7 - PWA Features**: ✅ Complete (4/4)
 - **Phase 8 - Business Logic & Testing**: 🚧 In Progress (3/5)
 - **Phase 9 - User Preferences**: ✅ Complete (5/5)
 
-**Overall Progress**: 37/53 tasks complete (70%)
+**Overall Progress**: 38/53 tasks complete (72%)
 
 ### Next Up
 1. Implement charts with Recharts (energy by location, timeline)
-2. Generate PWA icons (192x192, 512x512, 180x180, 32x32, 16x16)
-3. Test offline functionality
+2. Test offline functionality
 
 ---
 
@@ -115,7 +114,7 @@
 
 ## 7. PWA Features
 
-1. [ ] Generate PWA icons
+1. [x] Generate PWA icons
    - Create icons in public/icons/: 192x192, 512x512, 180x180, 32x32, 16x16 (standard + maskable variants)
    - All icons (including favicon) must visually match the Lucide "zap" icon used in Settings > About
 2. [x] Configure PWA manifest
