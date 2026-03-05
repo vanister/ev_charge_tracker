@@ -1,7 +1,8 @@
 import { Icon } from '../../components/Icon';
 import { FormInput } from '../../components/FormInput';
 import type { IconName } from '../../types/shared-types';
-import { LOCATION_ICON_OPTIONS, LOCATION_COLOR_OPTIONS, type LocationFormData } from './locationHelpers';
+import { LOCATION_ICON_OPTIONS, LOCATION_COLOR_OPTIONS } from '../../constants';
+import type { LocationFormData } from './locationHelpers';
 
 type LocationFormProps = {
   id?: string;

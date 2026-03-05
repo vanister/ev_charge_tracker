@@ -1,4 +1,3 @@
-import type { IconName } from '../../types/shared-types';
 import type { Location } from '../../data/data-types';
 
 export type LocationFormData = {
@@ -14,14 +13,5 @@ export const DEFAULT_LOCATION_FORM_DATA: LocationFormData = {
   color: 'teal',
   defaultRate: ''
 };
-
-export const LOCATION_ICON_OPTIONS: IconName[] = ['home', 'building', 'map-pin', 'zap', 'car'];
-
-export const LOCATION_COLOR_OPTIONS: { value: string; label: string; bgClass: string }[] = [
-  { value: 'teal', label: 'Teal', bgClass: 'bg-teal-500' },
-  { value: 'slate', label: 'Slate', bgClass: 'bg-slate-500' },
-  { value: 'purple', label: 'Purple', bgClass: 'bg-purple-400' },
-  { value: 'orange', label: 'Orange', bgClass: 'bg-orange-400' }
-];
 
 export type NewLocation = Omit<Location, 'id' | 'createdAt' | 'isActive'>;
