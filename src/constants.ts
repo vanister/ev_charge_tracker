@@ -7,7 +7,8 @@ export const USER_PREFERENCES_STORAGE_KEY = 'ev-charge-tracker-preferences';
 export const RECENT_SESSIONS_LIMIT = 5;
 
 export const DEFAULT_PREFERENCES: UserPreferences = {
-  recentSessionsLimit: RECENT_SESSIONS_LIMIT
+  recentSessionsLimit: RECENT_SESSIONS_LIMIT,
+  sessionsFilterTimeRange: '7d'
 };
 
 export const TOAST_MAX_COUNT = 4;
