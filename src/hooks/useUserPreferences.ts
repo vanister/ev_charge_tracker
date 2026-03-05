@@ -10,7 +10,7 @@ export function useUserPreferences(storage: Storage = localStorage) {
     (partial: Partial<UserPreferences>) => {
       setPreferences((prev) => {
         const updated = { ...prev, ...partial };
-        writePreferences(storage, updated);
+        writePreferences(updated, storage);
         return updated;
       });
     },

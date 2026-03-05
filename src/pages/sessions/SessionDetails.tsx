@@ -90,14 +90,8 @@ export function SessionDetails() {
       return;
     }
 
-    const vehicleId = vehicles.find((v) => v.id === preferences.lastVehicleId)?.id;
-
-    if (!vehicleId) {
-      return;
-    }
-
     setFormState((draft) => {
-      draft.vehicleId = vehicleId;
+      draft.vehicleId = vehicles.find((v) => v.id === preferences.lastVehicleId)?.id ?? '';
     });
     // Only run once after the vehicle list first loads; preferences are stable across this effect
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -109,14 +103,8 @@ export function SessionDetails() {
       return;
     }
 
-    const locationId = locations.find((l) => l.id === preferences.lastLocationId)?.id;
-
-    if (!locationId) {
-      return;
-    }
-
     setFormState((draft) => {
-      draft.locationId = locationId;
+      draft.locationId = locations.find((l) => l.id === preferences.lastLocationId)?.id ?? '';
     });
     // Only run once after the location list first loads; preferences are stable across this effect
     // eslint-disable-next-line react-hooks/exhaustive-deps

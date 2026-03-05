@@ -17,7 +17,7 @@ export function readPreferences(storage: Storage = window.localStorage): UserPre
   }
 }
 
-export function writePreferences(storage: Storage = window.localStorage, prefs: UserPreferences): void {
+export function writePreferences(prefs: UserPreferences, storage: Storage = window.localStorage): void {
   storage.setItem(USER_PREFERENCES_STORAGE_KEY, JSON.stringify(prefs));
 }
 
