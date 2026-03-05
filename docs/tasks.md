@@ -14,179 +14,100 @@
 
 **Overall Progress**: 38/53 tasks complete (72%)
 
-### Next Up
-1. Implement charts with Recharts (energy by location, timeline)
-2. Test offline functionality
+---
+
+## TODO
+
+### Phase 5 - UI Components
+- [ ] 2. Implement charts with Recharts
+  - Create energy usage by location chart and timeline chart for dashboard
+  - Recharts is installed but not yet used
+
+### Phase 8 - Business Logic & Testing
+- [ ] 4. Test offline functionality
+  - Verify all features work without network, test service worker caching
+
+### Phase 10 - Export and Restore
+- [ ] 1. Add an export and restore section to the settings page
+- [ ] 2. Export the entire dexie stores out into json including 
+  - version number 
+  - Dexie stores that match the the schema defined in the app
+- [ ] 3. Strict restore of matching database version in the app to the backup file
+- [ ] 4. Dangerously overwrite the existing dexie db woth the backup file
+
+### Post-MVP
+- [ ] 1. Support vehicle image upload
+  - Allow users to upload a custom image for their vehicle instead of the default 🚗 emoji
+  - Store image reference and display in VehicleItem and other vehicle displays
+- [ ] 2. Sync ability using users storage accounts
+  - iCloud, Drive, OneDrive, etc.
 
 ---
 
-## 1. Setup Phase
+## COMPLETED
 
-1. [x] Initialize Vite React TypeScript project
-   - Run `npm create vite@latest ev-charge-tracker -- --template react-ts` and set up basic project structure
-2. [x] Install core dependencies
-   - Install dexie, react-router-dom, recharts, date-fns, immer, lucide-react, clsx
-3. [x] Set up Tailwind CSS v4
-   - Install and configure @tailwindcss/vite plugin (v4 uses Vite plugin, not PostCSS init)
-4. [x] Install and configure Vite PWA plugin
-   - Install vite-plugin-pwa and configure in vite.config.ts for service worker generation
+### Phase 1 - Setup Phase
+- [x] 1. Initialize Vite React TypeScript project
+- [x] 2. Install core dependencies
+- [x] 3. Set up Tailwind CSS v4
+- [x] 4. Install and configure Vite PWA plugin
 
-## 2. Data Layer
+### Phase 2 - Data Layer
+- [x] 1. Create TypeScript types and interfaces
+- [x] 2. Set up Dexie database schema
+- [x] 3. Create constants file
+- [x] 4. Create utility functions
 
-1. [x] Create TypeScript types and interfaces
-   - Define Vehicle, ChargingSession, Settings, Location types in src/data/data-types.ts
-2. [x] Set up Dexie database schema
-   - Create src/data/db.ts with vehicles, sessions, settings, locations stores and indexes
-3. [x] Create constants file
-   - Define DEFAULT_LOCATIONS seed templates and DB_NAME in src/data/constants.ts
-4. [x] Create utility functions
-   - Add generateId() in src/utilities/dataUtils.ts; seedDefaultLocations() and loadSettings() in src/data/repositories.ts
+### Phase 3 - Context Providers & Hooks
+- [x] 1. Implement DatabaseProvider context
+- [x] 2. Implement AppInitializationProvider context
+- [x] 3. Implement useDatabase hook
+- [x] 4. Implement useAppInitialization hook
+- [x] 5. Implement useSettings hook
+- [x] 6. Implement useVehicles hook
+- [x] 7. Implement useLocations hook
+- [x] 8. Implement useSessions hook
+- [x] 9. Implement useStats hook
+- [x] 10. Implement ThemeProvider and useTheme hook
+- [x] 11. Implement useImmerState hook
 
-## 3. Context Providers & Hooks
+### Phase 4 - Routing & Pages
+- [x] 1. Set up React Router structure
+- [x] 2. Create Onboarding flow pages
+- [x] 3. Build Layout
+- [x] 4. Build SessionsList page
+- [x] 5. Build SessionDetails component
+- [x] 6. Build VehiclesList page
+- [x] 7. Build VehicleDetails component
+- [x] 8. Build Settings page
+- [x] 9. Build Dashboard page
 
-1. [x] Implement DatabaseProvider context
-   - Create context to provide single Dexie db instance to entire app
-2. [x] Implement AppInitializationProvider context
-   - Create context to handle app initialization (settings check, location seeding, persistent storage request)
-   - Provide isInitialized and error to app; uses useRef to prevent double-init in React Strict Mode
-3. [x] Implement useDatabase hook
-   - Create hook to access db from DatabaseContext
-4. [x] Implement useAppInitialization hook
-   - Create hook to access initialization state from AppInitializationContext
-5. [x] Implement useSettings hook
-   - Create hook for settings CRUD operations and completeOnboarding(); uses Result<T> pattern
-6. [x] Implement useVehicles hook
-   - Create hook for vehicle CRUD operations, including soft delete and deletion validation
-7. [x] Implement useLocations hook
-   - Create hook for location CRUD operations, including soft delete and deletion validation
-8. [x] Implement useSessions hook
-   - Create hook for session CRUD with filters (vehicleId, locationId, dateRange); compound filters done in-memory
-9. [x] Implement useStats hook (moved from Phase 4, added here for completeness)
-   - Create hook to compute totalKwh, totalCostCents, avgRatePerKwh, sessionCount, byLocation from sessions
-   - Returns { stats, recentSessions (5 most recent), isLoading }
-10. [x] Implement ThemeProvider and useTheme hook
-    - Manage light/dark/system theme; persist to localStorage; apply class to document root
-    - Returns { theme, resolvedTheme, updateTheme }
-11. [x] Implement useImmerState hook
-    - Wrapper around useState with Immer draft-based updates
+### Phase 5 - UI Components
+- [x] 1. Create reusable UI components
 
-## 4. Routing & Pages
+### Phase 6 - Tech Debt / Cleanup
+- [x] 1. Organize types
+- [x] 2. Use useImmerState hook
+- [x] 3. Specific error pages
+- [x] 4. Clean up helpers
+- [x] 5. Standardize page max-width
+- [x] 6. Use async/await
 
-1. [x] Set up React Router structure
-   - Configure routes: /, /onboarding, /sessions, /sessions/add, /sessions/:id/edit, /vehicles, /vehicles/add, /vehicles/:id/edit, /settings, /settings/locations/add, /settings/locations/:id/edit, /error
-   - RequireOnboarding guard redirects to /onboarding if settings.onboardingComplete is false
-2. [x] Create Onboarding flow pages
-   - Build 3-step onboarding: Welcome screen, Review/Edit Locations, First vehicle creation
-3. [x] Build Layout
-   - AppHeader with title and menu button, NavigationDrawer (mobile sidebar), MenuOverlay, ThemeSelector
-   - LayoutConfigProvider and usePageTitle for per-page title management
-4. [x] Build SessionsList page
-   - Sessions list grouped by date with filters (vehicle, location), edit/delete actions, empty states
-5. [x] Build SessionDetails component
-   - Form for adding/editing sessions; cost auto-calculated; location rate auto-fills ratePerKwh on selection
-6. [x] Build VehiclesList page
-   - Vehicles list with add/edit/delete actions; handles deletion validation (can't delete with sessions)
-7. [x] Build VehicleDetails component
-   - Form for adding/editing vehicles with icon picker; soft delete pattern
-8. [x] Build Settings page
-   - Locations management (add/edit/delete with safety checks), storage quota display, app info
-   - LocationDetails form at /settings/locations/add and /settings/locations/:id/edit
-9. [x] Build Dashboard page
-   - Stats cards (total kWh, average rate, session count), 5 most recent sessions, empty state handling
+### Phase 7 - PWA Features
+- [x] 1. Generate PWA icons
+- [x] 2. Configure PWA manifest
+- [x] 3. Implement persistent storage request
+- [x] 4. Add service worker update notification
 
-## 5. UI Components
+### Phase 8 - Business Logic & Testing
+- [x] 1. Implement app initialization flow
+- [x] 2. Add vehicle deletion safety checks
+- [x] 3. Add location deletion safety checks
+- [x] 5. Build and deploy to static hosting
 
-1. [x] Create reusable UI components
-   - Button, EmptyState, Icon, SectionHeader, FullscreenLoader components implemented
-   - Input, Select, Card, Modal not yet abstracted (inline Tailwind in pages)
-2. [ ] Implement charts with Recharts
-   - Create energy usage by location chart and timeline chart for dashboard
-   - Recharts is installed but not yet used
-
-## 6. Tech Debt / Cleanup
-
-1. [x] Organize the types that are sprinkled throughout the components and helpers into feature level types or global types
-2. [x] Check for opportunities to use the `useImmerState` hook
-3. [x] More specific error pages
-4. [x] Clean up helpers by removing the useless `build*Input` helpers
-5. [x] Standardize on a page max-width across all pages
-6. [x] Replace `Promise.then` with `async/await`
-
-## 7. PWA Features
-
-1. [x] Generate PWA icons
-   - Create icons in public/icons/: 192x192, 512x512, 180x180, 32x32, 16x16 (standard + maskable variants)
-   - All icons (including favicon) must visually match the Lucide "zap" icon used in Settings > About
-2. [x] Configure PWA manifest
-   - Set up manifest with name, icons, theme_color: #14b8a6 (teal-500), display: standalone in vite.config.ts
-3. [x] Implement persistent storage request
-   - Add navigator.storage.persist() call on app init, show storage quota in settings
-4. [x] Add service worker update notification
-   - Detect new service worker and show 'Update available' UI with reload action
-   - Refactored to use toast system (persistent info toast with Reload action)
-
-## 8. Business Logic & Testing
-
-1. [x] Implement app initialization flow
-   - Create logic to check settings, seed locations if needed, redirect to onboarding if needed, create default settings on first launch
-2. [x] Add vehicle deletion safety checks
-   - Prevent deletion of vehicles with sessions, offer cascade delete option
-3. [x] Add location deletion safety checks
-   - Prevent deletion of locations with sessions
-4. [ ] Test offline functionality
-   - Verify all features work without network, test service worker caching
-5. [x] Build and deploy to static hosting
-   - Configure deployment to Cloudflare Pages with HTTPS
-
-## 9. User Preferences
-
-Store lightweight UI preferences in `localStorage` (consistent with the existing theme storage pattern). Preferences are non-critical and can be safely reset; no Dexie schema migration required.
-
-**Storage key**: `USER_PREFERENCES_STORAGE_KEY = 'ev-charge-tracker-preferences'` (add to `src/constants.ts`)
-
-**`UserPreferences` type** (new file `src/types/preference-types.ts` or inline in the hook):
-```ts
-export type UserPreferences = {
-  lastVehicleId?: string;
-  lastLocationId?: string;
-  recentSessionsLimit: number; // defaults to RECENT_SESSIONS_LIMIT constant
-};
-```
-
-1. [x] Add `USER_PREFERENCES_STORAGE_KEY` constant to `src/constants.ts`
-   - Value: `'ev-charge-tracker-preferences'`
-   - Follows the existing `THEME_STORAGE_KEY` naming pattern
-2. [x] Create `useUserPreferences` hook at `src/hooks/useUserPreferences.ts`
-   - Reads from `localStorage` on mount, falls back to defaults if nothing stored
-   - Exposes `{ preferences, updatePreferences, resetPreferences }`
-   - `updatePreferences(partial: Partial<UserPreferences>)` merges and writes back to localStorage
-   - `resetPreferences()` clears the key and restores defaults
-   - Default values: `{ recentSessionsLimit: RECENT_SESSIONS_LIMIT }` (no vehicle/location pre-selected)
-3. [x] Persist last vehicle and location on session save
-   - In `SessionDetails`, after a successful create or update, call `updatePreferences({ lastVehicleId, lastLocationId })`
-   - On the "Add Session" form (not edit), pre-select `lastVehicleId` and `lastLocationId` as the initial form values if set in preferences
-4. [x] Wire `recentSessionsLimit` preference into `useStats`
-   - Replace hardcoded use of `RECENT_SESSIONS_LIMIT` in `buildRecentSessions` (`src/helpers/statsHelpers.ts`) with a value passed in or read from preferences
-   - `useStats` hook should read `preferences.recentSessionsLimit` via `useUserPreferences` and pass it through
-5. [x] Add a "Preferences" section to the Settings page
-   - Display current `recentSessionsLimit` with a simple numeric input or select (e.g. 3, 5, 10, 15)
-   - Show a "Reset Preferences" button that calls `resetPreferences()`
-   - Do **not** expose `lastVehicleId`/`lastLocationId` as editable — those are auto-managed
-
-## 10. Export and Restore
-
-1. Add an export and restore section to the settings page
-2. Export the entire dexie stores out into json including 
-   - version number 
-   - Dexie stores that match the the schema defined in the app
-3. Strict restore of matching database version in the app to the backup file
-4. Dangerously overwrite the existing dexie db woth the backup file
-
-
-## Post-MVP
-
-1. [ ] Support vehicle image upload
-   - Allow users to upload a custom image for their vehicle instead of the default 🚗 emoji
-   - Store image reference and display in VehicleItem and other vehicle displays
-2. [ ] Sync ability using users storage accounts
-   - iCloud, Drive, OneDrive, etc.
+### Phase 9 - User Preferences
+- [x] 1. Add USER_PREFERENCES_STORAGE_KEY constant
+- [x] 2. Create useUserPreferences hook
+- [x] 3. Persist last vehicle and location on session save
+- [x] 4. Wire recentSessionsLimit preference into useStats
+- [x] 5. Add a "Preferences" section to the Settings page
