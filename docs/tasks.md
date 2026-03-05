@@ -11,8 +11,9 @@
 - **Phase 7 - PWA Features**: ✅ Complete (4/4)
 - **Phase 8 - Business Logic & Testing**: 🚧 In Progress (3/5)
 - **Phase 9 - User Preferences**: ✅ Complete (5/5)
+- **Phase 10 - Data Management**: 🔲 Not Started (0/4)
 
-**Overall Progress**: 38/53 tasks complete (72%)
+**Overall Progress**: 38/57 tasks complete (67%)
 
 ### Next Up
 1. Implement charts with Recharts (energy by location, timeline)
@@ -173,11 +174,78 @@ export type UserPreferences = {
    - Show a "Reset Preferences" button that calls `resetPreferences()`
    - Do **not** expose `lastVehicleId`/`lastLocationId` as editable — those are auto-managed
 
+## 10. Data Management
+
+Provides export, import, and restore capabilities for all user data. The database is currently at **version 1** (see `db.version(1)` in `src/data/db.ts`). All data file operations must verify and handle version compatibility.
+
+**Format**: JSON — human-readable, widely compatible, easy to debug, and simple to validate.
+
+**File structure**:
+```ts
+export type DataExport = {
+  version: number;       // Dexie db version (e.g. 1)
+  exportedAt: number;    // Unix timestamp ms
+  data: {
+    vehicles: Vehicle[];
+    sessions: ChargingSession[];
+    settings: Settings[];
+    locations: Location[];
+  };
+};
+```
+
+Add `export-types.ts` to `src/types/` for the above type.
+
+**Version compatibility rules (v1)**:
+- ✅ Same version (1 → 1): import and restore are allowed
+- ❌ Mismatched version: reject with error — `"File version ${fileVersion} is incompatible with the current database version ${dbVersion}. Only same-version restores are supported."`
+- 🔮 Forward-compatible restore (migration support) is planned as a follow-up phase after this one.
+
+### Tasks
+
+1. [ ] Create export utility at `src/utilities/exportUtils.ts`
+   - Read all records from `db.vehicles`, `db.sessions`, `db.settings`, and `db.locations` using `toArray()`
+   - Assemble a `DataExport` object with `version` (current Dexie db version via `db.verno`), `exportedAt` (Date.now()), and all table data
+   - Serialize to JSON and trigger a browser file download
+   - Filename pattern: `ev-charge-tracker-export-YYYY-MM-DD.json`
+   - Handle empty tables gracefully (export as empty arrays)
+
+2. [ ] Create import utility at `src/utilities/importUtils.ts`
+   - Parse and validate the uploaded JSON file structure against `DataExport` type
+   - Verify `version` in file matches current `db.verno`; reject with error message if not
+   - Validate data integrity: required fields present, correct types, referential integrity (session vehicleId/locationId must exist in the file or current db)
+   - **Merge strategy**: use `bulkPut` to add new records and update existing ones by ID — does not delete any current data
+   - Return a result object: `{ success: boolean; imported: Record<string, number>; skipped: Record<string, number>; errors: string[] }`
+
+3. [ ] Add "Data Management" section to the Settings page (`src/pages/Settings.tsx` or equivalent)
+   - Show current database version (read from `db.verno`)
+   - **Export button**: calls export utility and triggers download
+   - **Import button**: opens file picker (`.json` only), runs import utility, shows result in a modal or toast
+     - On success: show counts (e.g. "Imported 12 sessions, 2 vehicles")
+     - On failure: show error message
+   - Place section below the existing Preferences section
+
+4. [ ] Implement "Dangerous Restore" in the Settings Data Management section
+   - Add a clearly separated and visually distinct "Danger Zone" sub-section
+   - **Restore from file** button: opens file picker (`.json` only)
+   - Before restoring, show a confirmation modal with a strong warning:
+     `"This will permanently DELETE all current data and replace it with the contents of the selected file. This cannot be undone."`
+   - On confirm:
+     - Parse and validate the backup file (same validation as import)
+     - Check version compatibility — reject if versions don't match
+     - Inside a Dexie `transaction('rw', db.tables, ...)`, clear all tables then bulk-insert all records from the file
+     - On success: force a full page reload (`window.location.reload()`) to re-initialize the app
+     - On error: show error toast and do not modify any data
+
 ## Post-MVP
 
 1. [ ] Support vehicle image upload
    - Allow users to upload a custom image for their vehicle instead of the default 🚗 emoji
    - Store image reference and display in VehicleItem and other vehicle displays
-2. [ ] Export, backup and restore functionality
+2. [ ] Automatic backup functionality
+   - Periodically save a full JSON backup (same `DataExport` format as Phase 10 export)
+   - Store backups in IndexedDB with a configurable retention policy (e.g. last 5 backups)
+   - List and manage existing backups in the Settings Data Management section
+   - Quick restore from a saved backup entry (reuses the Phase 10 dangerous restore logic)
 3. [ ] Sync ability using users storage accounts
    - iCloud, Drive, OneDrive, etc.
