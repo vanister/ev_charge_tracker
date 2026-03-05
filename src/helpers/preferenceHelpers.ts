@@ -1,7 +1,7 @@
 import type { UserPreferences } from '../types/preference-types';
 import { USER_PREFERENCES_STORAGE_KEY, DEFAULT_PREFERENCES } from '../constants';
 
-export function readPreferences(storage: Storage): UserPreferences {
+export function readPreferences(storage: Storage = window.localStorage): UserPreferences {
   try {
     const raw = storage.getItem(USER_PREFERENCES_STORAGE_KEY);
 
@@ -17,10 +17,10 @@ export function readPreferences(storage: Storage): UserPreferences {
   }
 }
 
-export function writePreferences(storage: Storage, prefs: UserPreferences): void {
+export function writePreferences(storage: Storage = window.localStorage, prefs: UserPreferences): void {
   storage.setItem(USER_PREFERENCES_STORAGE_KEY, JSON.stringify(prefs));
 }
 
-export function clearPreferences(storage: Storage): void {
+export function clearPreferences(storage: Storage = window.localStorage): void {
   storage.removeItem(USER_PREFERENCES_STORAGE_KEY);
 }

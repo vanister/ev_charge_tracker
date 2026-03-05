@@ -3,8 +3,6 @@ import type { UserPreferences } from '../types/preference-types';
 import { DEFAULT_PREFERENCES } from '../constants';
 import { readPreferences, writePreferences, clearPreferences } from '../helpers/preferenceHelpers';
 
-export type { UserPreferences };
-
 export function useUserPreferences(storage: Storage = localStorage) {
   const [preferences, setPreferences] = useState<UserPreferences>(() => readPreferences(storage));
 

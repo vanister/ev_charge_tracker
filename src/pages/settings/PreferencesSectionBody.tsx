@@ -1,8 +1,9 @@
 import { useUserPreferences } from '../../hooks/useUserPreferences';
+import { useToast } from '../../hooks/useToast';
 import { FormSelect } from '../../components/FormSelect';
 import { Button } from '../../components/Button';
 
-const LIMIT_OPTIONS = [
+const RECENT_SESSIONS_LIMIT_OPTIONS = [
   { value: '5', text: '5' },
   { value: '10', text: '10' },
   { value: '15', text: '15' },
@@ -13,9 +14,21 @@ const LIMIT_OPTIONS = [
 
 export function PreferencesSectionBody() {
   const { preferences, updatePreferences, resetPreferences } = useUserPreferences();
+  const { showToast } = useToast();
 
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     updatePreferences({ recentSessionsLimit: +e.target.value });
+  };
+
+  const handleReset = () => {
+    const confirmed = confirm('Are you sure you want to reset preferences to defaults?');
+
+    if (!confirmed) {
+      return;
+    }
+
+    resetPreferences();
+    showToast({ message: 'Preferences reset to defaults', variant: 'success' });
   };
 
   return (
@@ -24,11 +37,11 @@ export function PreferencesSectionBody() {
         id="recent-sessions-limit"
         label="Recent sessions to show"
         value={`${preferences.recentSessionsLimit}`}
-        options={LIMIT_OPTIONS}
+        options={RECENT_SESSIONS_LIMIT_OPTIONS}
         onChange={handleLimitChange}
       />
-      <Button variant="secondary" onClick={resetPreferences}>
-        Reset Preferences
+      <Button variant="secondary" onClick={handleReset}>
+        Reset
       </Button>
     </div>
   );
