@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import clsx from 'clsx';
 import { useDatabase } from '../../hooks/useDatabase';
 import { useImmerState } from '../../hooks/useImmerState';
 import { useToast } from '../../hooks/useToast';
@@ -29,7 +30,7 @@ const DEFAULT_STATE: ExportRestoreState = {
   restoreError: null
 };
 
-function validateBackup(parsed: unknown): Result<BackupFile> {
+const validateBackup = (parsed: unknown): Result<BackupFile> => {
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
     return failure('Backup file is not a valid object.');
   }
@@ -40,10 +41,18 @@ function validateBackup(parsed: unknown): Result<BackupFile> {
     return failure('Backup file is missing a valid version number.');
   }
 
-  if (!Array.isArray(obj.vehicles)) return failure('Backup file is missing a "vehicles" array.');
-  if (!Array.isArray(obj.sessions)) return failure('Backup file is missing a "sessions" array.');
-  if (!Array.isArray(obj.locations)) return failure('Backup file is missing a "locations" array.');
-  if (!Array.isArray(obj.settings)) return failure('Backup file is missing a "settings" array.');
+  if (!Array.isArray(obj.vehicles)) {
+    return failure('Backup file is missing a "vehicles" array.');
+  }
+  if (!Array.isArray(obj.sessions)) {
+    return failure('Backup file is missing a "sessions" array.');
+  }
+  if (!Array.isArray(obj.locations)) {
+    return failure('Backup file is missing a "locations" array.');
+  }
+  if (!Array.isArray(obj.settings)) {
+    return failure('Backup file is missing a "settings" array.');
+  }
 
   for (const v of obj.vehicles as unknown[]) {
     const vehicle = v as Record<string, unknown>;
@@ -98,7 +107,7 @@ function validateBackup(parsed: unknown): Result<BackupFile> {
   }
 
   return success(obj as unknown as BackupFile);
-}
+};
 
 export function ExportRestoreSectionBody() {
   const { db } = useDatabase();
@@ -106,7 +115,7 @@ export function ExportRestoreSectionBody() {
   const [state, setState] = useImmerState<ExportRestoreState>(DEFAULT_STATE);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  async function handleExport() {
+  const handleExport = async () => {
     setState((draft) => { draft.isExporting = true; });
 
     try {
@@ -139,14 +148,14 @@ export function ExportRestoreSectionBody() {
     } finally {
       setState((draft) => { draft.isExporting = false; });
     }
-  }
+  };
 
-  function handleRestoreClick() {
+  const handleRestoreClick = () => {
     setState((draft) => { draft.restoreError = null; });
     fileInputRef.current?.click();
-  }
+  };
 
-  function handleFileSelected(e: React.ChangeEvent<HTMLInputElement>) {
+  const handleFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -167,10 +176,10 @@ export function ExportRestoreSectionBody() {
         const backup = validationResult.data;
 
         if (backup.version !== db.verno) {
-          setState((draft) => {
-            draft.restoreError =
-              `Backup version (${backup.version}) does not match the app's database version (${db.verno}). Restore is not possible.`;
-          });
+          const msg =
+            `Backup version (${backup.version}) does not match ` +
+            `the app's database version (${db.verno}). Restore is not possible.`;
+          setState((draft) => { draft.restoreError = msg; });
           return;
         }
 
@@ -179,30 +188,30 @@ export function ExportRestoreSectionBody() {
           draft.pendingRestore = backup;
         });
       } catch {
-        setState((draft) => {
-          draft.restoreError = 'Failed to parse the backup file. Make sure it is a valid JSON file.';
-        });
+        const parseError = 'Failed to parse the backup file. Make sure it is a valid JSON file.';
+        setState((draft) => { draft.restoreError = parseError; });
       }
     };
 
     reader.readAsText(file);
-  }
+  };
 
-  function handleCancelRestore() {
+  const handleCancelRestore = () => {
     setState((draft) => {
       draft.pendingRestore = null;
       draft.restoreError = null;
     });
-  }
+  };
 
-  async function handleConfirmRestore() {
+  const handleConfirmRestore = async () => {
     if (!state.pendingRestore) return;
     const backup = state.pendingRestore;
 
     setState((draft) => { draft.isRestoring = true; });
 
     try {
-      await db.transaction('rw', [db.vehicles, db.sessions, db.locations, db.settings], async () => {
+      const tables = [db.vehicles, db.sessions, db.locations, db.settings];
+      await db.transaction('rw', tables, async () => {
         await db.vehicles.clear();
         await db.sessions.clear();
         await db.locations.clear();
@@ -214,7 +223,11 @@ export function ExportRestoreSectionBody() {
       });
 
       setState(() => DEFAULT_STATE);
-      showToast({ message: 'Restore completed successfully.', variant: 'success', persistent: true });
+      showToast({
+        message: 'Restore completed successfully.',
+        variant: 'success',
+        persistent: true
+      });
     } catch (err) {
       setState((draft) => { draft.isRestoring = false; });
       showToast({
@@ -223,7 +236,7 @@ export function ExportRestoreSectionBody() {
         persistent: true
       });
     }
-  }
+  };
 
   const anyBusy = state.isExporting || state.isRestoring;
 
@@ -254,7 +267,9 @@ export function ExportRestoreSectionBody() {
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-medium text-body">Restore from Backup</p>
-          <p className="text-xs text-body-secondary">Replace all existing data from a backup file</p>
+          <p className="text-xs text-body-secondary">
+            Replace all existing data from a backup file
+          </p>
         </div>
         <Button
           variant="secondary"
@@ -270,7 +285,10 @@ export function ExportRestoreSectionBody() {
       )}
 
       {state.pendingRestore && (
-        <div className="rounded-lg border border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-950 p-4 space-y-3">
+        <div className={clsx(
+          'rounded-lg border border-red-300 dark:border-red-700',
+          'bg-red-50 dark:bg-red-950 p-4 space-y-3'
+        )}>
           <p className="text-sm font-semibold text-red-700 dark:text-red-400">
             Danger – This cannot be undone
           </p>
