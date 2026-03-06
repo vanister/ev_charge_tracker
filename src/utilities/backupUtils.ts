@@ -7,14 +7,7 @@ import type {
   Settings,
   Vehicle
 } from '../data/data-types';
-
-export type BackupFile = {
-  version: number;
-  vehicles: Vehicle[];
-  sessions: ChargingSession[];
-  locations: Location[];
-  settings: Settings[];
-};
+import type { BackupFile } from '../pages/settings/settings-types';
 
 export async function exportBackup(db: EvChargTrackerDb): Promise<Result<BackupFile>> {
   try {

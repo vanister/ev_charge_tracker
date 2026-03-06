@@ -5,14 +5,14 @@ import {
   readBackupFile as readBackupFileUtil,
   restoreBackup as restoreBackupUtil
 } from '../utilities/backupUtils';
-import type { BackupFile } from '../utilities/backupUtils';
+import type { BackupFile } from '../pages/settings/settings-types';
 
 export function useBackup() {
   const { db } = useDatabase();
 
   const exportBackup = useCallback(() => exportBackupUtil(db), [db]);
 
-  const readBackupFile = (file: File) => readBackupFileUtil(file);
+  const readBackupFile = useCallback((file: File) => readBackupFileUtil(file), []);
 
   const restoreBackup = useCallback(
     (backup: BackupFile) => restoreBackupUtil(db, backup),

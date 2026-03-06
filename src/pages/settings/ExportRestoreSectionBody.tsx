@@ -13,33 +13,27 @@ export function ExportRestoreSectionBody() {
   const handleExport = async () => {
     setIsExporting(true);
 
-    try {
-      const result = await exportBackup();
+    const result = await exportBackup();
 
-      if (!result.success) {
-        showToast({
-          message: `Export failed: ${result.error}`,
-          variant: 'error',
-          persistent: true
-        });
-        return;
-      }
-
-      const json = JSON.stringify(result.data, null, 2);
-      const blob = new Blob([json], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-
-      const date = getDateGroupKey(Date.now());
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${date}-ev-charge-tracker-backup.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-
-      showToast({ message: 'Backup exported successfully.', variant: 'success' });
-    } finally {
+    if (!result.success) {
+      showToast({ message: `Export failed: ${result.error}`, variant: 'error', persistent: true });
       setIsExporting(false);
+      return;
     }
+
+    const json = JSON.stringify(result.data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const date = getDateGroupKey(Date.now());
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${date}-ev-charge-tracker-backup.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    showToast({ message: 'Backup exported successfully.', variant: 'success' });
+    setIsExporting(false);
   };
 
   const handleRestoreSuccess = () => {
