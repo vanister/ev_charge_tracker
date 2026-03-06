@@ -5,6 +5,7 @@ import { PreferencesSectionBody } from './PreferencesSectionBody';
 import { StorageSectionBody } from './StorageSectionBody';
 import { UpdateSectionBody } from './UpdateSectionBody';
 import { AboutSectionBody } from './AboutSectionBody';
+import { ExportRestoreSectionBody } from './ExportRestoreSectionBody';
 
 export function Settings() {
   usePageTitle('Settings');
@@ -22,6 +23,10 @@ export function Settings() {
 
         <SettingsSection title="Storage" cardClassName="space-y-3">
           <StorageSectionBody />
+        </SettingsSection>
+
+        <SettingsSection title="Export & Restore" cardClassName="space-y-3">
+          <ExportRestoreSectionBody />
         </SettingsSection>
 
         <SettingsSection title="Update">
