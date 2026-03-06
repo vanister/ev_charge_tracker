@@ -1,13 +1,20 @@
-import { failure, success } from '../../utilities/resultUtils';
-import type { Result } from '../../utilities/resultUtils';
+import { failure, success } from './resultUtils';
+import type { Result } from './resultUtils';
 import type {
   ChargingSession,
   EvChargTrackerDb,
   Location,
   Settings,
   Vehicle
-} from '../../data/data-types';
-import type { BackupFile } from './settings-types';
+} from '../data/data-types';
+
+export type BackupFile = {
+  version: number;
+  vehicles: Vehicle[];
+  sessions: ChargingSession[];
+  locations: Location[];
+  settings: Settings[];
+};
 
 export async function exportBackup(db: EvChargTrackerDb): Promise<Result<BackupFile>> {
   try {

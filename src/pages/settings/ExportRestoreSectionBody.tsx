@@ -1,13 +1,14 @@
 import { useRef, useState } from 'react';
 import { useDatabase } from '../../hooks/useDatabase';
 import { useToast } from '../../hooks/useToast';
+import { useBackup } from '../../hooks/useBackup';
 import { Button } from '../../components/Button';
-import { exportBackup, readBackupFile, restoreBackup } from './backupHelpers';
 import { getDateGroupKey } from '../../utilities/dateUtils';
 
 export function ExportRestoreSectionBody() {
   const { db } = useDatabase();
   const { showToast } = useToast();
+  const { exportBackup, readBackupFile, restoreBackup } = useBackup();
   const [isExporting, setIsExporting] = useState(false);
   const [isRestoring, setIsRestoring] = useState(false);
   const [restoreError, setRestoreError] = useState<string | null>(null);
@@ -16,7 +17,7 @@ export function ExportRestoreSectionBody() {
   const handleExport = async () => {
     setIsExporting(true);
 
-    const result = await exportBackup(db);
+    const result = await exportBackup();
 
     if (!result.success) {
       showToast({ message: `Export failed: ${result.error}`, variant: 'error', persistent: true });
@@ -79,7 +80,7 @@ export function ExportRestoreSectionBody() {
 
     setIsRestoring(true);
 
-    const restoreResult = await restoreBackup(db, backup);
+    const restoreResult = await restoreBackup(backup);
 
     if (!restoreResult.success) {
       setIsRestoring(false);
