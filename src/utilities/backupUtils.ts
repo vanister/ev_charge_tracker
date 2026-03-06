@@ -53,10 +53,7 @@ export async function restoreBackup(
   backup: BackupFile
 ): Promise<Result<void>> {
   if (backup.version !== db.verno) {
-    const msg =
-      `Backup version (${backup.version}) does not match ` +
-      `the app's database version (${db.verno}). Restore is not possible.`;
-    return failure(msg);
+    return failure(`Backup version (${backup.version}) does not match the app's database version (${db.verno}). Restore is not possible.`);
   }
 
   try {
