@@ -52,17 +52,28 @@ export async function restoreBackup(
   db: EvChargTrackerDb,
   backup: BackupFile
 ): Promise<Result<void>> {
+  if (backup.version !== db.verno) {
+    const msg =
+      `Backup version (${backup.version}) does not match ` +
+      `the app's database version (${db.verno}). Restore is not possible.`;
+    return failure(msg);
+  }
+
   try {
     const tables = [db.vehicles, db.sessions, db.locations, db.settings];
     await db.transaction('rw', tables, async () => {
-      await db.vehicles.clear();
-      await db.sessions.clear();
-      await db.locations.clear();
-      await db.settings.clear();
-      await db.vehicles.bulkPut(backup.vehicles);
-      await db.sessions.bulkPut(backup.sessions);
-      await db.locations.bulkPut(backup.locations);
-      await db.settings.bulkPut(backup.settings);
+      await Promise.all([
+        db.vehicles.clear(),
+        db.sessions.clear(),
+        db.locations.clear(),
+        db.settings.clear()
+      ]);
+      await Promise.all([
+        db.vehicles.bulkPut(backup.vehicles),
+        db.sessions.bulkPut(backup.sessions),
+        db.locations.bulkPut(backup.locations),
+        db.settings.bulkPut(backup.settings)
+      ]);
     });
     return success(undefined);
   } catch (err) {

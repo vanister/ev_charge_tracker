@@ -12,7 +12,7 @@ export function useBackup() {
 
   const exportBackup = useCallback(() => exportBackupUtil(db), [db]);
 
-  const readBackupFile = useCallback((file: File) => readBackupFileUtil(file), []);
+  const readBackupFile = (file: File) => readBackupFileUtil(file);
 
   const restoreBackup = useCallback(
     (backup: BackupFile) => restoreBackupUtil(db, backup),

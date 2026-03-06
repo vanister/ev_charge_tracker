@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import { useDatabase } from '../hooks/useDatabase';
 import { useBackup } from '../hooks/useBackup';
 import { Button } from './Button';
 import { FileSelect } from './FileSelect';
@@ -11,7 +10,6 @@ type RestoreBackupButtonProps = {
 };
 
 export function RestoreBackupButton(props: RestoreBackupButtonProps) {
-  const { db } = useDatabase();
   const { readBackupFile, restoreBackup } = useBackup();
   const [isRestoring, setIsRestoring] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,16 +27,6 @@ export function RestoreBackupButton(props: RestoreBackupButtonProps) {
       return;
     }
 
-    const backup = readResult.data;
-
-    if (backup.version !== db.verno) {
-      const msg =
-        `Backup version (${backup.version}) does not match ` +
-        `the app's database version (${db.verno}). Restore is not possible.`;
-      setError(msg);
-      return;
-    }
-
     const confirmed = window.confirm(
       'This will permanently overwrite all existing data with the contents of the backup ' +
       'file. This cannot be undone. Continue?'
@@ -49,7 +37,7 @@ export function RestoreBackupButton(props: RestoreBackupButtonProps) {
 
     setIsRestoring(true);
 
-    const restoreResult = await restoreBackup(backup);
+    const restoreResult = await restoreBackup(readResult.data);
 
     if (!restoreResult.success) {
       setIsRestoring(false);
@@ -57,6 +45,7 @@ export function RestoreBackupButton(props: RestoreBackupButtonProps) {
       return;
     }
 
+    setIsRestoring(false);
     await props.onSuccess();
   };
 
