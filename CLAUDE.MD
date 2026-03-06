@@ -12,8 +12,10 @@ This is a Vite, TypeScript, React PWA app. It's mobile focused and is designed t
 - No documentation such as JSDocs or XML Comments unless explicitly asked to provide
 - Simple, concise, single-purpose code
 - print to 100 char line limit
-- Follow SOLID principles
+- Invert dependencies
+- Single responibiity components, helpers and utilities
 - Follow KISS principle
+- Follow DRY principle
 - Test-minded, but don't write tests unless asked to do so
 - Leverage dependency injection and inversion of control when possible
 - Keep exceptions truly exceptional, return results or error objects instead of throwing
@@ -25,15 +27,16 @@ This is a Vite, TypeScript, React PWA app. It's mobile focused and is designed t
 - Named functions only for standalone helpers and utilities in separate utility files
 - Arrow functions require parens, destructure objects
 - Components: `export function Component(props: ComponentProps) {...}`
-- Single-purpose components encapsulating tailwindcss
 - Break down complex components into smaller ones, but avoid over-abstraction
 - Keep logic in helpers/hooks not Components
 - Named exports only
-- Use `type` for typing, `interface` for true interfaces
-- Components should live in their own files
+- Use `type` for typing
+- Single component per file
+- Single-purpose components encapsulating tailwindcss
 - No index barrel files
 - Dates handled with date-fns
-- Import ordering: CSS first → external deps → internal deps
+- Import ordering: external deps → project deps
+- Keep types close to where they're used. Move to feature or shared location if used outside of Component, helpers or utilities
 - No primitive constructors for coercion: use `+value` not `Number(value)`, `!!value` not `Boolean(value)`, `` `${value}` `` not `String(value)`
 - Run `npm run build` to verify no build errors after major changes
 - `React.FormEvent` is marked deprecated, use `React.SubmitEvent<T>` instead for form submit handlers
