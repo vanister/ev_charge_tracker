@@ -1,58 +1,68 @@
 import { failure, success } from '../../utilities/resultUtils';
 import type { Result } from '../../utilities/resultUtils';
-import type { ChargingSession, Location, Settings, Vehicle } from '../../data/data-types';
+import type {
+  ChargingSession,
+  EvChargTrackerDb,
+  Location,
+  Settings,
+  Vehicle
+} from '../../data/data-types';
 import type { BackupFile } from './settings-types';
 
-const isValidVehicle = (v: unknown): v is Vehicle => {
-  if (!v || typeof v !== 'object' || Array.isArray(v)) return false;
-  const { id, make, model, year, icon, createdAt, isActive } = v as Vehicle;
-  return (
-    typeof id === 'string' &&
-    typeof make === 'string' &&
-    typeof model === 'string' &&
-    typeof year === 'number' &&
-    typeof icon === 'string' &&
-    typeof createdAt === 'number' &&
-    (isActive === 0 || isActive === 1)
-  );
-};
+export async function exportBackup(db: EvChargTrackerDb): Promise<Result<BackupFile>> {
+  try {
+    const [vehicles, sessions, locations, settings] = await Promise.all([
+      db.vehicles.toArray(),
+      db.sessions.toArray(),
+      db.locations.toArray(),
+      db.settings.toArray()
+    ]);
+    return success({ version: db.verno, vehicles, sessions, locations, settings });
+  } catch (err) {
+    return failure(err instanceof Error ? err.message : 'Unknown error');
+  }
+}
 
-const isValidLocation = (l: unknown): l is Location => {
-  if (!l || typeof l !== 'object' || Array.isArray(l)) return false;
-  const { id, name, icon, color, defaultRate, createdAt, isActive } = l as Location;
-  return (
-    typeof id === 'string' &&
-    typeof name === 'string' &&
-    typeof icon === 'string' &&
-    typeof color === 'string' &&
-    typeof defaultRate === 'number' &&
-    typeof createdAt === 'number' &&
-    (isActive === 0 || isActive === 1)
-  );
-};
+export function readBackupFile(file: File): Promise<Result<BackupFile>> {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const parsed: unknown = JSON.parse(event.target?.result as string);
+        resolve(validateBackup(parsed));
+      } catch {
+        const msg = 'Failed to parse the backup file. Make sure it is a valid JSON file.';
+        resolve(failure(msg));
+      }
+    };
+    reader.onerror = () => resolve(failure('Failed to read the backup file.'));
+    reader.readAsText(file);
+  });
+}
 
-const isValidSession = (s: unknown): s is ChargingSession => {
-  if (!s || typeof s !== 'object' || Array.isArray(s)) return false;
-  const { id, vehicleId, locationId, energyKwh, ratePerKwh, costCents, chargedAt } =
-    s as ChargingSession;
-  return (
-    typeof id === 'string' &&
-    typeof vehicleId === 'string' &&
-    typeof locationId === 'string' &&
-    typeof energyKwh === 'number' &&
-    typeof ratePerKwh === 'number' &&
-    typeof costCents === 'number' &&
-    typeof chargedAt === 'number'
-  );
-};
+export async function restoreBackup(
+  db: EvChargTrackerDb,
+  backup: BackupFile
+): Promise<Result<void>> {
+  try {
+    const tables = [db.vehicles, db.sessions, db.locations, db.settings];
+    await db.transaction('rw', tables, async () => {
+      await db.vehicles.clear();
+      await db.sessions.clear();
+      await db.locations.clear();
+      await db.settings.clear();
+      await db.vehicles.bulkPut(backup.vehicles);
+      await db.sessions.bulkPut(backup.sessions);
+      await db.locations.bulkPut(backup.locations);
+      await db.settings.bulkPut(backup.settings);
+    });
+    return success(undefined);
+  } catch (err) {
+    return failure(err instanceof Error ? err.message : 'Unknown error');
+  }
+}
 
-const isValidSettings = (s: unknown): s is Settings => {
-  if (!s || typeof s !== 'object' || Array.isArray(s)) return false;
-  const { key, onboardingComplete } = s as Settings;
-  return typeof key === 'string' && typeof onboardingComplete === 'boolean';
-};
-
-export const validateBackup = (parsed: unknown): Result<BackupFile> => {
+function validateBackup(parsed: unknown): Result<BackupFile> {
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
     return failure('Backup file is not a valid object.');
   }
@@ -90,4 +100,53 @@ export const validateBackup = (parsed: unknown): Result<BackupFile> => {
   }
 
   return success(obj as unknown as BackupFile);
-};
+}
+
+function isValidVehicle(v: unknown): v is Vehicle {
+  if (!v || typeof v !== 'object' || Array.isArray(v)) return false;
+  const { id, make, model, year, icon, createdAt, isActive } = v as Vehicle;
+  return (
+    typeof id === 'string' &&
+    typeof make === 'string' &&
+    typeof model === 'string' &&
+    typeof year === 'number' &&
+    typeof icon === 'string' &&
+    typeof createdAt === 'number' &&
+    (isActive === 0 || isActive === 1)
+  );
+}
+
+function isValidLocation(l: unknown): l is Location {
+  if (!l || typeof l !== 'object' || Array.isArray(l)) return false;
+  const { id, name, icon, color, defaultRate, createdAt, isActive } = l as Location;
+  return (
+    typeof id === 'string' &&
+    typeof name === 'string' &&
+    typeof icon === 'string' &&
+    typeof color === 'string' &&
+    typeof defaultRate === 'number' &&
+    typeof createdAt === 'number' &&
+    (isActive === 0 || isActive === 1)
+  );
+}
+
+function isValidSession(s: unknown): s is ChargingSession {
+  if (!s || typeof s !== 'object' || Array.isArray(s)) return false;
+  const { id, vehicleId, locationId, energyKwh, ratePerKwh, costCents, chargedAt } =
+    s as ChargingSession;
+  return (
+    typeof id === 'string' &&
+    typeof vehicleId === 'string' &&
+    typeof locationId === 'string' &&
+    typeof energyKwh === 'number' &&
+    typeof ratePerKwh === 'number' &&
+    typeof costCents === 'number' &&
+    typeof chargedAt === 'number'
+  );
+}
+
+function isValidSettings(s: unknown): s is Settings {
+  if (!s || typeof s !== 'object' || Array.isArray(s)) return false;
+  const { key, onboardingComplete } = s as Settings;
+  return typeof key === 'string' && typeof onboardingComplete === 'boolean';
+}

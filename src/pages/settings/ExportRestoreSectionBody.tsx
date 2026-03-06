@@ -3,8 +3,8 @@ import { useDatabase } from '../../hooks/useDatabase';
 import { useImmerState } from '../../hooks/useImmerState';
 import { useToast } from '../../hooks/useToast';
 import { Button } from '../../components/Button';
-import { validateBackup } from './backupHelpers';
-import type { BackupFile, ExportRestoreState } from './settings-types';
+import { exportBackup, readBackupFile, restoreBackup } from './backupHelpers';
+import type { ExportRestoreState } from './settings-types';
 
 const DEFAULT_STATE: ExportRestoreState = {
   isExporting: false,
@@ -21,36 +21,31 @@ export function ExportRestoreSectionBody() {
   const handleExport = async () => {
     setState((draft) => { draft.isExporting = true; });
 
-    try {
-      const [vehicles, sessions, locations, settings] = await Promise.all([
-        db.vehicles.toArray(),
-        db.sessions.toArray(),
-        db.locations.toArray(),
-        db.settings.toArray()
-      ]);
+    const result = await exportBackup(db);
 
-      const backup: BackupFile = { version: db.verno, vehicles, sessions, locations, settings };
-      const json = JSON.stringify(backup, null, 2);
-      const blob = new Blob([json], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-
-      const date = new Date().toISOString().slice(0, 10);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `ev-charge-tracker-backup-${date}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-
-      showToast({ message: 'Backup exported successfully.', variant: 'success' });
-    } catch (err) {
+    if (!result.success) {
       showToast({
-        message: `Export failed: ${err instanceof Error ? err.message : 'Unknown error'}`,
+        message: `Export failed: ${result.error}`,
         variant: 'error',
         persistent: true
       });
-    } finally {
       setState((draft) => { draft.isExporting = false; });
+      return;
     }
+
+    const json = JSON.stringify(result.data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const date = new Date().toISOString().slice(0, 10);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ev-charge-tracker-backup-${date}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    showToast({ message: 'Backup exported successfully.', variant: 'success' });
+    setState((draft) => { draft.isExporting = false; });
   };
 
   const handleRestoreClick = () => {
@@ -58,77 +53,54 @@ export function ExportRestoreSectionBody() {
     fileInputRef.current?.click();
   };
 
-  const handleFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelected = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     // Reset input so the same file can be re-selected after cancelling
     e.target.value = '';
 
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-      try {
-        const parsed: unknown = JSON.parse(event.target?.result as string);
-        const validationResult = validateBackup(parsed);
+    const readResult = await readBackupFile(file);
+    if (!readResult.success) {
+      setState((draft) => { draft.restoreError = readResult.error; });
+      return;
+    }
 
-        if (!validationResult.success) {
-          setState((draft) => { draft.restoreError = validationResult.error; });
-          return;
-        }
+    const backup = readResult.data;
 
-        const backup = validationResult.data;
+    if (backup.version !== db.verno) {
+      const msg =
+        `Backup version (${backup.version}) does not match ` +
+        `the app's database version (${db.verno}). Restore is not possible.`;
+      setState((draft) => { draft.restoreError = msg; });
+      return;
+    }
 
-        if (backup.version !== db.verno) {
-          const msg =
-            `Backup version (${backup.version}) does not match ` +
-            `the app's database version (${db.verno}). Restore is not possible.`;
-          setState((draft) => { draft.restoreError = msg; });
-          return;
-        }
+    const confirmed = window.confirm(
+      'This will permanently overwrite all existing vehicles, sessions, locations, and ' +
+      'settings with the contents of the backup file. This cannot be undone. Continue?'
+    );
+    if (!confirmed) return;
 
-        const confirmed = window.confirm(
-          'This will permanently overwrite all existing vehicles, sessions, locations, and ' +
-          'settings with the contents of the backup file. This cannot be undone. Continue?'
-        );
-        if (!confirmed) return;
+    setState((draft) => { draft.isRestoring = true; });
 
-        setState((draft) => { draft.isRestoring = true; });
+    const restoreResult = await restoreBackup(db, backup);
 
-        try {
-          const tables = [db.vehicles, db.sessions, db.locations, db.settings];
-          await db.transaction('rw', tables, async () => {
-            await db.vehicles.clear();
-            await db.sessions.clear();
-            await db.locations.clear();
-            await db.settings.clear();
-            await db.vehicles.bulkPut(backup.vehicles);
-            await db.sessions.bulkPut(backup.sessions);
-            await db.locations.bulkPut(backup.locations);
-            await db.settings.bulkPut(backup.settings);
-          });
-
-          setState(() => DEFAULT_STATE);
-          showToast({
-            message: 'Restore completed successfully.',
-            variant: 'success',
-            persistent: true
-          });
-        } catch (restoreErr) {
-          setState((draft) => { draft.isRestoring = false; });
-          const msg = restoreErr instanceof Error ? restoreErr.message : 'Unknown error';
-          showToast({
-            message: `Restore failed: ${msg}`,
-            variant: 'error',
-            persistent: true
-          });
-        }
-      } catch {
-        const parseError = 'Failed to parse the backup file. Make sure it is a valid JSON file.';
-        setState((draft) => { draft.restoreError = parseError; });
-      }
-    };
-
-    reader.readAsText(file);
+    if (restoreResult.success) {
+      setState(() => DEFAULT_STATE);
+      showToast({
+        message: 'Restore completed successfully.',
+        variant: 'success',
+        persistent: true
+      });
+    } else {
+      setState((draft) => { draft.isRestoring = false; });
+      showToast({
+        message: `Restore failed: ${restoreResult.error}`,
+        variant: 'error',
+        persistent: true
+      });
+    }
   };
 
   const anyBusy = state.isExporting || state.isRestoring;
