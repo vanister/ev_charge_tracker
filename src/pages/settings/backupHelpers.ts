@@ -19,7 +19,8 @@ export async function exportBackup(db: EvChargTrackerDb): Promise<Result<BackupF
     ]);
     return success({ version: db.verno, vehicles, sessions, locations, settings });
   } catch (err) {
-    return failure(err instanceof Error ? err.message : 'Unknown error');
+    const msg = err instanceof Error ? err.message : 'Failed to export backup data.';
+    return failure(msg);
   }
 }
 
@@ -58,7 +59,8 @@ export async function restoreBackup(
     });
     return success(undefined);
   } catch (err) {
-    return failure(err instanceof Error ? err.message : 'Unknown error');
+    const msg = err instanceof Error ? err.message : 'Failed to restore backup data.';
+    return failure(msg);
   }
 }
 

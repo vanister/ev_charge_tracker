@@ -1,35 +1,25 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useDatabase } from '../../hooks/useDatabase';
-import { useImmerState } from '../../hooks/useImmerState';
 import { useToast } from '../../hooks/useToast';
 import { Button } from '../../components/Button';
 import { exportBackup, readBackupFile, restoreBackup } from './backupHelpers';
-import type { ExportRestoreState } from './settings-types';
-
-const DEFAULT_STATE: ExportRestoreState = {
-  isExporting: false,
-  isRestoring: false,
-  restoreError: null
-};
 
 export function ExportRestoreSectionBody() {
   const { db } = useDatabase();
   const { showToast } = useToast();
-  const [state, setState] = useImmerState<ExportRestoreState>(DEFAULT_STATE);
+  const [isExporting, setIsExporting] = useState(false);
+  const [isRestoring, setIsRestoring] = useState(false);
+  const [restoreError, setRestoreError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleExport = async () => {
-    setState((draft) => { draft.isExporting = true; });
+    setIsExporting(true);
 
     const result = await exportBackup(db);
 
     if (!result.success) {
-      showToast({
-        message: `Export failed: ${result.error}`,
-        variant: 'error',
-        persistent: true
-      });
-      setState((draft) => { draft.isExporting = false; });
+      showToast({ message: `Export failed: ${result.error}`, variant: 'error', persistent: true });
+      setIsExporting(false);
       return;
     }
 
@@ -45,24 +35,26 @@ export function ExportRestoreSectionBody() {
     URL.revokeObjectURL(url);
 
     showToast({ message: 'Backup exported successfully.', variant: 'success' });
-    setState((draft) => { draft.isExporting = false; });
+    setIsExporting(false);
   };
 
   const handleRestoreClick = () => {
-    setState((draft) => { draft.restoreError = null; });
+    setRestoreError(null);
     fileInputRef.current?.click();
   };
 
   const handleFileSelected = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
+    if (!file) {
+      return;
+    }
 
     // Reset input so the same file can be re-selected after cancelling
     e.target.value = '';
 
     const readResult = await readBackupFile(file);
     if (!readResult.success) {
-      setState((draft) => { draft.restoreError = readResult.error; });
+      setRestoreError(readResult.error);
       return;
     }
 
@@ -72,7 +64,7 @@ export function ExportRestoreSectionBody() {
       const msg =
         `Backup version (${backup.version}) does not match ` +
         `the app's database version (${db.verno}). Restore is not possible.`;
-      setState((draft) => { draft.restoreError = msg; });
+      setRestoreError(msg);
       return;
     }
 
@@ -80,30 +72,29 @@ export function ExportRestoreSectionBody() {
       'This will permanently overwrite all existing vehicles, sessions, locations, and ' +
       'settings with the contents of the backup file. This cannot be undone. Continue?'
     );
-    if (!confirmed) return;
+    if (!confirmed) {
+      return;
+    }
 
-    setState((draft) => { draft.isRestoring = true; });
+    setIsRestoring(true);
 
     const restoreResult = await restoreBackup(db, backup);
 
-    if (restoreResult.success) {
-      setState(() => DEFAULT_STATE);
-      showToast({
-        message: 'Restore completed successfully.',
-        variant: 'success',
-        persistent: true
-      });
-    } else {
-      setState((draft) => { draft.isRestoring = false; });
+    if (!restoreResult.success) {
+      setIsRestoring(false);
       showToast({
         message: `Restore failed: ${restoreResult.error}`,
         variant: 'error',
         persistent: true
       });
+      return;
     }
+
+    setIsRestoring(false);
+    showToast({ message: 'Restore completed successfully.', variant: 'success', persistent: true });
   };
 
-  const anyBusy = state.isExporting || state.isRestoring;
+  const anyBusy = isExporting || isRestoring;
 
   return (
     <>
@@ -125,7 +116,7 @@ export function ExportRestoreSectionBody() {
           onClick={handleExport}
           disabled={anyBusy}
         >
-          {state.isExporting ? 'Exporting…' : 'Export'}
+          {isExporting ? 'Exporting…' : 'Export'}
         </Button>
       </div>
 
@@ -141,12 +132,12 @@ export function ExportRestoreSectionBody() {
           onClick={handleRestoreClick}
           disabled={anyBusy}
         >
-          {state.isRestoring ? 'Restoring…' : 'Restore'}
+          {isRestoring ? 'Restoring…' : 'Restore'}
         </Button>
       </div>
 
-      {state.restoreError && (
-        <p className="text-sm text-red-600 dark:text-red-400">{state.restoreError}</p>
+      {restoreError && (
+        <p className="text-sm text-red-600 dark:text-red-400">{restoreError}</p>
       )}
     </>
   );
