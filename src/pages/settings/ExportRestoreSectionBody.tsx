@@ -3,6 +3,7 @@ import { useDatabase } from '../../hooks/useDatabase';
 import { useToast } from '../../hooks/useToast';
 import { Button } from '../../components/Button';
 import { exportBackup, readBackupFile, restoreBackup } from './backupHelpers';
+import { getDateGroupKey } from '../../utilities/dateUtils';
 
 export function ExportRestoreSectionBody() {
   const { db } = useDatabase();
@@ -27,10 +28,10 @@ export function ExportRestoreSectionBody() {
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
 
-    const date = new Date().toISOString().slice(0, 10);
+    const date = getDateGroupKey(Date.now());
     const a = document.createElement('a');
     a.href = url;
-    a.download = `ev-charge-tracker-backup-${date}.json`;
+    a.download = `${date}-ev-charge-tracker-backup.json`;
     a.click();
     URL.revokeObjectURL(url);
 
