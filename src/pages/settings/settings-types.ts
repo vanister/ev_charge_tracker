@@ -7,9 +7,3 @@ export type BackupFile = {
   locations: Location[];
   settings: Settings[];
 };
-
-export type ExportRestoreState = {
-  isExporting: boolean;
-  isRestoring: boolean;
-  restoreError: string | null;
-};

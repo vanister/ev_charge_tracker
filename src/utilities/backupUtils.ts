@@ -1,13 +1,13 @@
-import { failure, success } from '../../utilities/resultUtils';
-import type { Result } from '../../utilities/resultUtils';
+import { failure, success } from './resultUtils';
+import type { Result } from './resultUtils';
 import type {
   ChargingSession,
   EvChargTrackerDb,
   Location,
   Settings,
   Vehicle
-} from '../../data/data-types';
-import type { BackupFile } from './settings-types';
+} from '../data/data-types';
+import type { BackupFile } from '../pages/settings/settings-types';
 
 export async function exportBackup(db: EvChargTrackerDb): Promise<Result<BackupFile>> {
   try {
@@ -45,17 +45,25 @@ export async function restoreBackup(
   db: EvChargTrackerDb,
   backup: BackupFile
 ): Promise<Result<void>> {
+  if (backup.version !== db.verno) {
+    return failure(`Backup version (${backup.version}) does not match the app's database version (${db.verno}). Restore is not possible.`);
+  }
+
   try {
     const tables = [db.vehicles, db.sessions, db.locations, db.settings];
     await db.transaction('rw', tables, async () => {
-      await db.vehicles.clear();
-      await db.sessions.clear();
-      await db.locations.clear();
-      await db.settings.clear();
-      await db.vehicles.bulkPut(backup.vehicles);
-      await db.sessions.bulkPut(backup.sessions);
-      await db.locations.bulkPut(backup.locations);
-      await db.settings.bulkPut(backup.settings);
+      await Promise.all([
+        db.vehicles.clear(),
+        db.sessions.clear(),
+        db.locations.clear(),
+        db.settings.clear()
+      ]);
+      await Promise.all([
+        db.vehicles.bulkPut(backup.vehicles),
+        db.sessions.bulkPut(backup.sessions),
+        db.locations.bulkPut(backup.locations),
+        db.settings.bulkPut(backup.settings)
+      ]);
     });
     return success(undefined);
   } catch (err) {

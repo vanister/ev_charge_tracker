@@ -1,0 +1,23 @@
+import { useCallback } from 'react';
+import { useDatabase } from './useDatabase';
+import {
+  exportBackup as exportBackupUtil,
+  readBackupFile as readBackupFileUtil,
+  restoreBackup as restoreBackupUtil
+} from '../utilities/backupUtils';
+import type { BackupFile } from '../pages/settings/settings-types';
+
+export function useBackup() {
+  const { db } = useDatabase();
+
+  const exportBackup = useCallback(() => exportBackupUtil(db), [db]);
+
+  const readBackupFile = useCallback((file: File) => readBackupFileUtil(file), []);
+
+  const restoreBackup = useCallback(
+    (backup: BackupFile) => restoreBackupUtil(db, backup),
+    [db]
+  );
+
+  return { exportBackup, readBackupFile, restoreBackup };
+}
