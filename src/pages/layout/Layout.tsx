@@ -43,7 +43,7 @@ export function Layout() {
 
       <main className="pt-14 flex-1">
         <LayoutConfigProvider value={{ title, setTitle }}>
-          <div key={location.key} className="page-enter" style={{ animationDuration: `${PAGE_TRANSITION_DURATION}ms` }}>
+          <div key={location.key} className="animate-page-enter" style={{ animationDuration: `${PAGE_TRANSITION_DURATION}ms` }}>
             <Outlet />
           </div>
         </LayoutConfigProvider>
