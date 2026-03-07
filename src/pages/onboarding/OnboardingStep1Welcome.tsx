@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { OnboardingHeader } from './OnboardingHeader';
 import { FormFooter } from '../../components/FormFooter';
 import { Button } from '../../components/Button';
 import { RestoreBackupButton } from '../../components/RestoreBackupButton';
+import { useSettings } from '../../hooks/useSettings';
 
 type OnboardingStep1WelcomeProps = {
   onContinue: () => void;
@@ -10,6 +12,18 @@ type OnboardingStep1WelcomeProps = {
 
 export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
   const navigate = useNavigate();
+  const { getSettings } = useSettings();
+  const [onboardingComplete, setOnboardingComplete] = useState(false);
+
+  useEffect(() => {
+    async function load() {
+      const result = await getSettings();
+      if (result.success && result.data) {
+        setOnboardingComplete(result.data.onboardingComplete);
+      }
+    }
+    load();
+  }, [getSettings]);
 
   return (
     <div className="text-center">
@@ -26,9 +40,10 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
       </FormFooter>
 
       <div className="mt-4 flex flex-col items-center gap-2">
-        <p className="text-xs text-body-secondary">or</p>
+        <p className="text-body-secondary">or</p>
         <RestoreBackupButton
           label="Restore from backup"
+          skipConfirm={!onboardingComplete}
           onSuccess={() => navigate('/', { replace: true })}
         />
       </div>

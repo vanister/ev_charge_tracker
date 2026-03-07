@@ -7,6 +7,8 @@ type RestoreBackupButtonProps = {
   onSuccess: () => void | Promise<void>;
   label?: string;
   disabled?: boolean;
+  className?: string;
+  skipConfirm?: boolean;
 };
 
 export function RestoreBackupButton(props: RestoreBackupButtonProps) {
@@ -27,8 +29,7 @@ export function RestoreBackupButton(props: RestoreBackupButtonProps) {
       return;
     }
 
-    const confirmed = window.confirm('This will permanently overwrite all existing data with the contents of the backup file. This cannot be undone. Continue?');
-    if (!confirmed) {
+    if (!props.skipConfirm && !window.confirm('This will permanently overwrite all existing data with the contents of the backup file. This cannot be undone. Continue?')) {
       return;
     }
 
@@ -53,6 +54,7 @@ export function RestoreBackupButton(props: RestoreBackupButtonProps) {
         variant="secondary"
         onClick={handleClick}
         disabled={isRestoring || props.disabled}
+        className={props.className}
       >
         {isRestoring ? 'Restoring…' : (props.label ?? 'Restore from backup')}
       </Button>

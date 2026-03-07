@@ -47,7 +47,7 @@ export function ExportRestoreSectionBody() {
           <p className="text-sm font-medium text-body">Export Backup</p>
           <p className="text-xs text-body-secondary">Download all your data as a JSON file</p>
         </div>
-        <Button variant="secondary" onClick={handleExport} disabled={isExporting}>
+        <Button variant="secondary" onClick={handleExport} disabled={isExporting} className="w-32">
           {isExporting ? 'Exporting…' : 'Export'}
         </Button>
       </div>
@@ -64,6 +64,7 @@ export function ExportRestoreSectionBody() {
             label="Restore"
             disabled={isExporting}
             onSuccess={handleRestoreSuccess}
+            className="w-32"
           />
         </div>
       </div>
