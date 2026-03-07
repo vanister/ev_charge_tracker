@@ -8,7 +8,7 @@ import type { SessionWithMetadata } from '../../helpers/sessionHelpers';
 import type { SessionStats } from './dashboard-types';
 import { computeStats, buildRecentSessions } from '../../helpers/statsHelpers';
 import { buildChartData } from '../../helpers/chartHelpers';
-import type { ChartData } from '../../helpers/chartHelpers';
+import type { ChartData } from './chart-types';
 
 type UseDashboardDataResult = {
   stats: SessionStats | null;

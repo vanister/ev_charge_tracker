@@ -1,22 +1,8 @@
 import { subDays, format, startOfDay } from 'date-fns';
 import type { ChargingSession, Location } from '../data/data-types';
+import type { ChartData, ChartDayData, LocationChartConfig } from '../pages/dashboard/chart-types';
 
-export type ChartDayData = {
-  dateKey: string;
-  label: string;
-  [locationId: string]: number | string;
-};
-
-export type LocationChartConfig = {
-  locationId: string;
-  name: string;
-  color: string;
-};
-
-export type ChartData = {
-  days: ChartDayData[];
-  locationConfigs: LocationChartConfig[];
-};
+export type { ChartData, ChartDayData, LocationChartConfig };
 
 // Tailwind color hex values matching the CSS custom properties in index.css
 const LOCATION_COLOR_HEX: Record<string, string> = {

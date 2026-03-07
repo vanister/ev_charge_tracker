@@ -1,6 +1,6 @@
 import type { SessionStats } from './dashboard-types';
 import type { SessionWithMetadata } from '../../helpers/sessionHelpers';
-import type { ChartData } from '../../helpers/chartHelpers';
+import type { ChartData } from './chart-types';
 import { DashboardStats } from './DashboardStats';
 import { ChargeSessionsChart } from './ChargeSessionsChart';
 import { DashboardRecentSessions } from './DashboardRecentSessions';
