@@ -36,7 +36,7 @@ export function PreferencesSectionBody() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-end gap-3">
+      <div className="flex items-center justify-between">
         <FormSelect
           id="recent-sessions-limit"
           label="Recent sessions to show"
@@ -44,7 +44,7 @@ export function PreferencesSectionBody() {
           options={RECENT_SESSIONS_LIMIT_OPTIONS}
           onChange={handleLimitChange}
         />
-        <Button variant="secondary" onClick={handleReset}>
+        <Button variant="secondary" onClick={handleReset} className="w-32">
           Reset
         </Button>
       </div>
