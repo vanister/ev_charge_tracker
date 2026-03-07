@@ -20,6 +20,10 @@ export type Vehicle = {
   make: string;
   model: string;
   year: number;
+  trim?: string;
+  batteryCapacity?: number;
+  range?: number;
+  notes?: string;
   icon: string;
   createdAt: number;
   isActive: ActiveState;
