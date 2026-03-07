@@ -66,7 +66,7 @@ export function SessionForm(props: SessionFormProps) {
         type="number"
         required
         step="0.001"
-        min="0.001"
+        min="0"
         value={props.formData.ratePerKwh}
         onChange={(e) => props.onChange('ratePerKwh', e.target.value)}
         placeholder="0.000"
