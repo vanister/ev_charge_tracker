@@ -6,35 +6,18 @@
 - **Phase 2 - Data Layer**: ✅ Complete (4/4)
 - **Phase 3 - Context Providers & Hooks**: ✅ Complete (11/11)
 - **Phase 4 - Routing & Pages**: ✅ Complete (9/9)
-- **Phase 5 - UI Components**: 🚧 In Progress (1/2)
+- **Phase 5 - UI Components**: ✅ Complete (2/2)
 - **Phase 6 - Tech Debt / Cleanup**: ✅ Complete (6/6)
 - **Phase 7 - PWA Features**: ✅ Complete (4/4)
-- **Phase 8 - Business Logic & Testing**: 🚧 In Progress (4/5)
+- **Phase 8 - Business Logic & Testing**: ✅ Complete (5/5)
 - **Phase 9 - User Preferences**: ✅ Complete (5/5)
-- **Phase 10 - Export and Restore**: ❌ Not Started (0/4)
+- **Phase 10 - Export and Restore**: ✅ Complete (4/4)
 
-**Overall Progress**: 48/56 tasks complete (86%)
+**Overall Progress**: 54/54 tasks complete (100%)
 
 ---
 
 ## TODO
-
-### Phase 5 - UI Components
-- [ ] 2. Implement charts with Recharts
-  - Create energy usage by location chart and timeline chart for dashboard
-  - Recharts is installed but not yet used
-
-### Phase 8 - Business Logic & Testing
-- [x] 4. Test offline functionality
-  - Verify all features work without network, test service worker caching
-
-### Phase 10 - Export and Restore
-- [x] 1. Add an export and restore section to the settings page
-- [x] 2. Export the entire dexie stores out into json including 
-  - version number 
-  - Dexie stores that match the the schema defined in the app
-- [x] 3. Strict restore of matching database version in the app to the backup file
-- [x] 4. Dangerously overwrite the existing dexie db woth the backup file
 
 ### Post-MVP
 - [ ] 1. Support vehicle image upload
@@ -85,6 +68,9 @@
 
 ### Phase 5 - UI Components
 - [x] 1. Create reusable UI components
+- [x] 2. Implement charts with Recharts
+  - Charge sessions bar chart on the dashboard with time filter (7d / 30d / 90d)
+  - Custom tooltip and dedicated chart types extracted into separate files
 
 ### Phase 6 - Tech Debt / Cleanup
 - [x] 1. Organize types
@@ -104,6 +90,8 @@
 - [x] 1. Implement app initialization flow
 - [x] 2. Add vehicle deletion safety checks
 - [x] 3. Add location deletion safety checks
+- [x] 4. Test offline functionality
+  - Verify all features work without network, test service worker caching
 - [x] 5. Build and deploy to static hosting
 
 ### Phase 9 - User Preferences
@@ -112,3 +100,11 @@
 - [x] 3. Persist last vehicle and location on session save
 - [x] 4. Wire recentSessionsLimit preference into useStats
 - [x] 5. Add a "Preferences" section to the Settings page
+
+### Phase 10 - Export and Restore
+- [x] 1. Add an export and restore section to the settings page
+- [x] 2. Export the entire dexie stores out into json including
+  - version number
+  - Dexie stores that match the schema defined in the app
+- [x] 3. Strict restore of matching database version in the app to the backup file
+- [x] 4. Dangerously overwrite the existing dexie db with the backup file
