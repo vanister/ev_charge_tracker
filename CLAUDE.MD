@@ -15,8 +15,6 @@ A Vite + TypeScript + React 19 PWA for tracking EV charging sessions. Mobile-foc
 - Comment the why not the how
 - No documentation such as JSDocs or XML Comments unless explicitly asked to provide
 - Simple, concise, single-purpose code
-- 100 char line limit (enforced by `.prettierrc` `printWidth: 120`, but target 100)
-- Invert dependencies
 - Single responsibility components, helpers and utilities
 - Follow KISS principle
 - Follow DRY principle
