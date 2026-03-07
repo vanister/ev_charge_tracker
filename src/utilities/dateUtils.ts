@@ -17,6 +17,8 @@ export function getDateRangeForTimeFilter(value: TimeFilterValue): DateRange | u
       return { start: subDays(end, 14).getTime(), end };
     case '30d':
       return { start: subDays(end, 30).getTime(), end };
+    case '31d':
+      return { start: subDays(end, 31).getTime(), end };
     case '3m':
       return { start: subMonths(end, 3).getTime(), end };
     case '6m':

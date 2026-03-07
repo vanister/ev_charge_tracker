@@ -1,6 +1,6 @@
 export type ThemeMode = 'light' | 'dark' | 'system';
 
-export type TimeFilterValue = '7d' | '14d' | '30d' | '3m' | '6m' | '12m' | 'all';
+export type TimeFilterValue = '7d' | '14d' | '30d' | '31d' | '3m' | '6m' | '12m' | 'all';
 
 export type TimeFilterOption = {
   label: string;
