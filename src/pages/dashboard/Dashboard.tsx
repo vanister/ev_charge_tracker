@@ -1,16 +1,15 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from '../../hooks/usePageTitle';
-import { useStats } from '../../hooks/useStats';
+import { useDashboardData } from './useDashboardData';
 import { EmptyState } from '../../components/EmptyState';
-import { DashboardStats } from './DashboardStats';
-import { DashboardRecentSessions } from './DashboardRecentSessions';
+import { DashboardContent } from './DashboardContent';
 
 export function Dashboard() {
   usePageTitle('Dashboard');
 
   const navigate = useNavigate();
-  const { stats, recentSessions, isLoading, error } = useStats();
+  const { stats, recentSessions, chartData, isLoading, error } = useDashboardData();
 
   const hasSessions = stats !== null && stats.sessionCount > 0;
 
@@ -34,16 +33,13 @@ export function Dashboard() {
     );
   }
 
-  if (isLoading || !stats) {
+  if (isLoading || !stats || !chartData) {
     return null;
   }
 
   return (
     <div className="bg-background px-4 py-6">
-      <div className="max-w-2xl mx-auto">
-        <DashboardStats stats={stats} />
-        {recentSessions.length > 0 && <DashboardRecentSessions sessions={recentSessions} />}
-      </div>
+      <DashboardContent stats={stats} recentSessions={recentSessions} chartData={chartData} />
     </div>
   );
 }

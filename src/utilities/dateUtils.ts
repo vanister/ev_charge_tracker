@@ -5,7 +5,8 @@ import {
   subDays,
   subMonths
 } from 'date-fns';
-import type { DateRange, TimeFilterValue } from '../types/shared-types';
+import type { DateRange } from '../types/shared-types';
+import type { TimeFilterValue } from '../constants';
 
 export function getDateRangeForTimeFilter(value: TimeFilterValue): DateRange | undefined {
   const end = Date.now();
@@ -15,8 +16,8 @@ export function getDateRangeForTimeFilter(value: TimeFilterValue): DateRange | u
       return { start: subDays(end, 7).getTime(), end };
     case '14d':
       return { start: subDays(end, 14).getTime(), end };
-    case '30d':
-      return { start: subDays(end, 30).getTime(), end };
+    case '31d':
+      return { start: subDays(end, 31).getTime(), end };
     case '3m':
       return { start: subMonths(end, 3).getTime(), end };
     case '6m':
