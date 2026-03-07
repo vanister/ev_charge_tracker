@@ -7,6 +7,7 @@ import { AppHeader } from './AppHeader';
 import { MenuOverlay } from './MenuOverlay';
 import { NavigationDrawer } from './NavigationDrawer';
 import type { ThemeMode } from '../../types/shared-types';
+import { PAGE_TRANSITION_DURATION } from '../../constants';
 
 export function Layout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,7 +43,9 @@ export function Layout() {
 
       <main className="pt-14 flex-1">
         <LayoutConfigProvider value={{ title, setTitle }}>
-          <Outlet />
+          <div key={location.key} className="page-enter" style={{ animationDuration: `${PAGE_TRANSITION_DURATION}ms` }}>
+            <Outlet />
+          </div>
         </LayoutConfigProvider>
       </main>
     </div>

@@ -66,6 +66,17 @@
   }
 }
 
+@keyframes page-enter {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.page-enter {
+  animation-name: page-enter;
+  animation-timing-function: ease-in;
+  animation-fill-mode: both;
+}
+
 /* Semantic Tailwind classes */
 @layer utilities {
   .bg-background {
