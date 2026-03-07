@@ -94,7 +94,7 @@ export function SessionsFilter(props: SessionsFilterProps) {
                   { value: '', text: 'All Vehicles' },
                   ...vehicles.map((vehicle) => ({
                     value: vehicle.id,
-                    text: `${vehicle.icon} ${getVehicleDisplayName(vehicle)}`
+                    text: getVehicleDisplayName(vehicle)
                   }))
                 ]}
               />
