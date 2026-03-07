@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import type { Vehicle, Location } from '../../data/data-types';
 import { Button } from '../../components/Button';
 import { Icon } from '../../components/Icon';
@@ -17,6 +16,8 @@ type SessionsFilterProps = {
   onLocationChange: (id: string | undefined) => void;
   onTimeRangeChange: (value: TimeFilterValue) => void;
   onClearFilters: () => void;
+  isOpen: boolean;
+  onToggle: () => void;
 };
 
 export function SessionsFilter(props: SessionsFilterProps) {
@@ -29,10 +30,10 @@ export function SessionsFilter(props: SessionsFilterProps) {
     onVehicleChange,
     onLocationChange,
     onTimeRangeChange,
-    onClearFilters
+    onClearFilters,
+    isOpen,
+    onToggle
   } = props;
-
-  const [isOpen, setIsOpen] = useState(true);
 
   const hasActiveFilters = !!(selectedVehicleId || selectedLocationId);
 
@@ -55,7 +56,7 @@ export function SessionsFilter(props: SessionsFilterProps) {
       <button
         type="button"
         className="flex items-center gap-2 w-full text-left"
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={onToggle}
       >
         <Icon name="filter" size="sm" className="text-body-secondary" />
         <h2 className="text-sm font-semibold text-body flex-1">Filters</h2>

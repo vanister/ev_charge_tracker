@@ -8,7 +8,8 @@ export const RECENT_SESSIONS_LIMIT = 10;
 
 export const DEFAULT_PREFERENCES: UserPreferences = {
   recentSessionsLimit: RECENT_SESSIONS_LIMIT,
-  sessionsFilterTimeRange: '30d'
+  sessionsFilterTimeRange: '30d',
+  sessionsFilterIsOpen: true
 };
 
 export const PAGE_TRANSITION_DURATION = 150; // ms
