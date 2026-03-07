@@ -11,6 +11,8 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   sessionsFilterTimeRange: '30d'
 };
 
+export const PAGE_TRANSITION_DURATION = 150; // ms
+
 export const TOAST_MAX_COUNT = 4;
 export const TOAST_DEFAULT_DURATION = 3500;
 

@@ -43,9 +43,11 @@ export function PreferencesSectionBody() {
         options={RECENT_SESSIONS_LIMIT_OPTIONS}
         onChange={handleLimitChange}
       />
-      <Button variant="secondary" onClick={handleReset}>
-        Reset
-      </Button>
+      <div className="flex justify-end">
+        <Button variant="secondary" onClick={handleReset} className="w-32">
+          Reset
+        </Button>
+      </div>
     </div>
   );
 }
