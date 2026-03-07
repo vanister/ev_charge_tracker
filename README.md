@@ -1,7 +1,5 @@
 # EV Charge Tracker
 
-> **Beta** — Live at [EV Charge Tracker](https://evchargetracker.vanister.workers.dev)
-
 An offline, mobile-optimized, Progressive Web App (PWA) for tracking electric vehicle charging sessions. All data is stored locally on your device using IndexedDB. No internet connection required after installation.
 
 ## Features
