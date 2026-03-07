@@ -29,6 +29,7 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
         <p className="text-body-secondary">or</p>
         <RestoreBackupButton
           label="Restore from backup"
+          skipConfirm
           onSuccess={() => navigate('/', { replace: true })}
         />
       </div>
