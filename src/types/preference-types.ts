@@ -5,4 +5,5 @@ export type UserPreferences = {
   sessionsFilterTimeRange?: string;
   sessionsFilterVehicleId?: string;
   sessionsFilterLocationId?: string;
+  sessionsFilterIsOpen?: boolean;
 };

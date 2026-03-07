@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
@@ -46,6 +46,7 @@ export function SessionsList() {
     ...DEFAULT_STATE,
     selectedTimeRange: (preferences.sessionsFilterTimeRange as TimeFilterValue) ?? '7d'
   });
+  const [filtersIsOpen, setFiltersIsOpen] = useState(preferences.sessionsFilterIsOpen ?? true);
   const { getLocationList } = useLocations();
   const { getVehicleList } = useVehicles();
   const { getSessionList, deleteSession, hasAnySessions } = useSessions();
@@ -184,6 +185,11 @@ export function SessionsList() {
     navigate('/sessions/add');
   };
 
+  const handleFilterToggle = () => {
+    setFiltersIsOpen(!filtersIsOpen);
+    updatePreferences({ sessionsFilterIsOpen: !filtersIsOpen });
+  };
+
   const handleClearFilters = () => {
     setState((draft) => {
       draft.selectedVehicleId = undefined;
@@ -239,6 +245,8 @@ export function SessionsList() {
           onLocationChange={handleLocationChange}
           onTimeRangeChange={handleTimeRangeChange}
           onClearFilters={handleClearFilters}
+          isOpen={filtersIsOpen}
+          onToggle={handleFilterToggle}
         />
 
         {sessionsByDate.length === 0 ? (
