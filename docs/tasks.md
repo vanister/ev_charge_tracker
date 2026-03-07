@@ -23,8 +23,12 @@
 - [ ] 1. Support vehicle image upload
   - Allow users to upload a custom image for their vehicle instead of the default 🚗 emoji
   - Store image reference and display in VehicleItem and other vehicle displays
-- [ ] 2. Sync ability using users storage accounts
+- [ ] 1. Sync ability using users storage accounts
   - iCloud, Drive, OneDrive, etc.
+- [ ] 1. More charts
+  - Monthly charge stats 
+  - Yearly charge stats
+  - Custom range
 
 ---
 
