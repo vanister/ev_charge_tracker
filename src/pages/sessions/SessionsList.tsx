@@ -186,9 +186,8 @@ export function SessionsList() {
   };
 
   const handleFilterToggle = () => {
-    const next = !filtersIsOpen;
-    setFiltersIsOpen(next);
-    updatePreferences({ sessionsFilterIsOpen: next });
+    setFiltersIsOpen(!filtersIsOpen);
+    updatePreferences({ sessionsFilterIsOpen: !filtersIsOpen });
   };
 
   const handleClearFilters = () => {
