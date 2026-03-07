@@ -36,14 +36,14 @@ export function PreferencesSectionBody() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <FormSelect
-          id="recent-sessions-limit"
-          label="Recent sessions to show"
-          value={`${preferences.recentSessionsLimit}`}
-          options={RECENT_SESSIONS_LIMIT_OPTIONS}
-          onChange={handleLimitChange}
-        />
+      <FormSelect
+        id="recent-sessions-limit"
+        label="Recent sessions to show"
+        value={`${preferences.recentSessionsLimit}`}
+        options={RECENT_SESSIONS_LIMIT_OPTIONS}
+        onChange={handleLimitChange}
+      />
+      <div className="flex justify-end">
         <Button variant="secondary" onClick={handleReset} className="w-32">
           Reset
         </Button>
