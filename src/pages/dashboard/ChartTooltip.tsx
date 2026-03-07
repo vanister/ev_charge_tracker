@@ -1,10 +1,15 @@
 import type { ChartTooltipProps } from './chart-types';
 
 export function ChartTooltip({ active, payload, label, locationConfigs }: ChartTooltipProps) {
-  if (!active || !payload?.length) return null;
+  if (!active || !payload?.length) {
+    return null;
+  }
 
   const activeEntries = payload.filter((entry) => (entry.value ?? 0) > 0);
-  if (activeEntries.length === 0) return null;
+
+  if (activeEntries.length === 0) {
+    return null;
+  }
 
   const total = activeEntries.reduce((sum, e) => sum + (e.value ?? 0), 0);
   const configByKey = new Map(locationConfigs.map((c) => [c.locationId, c]));

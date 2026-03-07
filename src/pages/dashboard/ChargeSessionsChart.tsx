@@ -2,13 +2,11 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import type { ChartData } from './chart-types';
 import { ChartTooltip } from './ChartTooltip';
 import { SectionHeader } from '../../components/SectionHeader';
+import { CHART_X_AXIS_INTERVAL } from '../../constants';
 
 type ChargeSessionsChartProps = {
   data: ChartData;
 };
-
-// Show a label every 5th day so the x-axis stays readable with 31 bars
-const X_AXIS_INTERVAL = 4;
 
 export function ChargeSessionsChart({ data }: ChargeSessionsChartProps) {
   const { days, locationConfigs } = data;
@@ -18,7 +16,9 @@ export function ChargeSessionsChart({ data }: ChargeSessionsChartProps) {
     days.some((day) => (day[loc.locationId] as number) > 0)
   );
 
-  if (activeLocations.length === 0) return null;
+  if (activeLocations.length === 0) {
+    return null;
+  }
 
   return (
     <div className="mb-8">
@@ -31,7 +31,7 @@ export function ChargeSessionsChart({ data }: ChargeSessionsChartProps) {
 
             <XAxis
               dataKey="label"
-              interval={X_AXIS_INTERVAL}
+              interval={CHART_X_AXIS_INTERVAL}
               tick={{ fontSize: 10, fill: 'currentColor', opacity: 0.5 }}
               tickLine={false}
               axisLine={false}

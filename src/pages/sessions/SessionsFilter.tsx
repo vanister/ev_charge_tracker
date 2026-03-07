@@ -4,7 +4,7 @@ import { Icon } from '../../components/Icon';
 import { FormSelect } from '../../components/FormSelect';
 import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
 import { TIME_FILTER_OPTIONS } from '../../constants';
-import type { TimeFilterValue } from '../../types/shared-types';
+import type { TimeFilterValue } from '../../constants';
 
 type SessionsFilterProps = {
   vehicles: Vehicle[];

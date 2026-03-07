@@ -1,16 +1,7 @@
 import { subDays, format, startOfDay } from 'date-fns';
 import type { ChargingSession, Location } from '../data/data-types';
 import type { ChartData, ChartDayData, LocationChartConfig } from '../pages/dashboard/chart-types';
-
-export type { ChartData, ChartDayData, LocationChartConfig };
-
-// Tailwind color hex values matching the CSS custom properties in index.css
-const LOCATION_COLOR_HEX: Record<string, string> = {
-  teal: '#14b8a6',   // teal-500
-  slate: '#64748b',  // slate-500
-  purple: '#c084fc', // purple-400
-  orange: '#fb923c'  // orange-400
-};
+import { LOCATION_COLOR_HEX } from '../constants';
 
 export function buildChartData(
   sessions: ChargingSession[],
@@ -38,7 +29,9 @@ export function buildChartData(
 
   // Aggregate session energy into the correct day/location bucket
   for (const session of sessions) {
-    if (session.chargedAt < startTimestamp) continue;
+    if (session.chargedAt < startTimestamp) {
+      continue;
+    }
     const dateKey = format(session.chargedAt, 'yyyy-MM-dd');
     const day = dayIndex.get(dateKey);
     if (day) {
