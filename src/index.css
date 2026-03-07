@@ -66,6 +66,15 @@
     transition-duration: 150ms;
     transition-timing-function: ease;
   }
+
+  /* iOS Safari gives datetime-local inputs an intrinsic minimum width from -webkit-appearance.
+     Resetting appearance lets CSS sizing take full control while the native picker still works. */
+  input[type="datetime-local"],
+  input[type="date"],
+  input[type="time"] {
+    -webkit-appearance: none;
+    appearance: none;
+  }
 }
 
 @keyframes page-enter {
