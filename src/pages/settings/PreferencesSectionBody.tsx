@@ -36,16 +36,18 @@ export function PreferencesSectionBody() {
 
   return (
     <div className="space-y-4">
-      <FormSelect
-        id="recent-sessions-limit"
-        label="Recent sessions to show"
-        value={`${preferences.recentSessionsLimit}`}
-        options={RECENT_SESSIONS_LIMIT_OPTIONS}
-        onChange={handleLimitChange}
-      />
-      <Button variant="secondary" onClick={handleReset}>
-        Reset
-      </Button>
+      <div className="flex items-end gap-3">
+        <FormSelect
+          id="recent-sessions-limit"
+          label="Recent sessions to show"
+          value={`${preferences.recentSessionsLimit}`}
+          options={RECENT_SESSIONS_LIMIT_OPTIONS}
+          onChange={handleLimitChange}
+        />
+        <Button variant="secondary" onClick={handleReset}>
+          Reset
+        </Button>
+      </div>
     </div>
   );
 }
