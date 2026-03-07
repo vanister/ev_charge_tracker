@@ -7,6 +7,7 @@ type RestoreBackupButtonProps = {
   onSuccess: () => void | Promise<void>;
   label?: string;
   disabled?: boolean;
+  className?: string;
 };
 
 export function RestoreBackupButton(props: RestoreBackupButtonProps) {
@@ -53,6 +54,7 @@ export function RestoreBackupButton(props: RestoreBackupButtonProps) {
         variant="secondary"
         onClick={handleClick}
         disabled={isRestoring || props.disabled}
+        className={props.className}
       >
         {isRestoring ? 'Restoring…' : (props.label ?? 'Restore from backup')}
       </Button>
