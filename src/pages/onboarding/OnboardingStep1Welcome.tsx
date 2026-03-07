@@ -26,7 +26,7 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
       </FormFooter>
 
       <div className="mt-4 flex flex-col items-center gap-2">
-        <p className="text-xs text-body-secondary">or</p>
+        <p className="text-body-secondary">or</p>
         <RestoreBackupButton
           label="Restore from backup"
           onSuccess={() => navigate('/', { replace: true })}
