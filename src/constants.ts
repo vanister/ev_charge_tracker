@@ -4,11 +4,11 @@ import type { UserPreferences } from './types/preference-types';
 export const THEME_STORAGE_KEY = 'ev-charge-tracker-theme';
 export const USER_PREFERENCES_STORAGE_KEY = 'ev-charge-tracker-preferences';
 
-export const RECENT_SESSIONS_LIMIT = 5;
+export const RECENT_SESSIONS_LIMIT = 10;
 
 export const DEFAULT_PREFERENCES: UserPreferences = {
   recentSessionsLimit: RECENT_SESSIONS_LIMIT,
-  sessionsFilterTimeRange: '7d'
+  sessionsFilterTimeRange: '30d'
 };
 
 export const TOAST_MAX_COUNT = 4;
