@@ -30,8 +30,8 @@ export function RestoreBackupButton(props: RestoreBackupButtonProps) {
     }
 
     if (!props.skipConfirm) {
-      const confirmed = window.confirm('This will permanently overwrite all existing data with the contents of the backup file. This cannot be undone. Continue?');
-      if (!confirmed) {
+      const cancelled = !window.confirm('This will permanently overwrite all existing data with the contents of the backup file. This cannot be undone. Continue?');
+      if (cancelled) {
         return;
       }
     }

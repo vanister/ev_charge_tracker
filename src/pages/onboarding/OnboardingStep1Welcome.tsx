@@ -16,11 +16,13 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
   const [onboardingComplete, setOnboardingComplete] = useState(false);
 
   useEffect(() => {
-    getSettings().then((result) => {
+    async function load() {
+      const result = await getSettings();
       if (result.success && result.data) {
         setOnboardingComplete(result.data.onboardingComplete);
       }
-    });
+    }
+    load();
   }, [getSettings]);
 
   return (
