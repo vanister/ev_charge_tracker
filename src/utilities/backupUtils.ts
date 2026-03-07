@@ -59,10 +59,10 @@ export async function restoreBackup(
         db.settings.clear()
       ]);
       await Promise.all([
-        db.vehicles.bulkPut(backup.vehicles),
-        db.sessions.bulkPut(backup.sessions),
-        db.locations.bulkPut(backup.locations),
-        db.settings.bulkPut(backup.settings)
+        db.vehicles.bulkAdd(backup.vehicles),
+        db.sessions.bulkAdd(backup.sessions),
+        db.locations.bulkAdd(backup.locations),
+        db.settings.bulkAdd(backup.settings)
       ]);
     });
     return success(undefined);
