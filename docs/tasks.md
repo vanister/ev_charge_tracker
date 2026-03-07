@@ -25,16 +25,16 @@
   - Recharts is installed but not yet used
 
 ### Phase 8 - Business Logic & Testing
-- [ ] 4. Test offline functionality
+- [x] 4. Test offline functionality
   - Verify all features work without network, test service worker caching
 
 ### Phase 10 - Export and Restore
-- [ ] 1. Add an export and restore section to the settings page
-- [ ] 2. Export the entire dexie stores out into json including 
+- [x] 1. Add an export and restore section to the settings page
+- [x] 2. Export the entire dexie stores out into json including 
   - version number 
   - Dexie stores that match the the schema defined in the app
-- [ ] 3. Strict restore of matching database version in the app to the backup file
-- [ ] 4. Dangerously overwrite the existing dexie db woth the backup file
+- [x] 3. Strict restore of matching database version in the app to the backup file
+- [x] 4. Dangerously overwrite the existing dexie db woth the backup file
 
 ### Post-MVP
 - [ ] 1. Support vehicle image upload
