@@ -9,8 +9,12 @@ An offline, mobile-optimized, Progressive Web App (PWA) for tracking electric ve
 - **🚗 Multiple Vehicles**: Manage multiple EVs with custom names and icons
 - **📍 Location Management**: Track charging at Home, Work, DC Fast Chargers, or custom locations
 - **📊 Dashboard & Stats**: View total kWh, average rate, session count, and recent sessions
+- **📈 Charts & Analytics**: Bar chart of charge sessions over time (7d / 30d / 90d) with custom tooltips
+- **🔍 Filterable Sessions**: Collapsible filter panel with persistent open/closed state
+- **💾 Backup & Restore**: Export all data to JSON and restore from backup with version validation
+- **⚙️ Preferences**: Configure recent session limit and other per-user settings
 - **🌓 Dark Mode**: Full dark/light theme support with smooth transitions
-- **💾 Local Storage**: All data stays on your device, no cloud sync
+- **🗄️ Local Storage**: All data stays on your device, no cloud sync
 - **📲 Install as App**: Install directly from your browser, no app store needed
 - **🔔 Auto-Update**: Service worker update notification with one-tap reload
 
@@ -84,28 +88,24 @@ src/
 └── App.tsx           # Root component and router
 ```
 
-## Development Status (77% complete — 37/48 tasks)
+## Development Status (100% complete — 54/54 core tasks)
 
 ### ✅ Completed
 
 - Setup & dependencies
 - Database schema with Dexie.js
-- Core data hooks (vehicles, sessions, locations, settings, stats)
+- Core data hooks (vehicles, sessions, locations, settings, stats, backup, preferences)
 - App initialization, routing, and layout shell
 - Onboarding flow (3-step wizard)
 - Theme system (dark/light/system mode)
-- Session logging and management (list, add, edit, delete)
+- Session logging and management (list, add, edit, delete, filterable with collapsible panel)
 - Vehicle management (list, add, edit, delete with safety checks)
-- Settings page with location management and storage info
-- Dashboard page with stats cards and recent sessions
-- PWA configuration and persistent storage request
+- Settings page with location management, preferences, storage info, and backup/restore
+- Dashboard page with stats cards, recent sessions, and charge sessions bar chart (Recharts)
+- PWA configuration, icons, and persistent storage request
 - Service worker update notification
-
-### 🚧 In Progress / Not Started
-
-- Charts and analytics (Recharts — installed, not yet used)
-- PWA icons (192x192, 512x512, 180x180, 32x32, 16x16)
-- Offline functionality testing
+- Export/restore with JSON backup and database version validation
+- Build and deploy to static hosting
 
 See [docs/tasks.md](docs/tasks.md) for the complete development roadmap.
 
