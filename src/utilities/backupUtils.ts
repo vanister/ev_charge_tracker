@@ -114,8 +114,10 @@ function validateBackup(parsed: unknown): Result<BackupFile> {
     return failure('Backup file is missing a "data" array.');
   }
 
+  const data = obj.data as unknown[];
+
   const findStore = (storeName: string) =>
-    obj.data.find(
+    data.find(
       (s: unknown) =>
         s &&
         typeof s === 'object' &&
