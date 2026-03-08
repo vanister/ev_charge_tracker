@@ -1,38 +1,20 @@
 import { useEffect } from 'react';
-import { useBlocker } from 'react-router-dom';
 
 type UseNavigationGuardOptions = {
   enabled: boolean;
-  message?: string | (() => string);
 };
 
-export function useNavigationGuard({ enabled, message }: UseNavigationGuardOptions) {
-  const getConfirmMessage = () => {
-    const resolved = typeof message === 'function' ? message() : message;
-    return resolved ?? 'Are you sure you want to leave? This may interrupt an in-progress operation.';
-  };
-
-  const blocker = useBlocker(enabled);
-
+// useBlocker from react-router-dom requires a data router (RouterProvider) and
+// is incompatible with <BrowserRouter>. Guard only against page unload/reload.
+export function useNavigationGuard({ enabled }: UseNavigationGuardOptions) {
   useEffect(() => {
-    if (blocker.state !== 'blocked') {
+    if (!enabled) {
       return;
     }
 
-    if (!window.confirm(getConfirmMessage())) {
-      blocker.reset();
-      return;
-    }
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => e.preventDefault();
 
-    blocker.proceed();
-  }, [blocker]);
-
-  useEffect(() => {
-    if (enabled) {
-      const handleBeforeUnload = (e: BeforeUnloadEvent) => e.preventDefault();
-
-      window.addEventListener('beforeunload', handleBeforeUnload);
-      return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-    }
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [enabled]);
 }
