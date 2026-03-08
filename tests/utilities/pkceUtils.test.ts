@@ -76,18 +76,40 @@ describe('generatePkcePair', () => {
     expect(result.error).toMatch(/SubtleCrypto unavailable/);
   });
 
-  it('accepts an injected Crypto implementation', async () => {
-    // Verify the DI seam works — a spy-wrapped crypto still produces a valid pair.
-    // subtle must be set explicitly; it is non-enumerable on the native Crypto object
-    // so spreading does not copy it.
-    const spyCrypto: Crypto = {
-      getRandomValues: vi.fn(globalThis.crypto.getRandomValues.bind(globalThis.crypto)),
+  it('derives codeVerifier and codeChallenge from the injected Crypto bytes', async () => {
+    // Fixed bytes let us assert that the utility's output is driven entirely by the
+    // injected Crypto, not by an ambient global — that is what makes DI meaningful here.
+    const FIXED_BYTES = new Uint8Array(32).fill(0x42);
+
+    const expectedVerifier = btoa(String.fromCharCode(...FIXED_BYTES))
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=/g, '');
+
+    const hashBuffer = await globalThis.crypto.subtle.digest(
+      'SHA-256',
+      new TextEncoder().encode(expectedVerifier),
+    );
+    const expectedChallenge = btoa(String.fromCharCode(...new Uint8Array(hashBuffer)))
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=/g, '');
+
+    const mockCrypto = {
+      getRandomValues: vi.fn((buffer: Uint8Array) => {
+        buffer.set(FIXED_BYTES);
+        return buffer;
+      }),
       subtle: globalThis.crypto.subtle,
       randomUUID: globalThis.crypto.randomUUID.bind(globalThis.crypto),
-    };
+    } as unknown as Crypto;
 
-    const result = await generatePkcePair(spyCrypto);
+    const result = await generatePkcePair(mockCrypto);
     expect(result.success).toBe(true);
-    expect(spyCrypto.getRandomValues).toHaveBeenCalledOnce();
+    if (!result.success) return;
+
+    expect(mockCrypto.getRandomValues).toHaveBeenCalledOnce();
+    expect(result.data.codeVerifier).toBe(expectedVerifier);
+    expect(result.data.codeChallenge).toBe(expectedChallenge);
   });
 });
