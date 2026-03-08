@@ -11,22 +11,17 @@ type ToastProviderProps = {
 
 export function ToastProvider({ children }: ToastProviderProps) {
   const [toasts, setToasts] = useImmerState<Toast[]>([]);
-  const timeouts = useRef<Map<string, ReturnType<typeof setTimeout>> | null>(null);
-
-  // Lazy-initialize the ref so it's always available even if React clears it
-  if (!timeouts.current) {
-    timeouts.current = new Map();
-  }
+  const timeouts = useRef(new Map<string, ReturnType<typeof setTimeout>>());
 
   const clearTimer = (id: string) => {
-    const timer = timeouts.current!.get(id);
+    const timer = timeouts.current.get(id);
 
     if (!timer) {
       return;
     }
 
     clearTimeout(timer);
-    timeouts.current!.delete(id);
+    timeouts.current.delete(id);
   };
 
   const dismissToast = useCallback((id: string) => {
@@ -62,7 +57,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
 
       if (!persistent) {
         const timer = setTimeout(() => dismissToast(id), duration);
-        timeouts.current!.set(id, timer);
+        timeouts.current.set(id, timer);
       }
 
       return id;

@@ -7,11 +7,6 @@ type UseNavigationGuardOptions = {
 };
 
 export function useNavigationGuard({ enabled, message }: UseNavigationGuardOptions) {
-  const getConfirmMessage = () => {
-    const resolved = typeof message === 'function' ? message() : message;
-    return resolved ?? 'Are you sure you want to leave? This may interrupt an in-progress operation.';
-  };
-
   const blocker = useBlocker(enabled);
 
   useEffect(() => {
@@ -19,20 +14,26 @@ export function useNavigationGuard({ enabled, message }: UseNavigationGuardOptio
       return;
     }
 
-    if (!window.confirm(getConfirmMessage())) {
+    const resolved = typeof message === 'function' ? message() : message;
+    const confirmed = window.confirm(
+      resolved ?? 'Are you sure you want to leave? This may interrupt an in-progress operation.'
+    );
+
+    if (confirmed) {
+      blocker.proceed();
+    } else {
       blocker.reset();
+    }
+  }, [blocker, message]);
+
+  useEffect(() => {
+    if (!enabled) {
       return;
     }
 
-    blocker.proceed();
-  }, [blocker]);
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => e.preventDefault();
 
-  useEffect(() => {
-    if (enabled) {
-      const handleBeforeUnload = (e: BeforeUnloadEvent) => e.preventDefault();
-
-      window.addEventListener('beforeunload', handleBeforeUnload);
-      return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-    }
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [enabled]);
 }
