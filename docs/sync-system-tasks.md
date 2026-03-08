@@ -12,7 +12,7 @@ Goal: Securely obtain an access token without a backend.
 Goal: Translate your local database into a transportable format.
  * [ ] IDB Reader: Write a function to iterate through all Object Stores and pull data into a single object.
  * [ ] Schema Versioning: Add a version and lastUpdated key to the export object.
- * [ ] Data Compression: (Optional but recommended) Implement CompressionStream to Gzip the JSON string.
+ * [ ] ~~Data Compression: (Optional but recommended) Implement CompressionStream to Gzip the JSON string.~~
  * [ ] IDB Writer: Write the "Restore" function that clears local stores and populates them from a sync file.
 
 ## 3. Transport Module
