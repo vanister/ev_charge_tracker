@@ -6,6 +6,7 @@ import { FileSelect } from './FileSelect';
 type RestoreBackupButtonProps = {
   onSuccess: () => void | Promise<void>;
   onError?: (error: string | null) => void;
+  onRestoreStart?: () => void;
   label?: string;
   disabled?: boolean;
   className?: string;
@@ -33,6 +34,7 @@ export function RestoreBackupButton(props: RestoreBackupButtonProps) {
       return;
     }
 
+    props.onRestoreStart?.();
     setIsRestoring(true);
 
     const restoreResult = await restoreBackup(readResult.data);

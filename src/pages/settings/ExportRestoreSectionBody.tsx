@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useToast } from '../../hooks/useToast';
 import { useBackup } from '../../hooks/useBackup';
+import { useNavigationGuard } from '../../hooks/useNavigationGuard';
 import { Button } from '../../components/Button';
 import { RestoreBackupButton } from '../../components/RestoreBackupButton';
 import { getDateGroupKey } from '../../utilities/dateUtils';
@@ -9,7 +10,14 @@ export function ExportRestoreSectionBody() {
   const { showToast } = useToast();
   const { exportBackup } = useBackup();
   const [isExporting, setIsExporting] = useState(false);
+  const [isRestoring, setIsRestoring] = useState(false);
   const [restoreError, setRestoreError] = useState<string | null>(null);
+
+  useNavigationGuard({
+    enabled: isExporting || isRestoring,
+    message: () =>
+      `A ${isExporting ? 'backup export' : 'restore'} is in progress. Leaving now may corrupt your data. Are you sure you want to leave?`,
+  });
 
   const handleExport = async () => {
     setIsExporting(true);
@@ -38,7 +46,13 @@ export function ExportRestoreSectionBody() {
   };
 
   const handleRestoreSuccess = () => {
+    setIsRestoring(false);
     showToast({ message: 'Restore completed successfully.', variant: 'success', persistent: true });
+  };
+
+  const handleRestoreError = (error: string | null) => {
+    setIsRestoring(false);
+    setRestoreError(error);
   };
 
   return (
@@ -64,8 +78,9 @@ export function ExportRestoreSectionBody() {
           <RestoreBackupButton
             label="Restore"
             disabled={isExporting}
+            onRestoreStart={() => setIsRestoring(true)}
             onSuccess={handleRestoreSuccess}
-            onError={setRestoreError}
+            onError={handleRestoreError}
             className="w-32"
           />
         </div>
