@@ -26,7 +26,6 @@ A Vite + TypeScript + React 19 PWA for tracking EV charging sessions. Mobile-foc
 
 ## Project Rules
 
-- Follow the rules in [.prettierrc](./.prettierrc): `singleQuote`, `semi`, `tabWidth: 2`, `printWidth: 120`, `trailingComma: "none"`, `arrowParens: "always"`
 - Arrow functions for component event handlers, callbacks, and internal functions
 - Named functions only for standalone helpers and utilities in separate utility files
 - Arrow functions require parens, destructure objects
@@ -45,6 +44,7 @@ A Vite + TypeScript + React 19 PWA for tracking EV charging sessions. Mobile-foc
 - Run `npm run build` to verify no build errors after major changes
 - `React.FormEvent` is marked deprecated — use `React.SubmitEvent<T>` for form submit handlers
 - Use the `clsx` package for dynamic CSS class name creation
+- Keep CONSTANTS that are not component specific in a root constants.ts file
 
 ---
 
