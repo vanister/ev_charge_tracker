@@ -8,8 +8,7 @@ import type {
   Vehicle
 } from '../data/data-types';
 import type { BackupFile } from '../pages/settings/settings-types';
-
-const FILE_VERSION = 1;
+import { BACKUP_FILE_VERSION } from '../data/constants';
 
 export async function exportBackup(db: EvChargTrackerDb): Promise<Result<BackupFile>> {
   try {
@@ -21,7 +20,7 @@ export async function exportBackup(db: EvChargTrackerDb): Promise<Result<BackupF
     ]);
     return success({
       dbVersion: db.verno,
-      fileVersion: FILE_VERSION,
+      fileVersion: BACKUP_FILE_VERSION,
       timestamp: Date.now(),
       data: [
         { store: 'vehicles' as const, records: vehicles },

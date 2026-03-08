@@ -34,6 +34,8 @@ export const DEFAULT_LOCATIONS: Omit<Location, 'id' | 'createdAt' | 'isActive'>[
   }
 ];
 
+export const BACKUP_FILE_VERSION = 1;
+
 export const SETTINGS_KEY = 'app-settings';
 
 export const DEFAULT_SETTINGS: Settings = {
