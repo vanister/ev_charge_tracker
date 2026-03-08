@@ -6,7 +6,7 @@ import { useImmerState } from '../../hooks/useImmerState';
 import { Button } from '../../components/Button';
 import { FormFooter } from '../../components/FormFooter';
 import { LocationForm } from './LocationForm';
-import { DEFAULT_LOCATION_FORM_DATA, type LocationFormData } from './locationHelpers';
+import { DEFAULT_LOCATION_FORM_DATA, migrateColorToHex, type LocationFormData } from './locationHelpers';
 import { LOCATION_COLOR_HEX } from '../../constants';
 import type { IconName } from '../../types/shared-types';
 
@@ -74,7 +74,7 @@ export function LocationDetails() {
       setFormState((draft) => {
         draft.name = location.name;
         draft.icon = location.icon;
-        draft.color = location.color;
+        draft.color = migrateColorToHex(location.color);
         draft.defaultRate = location.defaultRate.toString();
         draft.isInitialized = true;
       });
@@ -101,7 +101,7 @@ export function LocationDetails() {
     const locationInput = {
       name: formState.name.trim(),
       icon: (formState.icon as IconName) || 'map-pin',
-      color: formState.color || LOCATION_COLOR_HEX.teal,
+      color: migrateColorToHex(formState.color || LOCATION_COLOR_HEX.teal),
       defaultRate: +formState.defaultRate || 0
     };
     const result = isEditMode

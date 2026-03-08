@@ -44,13 +44,6 @@ const sizeClasses: Record<IconSize, string> = {
   lg: 'w-6 h-6'
 };
 
-// Named color fallback for legacy data stored before hex migration
-const namedColorClasses: Record<string, string> = {
-  teal: 'text-teal-500',
-  slate: 'text-slate-500',
-  purple: 'text-purple-400',
-  orange: 'text-orange-400'
-};
 
 const iconMap: Record<IconName, React.FC<LucideProps>> = {
   home: Home,
@@ -86,13 +79,11 @@ export function Icon(props: IconProps) {
   const IconComponent = iconMap[name];
   if (!IconComponent) return null;
 
-  const isHex = color?.startsWith('#');
-  const colorClass = !isHex && color ? namedColorClasses[color] || '' : '';
-  const colorStyle = isHex ? { color } : undefined;
+  const colorStyle = color ? { color } : undefined;
 
   return (
     <IconComponent
-      className={clsx(sizeClasses[size], colorClass, className)}
+      className={clsx(sizeClasses[size], className)}
       style={colorStyle}
     />
   );
