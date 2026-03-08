@@ -14,6 +14,7 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
   const navigate = useNavigate();
   const { getSettings } = useSettings();
   const [onboardingComplete, setOnboardingComplete] = useState(false);
+  const [restoreError, setRestoreError] = useState<string | null>(null);
 
   useEffect(() => {
     async function load() {
@@ -45,7 +46,11 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
           label="Restore from backup"
           skipConfirm={!onboardingComplete}
           onSuccess={() => navigate('/', { replace: true })}
+          onError={setRestoreError}
         />
+        {restoreError && (
+          <p className="text-sm text-red-600 dark:text-red-400">{restoreError}</p>
+        )}
       </div>
     </div>
   );

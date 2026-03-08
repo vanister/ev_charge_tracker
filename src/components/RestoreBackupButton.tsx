@@ -5,6 +5,7 @@ import { FileSelect } from './FileSelect';
 
 type RestoreBackupButtonProps = {
   onSuccess: () => void | Promise<void>;
+  onError?: (error: string | null) => void;
   label?: string;
   disabled?: boolean;
   className?: string;
@@ -14,18 +15,17 @@ type RestoreBackupButtonProps = {
 export function RestoreBackupButton(props: RestoreBackupButtonProps) {
   const { readBackupFile, restoreBackup } = useBackup();
   const [isRestoring, setIsRestoring] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const fileSelectRef = useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
-    setError(null);
+    props.onError?.(null);
     fileSelectRef.current?.click();
   };
 
   const handleFileSelected = async (file: File) => {
     const readResult = await readBackupFile(file);
     if (!readResult.success) {
-      setError(readResult.error);
+      props.onError?.(readResult.error);
       return;
     }
 
@@ -39,7 +39,7 @@ export function RestoreBackupButton(props: RestoreBackupButtonProps) {
 
     if (!restoreResult.success) {
       setIsRestoring(false);
-      setError(`Restore failed: ${restoreResult.error}`);
+      props.onError?.(`Restore failed: ${restoreResult.error}`);
       return;
     }
 
@@ -58,9 +58,6 @@ export function RestoreBackupButton(props: RestoreBackupButtonProps) {
       >
         {isRestoring ? 'Restoring…' : (props.label ?? 'Restore from backup')}
       </Button>
-      {error && (
-        <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-      )}
     </>
   );
 }
