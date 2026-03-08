@@ -43,7 +43,7 @@ export function buildChartData(
   const locationConfigs: LocationChartConfig[] = locations.map((loc) => ({
     locationId: loc.id,
     name: loc.name,
-    color: LOCATION_COLOR_HEX[loc.color] ?? '#64748b'
+    color: loc.color || LOCATION_COLOR_HEX.slate
   }));
 
   return { days, locationConfigs };

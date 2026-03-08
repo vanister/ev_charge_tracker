@@ -1,32 +1,7 @@
 import clsx from 'clsx';
-import {
-  Home,
-  Building,
-  MapPin,
-  Zap,
-  Car,
-  Menu,
-  X,
-  Plus,
-  ChevronLeft,
-  Settings,
-  Sun,
-  Moon,
-  Monitor,
-  Edit,
-  Trash2,
-  Calendar,
-  Filter,
-  ChevronDown,
-  DollarSign,
-  TrendingUp,
-  Activity,
-  CheckCircle,
-  XCircle,
-  AlertTriangle,
-  Info
-} from 'lucide-react';
+import { type LucideProps } from 'lucide-react';
 import { type IconName } from '../types/shared-types';
+import { iconMap } from './iconMap';
 
 type IconSize = 'sm' | 'md' | 'lg';
 
@@ -43,72 +18,21 @@ const sizeClasses: Record<IconSize, string> = {
   lg: 'w-6 h-6'
 };
 
-const colorClasses: Record<string, string> = {
-  teal: 'text-teal-500',
-  slate: 'text-slate-500',
-  purple: 'text-purple-400',
-  orange: 'text-orange-400'
-};
-
 export function Icon(props: IconProps) {
   const { name, size = 'md', color, className = '' } = props;
 
-  const sizeClass = sizeClasses[size];
-  const colorClass = color ? colorClasses[color] || '' : '';
-  const combinedClassName = clsx(sizeClass, colorClass, className);
+  const IconComponent: React.FC<LucideProps> | undefined = iconMap[name];
 
-  switch (name) {
-    case 'home':
-      return <Home className={combinedClassName} />;
-    case 'building':
-      return <Building className={combinedClassName} />;
-    case 'map-pin':
-      return <MapPin className={combinedClassName} />;
-    case 'zap':
-      return <Zap className={combinedClassName} />;
-    case 'car':
-      return <Car className={combinedClassName} />;
-    case 'menu':
-      return <Menu className={combinedClassName} />;
-    case 'x':
-      return <X className={combinedClassName} />;
-    case 'plus':
-      return <Plus className={combinedClassName} />;
-    case 'chevron-left':
-      return <ChevronLeft className={combinedClassName} />;
-    case 'settings':
-      return <Settings className={combinedClassName} />;
-    case 'sun':
-      return <Sun className={combinedClassName} />;
-    case 'moon':
-      return <Moon className={combinedClassName} />;
-    case 'monitor':
-      return <Monitor className={combinedClassName} />;
-    case 'edit':
-      return <Edit className={combinedClassName} />;
-    case 'trash-2':
-      return <Trash2 className={combinedClassName} />;
-    case 'calendar':
-      return <Calendar className={combinedClassName} />;
-    case 'filter':
-      return <Filter className={combinedClassName} />;
-    case 'chevron-down':
-      return <ChevronDown className={combinedClassName} />;
-    case 'dollar-sign':
-      return <DollarSign className={combinedClassName} />;
-    case 'trending-up':
-      return <TrendingUp className={combinedClassName} />;
-    case 'activity':
-      return <Activity className={combinedClassName} />;
-    case 'check-circle':
-      return <CheckCircle className={combinedClassName} />;
-    case 'x-circle':
-      return <XCircle className={combinedClassName} />;
-    case 'alert-triangle':
-      return <AlertTriangle className={combinedClassName} />;
-    case 'info':
-      return <Info className={combinedClassName} />;
-    default:
-      return null;
+  if (!IconComponent) {
+    return null;
   }
+
+  const colorStyle = color ? { color } : undefined;
+
+  return (
+    <IconComponent
+      className={clsx(sizeClasses[size], className)}
+      style={colorStyle}
+    />
+  );
 }
