@@ -15,8 +15,8 @@ export function ExportRestoreSectionBody() {
 
   useNavigationGuard({
     enabled: isExporting || isRestoring,
-    message:
-      'A backup operation is in progress. Leaving now may corrupt your data. Are you sure you want to leave?',
+    message: () =>
+      `A ${isExporting ? 'backup export' : 'restore'} is in progress. Leaving now may corrupt your data. Are you sure you want to leave?`,
   });
 
   const handleExport = async () => {
