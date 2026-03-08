@@ -1,4 +1,5 @@
 import { FormInput } from '../../components/FormInput';
+import { FormTextarea } from '../../components/FormTextarea';
 import type { VehicleFormData } from './vehicleHelpers';
 
 type VehicleFormProps = {
@@ -63,6 +64,51 @@ export function VehicleForm(props: VehicleFormProps) {
         value={props.formData.name}
         onChange={(e) => props.onChange('name', e.target.value)}
         placeholder="My EV (optional)"
+        disabled={props.isLoading}
+      />
+
+      <FormInput
+        id="vehicle-trim"
+        label="Trim"
+        type="text"
+        value={props.formData.trim}
+        onChange={(e) => props.onChange('trim', e.target.value)}
+        placeholder="Long Range (optional)"
+        disabled={props.isLoading}
+      />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <FormInput
+          id="vehicle-battery-capacity"
+          label="Battery Capacity (kWh)"
+          type="number"
+          min="1"
+          value={props.formData.batteryCapacity}
+          onChange={(e) => props.onChange('batteryCapacity', e.target.value)}
+          placeholder="75 (optional)"
+          disabled={props.isLoading}
+        />
+
+        <FormInput
+          id="vehicle-range"
+          label="Range (mi)"
+          type="number"
+          min="1"
+          value={props.formData.range}
+          onChange={(e) => props.onChange('range', e.target.value)}
+          placeholder="358 (optional)"
+          disabled={props.isLoading}
+        />
+      </div>
+
+      <FormTextarea
+        id="vehicle-notes"
+        label="Notes"
+        value={props.formData.notes}
+        onChange={(e) => props.onChange('notes', e.target.value)}
+        placeholder="Any notes about this vehicle (optional)"
+        maxLength={1000}
+        rows={3}
         disabled={props.isLoading}
       />
 

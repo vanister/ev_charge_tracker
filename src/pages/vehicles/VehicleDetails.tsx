@@ -74,6 +74,10 @@ export function VehicleDetails() {
         draft.make = vehicle.make;
         draft.model = vehicle.model;
         draft.name = vehicle.name || '';
+        draft.trim = vehicle.trim || '';
+        draft.batteryCapacity = vehicle.batteryCapacity?.toString() || '';
+        draft.range = vehicle.range?.toString() || '';
+        draft.notes = vehicle.notes || '';
         draft.isInitialized = true;
       });
     };
@@ -96,11 +100,18 @@ export function VehicleDetails() {
       draft.error = '';
     });
 
+    const batteryCapacity = parseInt(formState.batteryCapacity, 10);
+    const range = parseInt(formState.range, 10);
+
     const vehicleInput = {
       year: parseInt(formState.year, 10),
       make: formState.make.trim(),
       model: formState.model.trim(),
       name: formState.name.trim() || undefined,
+      trim: formState.trim.trim() || undefined,
+      batteryCapacity: !isNaN(batteryCapacity) && batteryCapacity > 0 ? batteryCapacity : undefined,
+      range: !isNaN(range) && range > 0 ? range : undefined,
+      notes: formState.notes.trim() || undefined,
       icon: '🚗'
     };
 

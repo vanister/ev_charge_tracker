@@ -21,8 +21,6 @@ export function VehicleItem(props: VehicleItemProps) {
   return (
     <div className="p-4 bg-surface border border-default rounded-lg hover:border-default-hover transition-colors">
       <div className="flex items-start gap-4">
-        <div className="text-4xl">🚗</div>
-
         <div className="flex-1 min-w-0">
           <h3 className="text-lg font-semibold text-body mb-1">{displayName}</h3>
           <p className="text-sm text-body-secondary">{subtitle}</p>
