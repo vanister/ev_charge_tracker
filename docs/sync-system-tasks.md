@@ -1,4 +1,5 @@
-📋 Phase 1: Data Sync Implementation Checklist
+📋 Data Sync Implementation Checklist
+
 🔐 1. Auth Module (PKCE Flow)
 Goal: Securely obtain an access token without a backend.
  * [ ] Generate PKCE Pair: Implement utility to create a random code_verifier and a SHA-256 code_challenge.
