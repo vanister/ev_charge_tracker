@@ -16,7 +16,7 @@ export function buildChartData(
     const date = subDays(now, numDays - 1 - i);
     const base: ChartDayData = {
       dateKey: format(date, 'yyyy-MM-dd'),
-      label: format(date, 'MMM d')
+      label: format(date, 'MM/dd')
     };
     for (const loc of locations) {
       base[loc.id] = 0;
