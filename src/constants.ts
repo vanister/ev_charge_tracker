@@ -33,18 +33,10 @@ export type TimeFilterOption = (typeof TIME_FILTER_OPTIONS)[number];
 export const LOCATION_ICON_OPTIONS: IconName[] = ['home', 'building', 'map-pin', 'zap', 'car'];
 
 export const LOCATION_COLOR_OPTIONS: LocationColorOption[] = [
-  { value: 'teal', label: 'Teal', bgClass: 'bg-teal-500' },
-  { value: 'slate', label: 'Slate', bgClass: 'bg-slate-500' },
-  { value: 'purple', label: 'Purple', bgClass: 'bg-purple-400' },
-  { value: 'orange', label: 'Orange', bgClass: 'bg-orange-400' }
+  { value: '#14b8a6', label: 'Teal', bgClass: 'bg-teal-500' },
+  { value: '#64748b', label: 'Slate', bgClass: 'bg-slate-500' },
+  { value: '#c084fc', label: 'Purple', bgClass: 'bg-purple-400' },
+  { value: '#fb923c', label: 'Orange', bgClass: 'bg-orange-400' }
 ];
-
-// Hex values matching the CSS custom properties in index.css
-export const LOCATION_COLOR_HEX: Record<string, string> = {
-  teal: '#14b8a6',   // teal-500
-  slate: '#64748b',  // slate-500
-  purple: '#c084fc', // purple-400
-  orange: '#fb923c'  // orange-400
-};
 
 export const CHART_X_AXIS_INTERVAL = 4; // show a label every 5th bar (0-indexed)

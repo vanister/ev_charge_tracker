@@ -44,10 +44,10 @@ const sizeClasses: Record<IconSize, string> = {
 };
 
 const colorClasses: Record<string, string> = {
-  teal: 'text-teal-500',
-  slate: 'text-slate-500',
-  purple: 'text-purple-400',
-  orange: 'text-orange-400'
+  '#14b8a6': 'text-teal-500',
+  '#64748b': 'text-slate-500',
+  '#c084fc': 'text-purple-400',
+  '#fb923c': 'text-orange-400'
 };
 
 export function Icon(props: IconProps) {

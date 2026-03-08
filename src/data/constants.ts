@@ -6,28 +6,28 @@ export const DEFAULT_LOCATIONS: Omit<Location, 'id' | 'createdAt' | 'isActive'>[
   {
     name: 'Home',
     icon: 'home',
-    color: 'teal',
+    color: '#14b8a6',
     defaultRate: 0.15,
     order: 0
   },
   {
     name: 'DC Fast Charger',
     icon: 'zap',
-    color: 'orange',
+    color: '#fb923c',
     defaultRate: 0.35,
     order: 1
   },
   {
     name: 'Other',
     icon: 'map-pin',
-    color: 'purple',
+    color: '#c084fc',
     defaultRate: 0.11,
     order: 2
   },
   {
     name: 'Work',
     icon: 'building',
-    color: 'slate',
+    color: '#64748b',
     defaultRate: 0.17,
     order: 3
   }

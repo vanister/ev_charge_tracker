@@ -100,7 +100,7 @@ export function LocationDetails() {
     const locationInput = {
       name: formState.name.trim(),
       icon: (formState.icon as IconName) || 'map-pin',
-      color: formState.color || 'teal',
+      color: formState.color || '#14b8a6',
       defaultRate: +formState.defaultRate || 0
     };
     const result = isEditMode

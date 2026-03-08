@@ -10,7 +10,7 @@ export type LocationFormData = {
 export const DEFAULT_LOCATION_FORM_DATA: LocationFormData = {
   name: '',
   icon: 'map-pin',
-  color: 'teal',
+  color: '#14b8a6',
   defaultRate: ''
 };
 

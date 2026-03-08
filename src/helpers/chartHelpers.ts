@@ -1,7 +1,6 @@
 import { subDays, format, startOfDay } from 'date-fns';
 import type { ChargingSession, Location } from '../data/data-types';
 import type { ChartData, ChartDayData, LocationChartConfig } from '../pages/dashboard/chart-types';
-import { LOCATION_COLOR_HEX } from '../constants';
 
 export function buildChartData(
   sessions: ChargingSession[],
@@ -43,7 +42,7 @@ export function buildChartData(
   const locationConfigs: LocationChartConfig[] = locations.map((loc) => ({
     locationId: loc.id,
     name: loc.name,
-    color: LOCATION_COLOR_HEX[loc.color] ?? '#64748b'
+    color: loc.color || '#64748b'
   }));
 
   return { days, locationConfigs };
