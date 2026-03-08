@@ -15,14 +15,16 @@ export function useNavigationGuard({ enabled, message }: UseNavigationGuardOptio
   const blocker = useBlocker(enabled);
 
   useEffect(() => {
-    if (blocker.state === 'blocked') {
-      if (!window.confirm(getConfirmMessage())) {
-        blocker.reset();
-        return;
-      }
-
-      blocker.proceed();
+    if (blocker.state !== 'blocked') {
+      return;
     }
+
+    if (!window.confirm(getConfirmMessage())) {
+      blocker.reset();
+      return;
+    }
+
+    blocker.proceed();
   }, [blocker]);
 
   useEffect(() => {
