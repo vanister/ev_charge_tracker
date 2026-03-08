@@ -15,6 +15,7 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
   const { getSettings } = useSettings();
   const [onboardingComplete, setOnboardingComplete] = useState(false);
   const [restoreError, setRestoreError] = useState<string | null>(null);
+  const [isRestoring, setIsRestoring] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -35,7 +36,7 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
       />
 
       <FormFooter>
-        <Button variant="primary" onClick={props.onContinue} fullWidth className="sm:w-auto">
+        <Button variant="primary" onClick={props.onContinue} disabled={isRestoring} fullWidth className="sm:w-auto">
           Get Started
         </Button>
       </FormFooter>
@@ -46,7 +47,8 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
           label="Restore from backup"
           skipConfirm={!onboardingComplete}
           onSuccess={() => navigate('/', { replace: true })}
-          onError={setRestoreError}
+          onRestoreStart={() => setIsRestoring(true)}
+          onError={(error) => { setIsRestoring(false); setRestoreError(error); }}
         />
         {restoreError && (
           <p className="text-sm text-red-600 dark:text-red-400">{restoreError}</p>
