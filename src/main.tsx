@@ -2,7 +2,7 @@ import './index.css';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { db } from './data/db';
 import { DatabaseProvider } from './providers/DatabaseProvider';
 import { AppInitializationProvider } from './providers/AppInitializationProvider';
@@ -16,6 +16,9 @@ const onError = (error: unknown, info: React.ErrorInfo) => {
   console.error('Unhandled render error:', error, info);
 };
 
+// Catch-all route delegates all routing to App's <Routes> tree
+const router = createBrowserRouter([{ path: '*', element: <App /> }]);
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary FallbackComponent={GenericError} onError={onError}>
@@ -23,9 +26,7 @@ createRoot(document.getElementById('root')!).render(
         <DatabaseProvider db={db}>
           <ThemeProvider>
             <AppInitializationProvider>
-              <BrowserRouter>
-                <App />
-              </BrowserRouter>
+              <RouterProvider router={router} />
             </AppInitializationProvider>
           </ThemeProvider>
         </DatabaseProvider>

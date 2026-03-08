@@ -1,12 +1,31 @@
 import { useEffect } from 'react';
+import { useBlocker } from 'react-router-dom';
 
 type UseNavigationGuardOptions = {
   enabled: boolean;
+  message?: string | (() => string);
 };
 
-// useBlocker from react-router-dom requires a data router (RouterProvider) and
-// is incompatible with <BrowserRouter>. Guard only against page unload/reload.
-export function useNavigationGuard({ enabled }: UseNavigationGuardOptions) {
+export function useNavigationGuard({ enabled, message }: UseNavigationGuardOptions) {
+  const blocker = useBlocker(enabled);
+
+  useEffect(() => {
+    if (blocker.state !== 'blocked') {
+      return;
+    }
+
+    const resolved = typeof message === 'function' ? message() : message;
+    const confirmed = window.confirm(
+      resolved ?? 'Are you sure you want to leave? This may interrupt an in-progress operation.'
+    );
+
+    if (confirmed) {
+      blocker.proceed();
+    } else {
+      blocker.reset();
+    }
+  }, [blocker, message]);
+
   useEffect(() => {
     if (!enabled) {
       return;

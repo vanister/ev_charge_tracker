@@ -13,7 +13,11 @@ export function ExportRestoreSectionBody() {
   const [isRestoring, setIsRestoring] = useState(false);
   const [restoreError, setRestoreError] = useState<string | null>(null);
 
-  useNavigationGuard({ enabled: isExporting || isRestoring });
+  useNavigationGuard({
+    enabled: isExporting || isRestoring,
+    message: () =>
+      `A ${isExporting ? 'backup export' : 'restore'} is in progress. Leaving now may corrupt your data. Are you sure you want to leave?`,
+  });
 
   const handleExport = async () => {
     setIsExporting(true);
