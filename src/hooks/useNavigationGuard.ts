@@ -15,22 +15,22 @@ export function useNavigationGuard({ enabled, message }: UseNavigationGuardOptio
   const blocker = useBlocker(enabled);
 
   useEffect(() => {
-    if (blocker.state !== 'blocked') return;
+    if (blocker.state === 'blocked') {
+      if (!window.confirm(getConfirmMessage())) {
+        blocker.reset();
+        return;
+      }
 
-    if (!window.confirm(getConfirmMessage())) {
-      blocker.reset();
-      return;
+      blocker.proceed();
     }
-
-    blocker.proceed();
   }, [blocker]);
 
   useEffect(() => {
-    if (!enabled) return;
+    if (enabled) {
+      const handleBeforeUnload = (e: BeforeUnloadEvent) => e.preventDefault();
 
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => e.preventDefault();
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.addEventListener('beforeunload', handleBeforeUnload);
+      return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    }
   }, [enabled]);
 }
