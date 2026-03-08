@@ -9,6 +9,7 @@ export function ExportRestoreSectionBody() {
   const { showToast } = useToast();
   const { exportBackup } = useBackup();
   const [isExporting, setIsExporting] = useState(false);
+  const [restoreError, setRestoreError] = useState<string | null>(null);
 
   const handleExport = async () => {
     setIsExporting(true);
@@ -52,21 +53,25 @@ export function ExportRestoreSectionBody() {
         </Button>
       </div>
 
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-sm font-medium text-body">Restore from Backup</p>
-          <p className="text-xs text-body-secondary">
-            Replace all existing data from a backup file
-          </p>
-        </div>
-        <div className="flex flex-col items-end gap-1">
+      <div className="flex flex-col gap-1">
+        <div className="flex items-start justify-between">
+          <div>
+            <p className="text-sm font-medium text-body">Restore from Backup</p>
+            <p className="text-xs text-body-secondary">
+              Replace all existing data from a backup file
+            </p>
+          </div>
           <RestoreBackupButton
             label="Restore"
             disabled={isExporting}
             onSuccess={handleRestoreSuccess}
+            onError={setRestoreError}
             className="w-32"
           />
         </div>
+        {restoreError && (
+          <p className="text-sm text-red-600 dark:text-red-400">{restoreError}</p>
+        )}
       </div>
     </>
   );
