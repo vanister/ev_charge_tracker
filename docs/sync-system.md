@@ -1,4 +1,4 @@
-# High-Level Design: Data Sync System (Phase 1)
+# High-Level Design: Data Sync System
 
 ## 1. Objective
 To provide a manual, secure synchronization of the app's IndexedDB state to the user's personal cloud storage (Google Drive/iCloud), ensuring data portability and backup without a centralized backend.
@@ -54,7 +54,7 @@ To sync the data, we must convert the multi-table IndexedDB into a single transp
  * Atomic Writes: Cloud providers generally handle file updates atomically. The old backup is only replaced once the new upload is 100% complete.
  * Rate Limiting: Since this is a manual trigger, the app should disable the "Sync" button while a process is in flight to prevent duplicate requests.
 
-## 6. Implementation Milestones (Phase 1)
+## 6. Implementation Milestones
  * Auth Module: Implement the PKCE flow and token management.
  * Export/Import Module: Logic to read all IDB stores into a JSON blob and vice-versa.
  * Transport Module: The fetch logic to PUT/GET the file from the cloud provider.
