@@ -5,11 +5,10 @@ import { formatRate } from '../../utilities/formatUtils';
 
 type LocationItemProps = {
   location: Location;
-  onDelete: (id: string) => void;
 };
 
 export function LocationItem(props: LocationItemProps) {
-  const { location, onDelete } = props;
+  const { location } = props;
 
   return (
     <div className="p-4 bg-surface border border-default rounded-lg hover:border-default-hover transition-colors">
@@ -31,14 +30,6 @@ export function LocationItem(props: LocationItemProps) {
           >
             <Icon name="edit" size="sm" />
           </Link>
-          <button
-            type="button"
-            onClick={() => onDelete(location.id)}
-            className="p-2 text-body-secondary hover:text-red-500 hover:bg-background rounded-lg transition-colors"
-            aria-label="Delete location"
-          >
-            <Icon name="trash-2" size="sm" />
-          </button>
         </div>
       </div>
     </div>
