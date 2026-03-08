@@ -27,6 +27,7 @@ import {
   Info
 } from 'lucide-react';
 import { type IconName } from '../types/shared-types';
+import { LOCATION_COLOR_HEX } from '../constants';
 
 type IconSize = 'sm' | 'md' | 'lg';
 
@@ -44,10 +45,10 @@ const sizeClasses: Record<IconSize, string> = {
 };
 
 const colorClasses: Record<string, string> = {
-  '#14b8a6': 'text-teal-500',
-  '#64748b': 'text-slate-500',
-  '#c084fc': 'text-purple-400',
-  '#fb923c': 'text-orange-400'
+  [LOCATION_COLOR_HEX.teal]: 'text-teal-500',
+  [LOCATION_COLOR_HEX.slate]: 'text-slate-500',
+  [LOCATION_COLOR_HEX.purple]: 'text-purple-400',
+  [LOCATION_COLOR_HEX.orange]: 'text-orange-400'
 };
 
 export function Icon(props: IconProps) {

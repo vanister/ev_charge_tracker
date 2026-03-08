@@ -1,4 +1,5 @@
 import type { Location } from '../../data/data-types';
+import { LOCATION_COLOR_HEX } from '../../constants';
 
 export type LocationFormData = {
   name: string;
@@ -10,7 +11,7 @@ export type LocationFormData = {
 export const DEFAULT_LOCATION_FORM_DATA: LocationFormData = {
   name: '',
   icon: 'map-pin',
-  color: '#14b8a6',
+  color: LOCATION_COLOR_HEX.teal,
   defaultRate: ''
 };
 

@@ -7,6 +7,7 @@ import { Button } from '../../components/Button';
 import { FormFooter } from '../../components/FormFooter';
 import { LocationForm } from './LocationForm';
 import { DEFAULT_LOCATION_FORM_DATA, type LocationFormData } from './locationHelpers';
+import { LOCATION_COLOR_HEX } from '../../constants';
 import type { IconName } from '../../types/shared-types';
 
 type LocationDetailsState = LocationFormData & {
@@ -100,7 +101,7 @@ export function LocationDetails() {
     const locationInput = {
       name: formState.name.trim(),
       icon: (formState.icon as IconName) || 'map-pin',
-      color: formState.color || '#14b8a6',
+      color: formState.color || LOCATION_COLOR_HEX.teal,
       defaultRate: +formState.defaultRate || 0
     };
     const result = isEditMode
