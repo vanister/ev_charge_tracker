@@ -24,10 +24,10 @@ import {
   CheckCircle,
   XCircle,
   AlertTriangle,
-  Info
+  Info,
+  type LucideProps
 } from 'lucide-react';
 import { type IconName } from '../types/shared-types';
-import { LOCATION_COLOR_HEX } from '../constants';
 
 type IconSize = 'sm' | 'md' | 'lg';
 
@@ -44,72 +44,56 @@ const sizeClasses: Record<IconSize, string> = {
   lg: 'w-6 h-6'
 };
 
-const colorClasses: Record<string, string> = {
-  [LOCATION_COLOR_HEX.teal]: 'text-teal-500',
-  [LOCATION_COLOR_HEX.slate]: 'text-slate-500',
-  [LOCATION_COLOR_HEX.purple]: 'text-purple-400',
-  [LOCATION_COLOR_HEX.orange]: 'text-orange-400'
+// Named color fallback for legacy data stored before hex migration
+const namedColorClasses: Record<string, string> = {
+  teal: 'text-teal-500',
+  slate: 'text-slate-500',
+  purple: 'text-purple-400',
+  orange: 'text-orange-400'
+};
+
+const iconMap: Record<IconName, React.FC<LucideProps>> = {
+  home: Home,
+  building: Building,
+  'map-pin': MapPin,
+  zap: Zap,
+  car: Car,
+  menu: Menu,
+  x: X,
+  plus: Plus,
+  'chevron-left': ChevronLeft,
+  settings: Settings,
+  sun: Sun,
+  moon: Moon,
+  monitor: Monitor,
+  edit: Edit,
+  'trash-2': Trash2,
+  calendar: Calendar,
+  filter: Filter,
+  'chevron-down': ChevronDown,
+  'dollar-sign': DollarSign,
+  'trending-up': TrendingUp,
+  activity: Activity,
+  'check-circle': CheckCircle,
+  'x-circle': XCircle,
+  'alert-triangle': AlertTriangle,
+  info: Info
 };
 
 export function Icon(props: IconProps) {
   const { name, size = 'md', color, className = '' } = props;
 
-  const sizeClass = sizeClasses[size];
-  const colorClass = color ? colorClasses[color] || '' : '';
-  const combinedClassName = clsx(sizeClass, colorClass, className);
+  const IconComponent = iconMap[name];
+  if (!IconComponent) return null;
 
-  switch (name) {
-    case 'home':
-      return <Home className={combinedClassName} />;
-    case 'building':
-      return <Building className={combinedClassName} />;
-    case 'map-pin':
-      return <MapPin className={combinedClassName} />;
-    case 'zap':
-      return <Zap className={combinedClassName} />;
-    case 'car':
-      return <Car className={combinedClassName} />;
-    case 'menu':
-      return <Menu className={combinedClassName} />;
-    case 'x':
-      return <X className={combinedClassName} />;
-    case 'plus':
-      return <Plus className={combinedClassName} />;
-    case 'chevron-left':
-      return <ChevronLeft className={combinedClassName} />;
-    case 'settings':
-      return <Settings className={combinedClassName} />;
-    case 'sun':
-      return <Sun className={combinedClassName} />;
-    case 'moon':
-      return <Moon className={combinedClassName} />;
-    case 'monitor':
-      return <Monitor className={combinedClassName} />;
-    case 'edit':
-      return <Edit className={combinedClassName} />;
-    case 'trash-2':
-      return <Trash2 className={combinedClassName} />;
-    case 'calendar':
-      return <Calendar className={combinedClassName} />;
-    case 'filter':
-      return <Filter className={combinedClassName} />;
-    case 'chevron-down':
-      return <ChevronDown className={combinedClassName} />;
-    case 'dollar-sign':
-      return <DollarSign className={combinedClassName} />;
-    case 'trending-up':
-      return <TrendingUp className={combinedClassName} />;
-    case 'activity':
-      return <Activity className={combinedClassName} />;
-    case 'check-circle':
-      return <CheckCircle className={combinedClassName} />;
-    case 'x-circle':
-      return <XCircle className={combinedClassName} />;
-    case 'alert-triangle':
-      return <AlertTriangle className={combinedClassName} />;
-    case 'info':
-      return <Info className={combinedClassName} />;
-    default:
-      return null;
-  }
+  const isHex = color?.startsWith('#');
+  const colorClass = !isHex && color ? namedColorClasses[color] || '' : '';
+  const colorStyle = isHex ? { color } : undefined;
+
+  return (
+    <IconComponent
+      className={clsx(sizeClasses[size], colorClass, className)}
+      style={colorStyle}
+    />
+  );
 }
