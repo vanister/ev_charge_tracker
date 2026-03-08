@@ -1,33 +1,7 @@
 import clsx from 'clsx';
-import {
-  Home,
-  Building,
-  MapPin,
-  Zap,
-  Car,
-  Menu,
-  X,
-  Plus,
-  ChevronLeft,
-  Settings,
-  Sun,
-  Moon,
-  Monitor,
-  Edit,
-  Trash2,
-  Calendar,
-  Filter,
-  ChevronDown,
-  DollarSign,
-  TrendingUp,
-  Activity,
-  CheckCircle,
-  XCircle,
-  AlertTriangle,
-  Info,
-  type LucideProps
-} from 'lucide-react';
+import { type LucideProps } from 'lucide-react';
 import { type IconName } from '../types/shared-types';
+import { iconMap } from './iconMap';
 
 type IconSize = 'sm' | 'md' | 'lg';
 
@@ -44,40 +18,14 @@ const sizeClasses: Record<IconSize, string> = {
   lg: 'w-6 h-6'
 };
 
-
-const iconMap: Record<IconName, React.FC<LucideProps>> = {
-  home: Home,
-  building: Building,
-  'map-pin': MapPin,
-  zap: Zap,
-  car: Car,
-  menu: Menu,
-  x: X,
-  plus: Plus,
-  'chevron-left': ChevronLeft,
-  settings: Settings,
-  sun: Sun,
-  moon: Moon,
-  monitor: Monitor,
-  edit: Edit,
-  'trash-2': Trash2,
-  calendar: Calendar,
-  filter: Filter,
-  'chevron-down': ChevronDown,
-  'dollar-sign': DollarSign,
-  'trending-up': TrendingUp,
-  activity: Activity,
-  'check-circle': CheckCircle,
-  'x-circle': XCircle,
-  'alert-triangle': AlertTriangle,
-  info: Info
-};
-
 export function Icon(props: IconProps) {
   const { name, size = 'md', color, className = '' } = props;
 
-  const IconComponent = iconMap[name];
-  if (!IconComponent) return null;
+  const IconComponent: React.FC<LucideProps> | undefined = iconMap[name];
+
+  if (!IconComponent) {
+    return null;
+  }
 
   const colorStyle = color ? { color } : undefined;
 
