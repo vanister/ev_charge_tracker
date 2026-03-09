@@ -48,3 +48,12 @@ export const LOCATION_COLOR_OPTIONS: LocationColorOption[] = [
 ];
 
 export const CHART_X_AXIS_INTERVAL = 4; // show a label every 5th bar (0-indexed)
+
+export const OAUTH_PROVIDERS = {
+  google: {
+    authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
+    scope: 'https://www.googleapis.com/auth/drive.appdata',
+  },
+} as const;
+
+export type OAuthProvider = keyof typeof OAUTH_PROVIDERS;
