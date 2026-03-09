@@ -1,4 +1,7 @@
 import { OAUTH_PROVIDERS, type OAuthProvider } from '../constants';
+import { type Result, success, failure } from './resultUtils';
+
+const OAUTH_STATE_KEY = 'oauth_state';
 
 type AuthRequestParams = {
   provider: OAuthProvider;
@@ -29,4 +32,38 @@ export function buildAuthorizationUrl({
   });
 
   return `${authorizationEndpoint}?${params.toString()}`;
+}
+
+export function storeOAuthState(state: string): void {
+  sessionStorage.setItem(OAUTH_STATE_KEY, state);
+}
+
+export function getStoredOAuthState(): string | null {
+  return sessionStorage.getItem(OAUTH_STATE_KEY);
+}
+
+export function clearOAuthState(): void {
+  sessionStorage.removeItem(OAUTH_STATE_KEY);
+}
+
+type AuthCallbackParams = {
+  code: string;
+  state: string;
+};
+
+export function parseAuthCallback(params: URLSearchParams): Result<AuthCallbackParams> {
+  const error = params.get('error');
+
+  if (error) {
+    return failure(error);
+  }
+
+  const code = params.get('code');
+  const state = params.get('state');
+
+  if (!code || !state) {
+    return failure('Invalid callback: missing code or state');
+  }
+
+  return success({ code, state });
 }
