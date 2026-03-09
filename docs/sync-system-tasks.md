@@ -2,7 +2,7 @@
 
 ## 1. Auth Module (PKCE Flow)
 Goal: Securely obtain an access token without a backend.
- * [ ] Generate PKCE Pair: Implement utility to create a random code_verifier and a SHA-256 code_challenge.
+ * [x] Generate PKCE Pair: Implement utility to create a random code_verifier and a SHA-256 code_challenge.
  * [ ] Authorization Request: Construct the URL to redirect the user to the provider (Google/Apple) login.
  * [ ] Callback Handler: Create a listener (or a specific route) to capture the code from the URL after redirect.
  * [ ] Token Exchange: Exchange the code + code_verifier for an access_token and refresh_token.
