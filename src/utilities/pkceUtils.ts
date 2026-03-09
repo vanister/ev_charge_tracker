@@ -5,7 +5,6 @@ type PkcePair = {
   codeChallenge: string;
 };
 
-// Converts a byte array to a base64url string (URL-safe, no padding)
 function toBase64Url(bytes: Uint8Array): string {
   return btoa(String.fromCharCode(...bytes))
     .replace(/\+/g, '-')
@@ -13,7 +12,7 @@ function toBase64Url(bytes: Uint8Array): string {
     .replace(/=/g, '');
 }
 
-// 32 random bytes → 43 base64url chars, satisfying the 43–128 char PKCE spec
+// 32 bytes satisfies the 43–128 char PKCE spec after base64url encoding
 function generateCodeVerifier(c: Crypto = globalThis.crypto): string {
   const bytes = new Uint8Array(32);
   c.getRandomValues(bytes);

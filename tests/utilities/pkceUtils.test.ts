@@ -64,7 +64,6 @@ describe('generatePkcePair', () => {
   });
 
   it('returns a failure when SubtleCrypto is unavailable', async () => {
-    // Simulate a non-secure context where subtle is absent
     const insecureCrypto = {
       getRandomValues: globalThis.crypto.getRandomValues.bind(globalThis.crypto),
       subtle: undefined as unknown as SubtleCrypto,
