@@ -12,21 +12,27 @@ describe('generatePkcePair', () => {
   it('codeVerifier is 43 characters long', async () => {
     const result = await generatePkcePair();
     expect(result.success).toBe(true);
-    if (!result.success) return;
+    if (!result.success) {
+      return;
+    }
     expect(result.data.codeVerifier).toHaveLength(43);
   });
 
   it('codeVerifier contains only URL-safe base64url characters', async () => {
     const result = await generatePkcePair();
     expect(result.success).toBe(true);
-    if (!result.success) return;
+    if (!result.success) {
+      return;
+    }
     expect(result.data.codeVerifier).toMatch(BASE64URL_PATTERN);
   });
 
   it('codeChallenge is non-empty and contains only URL-safe base64url characters', async () => {
     const result = await generatePkcePair();
     expect(result.success).toBe(true);
-    if (!result.success) return;
+    if (!result.success) {
+      return;
+    }
     expect(result.data.codeChallenge.length).toBeGreaterThan(0);
     expect(result.data.codeChallenge).toMatch(BASE64URL_PATTERN);
   });
@@ -34,7 +40,9 @@ describe('generatePkcePair', () => {
   it('codeChallenge is the SHA-256 base64url hash of codeVerifier', async () => {
     const result = await generatePkcePair();
     expect(result.success).toBe(true);
-    if (!result.success) return;
+    if (!result.success) {
+      return;
+    }
 
     const { codeVerifier, codeChallenge } = result.data;
     const encoded = new TextEncoder().encode(codeVerifier);
@@ -50,7 +58,9 @@ describe('generatePkcePair', () => {
   it('codeChallenge differs from codeVerifier', async () => {
     const result = await generatePkcePair();
     expect(result.success).toBe(true);
-    if (!result.success) return;
+    if (!result.success) {
+      return;
+    }
     expect(result.data.codeChallenge).not.toBe(result.data.codeVerifier);
   });
 
@@ -58,7 +68,9 @@ describe('generatePkcePair', () => {
     const [first, second] = await Promise.all([generatePkcePair(), generatePkcePair()]);
     expect(first.success).toBe(true);
     expect(second.success).toBe(true);
-    if (!first.success || !second.success) return;
+    if (!first.success || !second.success) {
+      return;
+    }
     expect(first.data.codeVerifier).not.toBe(second.data.codeVerifier);
     expect(first.data.codeChallenge).not.toBe(second.data.codeChallenge);
   });
@@ -71,7 +83,9 @@ describe('generatePkcePair', () => {
 
     const result = await generatePkcePair(insecureCrypto);
     expect(result.success).toBe(false);
-    if (result.success) return;
+    if (result.success) {
+      return;
+    }
     expect(result.error).toMatch(/SubtleCrypto unavailable/);
   });
 
@@ -105,7 +119,9 @@ describe('generatePkcePair', () => {
 
     const result = await generatePkcePair(mockCrypto);
     expect(result.success).toBe(true);
-    if (!result.success) return;
+    if (!result.success) {
+      return;
+    }
 
     expect(mockCrypto.getRandomValues).toHaveBeenCalledOnce();
     expect(result.data.codeVerifier).toBe(expectedVerifier);
