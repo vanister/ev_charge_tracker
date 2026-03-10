@@ -5,14 +5,14 @@ Goal: Securely obtain an access token without a backend.
  * [x] Generate PKCE Pair: Implement utility to create a random code_verifier and a SHA-256 code_challenge.
  * [x] Authorization Request: Construct the URL to redirect the user to the provider (Google/Apple) login.
  * [x] Callback Handler: Create a listener (or a specific route) to capture the code from the URL after redirect.
- * [ ] Token Exchange: Exchange the code + code_verifier for an access_token and refresh_token.
- * [ ] Token Storage: Securely save the refresh_token in a dedicated IndexedDB table (e.g., system_config).
+ * [x] Token Exchange: Exchange the code + code_verifier for an access_token and refresh_token.
+ * [x] Token Storage: Securely save the refresh_token in a dedicated IndexedDB table (e.g., system_config).
 
 ## 2. Export/Import Module
 Goal: Translate your local database into a transportable format.
  * [ ] IDB Reader: Write a function to iterate through all Object Stores and pull data into a single object.
  * [ ] Schema Versioning: Add a version and lastUpdated key to the export object.
- * [ ] ~~Data Compression: (Optional but recommended) Implement CompressionStream to Gzip the JSON string.~~
+ ~~* [ ] Data Compression: (Optional but recommended) Implement CompressionStream to Gzip the JSON string.~~
  * [ ] IDB Writer: Write the "Restore" function that clears local stores and populates them from a sync file.
 
 ## 3. Transport Module

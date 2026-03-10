@@ -83,7 +83,7 @@ export async function restoreBackup(
         db.settings.bulkAdd(getRecords<Settings>('settings'))
       ]);
     });
-    return success(undefined);
+    return success();
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Failed to restore backup data.';
     return failure(msg);

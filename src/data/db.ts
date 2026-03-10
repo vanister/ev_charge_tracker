@@ -10,3 +10,7 @@ db.version(1).stores({
   settings: 'key',
   locations: 'id, isActive, createdAt, order'
 });
+
+db.version(2).stores({
+  systemConfig: 'key'
+});

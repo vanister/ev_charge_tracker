@@ -1,3 +1,15 @@
+export type Success<T> = {
+  readonly success: true;
+  readonly data: T;
+};
+
+export type Failure = {
+  readonly success: false;
+  readonly error: string;
+};
+
+export type Result<T> = Success<T> | Failure;
+
 export type ThemeMode = 'light' | 'dark' | 'system';
 
 export type DateRange = {

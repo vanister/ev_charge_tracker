@@ -124,7 +124,7 @@ export function useSessions() {
     async (id: string): Promise<Result<void>> => {
       try {
         await db.sessions.delete(id);
-        return success(undefined);
+        return success();
       } catch (err) {
         console.error('Failed to delete session:', err);
         return failure('Failed to delete session');

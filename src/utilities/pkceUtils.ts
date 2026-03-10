@@ -13,16 +13,13 @@ function toBase64Url(bytes: Uint8Array): string {
 }
 
 // 32 bytes satisfies the 43–128 char PKCE spec after base64url encoding
-function generateCodeVerifier(c: Crypto = globalThis.crypto): string {
+function generateCodeVerifier(c: Crypto = crypto): string {
   const bytes = new Uint8Array(32);
   c.getRandomValues(bytes);
   return toBase64Url(bytes);
 }
 
-async function generateCodeChallenge(
-  verifier: string,
-  c: Crypto = globalThis.crypto,
-): Promise<Result<string>> {
+async function generateCodeChallenge(verifier: string, c: Crypto = crypto): Promise<Result<string>> {
   if (!c.subtle) {
     return failure('SubtleCrypto unavailable — must run in a secure context (HTTPS or localhost)');
   }
@@ -32,7 +29,7 @@ async function generateCodeChallenge(
   return success(toBase64Url(new Uint8Array(hashBuffer)));
 }
 
-export async function generatePkcePair(c: Crypto = globalThis.crypto): Promise<Result<PkcePair>> {
+export async function generatePkcePair(c: Crypto = crypto): Promise<Result<PkcePair>> {
   const codeVerifier = generateCodeVerifier(c);
   const challengeResult = await generateCodeChallenge(codeVerifier, c);
 
@@ -40,5 +37,5 @@ export async function generatePkcePair(c: Crypto = globalThis.crypto): Promise<R
     return challengeResult;
   }
 
-  return success({ codeVerifier, codeChallenge: challengeResult.data });
+  return success({ codeVerifier, codeChallenge: challengeResult.data! });
 }
