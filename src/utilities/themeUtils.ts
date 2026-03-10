@@ -4,7 +4,7 @@ export function getSystemTheme(window: Window | undefined): 'light' | 'dark' {
   if (!window) {
     return 'light';
   }
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
 export function getStoredTheme(storage: Storage | undefined, storageKey: string): ThemeMode {

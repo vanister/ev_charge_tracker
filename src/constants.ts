@@ -34,10 +34,10 @@ export const LOCATION_ICON_OPTIONS: IconName[] = ['home', 'building', 'map-pin',
 
 // Hex values matching the CSS custom properties in index.css
 export const LOCATION_COLOR_HEX = {
-  teal: '#14b8a6',   // teal-500
-  slate: '#64748b',  // slate-500
+  teal: '#14b8a6', // teal-500
+  slate: '#64748b', // slate-500
   purple: '#c084fc', // purple-400
-  orange: '#fb923c'  // orange-400
+  orange: '#fb923c' // orange-400
 } as const;
 
 export const LOCATION_COLOR_OPTIONS: LocationColorOption[] = [
@@ -52,8 +52,9 @@ export const CHART_X_AXIS_INTERVAL = 4; // show a label every 5th bar (0-indexed
 export const OAUTH_PROVIDERS = {
   google: {
     authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
-    scope: 'https://www.googleapis.com/auth/drive.appdata',
-  },
+    tokenEndpoint: 'https://oauth2.googleapis.com/token',
+    scope: 'https://www.googleapis.com/auth/drive.appdata'
+  }
 } as const;
 
 export type OAuthProvider = keyof typeof OAUTH_PROVIDERS;

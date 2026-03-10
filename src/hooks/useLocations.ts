@@ -95,7 +95,7 @@ export function useLocations() {
           return failure(result.error);
         }
 
-        return success(undefined);
+        return success();
       } catch (err) {
         console.error('Failed to delete location:', err);
         return failure('Failed to delete location');

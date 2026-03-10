@@ -163,7 +163,7 @@ export function SessionsList() {
   };
 
   const handleDelete = async (id: string) => {
-    const confirmed = window.confirm('Are you sure you want to delete this charging session?');
+    const confirmed = confirm('Are you sure you want to delete this charging session?');
 
     if (!confirmed) {
       return;

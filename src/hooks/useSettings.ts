@@ -7,45 +7,39 @@ import { success, failure, type Result } from '../utilities/resultUtils';
 export function useSettings() {
   const { db } = useDatabase();
 
-  const getSettings = useCallback(
-    async (): Promise<Result<Settings | undefined>> => {
+  const getSettings = useCallback(async (): Promise<Result<Settings | undefined>> => {
+    try {
+      const settings = await db.settings.get(SETTINGS_KEY);
+      return success(settings);
+    } catch (err) {
+      console.error('Failed to get settings:', err);
+      return failure('Failed to load settings');
+    }
+  }, [db]);
+
+  const updateSettings = useCallback(
+    async (updates: Partial<Omit<Settings, 'key'>>): Promise<Result<boolean>> => {
       try {
-        const settings = await db.settings.get(SETTINGS_KEY);
-        return success(settings);
+        await db.settings
+          .where('key')
+          .equals(SETTINGS_KEY)
+          .modify((settings) => {
+            // must mutate the existing object for Dexie to detect the change
+            Object.assign(settings, updates);
+          });
+
+        return success(true);
       } catch (err) {
-        console.error('Failed to get settings:', err);
-        return failure('Failed to load settings');
+        console.error('Failed to update settings:', err);
+        return failure('Failed to update settings');
       }
     },
     [db]
   );
 
-  const updateSettings = async (
-    updates: Partial<Omit<Settings, 'key'>>
-  ): Promise<Result<Settings>> => {
-    try {
-      const current = await db.settings.get(SETTINGS_KEY);
-
-      if (!current) {
-        return failure('Settings not found');
-      }
-
-      const updated: Settings = {
-        ...current,
-        ...updates
-      };
-
-      await db.settings.put(updated);
-      return success(updated);
-    } catch (err) {
-      console.error('Failed to update settings:', err);
-      return failure('Failed to update settings');
-    }
-  };
-
-  const completeOnboarding = async (): Promise<Result<Settings>> => {
-    return updateSettings({ onboardingComplete: true });
-  };
+  const completeOnboarding = useCallback(async (): Promise<void> => {
+    await updateSettings({ onboardingComplete: true });
+  }, [updateSettings]);
 
   return {
     getSettings,

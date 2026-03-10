@@ -46,7 +46,7 @@ describe('generatePkcePair', () => {
 
     const { codeVerifier, codeChallenge } = result.data;
     const encoded = new TextEncoder().encode(codeVerifier);
-    const hashBuffer = await globalThis.crypto.subtle.digest('SHA-256', encoded);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', encoded);
     const expected = btoa(String.fromCharCode(...new Uint8Array(hashBuffer)))
       .replace(/\+/g, '-')
       .replace(/\//g, '_')
@@ -77,7 +77,7 @@ describe('generatePkcePair', () => {
 
   it('returns a failure when SubtleCrypto is unavailable', async () => {
     const insecureCrypto = {
-      getRandomValues: globalThis.crypto.getRandomValues.bind(globalThis.crypto),
+      getRandomValues: crypto.getRandomValues.bind(crypto),
       subtle: undefined as unknown as SubtleCrypto,
     } as Crypto;
 
@@ -99,7 +99,7 @@ describe('generatePkcePair', () => {
       .replace(/\//g, '_')
       .replace(/=/g, '');
 
-    const hashBuffer = await globalThis.crypto.subtle.digest(
+    const hashBuffer = await crypto.subtle.digest(
       'SHA-256',
       new TextEncoder().encode(expectedVerifier),
     );
@@ -113,8 +113,8 @@ describe('generatePkcePair', () => {
         buffer.set(FIXED_BYTES);
         return buffer;
       }),
-      subtle: globalThis.crypto.subtle,
-      randomUUID: globalThis.crypto.randomUUID.bind(globalThis.crypto),
+      subtle: crypto.subtle,
+      randomUUID: crypto.randomUUID.bind(crypto),
     } as unknown as Crypto;
 
     const result = await generatePkcePair(mockCrypto);

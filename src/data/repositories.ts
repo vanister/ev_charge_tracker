@@ -1,6 +1,6 @@
 import { generateId } from '../utilities/dataUtils';
-import { DEFAULT_LOCATIONS, DEFAULT_SETTINGS, SETTINGS_KEY } from './constants';
-import type { ActiveState, EvChargTrackerDb, Location, Settings } from './data-types';
+import { DEFAULT_LOCATIONS, DEFAULT_SETTINGS, DEFAULT_SYSTEM_CONFIG, SETTINGS_KEY, SYSTEM_CONFIG_KEY } from './constants';
+import type { ActiveState, EvChargTrackerDb, Location, Settings, SystemConfig } from './data-types';
 
 /******************************************************************************************
   Simple repository functions to abstract away direct db access from the rest of the app 
@@ -28,6 +28,19 @@ export async function seedDefaultLocations(db: EvChargTrackerDb): Promise<void> 
   })).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
   await db.locations.bulkPut(locations);
+}
+
+export async function loadSystemConfig(db: EvChargTrackerDb): Promise<SystemConfig> {
+  const existing = await db.systemConfig.get(SYSTEM_CONFIG_KEY);
+
+  if (existing) {
+    return existing;
+  }
+
+  const defaultConfig = { ...DEFAULT_SYSTEM_CONFIG };
+  await db.systemConfig.add(defaultConfig);
+
+  return defaultConfig;
 }
 
 export async function loadSettings(db: EvChargTrackerDb): Promise<Settings> {

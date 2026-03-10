@@ -1,4 +1,4 @@
-# High-Level Design: Data Sync System
+˝# High-Level Design: Data Sync System
 
 ## 1. Objective
 To provide a manual, secure synchronization of the app's IndexedDB state to the user's personal cloud storage (Google Drive/iCloud), ensuring data portability and backup without a centralized backend.
@@ -23,12 +23,12 @@ Before moving the entire database, the system performs a lightweight "head" requ
  * Compare the remote_modified_at timestamp with the local_last_sync timestamp stored in IndexedDB.
 
 ### Step C: Resolution Logic
-| Condition | Logic | Action |
-|---|---|---|
-| No Remote File | Local is the only truth. | Upload immediately. |
-| Local > Remote | Local has newer changes. | Upload (Overwrite remote). |
+| Condition      | Logic                        | Action                                                   |
+| -------------- | ---------------------------- | -------------------------------------------------------- |
+| No Remote File | Local is the only truth.     | Upload immediately.                                      |
+| Local > Remote | Local has newer changes.     | Upload (Overwrite remote).                               |
 | Remote > Local | Cloud was updated elsewhere. | Prompt User: "Download from Cloud" or "Overwrite Cloud". |
-| Equal | Everything is current. | Show "Up to Date" status. |
+| Equal          | Everything is current.       | Show "Up to Date" status.                                |
 
 ## 4. Data Serialization Strategy
 To sync the data, we must convert the multi-table IndexedDB into a single transportable format.

@@ -28,7 +28,7 @@ export function VehiclesList() {
   }, [getVehicleList]);
 
   const handleDelete = async (id: string) => {
-    const confirmed = window.confirm('Are you sure you want to delete this vehicle?');
+    const confirmed = confirm('Are you sure you want to delete this vehicle?');
 
     if (!confirmed) {
       return;

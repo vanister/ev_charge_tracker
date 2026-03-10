@@ -1,7 +1,10 @@
 import { OAUTH_PROVIDERS, type OAuthProvider } from '../constants';
+import type { OAuthTokens } from '../data/data-types';
+import type { TokenExchangeConfig } from '../types/auth-types';
 import { type Result, success, failure } from './resultUtils';
 
 const OAUTH_STATE_KEY = 'oauth_state';
+const OAUTH_CODE_VERIFIER_KEY = 'oauth_code_verifier';
 
 type AuthRequestParams = {
   provider: OAuthProvider;
@@ -51,6 +54,18 @@ export function clearOAuthState(storage: Storage = sessionStorage): void {
   storage.removeItem(OAUTH_STATE_KEY);
 }
 
+export function storeCodeVerifier(verifier: string, storage: Storage = sessionStorage): void {
+  storage.setItem(OAUTH_CODE_VERIFIER_KEY, verifier);
+}
+
+export function getStoredCodeVerifier(storage: Storage = sessionStorage): string | null {
+  return storage.getItem(OAUTH_CODE_VERIFIER_KEY);
+}
+
+export function clearCodeVerifier(storage: Storage = sessionStorage): void {
+  storage.removeItem(OAUTH_CODE_VERIFIER_KEY);
+}
+
 export function parseAuthCallback(params: URLSearchParams): Result<AuthCallbackParams> {
   const error = params.get('error');
 
@@ -66,4 +81,52 @@ export function parseAuthCallback(params: URLSearchParams): Result<AuthCallbackP
   }
 
   return success({ code, state });
+}
+
+export async function exchangeCodeForTokens({
+  provider,
+  code,
+  codeVerifier,
+  clientId,
+  redirectUri
+}: TokenExchangeConfig): Promise<Result<OAuthTokens>> {
+  const { tokenEndpoint } = OAUTH_PROVIDERS[provider];
+
+  const body = new URLSearchParams({
+    grant_type: 'authorization_code',
+    code,
+    code_verifier: codeVerifier,
+    client_id: clientId,
+    redirect_uri: redirectUri
+  });
+
+  try {
+    const response = await fetch(tokenEndpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const message = errorData?.error_description ?? errorData?.error ?? `Token exchange failed (${response.status})`;
+      return failure(message);
+    }
+
+    const data = await response.json();
+    const { access_token, refresh_token, expires_in } = data;
+
+    if (!access_token || !refresh_token || !expires_in) {
+      return failure('Invalid token response: missing required fields');
+    }
+
+    return success({
+      accessToken: access_token,
+      refreshToken: refresh_token,
+      expiresAt: Date.now() + expires_in * 1000
+    });
+  } catch (err) {
+    console.error('Network error during token exchange:', err);
+    return failure(`Network error during token exchange: ${err instanceof Error ? err.message : 'Unknown error'}`);
+  }
 }

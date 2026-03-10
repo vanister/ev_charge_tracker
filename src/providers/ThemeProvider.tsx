@@ -18,7 +18,7 @@ export function ThemeProvider(props: ThemeProviderProps) {
   const resolvedTheme: 'light' | 'dark' = theme === 'system' ? systemTheme : theme;
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const mediaQuery = matchMedia('(prefers-color-scheme: dark)');
 
     const handleChange = (event: MediaQueryListEvent) => {
       const newSystemTheme = event.matches ? 'dark' : 'light';

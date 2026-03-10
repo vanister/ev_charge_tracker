@@ -15,7 +15,7 @@ export function useNavigationGuard({ enabled, message }: UseNavigationGuardOptio
     }
 
     const resolved = typeof message === 'function' ? message() : message;
-    const confirmed = window.confirm(
+    const confirmed = confirm(
       resolved ?? 'Are you sure you want to leave? This may interrupt an in-progress operation.'
     );
 
@@ -33,7 +33,7 @@ export function useNavigationGuard({ enabled, message }: UseNavigationGuardOptio
 
     const handleBeforeUnload = (e: BeforeUnloadEvent) => e.preventDefault();
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    addEventListener('beforeunload', handleBeforeUnload);
+    return () => removeEventListener('beforeunload', handleBeforeUnload);
   }, [enabled]);
 }

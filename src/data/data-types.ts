@@ -1,5 +1,6 @@
 import type { Dexie, EntityTable } from 'dexie';
 import type { IconName } from '../types/shared-types';
+import type { OAuthProvider } from '../constants';
 
 export type ActiveState = 0 | 1;
 
@@ -45,9 +46,27 @@ export type Settings = {
   onboardingComplete: boolean;
 };
 
+export type SystemConfig = {
+  key: 'system-config';
+  oAuthSettings: Record<OAuthProvider, ProviderConfig>;
+  oauthTokens?: Record<OAuthProvider, OAuthTokens>;
+};
+
+export type ProviderConfig = {
+  provider: OAuthProvider;
+  clientId: string;
+};
+
+export type OAuthTokens = {
+  accessToken: string;
+  refreshToken: string;
+  expiresAt: number;
+};
+
 export type EvChargTrackerDb = Dexie & {
   vehicles: EntityTable<Vehicle, 'id'>;
   sessions: EntityTable<ChargingSession, 'id'>;
   settings: EntityTable<Settings, 'key'>;
   locations: EntityTable<Location, 'id'>;
+  systemConfig: EntityTable<SystemConfig, 'key'>;
 };

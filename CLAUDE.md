@@ -12,7 +12,7 @@ A Vite + TypeScript + React 19 PWA for tracking EV charging sessions. Mobile-foc
 
 - Guard clauses, early returns, avoid deep nesting
 - No inline returns in `if` statements
-- Comment the why not the how
+- Comment the why not the how, except for `// todo comments`
 - No documentation such as JSDocs or XML Comments unless explicitly asked to provide
 - Simple, concise, single-purpose code
 - Single responsibility components, helpers and utilities
@@ -57,22 +57,22 @@ A Vite + TypeScript + React 19 PWA for tracking EV charging sessions. Mobile-foc
 
 ## Technology Stack
 
-| Layer | Library / Tool | Version |
-|---|---|---|
-| Build | Vite | ^7 |
-| UI framework | React | ^19 |
-| Language | TypeScript | ~5.9 |
-| Routing | React Router | ^7 |
-| Database | Dexie.js (IndexedDB) | ^4 |
-| Styling | Tailwind CSS v4 | ^4 (via `@tailwindcss/vite` plugin) |
-| Icons | Lucide React | ^0.563 |
-| Charts | Recharts | ^3 (installed, not fully used yet) |
-| Dates | date-fns | ^4 |
-| Immutable state | Immer | ^11 |
-| Classnames | clsx | ^2 |
-| Error boundary | react-error-boundary | ^6 |
-| PWA | vite-plugin-pwa | ^1 |
-| Deployment | Cloudflare / Wrangler | ^4 |
+| Layer           | Library / Tool        | Version                             |
+| --------------- | --------------------- | ----------------------------------- |
+| Build           | Vite                  | ^7                                  |
+| UI framework    | React                 | ^19                                 |
+| Language        | TypeScript            | ~5.9                                |
+| Routing         | React Router          | ^7                                  |
+| Database        | Dexie.js (IndexedDB)  | ^4                                  |
+| Styling         | Tailwind CSS v4       | ^4 (via `@tailwindcss/vite` plugin) |
+| Icons           | Lucide React          | ^0.563                              |
+| Charts          | Recharts              | ^3 (installed, not fully used yet)  |
+| Dates           | date-fns              | ^4                                  |
+| Immutable state | Immer                 | ^11                                 |
+| Classnames      | clsx                  | ^2                                  |
+| Error boundary  | react-error-boundary  | ^6                                  |
+| PWA             | vite-plugin-pwa       | ^1                                  |
+| Deployment      | Cloudflare / Wrangler | ^4                                  |
 
 ---
 

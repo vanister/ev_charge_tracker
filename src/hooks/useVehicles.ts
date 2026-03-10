@@ -98,7 +98,7 @@ export function useVehicles() {
           return failure(result.error);
         }
 
-        return success(undefined);
+        return success();
       } catch (err) {
         console.error('Failed to delete vehicle:', err);
         return failure('Failed to delete vehicle');
