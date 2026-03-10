@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FullscreenLoader } from '../../components/FullscreenLoader';
 import { parseAuthCallback, getStoredOAuthState, clearOAuthState } from '../../utilities/authUtils';
 
-export function OAuthCallbackPage() {
+export function OAuthCallback() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 

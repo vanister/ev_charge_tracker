@@ -5,7 +5,7 @@ import { Layout } from './pages/layout/Layout';
 import { ErrorPage } from './pages/ErrorPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { Onboarding } from './pages/onboarding/Onboarding';
-import { OAuthCallbackPage } from './pages/auth/OAuthCallbackPage';
+import { OAuthCallback } from './pages/auth/OAuthCallback';
 import { Dashboard } from './pages/dashboard/Dashboard';
 import { SessionsList } from './pages/sessions/SessionsList';
 import { SessionDetails } from './pages/sessions/SessionDetails';
@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
     children: [
       { path: '/error', element: <ErrorPage /> },
       { path: '/onboarding', element: <Onboarding /> },
-      { path: '/auth/callback', element: <OAuthCallbackPage /> },
+      { path: '/auth/callback', element: <OAuthCallback /> },
       {
         element: <RequireOnboarding />,
         children: [
@@ -37,11 +37,11 @@ export const router = createBrowserRouter([
               { path: '/settings', element: <Settings /> },
               { path: '/settings/locations/add', element: <LocationDetails /> },
               { path: '/settings/locations/:id/edit', element: <LocationDetails /> },
-              { path: '*', element: <NotFoundPage /> },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+              { path: '*', element: <NotFoundPage /> }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 ]);

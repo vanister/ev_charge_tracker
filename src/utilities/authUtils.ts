@@ -12,12 +12,17 @@ type AuthRequestParams = {
   state: string;
 };
 
+type AuthCallbackParams = {
+  code: string;
+  state: string;
+};
+
 export function buildAuthorizationUrl({
   provider,
   clientId,
   redirectUri,
   codeChallenge,
-  state,
+  state
 }: AuthRequestParams): string {
   const { authorizationEndpoint, scope } = OAUTH_PROVIDERS[provider];
 
@@ -28,28 +33,23 @@ export function buildAuthorizationUrl({
     scope,
     code_challenge: codeChallenge,
     code_challenge_method: 'S256',
-    state,
+    state
   });
 
   return `${authorizationEndpoint}?${params.toString()}`;
 }
 
-export function storeOAuthState(state: string): void {
-  sessionStorage.setItem(OAUTH_STATE_KEY, state);
+export function storeOAuthState(state: string, storage: Storage = sessionStorage): void {
+  storage.setItem(OAUTH_STATE_KEY, state);
 }
 
-export function getStoredOAuthState(): string | null {
-  return sessionStorage.getItem(OAUTH_STATE_KEY);
+export function getStoredOAuthState(storage: Storage = sessionStorage): string | null {
+  return storage.getItem(OAUTH_STATE_KEY);
 }
 
-export function clearOAuthState(): void {
-  sessionStorage.removeItem(OAUTH_STATE_KEY);
+export function clearOAuthState(storage: Storage = sessionStorage): void {
+  storage.removeItem(OAUTH_STATE_KEY);
 }
-
-type AuthCallbackParams = {
-  code: string;
-  state: string;
-};
 
 export function parseAuthCallback(params: URLSearchParams): Result<AuthCallbackParams> {
   const error = params.get('error');

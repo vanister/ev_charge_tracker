@@ -1,4 +1,3 @@
-// @vitest-environment jsdom
 import { describe, it, expect, beforeEach } from 'vitest';
 import {
   buildAuthorizationUrl,
@@ -119,22 +118,32 @@ describe('parseAuthCallback', () => {
 });
 
 describe('OAuth state helpers', () => {
+  let storage: Storage;
+
   beforeEach(() => {
-    clearOAuthState();
+    const map = new Map<string, string>();
+    storage = {
+      getItem: (key) => map.get(key) ?? null,
+      setItem: (key, value) => { map.set(key, value); },
+      removeItem: (key) => { map.delete(key); },
+      clear: () => { map.clear(); },
+      key: (index) => [...map.keys()][index] ?? null,
+      get length() { return map.size; },
+    };
   });
 
   it('getStoredOAuthState returns null when nothing is stored', () => {
-    expect(getStoredOAuthState()).toBeNull();
+    expect(getStoredOAuthState(storage)).toBeNull();
   });
 
   it('storeOAuthState and getStoredOAuthState round-trip correctly', () => {
-    storeOAuthState('my-state-value');
-    expect(getStoredOAuthState()).toBe('my-state-value');
+    storeOAuthState('my-state-value', storage);
+    expect(getStoredOAuthState(storage)).toBe('my-state-value');
   });
 
   it('clearOAuthState removes the stored value', () => {
-    storeOAuthState('my-state-value');
-    clearOAuthState();
-    expect(getStoredOAuthState()).toBeNull();
+    storeOAuthState('my-state-value', storage);
+    clearOAuthState(storage);
+    expect(getStoredOAuthState(storage)).toBeNull();
   });
 });
