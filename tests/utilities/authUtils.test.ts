@@ -1,5 +1,11 @@
-import { describe, it, expect } from 'vitest';
-import { buildAuthorizationUrl } from '../../src/utilities/authUtils';
+import { describe, it, expect, beforeEach } from 'vitest';
+import {
+  buildAuthorizationUrl,
+  parseAuthCallback,
+  storeOAuthState,
+  getStoredOAuthState,
+  clearOAuthState,
+} from '../../src/utilities/authUtils';
 import { OAUTH_PROVIDERS } from '../../src/constants';
 
 const BASE_PARAMS = {
@@ -65,5 +71,79 @@ describe('buildAuthorizationUrl', () => {
     const url = buildAuthorizationUrl({ ...BASE_PARAMS, state: 'other-csrf-token' });
     const { params } = parseResult(url);
     expect(params.get('state')).toBe('other-csrf-token');
+  });
+});
+
+describe('parseAuthCallback', () => {
+  it('returns success with code and state for a valid callback', () => {
+    const params = new URLSearchParams({ code: 'auth-code-123', state: 'csrf-token-abc' });
+    const result = parseAuthCallback(params);
+    expect(result.success).toBe(true);
+    if (!result.success) {
+      return;
+    }
+    expect(result.data.code).toBe('auth-code-123');
+    expect(result.data.state).toBe('csrf-token-abc');
+  });
+
+  it('returns failure when the provider sends an error param', () => {
+    const params = new URLSearchParams({ error: 'access_denied' });
+    const result = parseAuthCallback(params);
+    expect(result.success).toBe(false);
+    if (result.success) {
+      return;
+    }
+    expect(result.error).toBe('access_denied');
+  });
+
+  it('returns failure when code is missing', () => {
+    const params = new URLSearchParams({ state: 'csrf-token-abc' });
+    const result = parseAuthCallback(params);
+    expect(result.success).toBe(false);
+    if (result.success) {
+      return;
+    }
+    expect(result.error).toMatch(/missing code or state/);
+  });
+
+  it('returns failure when state is missing', () => {
+    const params = new URLSearchParams({ code: 'auth-code-123' });
+    const result = parseAuthCallback(params);
+    expect(result.success).toBe(false);
+    if (result.success) {
+      return;
+    }
+    expect(result.error).toMatch(/missing code or state/);
+  });
+});
+
+describe('OAuth state helpers', () => {
+  let storage: Storage;
+
+  beforeEach(() => {
+    const map = new Map<string, string>();
+    storage = {
+      getItem: (key) => map.get(key) ?? null,
+      setItem: (key, value) => { map.set(key, value); },
+      removeItem: (key) => { map.delete(key); },
+      clear: () => { map.clear(); },
+      key: (index) => [...map.keys()][index] ?? null,
+      get length() { return map.size; },
+    };
+  });
+
+  it('getStoredOAuthState returns null when nothing is stored', () => {
+    expect(getStoredOAuthState(storage)).toBeNull();
+  });
+
+  it('storeOAuthState and getStoredOAuthState round-trip correctly', () => {
+    storeOAuthState('my-state-value', storage);
+    expect(getStoredOAuthState(storage)).toBe('my-state-value');
+  });
+
+  it('clearOAuthState removes the stored value', () => {
+    storeOAuthState('my-state-value', storage);
+    clearOAuthState(storage);
+    expect(getStoredOAuthState(storage)).toBeNull();
   });
 });

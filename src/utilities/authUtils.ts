@@ -1,4 +1,7 @@
 import { OAUTH_PROVIDERS, type OAuthProvider } from '../constants';
+import { type Result, success, failure } from './resultUtils';
+
+const OAUTH_STATE_KEY = 'oauth_state';
 
 type AuthRequestParams = {
   provider: OAuthProvider;
@@ -9,12 +12,17 @@ type AuthRequestParams = {
   state: string;
 };
 
+type AuthCallbackParams = {
+  code: string;
+  state: string;
+};
+
 export function buildAuthorizationUrl({
   provider,
   clientId,
   redirectUri,
   codeChallenge,
-  state,
+  state
 }: AuthRequestParams): string {
   const { authorizationEndpoint, scope } = OAUTH_PROVIDERS[provider];
 
@@ -25,8 +33,37 @@ export function buildAuthorizationUrl({
     scope,
     code_challenge: codeChallenge,
     code_challenge_method: 'S256',
-    state,
+    state
   });
 
   return `${authorizationEndpoint}?${params.toString()}`;
+}
+
+export function storeOAuthState(state: string, storage: Storage = sessionStorage): void {
+  storage.setItem(OAUTH_STATE_KEY, state);
+}
+
+export function getStoredOAuthState(storage: Storage = sessionStorage): string | null {
+  return storage.getItem(OAUTH_STATE_KEY);
+}
+
+export function clearOAuthState(storage: Storage = sessionStorage): void {
+  storage.removeItem(OAUTH_STATE_KEY);
+}
+
+export function parseAuthCallback(params: URLSearchParams): Result<AuthCallbackParams> {
+  const error = params.get('error');
+
+  if (error) {
+    return failure(error);
+  }
+
+  const code = params.get('code');
+  const state = params.get('state');
+
+  if (!code || !state) {
+    return failure('Invalid callback: missing code or state');
+  }
+
+  return success({ code, state });
 }
