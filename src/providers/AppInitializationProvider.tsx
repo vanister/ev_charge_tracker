@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, type ReactNode } from 'react';
 import { useDatabase } from '../hooks/useDatabase';
 import { AppInitializationContext } from '../contexts/AppInitializationContext';
-import { loadSettings, seedDefaultLocations } from '../data/repositories';
+import { loadSettings, loadSystemConfig, seedDefaultLocations } from '../data/repositories';
 
 type AppInitializationProviderProps = {
   children: ReactNode;
@@ -27,6 +27,7 @@ export function AppInitializationProvider({ children, storage = navigator.storag
     const initialize = async () => {
       try {
         await loadSettings(db);
+        await loadSystemConfig(db);
         await seedDefaultLocations(db);
 
         if (storage?.persist) {
