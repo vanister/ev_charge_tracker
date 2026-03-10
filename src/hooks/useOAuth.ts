@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { failure, success, type Result } from '../utilities/resultUtils';
 import { useDatabase } from './useDatabase';
-import type { OAuthTokens } from '../data/data-types';
+import type { OAuthTokens, ProviderConfig } from '../data/data-types';
 import type { OAuthProvider } from '../constants';
 import { SYSTEM_CONFIG_KEY } from '../data/constants';
 import type { TokenExchangeConfig } from '../types/auth-types';
@@ -51,6 +51,25 @@ export function useOAuth() {
     [db]
   );
 
+  const getProviderConfig = useCallback(
+    async (provider: OAuthProvider): Promise<Result<ProviderConfig>> => {
+      try {
+        const systemConfig = await db.systemConfig.get(SYSTEM_CONFIG_KEY);
+        const config = systemConfig?.oAuthSettings[provider];
+
+        if (!config) {
+          return failure(`No configuration found for provider: ${provider}`);
+        }
+
+        return success(config);
+      } catch (error) {
+        console.error('Failed to get provider config:', error);
+        return failure(error instanceof Error ? error.message : 'Failed to get provider config');
+      }
+    },
+    [db]
+  );
+
   const exchangeAndSave = useCallback(
     async (tokenConfig: TokenExchangeConfig): Promise<Result<boolean>> => {
       try {
@@ -69,5 +88,5 @@ export function useOAuth() {
     [saveTokens]
   );
 
-  return { getTokens, exchangeAndSave };
+  return { getTokens, getProviderConfig, exchangeAndSave };
 }

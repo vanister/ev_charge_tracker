@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FullscreenLoader } from '../../components/FullscreenLoader';
 import { useOAuth } from '../../hooks/useOAuth';
@@ -13,9 +13,16 @@ import {
 export function OAuthCallback() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { exchangeAndSave } = useOAuth();
+  const { exchangeAndSave, getProviderConfig } = useOAuth();
+  const running = useRef(false);
 
   useEffect(() => {
+    if (running.current) {
+      return;
+    }
+
+    running.current = true;
+
     const run = async () => {
       const result = parseAuthCallback(searchParams);
 
@@ -43,8 +50,14 @@ export function OAuthCallback() {
       // Clear immediately after retrieval to prevent replay
       clearCodeVerifier();
 
-      // todo - move clientid to the settings page under sync settings later
-      const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string;
+      const providerConfigResult = await getProviderConfig('google');
+
+      if (!providerConfigResult.success) {
+        navigate('/error', { replace: true, state: { error: providerConfigResult.error } });
+        return;
+      }
+
+      const { clientId } = providerConfigResult.data;
       const redirectUri = `${location.origin}/auth/callback`;
 
       const exchangeResult = await exchangeAndSave({
@@ -64,7 +77,7 @@ export function OAuthCallback() {
     };
 
     run();
-  }, [navigate, searchParams, exchangeAndSave]);
+  }, [navigate, searchParams, exchangeAndSave, getProviderConfig]);
 
   return <FullscreenLoader description="Connecting..." />;
 }
