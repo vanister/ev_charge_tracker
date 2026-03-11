@@ -12,9 +12,7 @@ export function ChargeSessionsChart({ data }: ChargeSessionsChartProps) {
   const { days, locationConfigs } = data;
 
   // Only render locations that have at least one session in the window
-  const activeLocations = locationConfigs.filter((loc) =>
-    days.some((day) => (day[loc.locationId] as number) > 0)
-  );
+  const activeLocations = locationConfigs.filter((loc) => days.some((day) => (day[loc.locationId] as number) > 0));
 
   if (activeLocations.length === 0) {
     return null;
@@ -24,9 +22,9 @@ export function ChargeSessionsChart({ data }: ChargeSessionsChartProps) {
     <div className="mb-8">
       <SectionHeader title="Last 31 Days" />
 
-      <div className="bg-surface rounded-xl border border-default px-2 pt-4 pb-3">
+      <div className="bg-surface border-default rounded-xl border px-2 pt-4 pb-3">
         <ResponsiveContainer width="100%" height={180}>
-          <BarChart data={days} barCategoryGap="35%" margin={{ top: 4, right: 4, left: -16, bottom: 0 }}>
+          <BarChart data={days} barCategoryGap="35%" margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
             <CartesianGrid vertical={false} stroke="currentColor" strokeOpacity={0.08} />
 
             <XAxis
@@ -63,14 +61,11 @@ export function ChargeSessionsChart({ data }: ChargeSessionsChartProps) {
           </BarChart>
         </ResponsiveContainer>
 
-        <div className="flex flex-wrap gap-x-5 gap-y-1.5 mt-3 px-2 justify-center">
+        <div className="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-1.5 px-2">
           {activeLocations.map((loc) => (
             <div key={loc.locationId} className="flex items-center gap-1.5">
-              <span
-                className="inline-block w-2.5 h-2.5 rounded-sm flex-shrink-0"
-                style={{ backgroundColor: loc.color }}
-              />
-              <span className="text-xs text-body-secondary">{loc.name}</span>
+              <span className="inline-block h-2.5 w-2.5 shrink-0 rounded-sm" style={{ backgroundColor: loc.color }} />
+              <span className="text-body-secondary text-xs">{loc.name}</span>
             </div>
           ))}
         </div>
