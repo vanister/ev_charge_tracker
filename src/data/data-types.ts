@@ -1,67 +1,24 @@
 import type { Dexie, EntityTable } from 'dexie';
-import type { IconName } from '../types/shared-types';
-import type { OAuthProvider } from '../constants';
+import type { z } from 'zod';
+import type {
+  VehicleSchema,
+  LocationSchema,
+  ChargingSessionSchema,
+  SettingsSchema,
+  SystemConfigSchema,
+  ProviderConfigSchema,
+  OAuthTokensSchema
+} from './schemas';
 
 export type ActiveState = 0 | 1;
 
-export type Location = {
-  id: string;
-  name: string;
-  icon: IconName;
-  color: string;
-  defaultRate: number;
-  createdAt: number;
-  isActive: ActiveState;
-  order?: number;
-};
-
-export type Vehicle = {
-  id: string;
-  name?: string;
-  make: string;
-  model: string;
-  year: number;
-  trim?: string;
-  batteryCapacity?: number;
-  range?: number;
-  notes?: string;
-  icon: string;
-  createdAt: number;
-  isActive: ActiveState;
-};
-
-export type ChargingSession = {
-  id: string;
-  vehicleId: string;
-  locationId: string;
-  energyKwh: number;
-  ratePerKwh: number;
-  costCents: number;
-  chargedAt: number;
-  notes?: string;
-};
-
-export type Settings = {
-  key: 'app-settings';
-  onboardingComplete: boolean;
-};
-
-export type SystemConfig = {
-  key: 'system-config';
-  oAuthSettings: Record<OAuthProvider, ProviderConfig>;
-  oauthTokens?: Record<OAuthProvider, OAuthTokens>;
-};
-
-export type ProviderConfig = {
-  provider: OAuthProvider;
-  clientId: string;
-};
-
-export type OAuthTokens = {
-  accessToken: string;
-  refreshToken: string;
-  expiresAt: number;
-};
+export type Vehicle = z.infer<typeof VehicleSchema>;
+export type Location = z.infer<typeof LocationSchema>;
+export type ChargingSession = z.infer<typeof ChargingSessionSchema>;
+export type Settings = z.infer<typeof SettingsSchema>;
+export type SystemConfig = z.infer<typeof SystemConfigSchema>;
+export type ProviderConfig = z.infer<typeof ProviderConfigSchema>;
+export type OAuthTokens = z.infer<typeof OAuthTokensSchema>;
 
 export type EvChargTrackerDb = Dexie & {
   vehicles: EntityTable<Vehicle, 'id'>;
