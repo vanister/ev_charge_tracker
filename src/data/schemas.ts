@@ -4,6 +4,10 @@ import { OAUTH_PROVIDERS } from '../constants';
 
 const ActiveStateSchema = z.union([z.literal(0), z.literal(1)]);
 
+const OAuthProviderSchema = z.enum(
+  Object.keys(OAUTH_PROVIDERS) as [keyof typeof OAUTH_PROVIDERS, ...Array<keyof typeof OAUTH_PROVIDERS>]
+);
+
 export const VehicleSchema = z.object({
   id: z.string(),
   name: z.string().optional(),
@@ -46,24 +50,6 @@ export const SettingsSchema = z.object({
   key: z.literal('app-settings'),
   onboardingComplete: z.boolean()
 });
-
-const StoreExportSchema = z.discriminatedUnion('store', [
-  z.object({ store: z.literal('vehicles'), records: z.array(VehicleSchema) }),
-  z.object({ store: z.literal('sessions'), records: z.array(ChargingSessionSchema) }),
-  z.object({ store: z.literal('locations'), records: z.array(LocationSchema) }),
-  z.object({ store: z.literal('settings'), records: z.array(SettingsSchema) })
-]);
-
-export const BackupFileSchema = z.object({
-  dbVersion: z.number().int().positive(),
-  fileVersion: z.number().int().positive(),
-  timestamp: z.number(),
-  data: z.array(StoreExportSchema).length(4)
-});
-
-const OAuthProviderSchema = z.enum(
-  Object.keys(OAUTH_PROVIDERS) as [keyof typeof OAUTH_PROVIDERS, ...Array<keyof typeof OAUTH_PROVIDERS>]
-);
 
 export const ProviderConfigSchema = z.object({
   provider: OAuthProviderSchema,

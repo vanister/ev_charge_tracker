@@ -3,7 +3,7 @@ import type { Result } from './resultUtils';
 import type { ChargingSession, EvChargTrackerDb, Location, Settings, Vehicle } from '../data/data-types';
 import type { BackupFile } from '../pages/settings/settings-types';
 import { BACKUP_FILE_VERSION } from '../data/constants';
-import { BackupFileSchema } from '../data/schemas';
+import { BackupFileSchema } from '../data/backup-schema';
 
 export async function exportBackup(db: EvChargTrackerDb): Promise<Result<BackupFile>> {
   try {
