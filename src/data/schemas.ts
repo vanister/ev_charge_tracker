@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ALL_ICONS } from '../types/shared-types';
+import { OAUTH_PROVIDERS } from '../constants';
 
 const ActiveStateSchema = z.union([z.literal(0), z.literal(1)]);
 
@@ -58,4 +59,25 @@ export const BackupFileSchema = z.object({
   fileVersion: z.number().int().positive(),
   timestamp: z.number(),
   data: z.array(StoreExportSchema).length(4)
+});
+
+const OAuthProviderSchema = z.enum(
+  Object.keys(OAUTH_PROVIDERS) as [keyof typeof OAUTH_PROVIDERS, ...Array<keyof typeof OAUTH_PROVIDERS>]
+);
+
+export const ProviderConfigSchema = z.object({
+  provider: OAuthProviderSchema,
+  clientId: z.string()
+});
+
+export const OAuthTokensSchema = z.object({
+  accessToken: z.string(),
+  refreshToken: z.string(),
+  expiresAt: z.number()
+});
+
+export const SystemConfigSchema = z.object({
+  key: z.literal('system-config'),
+  oAuthSettings: z.record(OAuthProviderSchema, ProviderConfigSchema),
+  oauthTokens: z.record(OAuthProviderSchema, OAuthTokensSchema).optional()
 });
