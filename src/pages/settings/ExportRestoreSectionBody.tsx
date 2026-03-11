@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useToast } from '../../hooks/useToast';
 import { useBackup } from '../../hooks/useBackup';
 import { useNavigationGuard } from '../../hooks/useNavigationGuard';
@@ -16,7 +16,7 @@ export function ExportRestoreSectionBody() {
   useNavigationGuard({
     enabled: isExporting || isRestoring,
     message: () =>
-      `A ${isExporting ? 'backup export' : 'restore'} is in progress. Leaving now may corrupt your data. Are you sure you want to leave?`,
+      `A ${isExporting ? 'backup export' : 'restore'} is in progress. Leaving now may corrupt your data. Are you sure you want to leave?`
   });
 
   const handleExport = async () => {
@@ -47,7 +47,7 @@ export function ExportRestoreSectionBody() {
 
   const handleRestoreSuccess = () => {
     setIsRestoring(false);
-    showToast({ message: 'Restore completed successfully.', variant: 'success', persistent: true });
+    showToast({ message: 'Restore completed successfully.', variant: 'success' });
   };
 
   const handleRestoreError = (error: string | null) => {
@@ -56,38 +56,49 @@ export function ExportRestoreSectionBody() {
   };
 
   return (
-    <>
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm font-medium text-body">Export Backup</p>
-          <p className="text-xs text-body-secondary">Download all your data as a JSON file</p>
-        </div>
-        <Button variant="secondary" onClick={handleExport} disabled={isExporting} className="w-32">
+    <div className="flex flex-col gap-4">
+      <SectionRow title="Export Backup" description="Download all your data as a JSON file">
+        <Button
+          variant="secondary"
+          onClick={handleExport}
+          disabled={isExporting || isRestoring}
+          className="w-28 shrink-0"
+        >
           {isExporting ? 'Exporting…' : 'Export'}
         </Button>
-      </div>
+      </SectionRow>
 
       <div className="flex flex-col gap-1">
-        <div className="flex items-start justify-between">
-          <div>
-            <p className="text-sm font-medium text-body">Restore from Backup</p>
-            <p className="text-xs text-body-secondary">
-              Replace all existing data from a backup file
-            </p>
-          </div>
+        <SectionRow title="Restore from Backup" description="Replace all existing data from a backup file">
           <RestoreBackupButton
             label="Restore"
-            disabled={isExporting}
+            disabled={isExporting || isRestoring}
             onRestoreStart={() => setIsRestoring(true)}
             onSuccess={handleRestoreSuccess}
             onError={handleRestoreError}
-            className="w-32"
+            className="w-28 shrink-0"
           />
-        </div>
-        {restoreError && (
-          <p className="text-sm text-red-600 dark:text-red-400">{restoreError}</p>
-        )}
+        </SectionRow>
+        {restoreError && <p className="text-sm text-red-600 dark:text-red-400">{restoreError}</p>}
       </div>
-    </>
+    </div>
+  );
+}
+
+type SectionRowProps = {
+  title: string;
+  description: string;
+  children: ReactNode;
+};
+
+function SectionRow({ title, description, children }: SectionRowProps) {
+  return (
+    <div className="flex items-start justify-between">
+      <div className="mr-4">
+        <p className="text-body text-sm font-medium">{title}</p>
+        <p className="text-body-secondary text-xs">{description}</p>
+      </div>
+      {children}
+    </div>
   );
 }
