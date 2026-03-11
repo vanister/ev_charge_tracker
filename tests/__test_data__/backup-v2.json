@@ -1,0 +1,171 @@
+{
+  "dbVersion": 2,
+  "fileVersion": 1,
+  "timestamp": 1741564800000,
+  "data": [
+    {
+      "store": "vehicles",
+      "records": [
+        {
+          "year": 2022,
+          "make": "Ford",
+          "model": "Mustang Mach-E",
+          "name": "Red Stallion",
+          "icon": "🚗",
+          "id": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "createdAt": 1772753801190,
+          "isActive": 1
+        }
+      ]
+    },
+    {
+      "store": "sessions",
+      "records": [
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14.0,
+          "ratePerKwh": 0.0,
+          "chargedAt": 1772006400000,
+          "id": "cdea50bd-c59d-486a-8a6c-e1cca5d98bce",
+          "costCents": 0,
+          "notes": "Imported: 2026-03-10 13:59 PST"
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 54.0,
+          "ratePerKwh": 0.28,
+          "chargedAt": 1771747200000,
+          "id": "0327a1e4-5dc6-4e24-9332-2cf15c9efc64",
+          "costCents": 1512,
+          "notes": "Imported: 2026-03-10 13:59 PST"
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 26.0,
+          "ratePerKwh": 0.42,
+          "chargedAt": 1771747200000,
+          "id": "26b93228-9cf3-4a30-93cb-55aed1ecc675",
+          "costCents": 1092,
+          "notes": "Imported: 2026-03-10 13:59 PST"
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 40.0,
+          "ratePerKwh": 0.62,
+          "chargedAt": 1771574400000,
+          "id": "28af7658-4f25-406f-b962-fddeb7b1bb20",
+          "costCents": 2480,
+          "notes": "Imported: 2026-03-10 13:59 PST"
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 8.0,
+          "ratePerKwh": 0.0,
+          "chargedAt": 1771488000000,
+          "id": "6a251229-4594-4486-b5da-52d6d8889de4",
+          "costCents": 0,
+          "notes": "Imported: 2026-03-10 13:59 PST"
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 19.0,
+          "ratePerKwh": 0.56,
+          "chargedAt": 1771315200000,
+          "id": "e9b8faef-40af-44a7-86c3-6329625e5e8d",
+          "costCents": 1064,
+          "notes": "Imported: 2026-03-10 13:59 PST"
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 18.0,
+          "ratePerKwh": 0.0,
+          "chargedAt": 1771228800000,
+          "id": "73982ca4-a15a-4819-940e-374ec211e526",
+          "costCents": 0,
+          "notes": "Imported: 2026-03-10 13:59 PST"
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 52.0,
+          "ratePerKwh": 0.56,
+          "chargedAt": 1771228800000,
+          "id": "e313ca02-6978-41ca-bb94-97558bf830ad",
+          "costCents": 2912,
+          "notes": "Imported: 2026-03-10 13:59 PST"
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 11.0,
+          "ratePerKwh": 0.0,
+          "chargedAt": 1770969600000,
+          "id": "9cd25e1f-d5be-4c45-b1b5-d381dbfa70a0",
+          "costCents": 0,
+          "notes": "Imported: 2026-03-10 13:59 PST"
+        }
+      ]
+    },
+    {
+      "store": "locations",
+      "records": [
+        {
+          "id": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "name": "Home",
+          "icon": "home",
+          "color": "teal",
+          "defaultRate": 0,
+          "createdAt": 1772706226473,
+          "isActive": 1,
+          "order": 0
+        },
+        {
+          "id": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "name": "DC Fast Charger",
+          "icon": "zap",
+          "color": "orange",
+          "defaultRate": 0.35,
+          "createdAt": 1772706226473,
+          "isActive": 1,
+          "order": 1
+        },
+        {
+          "id": "324e99a7-7579-42f9-9097-613cb55f2c1f",
+          "name": "Work",
+          "icon": "building",
+          "color": "slate",
+          "defaultRate": 0.17,
+          "createdAt": 1772706226473,
+          "isActive": 1,
+          "order": 3
+        },
+        {
+          "id": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "name": "Other",
+          "icon": "map-pin",
+          "color": "purple",
+          "defaultRate": 0.11,
+          "createdAt": 1772706226473,
+          "isActive": 1,
+          "order": 2
+        }
+      ]
+    },
+    {
+      "store": "settings",
+      "records": [
+        {
+          "key": "app-settings",
+          "onboardingComplete": true
+        }
+      ]
+    }
+  ]
+}
