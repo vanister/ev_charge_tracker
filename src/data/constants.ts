@@ -35,6 +35,10 @@ export const DEFAULT_LOCATIONS: Omit<Location, 'id' | 'createdAt' | 'isActive'>[
 ];
 
 export const BACKUP_FILE_VERSION = 1;
+export const BACKUP_FILE_NAME = 'ev-charge-tracker-backup.json';
+
+export const SYNC_FILE_VERSION = 1;
+export const SYNC_FILE_NAME = 'ev-charge-tracker-sync.json';
 
 export const SETTINGS_KEY = 'app-settings';
 
@@ -52,5 +56,7 @@ export const DEFAULT_SYSTEM_CONFIG: SystemConfig = {
       provider: 'google',
       clientId: ''
     }
-  }
+  },
+  deviceId: undefined,
+  lastSyncAt: undefined
 };

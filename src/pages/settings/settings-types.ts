@@ -10,5 +10,7 @@ export type BackupFile = {
   dbVersion: number;
   fileVersion: number;
   timestamp: number;
+  // Preserved so restoring a backup also recovers the device's sync identity
+  deviceId?: string;
   data: StoreExport[];
 };

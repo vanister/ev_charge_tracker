@@ -37,6 +37,7 @@ A Vite + TypeScript + React 19 PWA for tracking EV charging sessions. Mobile-foc
 - Single component per file
 - Single-purpose components encapsulating Tailwind CSS
 - No index barrel files
+- No re-exports — never re-export a value or type from another module (bad for Vite HMR)
 - Dates handled with `date-fns`
 - Import ordering: external deps → project deps
 - Keep types close to where they're used; move to a feature or shared location only if used outside of its originating Component, helper, or utility
