@@ -36,7 +36,7 @@ export function LocationDetails() {
     isInitialized: !isEditMode
   });
 
-  usePageTitle(isEditMode ? 'Edit Location' : 'Add Location');
+  usePageTitle(isEditMode ? 'Edit Location' : 'Add Location', true);
 
   useEffect(() => {
     if (!isEditMode || formState.isInitialized) {

@@ -1,12 +1,22 @@
 import { useEffect } from 'react';
 import { useLayoutConfig } from './useLayoutConfig';
 
-export function usePageTitle(title: string) {
-  const { setTitle } = useLayoutConfig();
+export function usePageTitle(title: string, hideTabBar = false) {
+  const { setTitle, setHideTabBar } = useLayoutConfig();
 
   useEffect(() => {
     setTitle(title);
   }, [title, setTitle]);
+
+  useEffect(() => {
+    if (!hideTabBar) {
+      return;
+    }
+
+    setHideTabBar(true);
+
+    return () => setHideTabBar(false);
+  }, [hideTabBar, setHideTabBar]);
 
   return { updateTitle: setTitle };
 }

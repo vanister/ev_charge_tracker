@@ -44,7 +44,7 @@ export function SessionDetails() {
   const navigate = useNavigate();
   const isEditMode = !!id;
 
-  usePageTitle(isEditMode ? 'Edit Session' : 'Add Session');
+  usePageTitle(isEditMode ? 'Edit Session' : 'Add Session', true);
 
   const { getSession, createSession, updateSession } = useSessions();
   const { getVehicleList } = useVehicles();

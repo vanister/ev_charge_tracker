@@ -34,7 +34,7 @@ export function VehicleDetails() {
     isInitialized: !isEditMode
   });
 
-  usePageTitle(isEditMode ? 'Edit Vehicle' : 'Add Vehicle');
+  usePageTitle(isEditMode ? 'Edit Vehicle' : 'Add Vehicle', true);
 
   useEffect(() => {
     if (!isEditMode || formState.isInitialized) {
