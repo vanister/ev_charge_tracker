@@ -18,14 +18,15 @@ const TABS: TabItem[] = [
 
 type BottomTabBarProps = {
   currentPath: string;
+  hidden?: boolean;
 };
 
 export function BottomTabBar(props: BottomTabBarProps) {
-  const { currentPath } = props;
+  const { currentPath, hidden } = props;
 
   return (
     <nav
-      className="bg-surface border-default fixed right-0 bottom-0 left-0 z-10 border-t"
+      className={clsx('bg-surface border-default fixed right-0 bottom-0 left-0 z-10 border-t', { hidden })}
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       <div className="mx-auto grid max-w-md grid-cols-4">

@@ -9,6 +9,7 @@ import { useState } from 'react';
 export function Layout() {
   const location = useLocation();
   const [title, setTitle] = useState<string>('EV Charge Tracker');
+  const [hideTabBar, setHideTabBar] = useState(false);
 
   useAppUpdateAvailable();
 
@@ -17,7 +18,7 @@ export function Layout() {
       <AppHeader title={title} />
 
       <main className="flex-1 pt-14 pb-24">
-        <LayoutConfigProvider value={{ title, setTitle }}>
+        <LayoutConfigProvider value={{ title, setTitle, hideTabBar, setHideTabBar }}>
           <div
             key={location.key}
             className="animate-page-enter"
@@ -28,7 +29,7 @@ export function Layout() {
         </LayoutConfigProvider>
       </main>
 
-      <BottomTabBar currentPath={location.pathname} />
+      <BottomTabBar currentPath={location.pathname} hidden={hideTabBar} />
     </div>
   );
 }
