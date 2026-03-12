@@ -35,7 +35,6 @@ export const router = createBrowserRouter([
               { path: '/vehicles/add', element: <VehicleDetails /> },
               { path: '/vehicles/:id/edit', element: <VehicleDetails /> },
               { path: '/settings', element: <Settings /> },
-              { path: '/settings/locations/add', element: <LocationDetails /> },
               { path: '/settings/locations/:id/edit', element: <LocationDetails /> },
               { path: '*', element: <NotFoundPage /> }
             ]

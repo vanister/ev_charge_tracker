@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { OnboardingHeader } from './OnboardingHeader';
 import { FormFooter } from '../../components/FormFooter';
 import { Button } from '../../components/Button';
@@ -11,7 +10,6 @@ type OnboardingStep1WelcomeProps = {
 };
 
 export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
-  const navigate = useNavigate();
   const { getSettings } = useSettings();
   const [onboardingComplete, setOnboardingComplete] = useState(false);
   const [restoreError, setRestoreError] = useState<string | null>(null);
@@ -46,7 +44,7 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
         <RestoreBackupButton
           label="Restore from backup"
           skipConfirm={!onboardingComplete}
-          onSuccess={() => navigate('/', { replace: true })}
+          onSuccess={() => window.location.replace('/')}
           onRestoreStart={() => setIsRestoring(true)}
           onError={(error) => { setIsRestoring(false); setRestoreError(error); }}
         />
