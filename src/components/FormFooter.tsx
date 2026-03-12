@@ -1,17 +1,17 @@
-import { useEffect, type ReactNode } from 'react';
-import { useLayoutConfig } from '../hooks/useLayoutConfig';
+import { useEffect, useContext, type ReactNode } from 'react';
+import { LayoutConfigContext } from '../contexts/LayoutConfigContext';
 
 type FormFooterProps = {
   children: ReactNode;
 };
 
 export function FormFooter({ children }: FormFooterProps) {
-  const { setHideTabBar } = useLayoutConfig();
+  const layoutConfig = useContext(LayoutConfigContext);
 
   useEffect(() => {
-    setHideTabBar(true);
-    return () => setHideTabBar(false);
-  }, [setHideTabBar]);
+    layoutConfig?.setHideTabBar(true);
+    return () => layoutConfig?.setHideTabBar(false);
+  }, [layoutConfig]);
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-20 bg-background border-t border-default">
