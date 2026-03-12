@@ -18,7 +18,7 @@ export function DashboardContent({ stats, recentSessions, chartData }: Dashboard
       <DashboardStats stats={stats} />
       <ChargeSessionsChart data={chartData} />
       <KwhByLocation stats={stats} />
-      {recentSessions.length > 0 && <DashboardRecentSessions sessions={recentSessions} />}
+      <DashboardRecentSessions sessions={recentSessions} />
     </div>
   );
 }

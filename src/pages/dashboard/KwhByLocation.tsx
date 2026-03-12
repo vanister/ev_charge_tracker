@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import type { SessionStats } from './dashboard-types';
 import { SectionHeader } from '../../components/SectionHeader';
 
@@ -6,9 +7,14 @@ type KwhByLocationProps = {
 };
 
 export function KwhByLocation({ stats }: KwhByLocationProps) {
-  if (stats.totalKwh === 0 || stats.byLocation.length === 0) return null;
+  const sorted = useMemo(
+    () => [...stats.byLocation].sort((a, b) => b.totalKwh - a.totalKwh),
+    [stats.byLocation]
+  );
 
-  const sorted = [...stats.byLocation].sort((a, b) => b.totalKwh - a.totalKwh);
+  if (stats.totalKwh === 0 || sorted.length === 0) {
+    return null;
+  }
 
   return (
     <div className="mb-8">
