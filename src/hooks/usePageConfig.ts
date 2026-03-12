@@ -9,11 +9,7 @@ export function usePageConfig(title: string, hideTabBar = false) {
   }, [title, setTitle]);
 
   useEffect(() => {
-    if (!hideTabBar) {
-      return;
-    }
-
-    setHideTabBar(true);
+    setHideTabBar(hideTabBar);
 
     return () => setHideTabBar(false);
   }, [hideTabBar, setHideTabBar]);
