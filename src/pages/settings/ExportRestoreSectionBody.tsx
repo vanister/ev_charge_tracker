@@ -5,6 +5,7 @@ import { useNavigationGuard } from '../../hooks/useNavigationGuard';
 import { Button } from '../../components/Button';
 import { RestoreBackupButton } from '../../components/RestoreBackupButton';
 import { getDateGroupKey } from '../../utilities/dateUtils';
+import { BACKUP_FILE_NAME } from '../../data/constants';
 
 export function ExportRestoreSectionBody() {
   const { showToast } = useToast();
@@ -33,12 +34,13 @@ export function ExportRestoreSectionBody() {
     const json = JSON.stringify(result.data, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-
     const date = getDateGroupKey(Date.now());
     const a = document.createElement('a');
+
     a.href = url;
-    a.download = `${date}-ev-charge-tracker-backup.json`;
+    a.download = `${date}-${BACKUP_FILE_NAME}`;
     a.click();
+
     URL.revokeObjectURL(url);
 
     showToast({ message: 'Backup exported successfully.', variant: 'success' });

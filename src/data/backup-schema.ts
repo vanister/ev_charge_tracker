@@ -12,5 +12,7 @@ export const BackupFileSchema = z.object({
   dbVersion: z.number().int().positive(),
   fileVersion: z.number().int().positive(),
   timestamp: z.number(),
+  // Preserved so restoring a backup also recovers the device's sync identity
+  deviceId: z.string().optional(),
   data: z.array(StoreExportSchema).length(4)
 });

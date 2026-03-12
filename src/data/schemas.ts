@@ -65,5 +65,9 @@ export const OAuthTokensSchema = z.object({
 export const SystemConfigSchema = z.object({
   key: z.literal('system-config'),
   oAuthSettings: z.record(OAuthProviderSchema, ProviderConfigSchema),
-  oauthTokens: z.record(OAuthProviderSchema, OAuthTokensSchema).optional()
+  oauthTokens: z.record(OAuthProviderSchema, OAuthTokensSchema).optional(),
+  // Persisted device identifier included in sync file metadata
+  deviceId: z.string().optional(),
+  // Epoch ms of last successful sync — used by Transport module for diff-check
+  lastSyncAt: z.number().optional()
 });
