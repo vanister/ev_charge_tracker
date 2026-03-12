@@ -104,9 +104,7 @@ export function LocationDetails() {
       color: migrateColorToHex(formState.color || LOCATION_COLOR_HEX.teal),
       defaultRate: +formState.defaultRate || 0
     };
-    const result = isEditMode
-      ? await updateLocation(id!, locationInput)
-      : await createLocation(locationInput);
+    const result = isEditMode ? await updateLocation(id!, locationInput) : await createLocation(locationInput);
 
     if (!result.success) {
       setFormState((draft) => {
@@ -125,7 +123,7 @@ export function LocationDetails() {
 
   if (!formState.isInitialized) {
     return (
-      <div className="flex items-center justify-center min-h-100">
+      <div className="flex min-h-100 items-center justify-center">
         <div className="text-body-secondary">Loading...</div>
       </div>
     );
@@ -133,8 +131,8 @@ export function LocationDetails() {
 
   if (formState.locationNotFound) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-8">
-        <div className="p-6 bg-surface border border-default rounded-lg text-center">
+      <div className="mx-auto max-w-2xl px-4 py-8">
+        <div className="bg-surface border-default rounded-lg border p-6 text-center">
           <p className="text-body-secondary mb-4">Location not found</p>
           <button onClick={handleCancel} className="text-primary hover:text-primary-hover font-medium">
             Back to Settings
@@ -145,10 +143,8 @@ export function LocationDetails() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 pt-8 pb-20">
-      <h1 className="text-2xl font-bold text-body mb-6">
-        {isEditMode ? 'Edit Location' : 'Add Location'}
-      </h1>
+    <div className="mx-auto max-w-2xl px-4 pt-8 pb-20">
+      <h1 className="text-body mb-6 text-2xl font-bold">{isEditMode ? 'Edit Location' : 'Add Location'}</h1>
 
       <LocationForm
         id="location-form"

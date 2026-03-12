@@ -49,6 +49,14 @@ export function SessionDetails() {
   const { getSession, createSession, updateSession } = useSessions();
   const { getVehicleList } = useVehicles();
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const { getLocationList } = useLocations();
+  const [locations, setLocations] = useState<AppLocation[]>([]);
+  const { preferences, updatePreferences } = useUserPreferences();
+  const [formState, setFormState] = useImmerState<SessionPageState>({
+    ...NEW_SESSION,
+    chargedAt: getDefaultDateTime(),
+    isInitialized: !isEditMode
+  });
 
   useEffect(() => {
     const loadVehicles = async () => {
@@ -61,8 +69,6 @@ export function SessionDetails() {
 
     loadVehicles();
   }, [getVehicleList]);
-  const { getLocationList } = useLocations();
-  const [locations, setLocations] = useState<AppLocation[]>([]);
 
   useEffect(() => {
     const loadLocations = async () => {
@@ -76,15 +82,6 @@ export function SessionDetails() {
     loadLocations();
   }, [getLocationList]);
 
-  const { preferences, updatePreferences } = useUserPreferences();
-
-  const [formState, setFormState] = useImmerState<SessionPageState>({
-    ...NEW_SESSION,
-    chargedAt: getDefaultDateTime(),
-    isInitialized: !isEditMode
-  });
-
-  // Pre-fill vehicle from preferences on Add Session when the vehicle list is loaded
   useEffect(() => {
     if (isEditMode || vehicles.length === 0) {
       return;
@@ -97,7 +94,6 @@ export function SessionDetails() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditMode, vehicles]);
 
-  // Pre-fill location from preferences on Add Session when the location list is loaded
   useEffect(() => {
     if (isEditMode || locations.length === 0) {
       return;
@@ -203,7 +199,6 @@ export function SessionDetails() {
       draft.error = '';
     });
 
-    // todo - this is biz logic, move out into a helper
     try {
       const input = {
         vehicleId: formState.vehicleId,
@@ -259,7 +254,7 @@ export function SessionDetails() {
   const calculatedCost = calculateCostCents(+formState.energyKwh || 0, +formState.ratePerKwh || 0);
 
   return (
-    <div className="max-w-2xl mx-auto px-6 pt-6 pb-20">
+    <div className="mx-auto max-w-2xl px-4 pt-8 pb-20">
       <SessionForm
         id="session-form"
         formData={formState}
