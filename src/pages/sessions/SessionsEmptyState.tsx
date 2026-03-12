@@ -1,4 +1,5 @@
 import { Button } from '../../components/Button';
+import { EmptyState } from '../../components/EmptyState';
 
 type SessionsEmptyStateProps = {
   hasFilters: boolean;
@@ -31,14 +32,12 @@ export function SessionsEmptyState(props: SessionsEmptyStateProps) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-full px-4 text-center">
-      <p className="text-body-secondary text-lg mb-2">No charging sessions yet</p>
-      <p className="text-body-tertiary text-sm mb-6">
-        Add your first charging session to get started
-      </p>
-      <Button variant="primary" onClick={onAddSession}>
-        Add Session
-      </Button>
-    </div>
+    <EmptyState
+      icon="zap"
+      title="No charging sessions yet"
+      message="Add your first session to start tracking your EV charging stats."
+      actionLabel="Add Session"
+      onAction={onAddSession}
+    />
   );
 }

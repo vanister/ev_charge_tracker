@@ -36,7 +36,7 @@ export function BottomTabBar(props: BottomTabBarProps) {
             <Link
               key={tab.path}
               to={tab.path}
-              className={clsx('flex flex-col items-center justify-center gap-0.5 py-3', 'transition-colors', {
+              className={clsx('flex flex-col items-center justify-center gap-0.5 py-5', 'transition-colors', {
                 'text-primary': isActive,
                 'text-body-secondary': !isActive
               })}
