@@ -3,6 +3,7 @@ import type { SessionWithMetadata } from '../../helpers/sessionHelpers';
 import type { ChartData } from './chart-types';
 import { DashboardStats } from './DashboardStats';
 import { ChargeSessionsChart } from './ChargeSessionsChart';
+import { KwhByLocation } from './KwhByLocation';
 import { DashboardRecentSessions } from './DashboardRecentSessions';
 
 type DashboardContentProps = {
@@ -16,6 +17,7 @@ export function DashboardContent({ stats, recentSessions, chartData }: Dashboard
     <div className="max-w-2xl mx-auto">
       <DashboardStats stats={stats} />
       <ChargeSessionsChart data={chartData} />
+      <KwhByLocation stats={stats} />
       {recentSessions.length > 0 && <DashboardRecentSessions sessions={recentSessions} />}
     </div>
   );
