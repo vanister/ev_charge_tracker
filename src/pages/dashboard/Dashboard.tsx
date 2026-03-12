@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { usePageTitle } from '../../hooks/usePageTitle';
+import { usePageConfig } from '../../hooks/usePageConfig';
 import { useDashboardData } from './useDashboardData';
 import { EmptyState } from '../../components/EmptyState';
 import { DashboardContent } from './DashboardContent';
 
 export function Dashboard() {
-  usePageTitle('Dashboard');
+  usePageConfig('Dashboard');
 
   const navigate = useNavigate();
   const { stats, recentSessions, chartData, isLoading, error } = useDashboardData();

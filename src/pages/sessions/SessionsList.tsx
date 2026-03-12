@@ -4,7 +4,7 @@ import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import type { ChargingSession, Vehicle, Location as AppLocation } from '../../data/data-types';
 import { useLocations } from '../../hooks/useLocations';
-import { usePageTitle } from '../../hooks/usePageTitle';
+import { usePageConfig } from '../../hooks/usePageConfig';
 import { useImmerState } from '../../hooks/useImmerState';
 import { useUserPreferences } from '../../hooks/useUserPreferences';
 import { ItemListButton } from '../../components/ItemListButton';
@@ -38,7 +38,7 @@ const DEFAULT_STATE: SessionsListState = {
 };
 
 export function SessionsList() {
-  usePageTitle('Sessions');
+  usePageConfig('Sessions');
 
   const navigate = useNavigate();
   const { preferences, updatePreferences } = useUserPreferences();

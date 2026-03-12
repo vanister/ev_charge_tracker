@@ -5,7 +5,7 @@ import { useVehicles } from '../../hooks/useVehicles';
 import { useLocations } from '../../hooks/useLocations';
 import { useUserPreferences } from '../../hooks/useUserPreferences';
 import type { Vehicle, Location as AppLocation } from '../../data/data-types';
-import { usePageTitle } from '../../hooks/usePageTitle';
+import { usePageConfig } from '../../hooks/usePageConfig';
 import { useImmerState } from '../../hooks/useImmerState';
 import { Button } from '../../components/Button';
 import { FormFooter } from '../../components/FormFooter';
@@ -44,7 +44,7 @@ export function SessionDetails() {
   const navigate = useNavigate();
   const isEditMode = !!id;
 
-  usePageTitle(isEditMode ? 'Edit Session' : 'Add Session', true);
+  usePageConfig(isEditMode ? 'Edit Session' : 'Add Session', true);
 
   const { getSession, createSession, updateSession } = useSessions();
   const { getVehicleList } = useVehicles();

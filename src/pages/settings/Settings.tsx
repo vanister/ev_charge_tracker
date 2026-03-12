@@ -1,4 +1,4 @@
-import { usePageTitle } from '../../hooks/usePageTitle';
+import { usePageConfig } from '../../hooks/usePageConfig';
 import { SettingsSection } from './SettingsSection';
 import { LocationsSectionBody } from './LocationsSection';
 import { PreferencesSectionBody } from './PreferencesSectionBody';
@@ -9,7 +9,7 @@ import { ExportRestoreSectionBody } from './ExportRestoreSectionBody';
 import { ThemeSectionBody } from './ThemeSectionBody';
 
 export function Settings() {
-  usePageTitle('Settings');
+  usePageConfig('Settings');
 
   return (
     <div className="bg-background px-4 py-6">

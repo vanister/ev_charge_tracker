@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLayoutConfig } from './useLayoutConfig';
 
-export function usePageTitle(title: string, hideTabBar = false) {
+export function usePageConfig(title: string, hideTabBar = false) {
   const { setTitle, setHideTabBar } = useLayoutConfig();
 
   useEffect(() => {

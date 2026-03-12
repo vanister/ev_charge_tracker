@@ -1,14 +1,14 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useVehicles } from '../../hooks/useVehicles';
-import { usePageTitle } from '../../hooks/usePageTitle';
+import { usePageConfig } from '../../hooks/usePageConfig';
 import { ItemListButton } from '../../components/ItemListButton';
 import { EmptyState } from '../../components/EmptyState';
 import { VehicleItem } from './VehicleItem';
 import type { Vehicle } from '../../data/data-types';
 
 export function VehiclesList() {
-  usePageTitle('Vehicles');
+  usePageConfig('Vehicles');
 
   const navigate = useNavigate();
   const { getVehicleList, deleteVehicle } = useVehicles();
