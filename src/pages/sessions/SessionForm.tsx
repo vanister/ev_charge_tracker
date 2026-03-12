@@ -20,7 +20,7 @@ type SessionFormProps = {
 
 export function SessionForm(props: SessionFormProps) {
   return (
-    <form id={props.id} onSubmit={props.onSubmit} className="space-y-6">
+    <form id={props.id} onSubmit={props.onSubmit} className="space-y-4">
       <FormSelect
         id="vehicle"
         label="Vehicle"
@@ -93,15 +93,15 @@ export function SessionForm(props: SessionFormProps) {
         disabled={props.isLoading}
       />
 
-      <div className="p-4 bg-background border border-default rounded-lg">
+      <div className="bg-background border-default rounded-lg border p-4">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-body-secondary">Estimated Cost:</span>
-          <span className="text-lg font-semibold text-primary">{formatCost(props.calculatedCost)}</span>
+          <span className="text-body-secondary text-sm font-medium">Estimated Cost:</span>
+          <span className="text-primary text-lg font-semibold">{formatCost(props.calculatedCost)}</span>
         </div>
       </div>
 
       {props.error && (
-        <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+        <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-3">
           <p className="text-sm text-red-500">{props.error}</p>
         </div>
       )}
