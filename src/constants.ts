@@ -48,6 +48,7 @@ export const LOCATION_COLOR_OPTIONS: LocationColorOption[] = [
 ];
 
 export const CHART_X_AXIS_INTERVAL = 4; // show a label every 5th bar (0-indexed)
+export const DASHBOARD_CHART_DAYS = 31;
 
 export const OAUTH_PROVIDERS = {
   google: {

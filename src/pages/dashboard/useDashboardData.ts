@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { subDays, startOfDay } from 'date-fns';
 import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import { useLocations } from '../../hooks/useLocations';
@@ -9,6 +10,7 @@ import type { SessionStats } from './dashboard-types';
 import { computeStats, buildRecentSessions } from '../../helpers/statsHelpers';
 import { buildChartData } from '../../helpers/chartHelpers';
 import type { ChartData } from './chart-types';
+import { DASHBOARD_CHART_DAYS } from '../../constants';
 
 type UseDashboardDataResult = {
   stats: SessionStats | null;
@@ -47,11 +49,14 @@ export function useDashboardData(): UseDashboardDataResult {
         const vehicleMap = createVehicleMap(vehicleResult.data);
         const locationMap = createLocationMap(locationResult.data);
 
-        setStats(computeStats(sessionResult.data, locationMap));
+        const chartStartTimestamp = startOfDay(subDays(Date.now(), DASHBOARD_CHART_DAYS - 1)).getTime();
+        const chartSessions = sessionResult.data.filter((s) => s.chargedAt >= chartStartTimestamp);
+
+        setStats(computeStats(chartSessions, locationMap));
         setRecentSessions(
           buildRecentSessions(sessionResult.data, vehicleMap, locationMap, preferences.recentSessionsLimit)
         );
-        setChartData(buildChartData(sessionResult.data, locationResult.data));
+        setChartData(buildChartData(sessionResult.data, locationResult.data, DASHBOARD_CHART_DAYS));
       } catch (err) {
         console.error('Failed to load dashboard data:', err);
         setError('Failed to load dashboard data');
