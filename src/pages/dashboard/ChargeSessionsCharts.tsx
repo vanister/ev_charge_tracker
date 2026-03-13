@@ -1,18 +1,23 @@
+import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import type { ChartData } from './chart-types';
+import type { SessionStats } from './dashboard-types';
 import { ChartTooltip } from './ChartTooltip';
 import { SectionHeader } from '../../components/SectionHeader';
 import { CHART_X_AXIS_INTERVAL } from '../../constants';
 
 type ChargeSessionsChartProps = {
   data: ChartData;
+  stats: SessionStats;
 };
 
-export function ChargeSessionsChart({ data }: ChargeSessionsChartProps) {
+export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) {
   const { days, locationConfigs } = data;
 
   // Only render locations that have at least one session in the window
   const activeLocations = locationConfigs.filter((loc) => days.some((day) => (day[loc.locationId] as number) > 0));
+
+  const sortedByKwh = useMemo(() => [...stats.byLocation].sort((a, b) => b.totalKwh - a.totalKwh), [stats.byLocation]);
 
   if (activeLocations.length === 0) {
     return (
@@ -77,6 +82,29 @@ export function ChargeSessionsChart({ data }: ChargeSessionsChartProps) {
           ))}
         </div>
       </div>
+
+      {stats.totalKwh > 0 && sortedByKwh.length > 0 && (
+        <div className="bg-surface border-default mt-3 space-y-3 rounded-xl border px-4 py-4">
+          {sortedByKwh.map((loc) => {
+            const pct = Math.round((loc.totalKwh / stats.totalKwh) * 100);
+            return (
+              <div key={loc.locationId}>
+                <div className="mb-1 flex justify-between">
+                  <span className="text-sm">{loc.name}</span>
+                  <span className="text-body-secondary text-xs">{pct}%</span>
+                </div>
+                <div className="relative h-1.5 w-full overflow-hidden rounded-full">
+                  <div className="absolute inset-0 rounded-full bg-current opacity-10" />
+                  <div
+                    className="absolute inset-y-0 left-0 rounded-full"
+                    style={{ width: `${pct}%`, backgroundColor: loc.color }}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
