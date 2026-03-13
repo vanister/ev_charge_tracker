@@ -14,13 +14,15 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
   const { days, locationConfigs } = data;
 
   // Only render locations that have at least one session in the window
-  const activeLocations = locationConfigs.filter((loc) => days.some((day) => (day[loc.locationId] as number) > 0));
-
+  const activeLocations = useMemo(
+    () => locationConfigs.filter((loc) => days.some((day) => (day[loc.locationId] as number) > 0)),
+    [locationConfigs, days]
+  );
   const sortedByKwh = useMemo(() => [...stats.byLocation].sort((a, b) => b.totalKwh - a.totalKwh), [stats.byLocation]);
 
   if (activeLocations.length === 0) {
     return (
-      <div className="mt-4 bg-surface border-default rounded-xl border px-2 py-10 text-center">
+      <div className="bg-surface border-default mt-4 rounded-xl border px-2 py-10 text-center">
         <p className="text-body-secondary text-sm">No charging sessions in the last 31 days</p>
       </div>
     );
@@ -28,7 +30,6 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
 
   return (
     <div className="mt-4">
-
       <div className="bg-surface border-default rounded-xl border px-2 pt-4 pb-3">
         <ResponsiveContainer width="100%" height={180}>
           <BarChart data={days} barCategoryGap="35%" margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
