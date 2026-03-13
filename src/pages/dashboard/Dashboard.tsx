@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { usePageConfig } from '../../hooks/usePageConfig';
 import { useDashboardData } from './useDashboardData';
 import { EmptyState } from '../../components/EmptyState';
-import { DashboardContent } from './DashboardContent';
+import { Section } from '../../components/Section';
+import { ChargeStats } from './ChargeStats';
+import { ChargeSessionsCharts } from './ChargeSessionsCharts';
+import { DashboardRecentSessions } from './DashboardRecentSessions';
 
 export function Dashboard() {
   usePageConfig('Dashboard');
@@ -39,7 +42,26 @@ export function Dashboard() {
 
   return (
     <div className="bg-background px-4 py-6">
-      <DashboardContent stats={stats} recentSessions={recentSessions} chartData={chartData} />
+      <div className="mx-auto max-w-2xl space-y-8">
+        <Section title="Last 31 Days" noCard>
+          <ChargeStats stats={stats} />
+          <ChargeSessionsCharts data={chartData} stats={stats} />
+        </Section>
+
+        {recentSessions.length > 0 && (
+          <Section
+            title="Recent Sessions"
+            action={
+              <Link to="/sessions" className="text-primary text-sm font-medium">
+                View all
+              </Link>
+            }
+            noCard
+          >
+            <DashboardRecentSessions sessions={recentSessions} />
+          </Section>
+        )}
+      </div>
     </div>
   );
 }

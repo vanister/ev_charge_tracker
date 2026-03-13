@@ -3,7 +3,6 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import type { ChartData } from './chart-types';
 import type { SessionStats } from './dashboard-types';
 import { ChartTooltip } from './ChartTooltip';
-import { SectionHeader } from '../../components/SectionHeader';
 import { CHART_X_AXIS_INTERVAL } from '../../constants';
 
 type ChargeSessionsChartProps = {
@@ -21,18 +20,14 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
 
   if (activeLocations.length === 0) {
     return (
-      <div className="mb-8">
-        <SectionHeader title="Last 31 Days" />
-        <div className="bg-surface border-default rounded-xl border px-2 py-10 text-center">
-          <p className="text-body-secondary text-sm">No charging sessions in the last 31 days</p>
-        </div>
+      <div className="mt-4 bg-surface border-default rounded-xl border px-2 py-10 text-center">
+        <p className="text-body-secondary text-sm">No charging sessions in the last 31 days</p>
       </div>
     );
   }
 
   return (
-    <div className="mb-8">
-      <SectionHeader title="Last 31 Days" />
+    <div className="mt-4">
 
       <div className="bg-surface border-default rounded-xl border px-2 pt-4 pb-3">
         <ResponsiveContainer width="100%" height={180}>
