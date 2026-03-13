@@ -54,6 +54,7 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
             <Tooltip
               content={<ChartTooltip locationConfigs={activeLocations} />}
               cursor={{ fill: 'currentColor', opacity: 0.05 }}
+              isAnimationActive={false}
             />
 
             {activeLocations.map((loc) => (
