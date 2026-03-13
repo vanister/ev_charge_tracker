@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { subDays, startOfDay } from 'date-fns';
+import { startOfDay, subDays } from '../../utilities/dateUtils';
 import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import { useLocations } from '../../hooks/useLocations';
@@ -34,35 +34,36 @@ export function useDashboardData(): UseDashboardDataResult {
 
   useEffect(() => {
     const loadData = async () => {
-      try {
-        const [sessionResult, vehicleResult, locationResult] = await Promise.all([
-          getSessionList(),
-          getVehicleList(),
-          getLocationList(true)
-        ]);
+      const [sessionResult, vehicleResult, locationResult] = await Promise.all([
+        getSessionList(),
+        getVehicleList(),
+        getLocationList(true)
+      ]);
 
-        if (!sessionResult.success || !vehicleResult.success || !locationResult.success) {
-          setError('Failed to load dashboard data');
-          return;
-        }
-
-        const vehicleMap = createVehicleMap(vehicleResult.data);
-        const locationMap = createLocationMap(locationResult.data);
-
-        const chartStartTimestamp = startOfDay(subDays(Date.now(), DASHBOARD_CHART_DAYS - 1)).getTime();
-        const chartSessions = sessionResult.data.filter((s) => s.chargedAt >= chartStartTimestamp);
-
-        setStats(computeStats(chartSessions, locationMap));
-        setRecentSessions(
-          buildRecentSessions(sessionResult.data, vehicleMap, locationMap, preferences.recentSessionsLimit)
-        );
-        setChartData(buildChartData(sessionResult.data, locationResult.data, DASHBOARD_CHART_DAYS));
-      } catch (err) {
-        console.error('Failed to load dashboard data:', err);
+      if (!sessionResult.success || !vehicleResult.success || !locationResult.success) {
         setError('Failed to load dashboard data');
-      } finally {
         setIsLoading(false);
+        return;
       }
+
+      const vehicleMap = createVehicleMap(vehicleResult.data);
+      const locationMap = createLocationMap(locationResult.data);
+
+      const chartStartTimestamp = startOfDay(subDays(Date.now(), DASHBOARD_CHART_DAYS - 1));
+      const chartSessions = sessionResult.data.filter((s) => s.chargedAt >= chartStartTimestamp);
+      const stats = computeStats(chartSessions, locationMap);
+      const recentSessions = buildRecentSessions(
+        sessionResult.data,
+        vehicleMap,
+        locationMap,
+        preferences.recentSessionsLimit
+      );
+      const chartData = buildChartData(sessionResult.data, locationResult.data, DASHBOARD_CHART_DAYS);
+
+      setStats(stats);
+      setRecentSessions(recentSessions);
+      setChartData(chartData);
+      setIsLoading(false);
     };
 
     loadData();

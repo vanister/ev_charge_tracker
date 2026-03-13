@@ -1,4 +1,5 @@
-import { OAUTH_PROVIDERS, type OAuthProvider } from '../constants';
+import { OAUTH_PROVIDERS } from '../constants';
+import type { OAuthProvider } from '../types/shared-types';
 import type { OAuthTokens } from '../data/data-types';
 import type { TokenExchangeConfig } from '../types/auth-types';
 import { type Result, success, failure } from './resultUtils';

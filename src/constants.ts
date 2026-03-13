@@ -27,9 +27,6 @@ export const TIME_FILTER_OPTIONS = [
   { label: 'All', value: 'all' }
 ] as const;
 
-export type TimeFilterValue = (typeof TIME_FILTER_OPTIONS)[number]['value'];
-export type TimeFilterOption = (typeof TIME_FILTER_OPTIONS)[number];
-
 export const LOCATION_ICON_OPTIONS: IconName[] = ['home', 'building', 'map-pin', 'zap', 'car'];
 
 // Hex values matching the CSS custom properties in index.css
@@ -57,5 +54,3 @@ export const OAUTH_PROVIDERS = {
     scope: 'https://www.googleapis.com/auth/drive.appdata'
   }
 } as const;
-
-export type OAuthProvider = keyof typeof OAUTH_PROVIDERS;

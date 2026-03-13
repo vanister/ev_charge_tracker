@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { failure, success, type Result } from '../utilities/resultUtils';
 import { useDatabase } from './useDatabase';
 import type { OAuthTokens, ProviderConfig } from '../data/data-types';
-import type { OAuthProvider } from '../constants';
+import type { OAuthProvider } from '../types/shared-types';
 import { SYSTEM_CONFIG_KEY } from '../data/constants';
 import type { TokenExchangeConfig } from '../types/auth-types';
 import { exchangeCodeForTokens } from '../utilities/authUtils';

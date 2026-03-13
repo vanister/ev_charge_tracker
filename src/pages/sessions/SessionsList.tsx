@@ -13,7 +13,7 @@ import { SessionDateGroup } from './SessionDateGroup';
 import { SessionsEmptyState } from './SessionsEmptyState';
 import { formatDate, getDateRangeForTimeFilter } from '../../utilities/dateUtils';
 import { createVehicleMap, createLocationMap, groupSessionsByDate } from '../../helpers/sessionHelpers';
-import type { TimeFilterValue } from '../../constants';
+import type { TimeFilterValue } from '../../types/shared-types';
 
 type SessionsListState = {
   selectedVehicleId: string | undefined;

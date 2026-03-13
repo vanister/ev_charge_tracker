@@ -48,3 +48,8 @@ export const ALL_ICONS = [
 export type IconName = (typeof ALL_ICONS)[number];
 
 export type LocationColorOption = { value: string; label: string; bgClass: string };
+
+export type TimeFilterValue = '7d' | '14d' | '31d' | '3m' | '6m' | '12m' | 'all';
+export type TimeFilterOption = { label: string; value: TimeFilterValue };
+
+export type OAuthProvider = 'google';

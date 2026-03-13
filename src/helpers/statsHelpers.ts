@@ -22,7 +22,7 @@ export function computeStats(sessions: ChargingSession[], locationMap: Map<strin
           group.set(s.locationId, {
             locationId: s.locationId,
             name: location?.name ?? 'Unknown',
-            color: location?.color ?? '#888888',
+            color: location?.color ?? '#c084fc', // other color
             totalKwh: s.energyKwh,
             totalCostCents: s.costCents
           });
