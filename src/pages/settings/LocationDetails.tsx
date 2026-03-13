@@ -144,8 +144,6 @@ export function LocationDetails() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 pt-8 pb-20">
-      <h1 className="text-body mb-6 text-2xl font-bold">{isEditMode ? 'Edit Location' : 'Add Location'}</h1>
-
       <LocationForm
         id="location-form"
         formData={formState}

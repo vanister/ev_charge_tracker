@@ -155,8 +155,6 @@ export function VehicleDetails() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 pt-8 pb-20">
-      <h1 className="text-2xl font-bold text-body mb-6">{isEditMode ? 'Edit Vehicle' : 'Add Vehicle'}</h1>
-
       <VehicleForm
         id="vehicle-form"
         formData={formState}
