@@ -1,5 +1,14 @@
 # Data Sync Implementation Checklist
 
+## Progress Summary
+
+- **Auth Module**: ✅ Complete
+- **Export/Import Module**: ✅ Complete
+- **Transport Module**: ❌ Not started
+- **UI & Orchestration**: ❌ Not started
+
+**Overall Progress**: 2/4 modules complete (50%)
+
 ## 1. Auth Module (PKCE Flow)
 Goal: Securely obtain an access token without a backend.
  * [x] Generate PKCE Pair: Implement utility to create a random code_verifier and a SHA-256 code_challenge.

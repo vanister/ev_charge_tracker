@@ -1,6 +1,6 @@
 # EV Charge Tracker - Design Outline
 
-> **Status**: All Pages Complete (71%) - Data layer, hooks, providers, onboarding, dashboard, sessions, vehicles, settings, and theme support are all implemented. Remaining: Recharts charts, PWA icons, and service worker update notification.
+> **Status**: MVP Complete (100%) - All phases shipped. Post-MVP work in progress: cloud sync (auth + export/import done; transport layer and sync UI remaining). See `docs/sync-system-tasks.md` for sync progress.
 
 ## Tech Stack
 
