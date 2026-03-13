@@ -18,8 +18,8 @@ export function getDateRangeForTimeFilter(value: TimeFilterValue): DateRange | u
       return { start: dateFnsSubDays(end, 14).getTime(), end };
     case '31d':
       return { start: dateFnsSubDays(end, 31).getTime(), end };
-    case '3m':
-      return { start: subMonths(end, 3).getTime(), end };
+    case '90d':
+      return { start: dateFnsSubDays(end, 90).getTime(), end };
     case '6m':
       return { start: subMonths(end, 6).getTime(), end };
     case '12m':
