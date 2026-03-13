@@ -3,7 +3,6 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import type { ChartData } from './chart-types';
 import type { SessionStats } from './dashboard-types';
 import { ChartTooltip } from './ChartTooltip';
-import { SectionHeader } from '../../components/SectionHeader';
 import { CHART_X_AXIS_INTERVAL } from '../../constants';
 
 type ChargeSessionsChartProps = {
@@ -15,25 +14,22 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
   const { days, locationConfigs } = data;
 
   // Only render locations that have at least one session in the window
-  const activeLocations = locationConfigs.filter((loc) => days.some((day) => (day[loc.locationId] as number) > 0));
-
+  const activeLocations = useMemo(
+    () => locationConfigs.filter((loc) => days.some((day) => (day[loc.locationId] as number) > 0)),
+    [locationConfigs, days]
+  );
   const sortedByKwh = useMemo(() => [...stats.byLocation].sort((a, b) => b.totalKwh - a.totalKwh), [stats.byLocation]);
 
   if (activeLocations.length === 0) {
     return (
-      <div className="mb-8">
-        <SectionHeader title="Last 31 Days" />
-        <div className="bg-surface border-default rounded-xl border px-2 py-10 text-center">
-          <p className="text-body-secondary text-sm">No charging sessions in the last 31 days</p>
-        </div>
+      <div className="bg-surface border-default mt-4 rounded-xl border px-2 py-10 text-center">
+        <p className="text-body-secondary text-sm">No charging sessions in the last 31 days</p>
       </div>
     );
   }
 
   return (
-    <div className="mb-8">
-      <SectionHeader title="Last 31 Days" />
-
+    <div className="mt-4">
       <div className="bg-surface border-default rounded-xl border px-2 pt-4 pb-3">
         <ResponsiveContainer width="100%" height={180}>
           <BarChart data={days} barCategoryGap="35%" margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
@@ -58,6 +54,7 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
             <Tooltip
               content={<ChartTooltip locationConfigs={activeLocations} />}
               cursor={{ fill: 'currentColor', opacity: 0.05 }}
+              isAnimationActive={false}
             />
 
             {activeLocations.map((loc) => (

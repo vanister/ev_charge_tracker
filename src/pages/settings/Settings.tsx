@@ -1,5 +1,5 @@
 import { usePageConfig } from '../../hooks/usePageConfig';
-import { SettingsSection } from './SettingsSection';
+import { Section } from '../../components/Section';
 import { LocationsSectionBody } from './LocationsSection';
 import { PreferencesSectionBody } from './PreferencesSectionBody';
 import { StorageSectionBody } from './StorageSectionBody';
@@ -14,33 +14,33 @@ export function Settings() {
   return (
     <div className="bg-background px-4 py-6">
       <div className="max-w-2xl mx-auto space-y-8">
-        <SettingsSection title="Theme">
+        <Section title="Theme">
           <ThemeSectionBody />
-        </SettingsSection>
+        </Section>
 
-        <SettingsSection title="Locations">
+        <Section title="Locations">
           <LocationsSectionBody />
-        </SettingsSection>
+        </Section>
 
-        <SettingsSection title="Preferences" cardClassName="space-y-4">
+        <Section title="Preferences" cardClassName="space-y-4">
           <PreferencesSectionBody />
-        </SettingsSection>
+        </Section>
 
-        <SettingsSection title="Storage" cardClassName="space-y-3">
+        <Section title="Storage" cardClassName="space-y-3">
           <StorageSectionBody />
-        </SettingsSection>
+        </Section>
 
-        <SettingsSection title="Export & Restore" cardClassName="space-y-3">
+        <Section title="Export & Restore" cardClassName="space-y-3">
           <ExportRestoreSectionBody />
-        </SettingsSection>
+        </Section>
 
-        <SettingsSection title="Update">
+        <Section title="Update">
           <UpdateSectionBody />
-        </SettingsSection>
+        </Section>
 
-        <SettingsSection title="About">
+        <Section title="About">
           <AboutSectionBody />
-        </SettingsSection>
+        </Section>
       </div>
     </div>
   );
