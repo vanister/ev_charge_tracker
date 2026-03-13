@@ -2,7 +2,7 @@ import type { SessionStats } from './dashboard-types';
 import type { SessionWithMetadata } from '../../helpers/sessionHelpers';
 import type { ChartData } from './chart-types';
 import { DashboardStats } from './DashboardStats';
-import { ChargeSessionsChart } from './ChargeSessionsChart';
+import { ChargeSessionsCharts } from './ChargeSessionsCharts';
 import { DashboardRecentSessions } from './DashboardRecentSessions';
 
 type DashboardContentProps = {
@@ -13,10 +13,10 @@ type DashboardContentProps = {
 
 export function DashboardContent({ stats, recentSessions, chartData }: DashboardContentProps) {
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="mx-auto max-w-2xl">
       <DashboardStats stats={stats} />
-      <ChargeSessionsChart data={chartData} />
-      {recentSessions.length > 0 && <DashboardRecentSessions sessions={recentSessions} />}
+      <ChargeSessionsCharts data={chartData} stats={stats} />
+      <DashboardRecentSessions sessions={recentSessions} />
     </div>
   );
 }

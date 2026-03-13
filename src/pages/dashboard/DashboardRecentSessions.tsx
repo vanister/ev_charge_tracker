@@ -8,6 +8,10 @@ type DashboardRecentSessionsProps = {
 };
 
 export function DashboardRecentSessions({ sessions }: DashboardRecentSessionsProps) {
+  if (sessions.length === 0) {
+    return null;
+  }
+
   return (
     <div>
       <SectionHeader

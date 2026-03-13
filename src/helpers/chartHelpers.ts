@@ -1,4 +1,4 @@
-import { subDays, format, startOfDay } from 'date-fns';
+import { subDays, startOfDay, formatDate, getDateGroupKey } from '../utilities/dateUtils';
 import type { ChargingSession, Location } from '../data/data-types';
 import type { ChartData, ChartDayData, LocationChartConfig } from '../pages/dashboard/chart-types';
 import { LOCATION_COLOR_HEX } from '../constants';
@@ -9,14 +9,14 @@ export function buildChartData(
   numDays: number = 31
 ): ChartData {
   const now = Date.now();
-  const startTimestamp = startOfDay(subDays(now, numDays - 1)).getTime();
+  const startTimestamp = startOfDay(subDays(now, numDays - 1));
 
   // Generate all days in range, oldest first
   const days: ChartDayData[] = Array.from({ length: numDays }, (_, i) => {
     const date = subDays(now, numDays - 1 - i);
     const base: ChartDayData = {
-      dateKey: format(date, 'yyyy-MM-dd'),
-      label: format(date, 'MM/dd')
+      dateKey: getDateGroupKey(date),
+      label: formatDate(date, 'MM/dd')
     };
     for (const loc of locations) {
       base[loc.id] = 0;
@@ -32,7 +32,7 @@ export function buildChartData(
     if (session.chargedAt < startTimestamp) {
       continue;
     }
-    const dateKey = format(session.chargedAt, 'yyyy-MM-dd');
+    const dateKey = getDateGroupKey(session.chargedAt);
     const day = dayIndex.get(dateKey);
     if (day) {
       const current = (day[session.locationId] as number) ?? 0;

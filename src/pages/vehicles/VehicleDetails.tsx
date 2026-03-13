@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useVehicles } from '../../hooks/useVehicles';
-import { usePageTitle } from '../../hooks/usePageTitle';
+import { usePageConfig } from '../../hooks/usePageConfig';
 import { useImmerState } from '../../hooks/useImmerState';
 import { Button } from '../../components/Button';
 import { FormFooter } from '../../components/FormFooter';
@@ -34,7 +34,7 @@ export function VehicleDetails() {
     isInitialized: !isEditMode
   });
 
-  usePageTitle(isEditMode ? 'Edit Vehicle' : 'Add Vehicle');
+  usePageConfig(isEditMode ? 'Edit Vehicle' : 'Add Vehicle', true);
 
   useEffect(() => {
     if (!isEditMode || formState.isInitialized) {

@@ -12,12 +12,12 @@ export type SessionWithMetadata = {
 
 export type SessionsByDate = [string, SessionWithMetadata[]][];
 
-export function createVehicleMap(vehicles: Vehicle[]) {
-  return new Map(vehicles.map((v) => [v.id, v]));
+export function createVehicleMap(vehicles: Vehicle[]): Map<string, Vehicle> {
+  return new Map<string, Vehicle>(vehicles.map((v) => [v.id, v]));
 }
 
-export function createLocationMap(locations: Location[]) {
-  return new Map(locations.map((l) => [l.id, l]));
+export function createLocationMap(locations: Location[]): Map<string, Location> {
+  return new Map<string, Location>(locations.map((l) => [l.id, l]));
 }
 
 export function getVehicleDisplayName(vehicle: Vehicle): string {

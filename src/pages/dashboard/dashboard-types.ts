@@ -1,6 +1,7 @@
 export type LocationStat = {
   locationId: string;
   name: string;
+  color: string;
   totalKwh: number;
   totalCostCents: number;
 };

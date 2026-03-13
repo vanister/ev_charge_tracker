@@ -2,22 +2,22 @@ import {
   format,
   isSameDay as dateFnsIsSameDay,
   startOfDay as dateFnsStartOfDay,
-  subDays,
+  subDays as dateFnsSubDays,
   subMonths
 } from 'date-fns';
 import type { DateRange } from '../types/shared-types';
-import type { TimeFilterValue } from '../constants';
+import type { TimeFilterValue } from '../types/shared-types';
 
 export function getDateRangeForTimeFilter(value: TimeFilterValue): DateRange | undefined {
   const end = Date.now();
 
   switch (value) {
     case '7d':
-      return { start: subDays(end, 7).getTime(), end };
+      return { start: dateFnsSubDays(end, 7).getTime(), end };
     case '14d':
-      return { start: subDays(end, 14).getTime(), end };
+      return { start: dateFnsSubDays(end, 14).getTime(), end };
     case '31d':
-      return { start: subDays(end, 31).getTime(), end };
+      return { start: dateFnsSubDays(end, 31).getTime(), end };
     case '3m':
       return { start: subMonths(end, 3).getTime(), end };
     case '6m':
@@ -47,6 +47,10 @@ export function isSameDay(timestamp1: number, timestamp2: number): boolean {
 
 export function startOfDay(timestamp: number): number {
   return dateFnsStartOfDay(timestamp).getTime();
+}
+
+export function subDays(timestamp: number, days: number): number {
+  return dateFnsSubDays(timestamp, days).getTime();
 }
 
 export function getDateGroupKey(timestamp: number): string {

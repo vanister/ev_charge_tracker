@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useLocations } from '../../hooks/useLocations';
-import { usePageTitle } from '../../hooks/usePageTitle';
+import { usePageConfig } from '../../hooks/usePageConfig';
 import { useImmerState } from '../../hooks/useImmerState';
 import { Button } from '../../components/Button';
 import { FormFooter } from '../../components/FormFooter';
@@ -36,7 +36,7 @@ export function LocationDetails() {
     isInitialized: !isEditMode
   });
 
-  usePageTitle(isEditMode ? 'Edit Location' : 'Add Location');
+  usePageConfig(isEditMode ? 'Edit Location' : 'Add Location', true);
 
   useEffect(() => {
     if (!isEditMode || formState.isInitialized) {

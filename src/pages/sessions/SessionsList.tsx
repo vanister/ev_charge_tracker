@@ -4,7 +4,7 @@ import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import type { ChargingSession, Vehicle, Location as AppLocation } from '../../data/data-types';
 import { useLocations } from '../../hooks/useLocations';
-import { usePageTitle } from '../../hooks/usePageTitle';
+import { usePageConfig } from '../../hooks/usePageConfig';
 import { useImmerState } from '../../hooks/useImmerState';
 import { useUserPreferences } from '../../hooks/useUserPreferences';
 import { ItemListButton } from '../../components/ItemListButton';
@@ -13,7 +13,7 @@ import { SessionDateGroup } from './SessionDateGroup';
 import { SessionsEmptyState } from './SessionsEmptyState';
 import { formatDate, getDateRangeForTimeFilter } from '../../utilities/dateUtils';
 import { createVehicleMap, createLocationMap, groupSessionsByDate } from '../../helpers/sessionHelpers';
-import type { TimeFilterValue } from '../../constants';
+import type { TimeFilterValue } from '../../types/shared-types';
 
 type SessionsListState = {
   selectedVehicleId: string | undefined;
@@ -38,7 +38,7 @@ const DEFAULT_STATE: SessionsListState = {
 };
 
 export function SessionsList() {
-  usePageTitle('Sessions');
+  usePageConfig('Sessions');
 
   const navigate = useNavigate();
   const { preferences, updatePreferences } = useUserPreferences();

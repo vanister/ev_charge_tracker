@@ -65,6 +65,11 @@
     transition-property: background-color, color, border-color;
     transition-duration: 150ms;
     transition-timing-function: ease;
+    user-select: none;
+  }
+
+  input, textarea, select {
+    user-select: text;
   }
 
   /* iOS Safari gives datetime-local inputs an intrinsic minimum width from -webkit-appearance.

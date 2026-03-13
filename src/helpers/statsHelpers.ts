@@ -18,9 +18,11 @@ export function computeStats(sessions: ChargingSession[], locationMap: Map<strin
           existing.totalKwh += s.energyKwh;
           existing.totalCostCents += s.costCents;
         } else {
+          const location = locationMap.get(s.locationId);
           group.set(s.locationId, {
             locationId: s.locationId,
-            name: locationMap.get(s.locationId)?.name ?? 'Unknown',
+            name: location?.name ?? 'Unknown',
+            color: location?.color ?? '#c084fc', // other color
             totalKwh: s.energyKwh,
             totalCostCents: s.costCents
           });

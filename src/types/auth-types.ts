@@ -1,4 +1,4 @@
-import type { OAuthProvider } from '../constants';
+import type { OAuthProvider } from './shared-types';
 
 export type TokenExchangeConfig = {
   provider: OAuthProvider;
