@@ -46,8 +46,12 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
               tick={{ fontSize: 10, fill: 'currentColor', opacity: 0.5 }}
               tickLine={false}
               axisLine={false}
-              tickFormatter={(v: number) => (v === 0 ? '' : `${v}`)}
-              width={36}
+              tickFormatter={(v: number) => {
+                if (v === 0) return '';
+                if (v >= 1000) return `${+(v / 1000).toFixed(1)}k`;
+                return `${Math.round(v)}`;
+              }}
+              width={44}
             />
 
             <Tooltip

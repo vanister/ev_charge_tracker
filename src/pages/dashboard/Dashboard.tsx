@@ -123,6 +123,7 @@ export function Dashboard() {
             onClearFilters={handleClearFilters}
             isOpen={filtersIsOpen}
             onToggle={handleFilterToggle}
+            className="mb-4"
           />
           <ChargeStats stats={stats} />
           <ChargeSessionsCharts data={chartData} stats={stats} />
