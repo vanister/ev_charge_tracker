@@ -124,9 +124,13 @@ export function getChartNumDays(timeRange: TimeFilterValue): number {
 }
 
 // Number of monthly bars for time ranges 6m / 12m / all
-export function getChartNumMonths(timeRange: TimeFilterValue): number {
+export function getChartNumMonths(timeRange: TimeFilterValue, sessions: ChargingSession[]): number {
   if (timeRange === '6m') return 6;
   if (timeRange === '12m') return 12;
-  // 'all' — last 60 months (5 years) looking back from now
-  return 60;
+
+  // 'all' — compute from the earliest session, capped at 60 months (5 years)
+  if (sessions.length === 0) return 6;
+  const earliest = sessions.reduce((min, s) => Math.min(min, s.chargedAt), Infinity);
+  const monthsElapsed = (Date.now() - earliest) / (1000 * 60 * 60 * 24 * 30.44) + 1;
+  return Math.min(Math.ceil(monthsElapsed), 60);
 }
