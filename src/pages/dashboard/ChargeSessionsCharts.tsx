@@ -3,7 +3,6 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import type { ChartData } from './chart-types';
 import type { SessionStats } from './dashboard-types';
 import { ChartTooltip } from './ChartTooltip';
-import { CHART_X_AXIS_INTERVAL } from '../../constants';
 
 type ChargeSessionsChartProps = {
   data: ChartData;
@@ -11,19 +10,22 @@ type ChargeSessionsChartProps = {
 };
 
 export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) {
-  const { days, locationConfigs } = data;
+  const { bars, locationConfigs } = data;
 
   // Only render locations that have at least one session in the window
   const activeLocations = useMemo(
-    () => locationConfigs.filter((loc) => days.some((day) => (day[loc.locationId] as number) > 0)),
-    [locationConfigs, days]
+    () => locationConfigs.filter((loc) => bars.some((bar) => (bar[loc.locationId] as number) > 0)),
+    [locationConfigs, bars]
   );
   const sortedByKwh = useMemo(() => [...stats.byLocation].sort((a, b) => b.totalKwh - a.totalKwh), [stats.byLocation]);
+
+  // Keep ~7 x-axis labels regardless of bar count
+  const xAxisInterval = Math.max(0, Math.floor(bars.length / 7) - 1);
 
   if (activeLocations.length === 0) {
     return (
       <div className="bg-surface border-default mt-4 rounded-xl border px-2 py-10 text-center">
-        <p className="text-body-secondary text-sm">No charging sessions in the last 31 days</p>
+        <p className="text-body-secondary text-sm">No charging sessions for this period</p>
       </div>
     );
   }
@@ -32,12 +34,12 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
     <div className="mt-4">
       <div className="bg-surface border-default rounded-xl border px-2 pt-4 pb-3">
         <ResponsiveContainer width="100%" height={180}>
-          <BarChart data={days} barCategoryGap="35%" margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
+          <BarChart data={bars} barCategoryGap="35%" margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
             <CartesianGrid vertical={false} stroke="currentColor" strokeOpacity={0.08} />
 
             <XAxis
               dataKey="label"
-              interval={CHART_X_AXIS_INTERVAL}
+              interval={xAxisInterval}
               tick={{ fontSize: 10, fill: 'currentColor', opacity: 0.5 }}
               tickLine={false}
               axisLine={false}

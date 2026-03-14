@@ -1,3 +1,11 @@
+import type { TimeFilterValue } from '../../types/shared-types';
+
+export type DashboardFilter = {
+  timeRange: TimeFilterValue;
+  vehicleId: string | undefined;
+  locationId: string | undefined;
+};
+
 export type LocationStat = {
   locationId: string;
   name: string;

@@ -1,4 +1,4 @@
-export type ChartDayData = {
+export type ChartBarData = {
   dateKey: string;
   label: string;
   [locationId: string]: number | string;
@@ -11,7 +11,7 @@ export type LocationChartConfig = {
 };
 
 export type ChartData = {
-  days: ChartDayData[];
+  bars: ChartBarData[];
   locationConfigs: LocationChartConfig[];
 };
 

@@ -6,4 +6,8 @@ export type UserPreferences = {
   sessionsFilterVehicleId?: string;
   sessionsFilterLocationId?: string;
   sessionsFilterIsOpen?: boolean;
+  dashboardFilterTimeRange?: string;
+  dashboardFilterVehicleId?: string;
+  dashboardFilterLocationId?: string;
+  dashboardFilterIsOpen?: boolean;
 };
