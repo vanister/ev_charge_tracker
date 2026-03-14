@@ -87,15 +87,15 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
           description={`You already have ${vehicles.length} vehicle${vehicles.length > 1 ? 's' : ''} in your garage.`}
         />
 
-        <div className="space-y-3 mb-6">
+        <div className="mb-6 space-y-3">
           {vehicles.map((vehicle) => (
-            <div key={vehicle.id} className="p-4 bg-surface border border-default rounded-lg flex items-center gap-3">
+            <div key={vehicle.id} className="bg-surface border-default flex items-center gap-3 rounded-lg border p-4">
               <div className="flex-1">
-                <div className="font-medium text-body">
+                <div className="text-body font-medium">
                   {vehicle.name || `${vehicle.year} ${vehicle.make} ${vehicle.model}`}
                 </div>
                 {vehicle.name && (
-                  <div className="text-sm text-body-secondary">
+                  <div className="text-body-secondary text-sm">
                     {vehicle.year} {vehicle.make} {vehicle.model}
                   </div>
                 )}

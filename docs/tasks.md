@@ -20,13 +20,14 @@
 ## TODO
 
 ### Post-MVP
+
 - [ ] 1. Support vehicle image upload
   - Allow users to upload a custom image for their vehicle instead of the default 🚗 emoji
   - Store image reference and display in VehicleItem and other vehicle displays
 - ~~[ ] 2. Sync ability using users storage accounts~~
   - ~~iCloud, Drive, OneDrive, etc.~~
 - [ ] 3. More charts
-  - Monthly charge stats 
+  - Monthly charge stats
   - Yearly charge stats
   - Custom range
 
@@ -35,18 +36,21 @@
 ## COMPLETED
 
 ### Phase 1 - Setup Phase
+
 - [x] 1. Initialize Vite React TypeScript project
 - [x] 2. Install core dependencies
 - [x] 3. Set up Tailwind CSS v4
 - [x] 4. Install and configure Vite PWA plugin
 
 ### Phase 2 - Data Layer
+
 - [x] 1. Create TypeScript types and interfaces
 - [x] 2. Set up Dexie database schema
 - [x] 3. Create constants file
 - [x] 4. Create utility functions
 
 ### Phase 3 - Context Providers & Hooks
+
 - [x] 1. Implement DatabaseProvider context
 - [x] 2. Implement AppInitializationProvider context
 - [x] 3. Implement useDatabase hook
@@ -60,6 +64,7 @@
 - [x] 11. Implement useImmerState hook
 
 ### Phase 4 - Routing & Pages
+
 - [x] 1. Set up React Router structure
 - [x] 2. Create Onboarding flow pages
 - [x] 3. Build Layout
@@ -71,12 +76,14 @@
 - [x] 9. Build Dashboard page
 
 ### Phase 5 - UI Components
+
 - [x] 1. Create reusable UI components
 - [x] 2. Implement charts with Recharts
   - Charge sessions bar chart on the dashboard with time filter (7d / 30d / 90d)
   - Custom tooltip and dedicated chart types extracted into separate files
 
 ### Phase 6 - Tech Debt / Cleanup
+
 - [x] 1. Organize types
 - [x] 2. Use useImmerState hook
 - [x] 3. Specific error pages
@@ -85,12 +92,14 @@
 - [x] 6. Use async/await
 
 ### Phase 7 - PWA Features
+
 - [x] 1. Generate PWA icons
 - [x] 2. Configure PWA manifest
 - [x] 3. Implement persistent storage request
 - [x] 4. Add service worker update notification
 
 ### Phase 8 - Business Logic & Testing
+
 - [x] 1. Implement app initialization flow
 - [x] 2. Add vehicle deletion safety checks
 - [x] 3. Add location deletion safety checks
@@ -99,6 +108,7 @@
 - [x] 5. Build and deploy to static hosting
 
 ### Phase 9 - User Preferences
+
 - [x] 1. Add USER_PREFERENCES_STORAGE_KEY constant
 - [x] 2. Create useUserPreferences hook
 - [x] 3. Persist last vehicle and location on session save
@@ -106,6 +116,7 @@
 - [x] 5. Add a "Preferences" section to the Settings page
 
 ### Phase 10 - Export and Restore
+
 - [x] 1. Add an export and restore section to the settings page
 - [x] 2. Export the entire dexie stores out into json including
   - version number

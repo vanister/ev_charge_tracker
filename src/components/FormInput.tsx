@@ -11,17 +11,17 @@ type FormInputProps = {
 export function FormInput({ id, label, required, labelClassName, className, ...inputProps }: FormInputProps) {
   return (
     <div>
-      <label htmlFor={id} className={clsx('block text-sm font-medium text-body mb-1', labelClassName)}>
+      <label htmlFor={id} className={clsx('text-body mb-1 block text-sm font-medium', labelClassName)}>
         {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
+        {required && <span className="ml-1 text-red-500">*</span>}
       </label>
       <input
         id={id}
         required={required}
         className={clsx(
-          'w-full min-w-0 px-3 py-2 bg-surface border border-default rounded-lg',
+          'bg-surface border-default w-full min-w-0 rounded-lg border px-3 py-2',
           'text-body placeholder-body-tertiary focus:outline-none',
-          'focus:ring-2 focus:ring-primary focus:border-transparent',
+          'focus:ring-primary focus:border-transparent focus:ring-2',
           className
         )}
         {...inputProps}

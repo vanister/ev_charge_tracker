@@ -19,17 +19,17 @@ export function VehicleItem(props: VehicleItemProps) {
   const subtitle = vehicle.name ? `${vehicle.year} ${vehicle.make} ${vehicle.model}` : `${vehicle.year}`;
 
   return (
-    <div className="p-4 bg-surface border border-default rounded-lg hover:border-default-hover transition-colors">
+    <div className="bg-surface border-default hover:border-default-hover rounded-lg border p-4 transition-colors">
       <div className="flex items-start gap-4">
-        <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-semibold text-body mb-1">{displayName}</h3>
-          <p className="text-sm text-body-secondary">{subtitle}</p>
+        <div className="min-w-0 flex-1">
+          <h3 className="text-body mb-1 text-lg font-semibold">{displayName}</h3>
+          <p className="text-body-secondary text-sm">{subtitle}</p>
         </div>
 
         <div className="flex items-center gap-2">
           <Link
             to={`/vehicles/${vehicle.id}/edit`}
-            className="p-2 text-body-secondary hover:text-body hover:bg-background rounded-lg transition-colors"
+            className="text-body-secondary hover:text-body hover:bg-background rounded-lg p-2 transition-colors"
             aria-label="Edit vehicle"
           >
             <Icon name="edit" size="sm" />
@@ -37,7 +37,7 @@ export function VehicleItem(props: VehicleItemProps) {
           <button
             type="button"
             onClick={handleDelete}
-            className="p-2 text-body-secondary hover:text-red-500 hover:bg-background rounded-lg transition-colors"
+            className="text-body-secondary hover:bg-background rounded-lg p-2 transition-colors hover:text-red-500"
             aria-label="Delete vehicle"
           >
             <Icon name="trash-2" size="sm" />

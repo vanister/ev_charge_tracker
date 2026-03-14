@@ -13,7 +13,7 @@ export function SessionDateGroup(props: SessionDateGroupProps) {
 
   return (
     <div className="mb-6">
-      <h3 className="text-sm font-semibold text-body-secondary mb-3 px-1">{date}</h3>
+      <h3 className="text-body-secondary mb-3 px-1 text-sm font-semibold">{date}</h3>
       <div className="space-y-3">
         {sessions.map((item) => (
           <SessionItem

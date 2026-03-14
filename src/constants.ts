@@ -46,7 +46,6 @@ export const LOCATION_COLOR_OPTIONS: LocationColorOption[] = [
   { value: LOCATION_COLOR_HEX.orange, label: 'Orange', bgClass: 'bg-orange-400' }
 ];
 
-
 export const OAUTH_PROVIDERS = {
   google: {
     authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',

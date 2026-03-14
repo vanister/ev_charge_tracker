@@ -46,11 +46,12 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
           skipConfirm={!onboardingComplete}
           onSuccess={() => window.location.replace('/')}
           onRestoreStart={() => setIsRestoring(true)}
-          onError={(error) => { setIsRestoring(false); setRestoreError(error); }}
+          onError={(error) => {
+            setIsRestoring(false);
+            setRestoreError(error);
+          }}
         />
-        {restoreError && (
-          <p className="text-sm text-red-600 dark:text-red-400">{restoreError}</p>
-        )}
+        {restoreError && <p className="text-sm text-red-600 dark:text-red-400">{restoreError}</p>}
       </div>
     </div>
   );

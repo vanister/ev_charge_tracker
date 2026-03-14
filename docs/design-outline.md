@@ -54,10 +54,10 @@ locations: '++id, isActive, createdAt';
 // Dynamic store, user can add/edit/delete locations
 // Default locations seeded on first launch:
 DEFAULT_LOCATIONS = [
-  { name: 'Home',              icon: 'home',     color: 'teal',   defaultRate: 0.15 },
-  { name: 'Work',              icon: 'building', color: 'slate',  defaultRate: 0.17 },
-  { name: 'Other',             icon: 'map-pin',  color: 'purple', defaultRate: 0.11 },
-  { name: 'DC Fast Charger',   icon: 'zap',      color: 'orange', defaultRate: 0.35 }
+  { name: 'Home', icon: 'home', color: 'teal', defaultRate: 0.15 },
+  { name: 'Work', icon: 'building', color: 'slate', defaultRate: 0.17 },
+  { name: 'Other', icon: 'map-pin', color: 'purple', defaultRate: 0.11 },
+  { name: 'DC Fast Charger', icon: 'zap', color: 'orange', defaultRate: 0.35 }
 ];
 ```
 
@@ -125,6 +125,7 @@ Session filters: `{ vehicleId?, locationId?, dateRange? }`
 ```
 
 **Default locations** (seeded on first launch):
+
 - Home (🏠 home icon, teal, $0.15/kWh)
 - Work (🏢 building icon, slate, $0.17/kWh)
 - Other (📍 map-pin icon, purple, $0.11/kWh)
@@ -142,7 +143,7 @@ plugins: [
     manifest: {
       name: 'EV Charge Tracker',
       short_name: 'Charge Tracker',
-      theme_color: '#14b8a6',  // teal-500
+      theme_color: '#14b8a6', // teal-500
       display: 'standalone',
       icons: [
         /* 192x192 (standard + maskable), 512x512 (standard + maskable) */

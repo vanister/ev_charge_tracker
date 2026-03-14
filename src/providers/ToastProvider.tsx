@@ -27,35 +27,46 @@ export function ToastProvider({ children }: ToastProviderProps) {
     timeouts.current.delete(id);
   };
 
-  const removeToast = useCallback((id: string) => {
-    animTimers.current.delete(id);
+  const removeToast = useCallback(
+    (id: string) => {
+      animTimers.current.delete(id);
 
-    setToasts((draft) => {
-      const index = draft.findIndex((t) => t.id === id);
+      setToasts((draft) => {
+        const index = draft.findIndex((t) => t.id === id);
 
-      if (index !== -1) {
-        draft.splice(index, 1);
-      }
-    });
-  }, [setToasts]);
+        if (index !== -1) {
+          draft.splice(index, 1);
+        }
+      });
+    },
+    [setToasts]
+  );
 
-  const dismissToast = useCallback((id: string) => {
-    clearTimer(id);
+  const dismissToast = useCallback(
+    (id: string) => {
+      clearTimer(id);
 
-    setToasts((draft) => {
-      const toast = draft.find((t) => t.id === id);
+      setToasts((draft) => {
+        const toast = draft.find((t) => t.id === id);
 
-      if (toast && !toast.exiting) {
-        toast.exiting = true;
-      }
-    });
+        if (toast && !toast.exiting) {
+          toast.exiting = true;
+        }
+      });
 
-    const timer = setTimeout(() => removeToast(id), TOAST_EXIT_ANIMATION_MS);
-    animTimers.current.set(id, timer);
-  }, [setToasts, removeToast]);
+      const timer = setTimeout(() => removeToast(id), TOAST_EXIT_ANIMATION_MS);
+      animTimers.current.set(id, timer);
+    },
+    [setToasts, removeToast]
+  );
 
   const showToast = useCallback(
-    ({ persistent = false, duration = TOAST_DEFAULT_DURATION, variant = 'success', ...rest }: ShowToastOptions): string => {
+    ({
+      persistent = false,
+      duration = TOAST_DEFAULT_DURATION,
+      variant = 'success',
+      ...rest
+    }: ShowToastOptions): string => {
       const id = crypto.randomUUID();
       const toast: Toast = { ...rest, variant, persistent, duration, id };
 

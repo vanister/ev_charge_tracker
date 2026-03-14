@@ -91,7 +91,7 @@ export function Dashboard() {
 
   if (!isLoading && !hasAnySessions) {
     return (
-      <div className="flex-1 bg-background px-4 py-6 flex flex-col">
+      <div className="bg-background flex flex-1 flex-col px-4 py-6">
         <EmptyState
           icon="zap"
           title="No charging sessions yet"

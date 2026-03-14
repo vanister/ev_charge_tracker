@@ -28,13 +28,10 @@ export function StorageSectionBody() {
   }, [setState]);
 
   if (state.storageUsed == null || state.storageQuota == null) {
-    return <p className="text-sm text-body-secondary">Storage information unavailable</p>;
+    return <p className="text-body-secondary text-sm">Storage information unavailable</p>;
   }
 
-  const storagePercent =
-    state.storageQuota > 0
-      ? Math.min(100, (state.storageUsed / state.storageQuota) * 100)
-      : null;
+  const storagePercent = state.storageQuota > 0 ? Math.min(100, (state.storageUsed / state.storageQuota) * 100) : null;
 
   return (
     <>
@@ -45,11 +42,8 @@ export function StorageSectionBody() {
         </span>
       </div>
       {storagePercent != null && (
-        <div className="h-2 bg-border rounded-full overflow-hidden">
-          <div
-            className="h-full bg-primary rounded-full transition-all"
-            style={{ width: `${storagePercent}%` }}
-          />
+        <div className="bg-border h-2 overflow-hidden rounded-full">
+          <div className="bg-primary h-full rounded-full transition-all" style={{ width: `${storagePercent}%` }} />
         </div>
       )}
     </>

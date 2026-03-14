@@ -9,11 +9,7 @@ import type { TimeFilterValue } from '../types/shared-types';
 // from the raw bar payload without needing a separate data structure.
 const costKey = (locationId: string) => `${locationId}__cost`;
 
-export function buildChartData(
-  sessions: ChargingSession[],
-  locations: Location[],
-  numDays: number = 31
-): ChartData {
+export function buildChartData(sessions: ChargingSession[], locations: Location[], numDays: number = 31): ChartData {
   const now = Date.now();
   const startTimestamp = startOfDay(subDays(now, numDays - 1));
 
@@ -43,8 +39,7 @@ export function buildChartData(
     const bar = barIndex.get(dateKey);
     if (bar) {
       bar[session.locationId] = ((bar[session.locationId] as number) ?? 0) + session.energyKwh;
-      bar[costKey(session.locationId)] =
-        ((bar[costKey(session.locationId)] as number) ?? 0) + session.costCents;
+      bar[costKey(session.locationId)] = ((bar[costKey(session.locationId)] as number) ?? 0) + session.costCents;
     }
   }
 
@@ -73,9 +68,7 @@ export function buildMonthlyChartData(
     const monthKey = format(monthDate, 'yyyy-MM');
     // Show year only when it differs from the current year
     const label =
-      monthDate.getFullYear() === now.getFullYear()
-        ? format(monthDate, 'MMM')
-        : format(monthDate, "MMM ''yy");
+      monthDate.getFullYear() === now.getFullYear() ? format(monthDate, 'MMM') : format(monthDate, "MMM ''yy");
 
     const base: ChartBarData = { dateKey: monthKey, label };
     for (const loc of locations) {
@@ -92,8 +85,7 @@ export function buildMonthlyChartData(
     const bar = barIndex.get(monthKey);
     if (bar) {
       bar[session.locationId] = ((bar[session.locationId] as number) ?? 0) + session.energyKwh;
-      bar[costKey(session.locationId)] =
-        ((bar[costKey(session.locationId)] as number) ?? 0) + session.costCents;
+      bar[costKey(session.locationId)] = ((bar[costKey(session.locationId)] as number) ?? 0) + session.costCents;
     }
   }
 

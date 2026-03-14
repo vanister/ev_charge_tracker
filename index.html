@@ -11,8 +11,7 @@
         try {
           const theme = localStorage.getItem('ev-charge-tracker-theme') || 'system';
           const isDark =
-            theme === 'dark' ||
-            (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
           if (isDark) {
             document.documentElement.classList.add('dark');
           }

@@ -22,7 +22,7 @@ export function ItemListButton(props: ItemListButtonProps) {
       type="button"
       onClick={onClick}
       className={clsx(
-        'w-full p-4 rounded-lg border transition-all cursor-pointer',
+        'w-full cursor-pointer rounded-lg border p-4 transition-all',
         'flex items-center justify-center gap-2 text-white',
         variantClasses[variant],
         className

@@ -9,6 +9,7 @@ A fully offline PWA for tracking EV charging sessions. Designed to function as a
 ## Technology Stack
 
 ### Core
+
 - **Vite** - Build tool and dev server
 - **React 19** - UI framework
 - **TypeScript** - Type safety
@@ -16,9 +17,11 @@ A fully offline PWA for tracking EV charging sessions. Designed to function as a
 - **Vite PWA Plugin** - Service worker generation
 
 ### UI & Styling
+
 - **Tailwind CSS v4** - Utility-first CSS framework (bundled via `@tailwindcss/vite` plugin)
 
 ### Additional
+
 - **Lucide React** - Tree-shakeable SVG icon components
 - **Recharts** - Chart components (installed, not yet used)
 - **React Router v7** - Client-side routing
@@ -29,6 +32,7 @@ A fully offline PWA for tracking EV charging sessions. Designed to function as a
 ## Architecture Principles
 
 ### Offline-First Design
+
 ```
 NO_NETWORK_REQUIRED:
   - All features work without internet connection
@@ -43,6 +47,7 @@ STORAGE_STRATEGY:
 ```
 
 ### PWA as App Store Alternative
+
 ```
 DISTRIBUTION:
   - Host on any static hosting (Vercel, Netlify, GitHub Pages)
@@ -63,7 +68,7 @@ erDiagram
     Vehicle ||--o{ ChargingSession : has
     Location ||--o{ ChargingSession : has
     Settings ||--|| Settings : singleton
-    
+
     Vehicle {
         uuid id PK
         string name
@@ -74,7 +79,7 @@ erDiagram
         timestamp createdAt
         boolean isActive
     }
-    
+
     Location {
         uuid id PK
         string name
@@ -84,7 +89,7 @@ erDiagram
         timestamp createdAt
         boolean isActive
     }
-    
+
     ChargingSession {
         uuid id PK
         uuid vehicleId FK
@@ -95,7 +100,7 @@ erDiagram
         timestamp chargedAt
         string notes
     }
-    
+
     Settings {
         string key PK
         boolean onboardingComplete
@@ -137,6 +142,7 @@ Settings
 ```
 
 ### Default Locations
+
 ```
 DEFAULT_LOCATIONS = [
   { name: 'Home',            icon: 'home',     color: 'teal',   defaultRate: 0.15 },
@@ -150,6 +156,7 @@ DEFAULT_LOCATIONS = [
 ```
 
 ### Database Schema
+
 ```
 STORE: vehicles
   INDEX: id (primary)
@@ -189,7 +196,7 @@ flowchart TD
     D -->|Yes| F
     F -->|No| G[Show Onboarding]
     F -->|Yes| H[Show Dashboard]
-    
+
     G --> I[Welcome Screen]
     I --> J[Review/Edit Locations]
     J --> K[Add First Vehicle]
@@ -198,13 +205,14 @@ flowchart TD
 ```
 
 ### Default Settings Initialization
+
 ```
 ON_FIRST_LAUNCH:
   CREATE settings {
     key: 'app-settings',
     onboardingComplete: false
   }
-  
+
   SEED locations [
     { name: 'Home',            icon: 'home',     color: 'teal',   defaultRate: 0.15 },
     { name: 'Work',            icon: 'building', color: 'slate',  defaultRate: 0.17 },
@@ -214,6 +222,7 @@ ON_FIRST_LAUNCH:
 ```
 
 ### Onboarding Screens
+
 ```
 SCREEN 1: Welcome
   - App name and purpose
@@ -234,6 +243,7 @@ SCREEN 3: First Vehicle
 ```
 
 ### Empty States (Post-Onboarding)
+
 ```
 DASHBOARD_EMPTY:
   When: 0 sessions exist
@@ -279,6 +289,7 @@ MANIFEST:
 ```
 
 ### Service Worker Strategy
+
 ```
 PRECACHE (install time):
   - index.html
@@ -299,6 +310,7 @@ UPDATE_FLOW:
 ```
 
 ### Persistent Storage
+
 ```
 ON_APP_INIT:
   if navigator.storage.persist:
@@ -324,30 +336,31 @@ graph TB
         Components["Components"]
         Hooks["Custom Hooks"]
     end
-    
+
     Router --> Pages
     Pages --> Components
     Pages --> Hooks
     Components --> Hooks
-    
+
     Hooks --> DexieHooks["Dexie useLiveQuery()"]
     DexieHooks --> IndexedDB
-    
+
     subgraph IndexedDB["IndexedDB (On-Device)"]
         Vehicles[("vehicles")]
         Sessions[("sessions")]
         Settings[("settings")]
         Locations[("locations")]
     end
-    
+
     subgraph ServiceWorker["Service Worker"]
         Cache["Precached App Shell"]
     end
-    
+
     ServiceWorker -.->|serves| ReactApp
 ```
 
 ## Routing Structure
+
 ```
 /error                         # ErrorPage (initialization failures)
 /onboarding                    # Onboarding flow (3 steps, public)
@@ -491,6 +504,7 @@ useLayoutConfig() → { title, setTitle }
 ## Business Logic
 
 ### Cost Calculation
+
 ```
 ON_SESSION_CREATE:
   costCents = ROUND(energyKwh Ã— ratePerKwh Ã— 100)
@@ -499,10 +513,11 @@ ON_SESSION_CREATE:
 ```
 
 ### Vehicle Deletion
+
 ```
 ON_DELETE_VEHICLE:
   sessionCount = COUNT sessions WHERE vehicleId = id
-  
+
   if sessionCount > 0:
     SHOW error "Cannot delete vehicle with existing sessions"
     OFFER "Delete all sessions first?" (dangerous action)
@@ -511,10 +526,11 @@ ON_DELETE_VEHICLE:
 ```
 
 ### Location Deletion
+
 ```
 ON_DELETE_LOCATION:
   sessionCount = COUNT sessions WHERE locationId = id
-  
+
   if sessionCount > 0:
     SHOW error "Cannot delete location with existing sessions"
   else:
@@ -522,6 +538,7 @@ ON_DELETE_LOCATION:
 ```
 
 ### Default Rate Application
+
 ```
 ON_ADD_SESSION:
   location selected → pre-fill rate from location.defaultRate
@@ -534,6 +551,7 @@ ON_ADD_SESSION:
 ## Development Setup
 
 ### Create Project
+
 ```bash
 npm create vite@latest ev-charge-tracker -- --template react-ts
 cd ev-charge-tracker
@@ -548,6 +566,7 @@ npm install -D vite-plugin-pwa
 ```
 
 ### File Structure
+
 ```
 src/
   components/      # Shared UI: Button, EmptyState, Icon, SectionHeader, FullscreenLoader, RequireOnboarding
@@ -573,6 +592,7 @@ public/
 ```
 
 ### Deployment
+
 ```
 BUILD:
   Vite bundles app

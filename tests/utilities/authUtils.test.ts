@@ -4,7 +4,7 @@ import {
   parseAuthCallback,
   storeOAuthState,
   getStoredOAuthState,
-  clearOAuthState,
+  clearOAuthState
 } from '../../src/utilities/authUtils';
 import { OAUTH_PROVIDERS } from '../../src/constants';
 
@@ -13,7 +13,7 @@ const BASE_PARAMS = {
   clientId: 'test-client-id',
   redirectUri: 'https://example.com/callback',
   codeChallenge: 'test-code-challenge',
-  state: 'test-csrf-state',
+  state: 'test-csrf-state'
 };
 
 function parseResult(url: string): { base: string; params: URLSearchParams } {
@@ -124,11 +124,19 @@ describe('OAuth state helpers', () => {
     const map = new Map<string, string>();
     storage = {
       getItem: (key) => map.get(key) ?? null,
-      setItem: (key, value) => { map.set(key, value); },
-      removeItem: (key) => { map.delete(key); },
-      clear: () => { map.clear(); },
+      setItem: (key, value) => {
+        map.set(key, value);
+      },
+      removeItem: (key) => {
+        map.delete(key);
+      },
+      clear: () => {
+        map.clear();
+      },
       key: (index) => [...map.keys()][index] ?? null,
-      get length() { return map.size; },
+      get length() {
+        return map.size;
+      }
     };
   });
 

@@ -1,5 +1,11 @@
 import { generateId } from '../utilities/dataUtils';
-import { DEFAULT_LOCATIONS, DEFAULT_SETTINGS, DEFAULT_SYSTEM_CONFIG, SETTINGS_KEY, SYSTEM_CONFIG_KEY } from './constants';
+import {
+  DEFAULT_LOCATIONS,
+  DEFAULT_SETTINGS,
+  DEFAULT_SYSTEM_CONFIG,
+  SETTINGS_KEY,
+  SYSTEM_CONFIG_KEY
+} from './constants';
 import type { ActiveState, EvChargTrackerDb, Location, Settings, SystemConfig } from './data-types';
 
 /******************************************************************************************

@@ -57,22 +57,22 @@ A Vite + TypeScript + React 19 PWA for tracking EV charging sessions. Mobile-foc
 
 ## Technology Stack
 
-| Layer | Library / Tool | Version |
-|---|---|---|
-| Build | Vite | ^7 |
-| UI framework | React | ^19 |
-| Language | TypeScript | ~5.9 |
-| Routing | React Router | ^7 |
-| Database | Dexie.js (IndexedDB) | ^4 |
-| Styling | Tailwind CSS v4 | ^4 (via `@tailwindcss/vite` plugin) |
-| Icons | Lucide React | ^0.563 |
-| Charts | Recharts | ^3 (installed, not fully used yet) |
-| Dates | date-fns | ^4 |
-| Immutable state | Immer | ^11 |
-| Classnames | clsx | ^2 |
-| Error boundary | react-error-boundary | ^6 |
-| PWA | vite-plugin-pwa | ^1 |
-| Deployment | Cloudflare / Wrangler | ^4 |
+| Layer           | Library / Tool        | Version                             |
+| --------------- | --------------------- | ----------------------------------- |
+| Build           | Vite                  | ^7                                  |
+| UI framework    | React                 | ^19                                 |
+| Language        | TypeScript            | ~5.9                                |
+| Routing         | React Router          | ^7                                  |
+| Database        | Dexie.js (IndexedDB)  | ^4                                  |
+| Styling         | Tailwind CSS v4       | ^4 (via `@tailwindcss/vite` plugin) |
+| Icons           | Lucide React          | ^0.563                              |
+| Charts          | Recharts              | ^3 (installed, not fully used yet)  |
+| Dates           | date-fns              | ^4                                  |
+| Immutable state | Immer                 | ^11                                 |
+| Classnames      | clsx                  | ^2                                  |
+| Error boundary  | react-error-boundary  | ^6                                  |
+| PWA             | vite-plugin-pwa       | ^1                                  |
+| Deployment      | Cloudflare / Wrangler | ^4                                  |
 
 ---
 
@@ -189,6 +189,7 @@ UserPreferences (localStorage) { lastVehicleId?, lastLocationId?, recentSessions
 ```
 
 **Key invariants:**
+
 - `costCents` is computed at session creation (`round(energyKwh × ratePerKwh × 100)`) and never recalculated
 - Vehicles and locations use soft-delete (`isActive: 0`) to preserve session history
 - Deletion is blocked if the entity has existing sessions
@@ -253,40 +254,50 @@ Protected by RequireOnboarding:
 ## Key Patterns
 
 ### Result<T> pattern
+
 All data-mutation hook methods return `Result<T>` instead of throwing:
 
 ```ts
 // src/utilities/resultUtils.ts
 type Result<T> = Success<T> | Failure;
-success(data)   // → { success: true, data }
-failure(msg)    // → { success: false, error: string }
-isSuccess(r)    // type guard
-isFailure(r)    // type guard
+success(data); // → { success: true, data }
+failure(msg); // → { success: false, error: string }
+isSuccess(r); // type guard
+isFailure(r); // type guard
 ```
 
 Use `isSuccess` / `isFailure` guards to branch in components.
 
 ### Custom hooks for all data access
+
 Components never import `db` directly — they call hooks:
 
 ```ts
 const { createSession } = useSessions();
 const result = await createSession(input);
-if (isFailure(result)) { showToast(result.error); return; }
+if (isFailure(result)) {
+  showToast(result.error);
+  return;
+}
 ```
 
 ### useImmerState
+
 Ergonomic nested state updates:
 
 ```ts
 const [form, setForm] = useImmerState(initialForm);
-setForm((draft) => { draft.vehicle.name = 'New Name'; });
+setForm((draft) => {
+  draft.vehicle.name = 'New Name';
+});
 ```
 
 ### Icon system
+
 All icons go through `<Icon name="home" />` using the `IconName` union type defined in `src/types/shared-types.ts`. Do not use Lucide components directly in feature code.
 
 ### Backup / Restore
+
 `src/utilities/backupUtils.ts` exports three functions: `exportBackup`, `readBackupFile`, `restoreBackup`. All wrapped by `useBackup` hook. Restore validates schema version match before overwriting.
 
 ---

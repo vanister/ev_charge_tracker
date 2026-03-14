@@ -16,13 +16,5 @@ export const FileSelect = forwardRef<HTMLInputElement, FileSelectProps>((props, 
     props.onChange(file);
   };
 
-  return (
-    <input
-      ref={ref}
-      type="file"
-      accept={props.accept}
-      className="hidden"
-      onChange={handleChange}
-    />
-  );
+  return <input ref={ref} type="file" accept={props.accept} className="hidden" onChange={handleChange} />;
 });

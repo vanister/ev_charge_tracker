@@ -11,9 +11,7 @@ type ThemeProviderProps = {
 export function ThemeProvider(props: ThemeProviderProps) {
   const { children } = props;
   const [systemTheme, setSystemTheme] = useState<'light' | 'dark'>(() => getSystemTheme(window));
-  const [theme, setTheme] = useState<ThemeMode>(() =>
-    getStoredTheme(localStorage, THEME_STORAGE_KEY)
-  );
+  const [theme, setTheme] = useState<ThemeMode>(() => getStoredTheme(localStorage, THEME_STORAGE_KEY));
 
   const resolvedTheme: 'light' | 'dark' = theme === 'system' ? systemTheme : theme;
 
@@ -42,9 +40,5 @@ export function ThemeProvider(props: ThemeProviderProps) {
     applyTheme(document.documentElement, newTheme, systemTheme);
   };
 
-  return (
-    <ThemeContext.Provider value={{ theme, resolvedTheme, updateTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={{ theme, resolvedTheme, updateTheme }}>{children}</ThemeContext.Provider>;
 }

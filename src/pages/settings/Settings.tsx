@@ -13,7 +13,7 @@ export function Settings() {
 
   return (
     <div className="bg-background px-4 py-6">
-      <div className="max-w-2xl mx-auto space-y-8">
+      <div className="mx-auto max-w-2xl space-y-8">
         <Section title="Theme">
           <ThemeSectionBody />
         </Section>

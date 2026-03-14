@@ -6,8 +6,8 @@ type FormFooterProps = {
 
 export function FormFooter({ children }: FormFooterProps) {
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-20 bg-background border-t border-default">
-      <div className="max-w-2xl w-full mx-auto p-4">{children}</div>
+    <div className="bg-background border-default fixed right-0 bottom-0 left-0 z-20 border-t">
+      <div className="mx-auto w-full max-w-2xl p-4">{children}</div>
     </div>
   );
 }

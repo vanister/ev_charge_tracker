@@ -29,10 +29,5 @@ export function Icon(props: IconProps) {
 
   const colorStyle = color ? { color } : undefined;
 
-  return (
-    <IconComponent
-      className={clsx(sizeClasses[size], className)}
-      style={colorStyle}
-    />
-  );
+  return <IconComponent className={clsx(sizeClasses[size], className)} style={colorStyle} />;
 }

@@ -11,21 +11,21 @@ export function LocationItem(props: LocationItemProps) {
   const { location } = props;
 
   return (
-    <div className="p-4 bg-surface border border-default rounded-lg hover:border-default-hover transition-colors">
+    <div className="bg-surface border-default hover:border-default-hover rounded-lg border p-4 transition-colors">
       <div className="flex items-center gap-4">
-        <div className="p-2 bg-background rounded-lg shrink-0">
+        <div className="bg-background shrink-0 rounded-lg p-2">
           <Icon name={location.icon} size="md" color={location.color} />
         </div>
 
-        <div className="flex-1 min-w-0">
-          <p className="text-base font-semibold text-body">{location.name}</p>
-          <p className="text-sm text-body-secondary">{formatRate(location.defaultRate)}</p>
+        <div className="min-w-0 flex-1">
+          <p className="text-body text-base font-semibold">{location.name}</p>
+          <p className="text-body-secondary text-sm">{formatRate(location.defaultRate)}</p>
         </div>
 
         <div className="flex items-center gap-2">
           <Link
             to={`/settings/locations/${location.id}/edit`}
-            className="p-2 text-body-secondary hover:text-body hover:bg-background rounded-lg transition-colors"
+            className="text-body-secondary hover:text-body hover:bg-background rounded-lg p-2 transition-colors"
             aria-label="Edit location"
           >
             <Icon name="edit" size="sm" />

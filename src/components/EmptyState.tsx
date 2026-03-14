@@ -20,10 +20,10 @@ export function EmptyState({
   buttonVariant = 'primary'
 }: EmptyStateProps) {
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <div className="p-6 bg-surface border border-default rounded-lg text-center">
-        {icon && <Icon name={icon} size="lg" className="mx-auto mb-4 text-body-secondary" />}
-        <h3 className="text-lg font-medium text-body mb-2">{title}</h3>
+    <div className="mx-auto max-w-2xl p-6">
+      <div className="bg-surface border-default rounded-lg border p-6 text-center">
+        {icon && <Icon name={icon} size="lg" className="text-body-secondary mx-auto mb-4" />}
+        <h3 className="text-body mb-2 text-lg font-medium">{title}</h3>
         <p className="text-body-secondary mb-4">{message}</p>
         {actionLabel && onAction && (
           <Button variant={buttonVariant} onClick={onAction}>

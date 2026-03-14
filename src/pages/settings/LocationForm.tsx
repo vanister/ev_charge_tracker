@@ -28,7 +28,7 @@ export function LocationForm(props: LocationFormProps) {
       />
 
       <div>
-        <span className="block text-sm font-medium text-body mb-2">Icon</span>
+        <span className="text-body mb-2 block text-sm font-medium">Icon</span>
         <div className="flex gap-2">
           {LOCATION_ICON_OPTIONS.map((icon) => (
             <button
@@ -37,9 +37,9 @@ export function LocationForm(props: LocationFormProps) {
               onClick={() => props.onChange('icon', icon)}
               disabled={props.isLoading}
               aria-label={icon}
-              className={`p-3 rounded-lg border transition-colors ${
+              className={`rounded-lg border p-3 transition-colors ${
                 props.formData.icon === icon
-                  ? 'border-primary bg-primary/10 ring-2 ring-primary text-primary'
+                  ? 'border-primary bg-primary/10 ring-primary text-primary ring-2'
                   : 'border-default bg-surface text-body-secondary hover:border-default-hover hover:bg-background'
               }`}
             >
@@ -50,7 +50,7 @@ export function LocationForm(props: LocationFormProps) {
       </div>
 
       <div>
-        <span className="block text-sm font-medium text-body mb-2">Color</span>
+        <span className="text-body mb-2 block text-sm font-medium">Color</span>
         <div className="flex gap-3">
           {LOCATION_COLOR_OPTIONS.map((color) => (
             <button
@@ -59,8 +59,8 @@ export function LocationForm(props: LocationFormProps) {
               onClick={() => props.onChange('color', color.value)}
               disabled={props.isLoading}
               aria-label={color.label}
-              className={`w-8 h-8 rounded-full ${color.bgClass} transition-transform ${
-                props.formData.color === color.value ? 'ring-2 ring-offset-2 ring-primary scale-110' : 'hover:scale-105'
+              className={`h-8 w-8 rounded-full ${color.bgClass} transition-transform ${
+                props.formData.color === color.value ? 'ring-primary scale-110 ring-2 ring-offset-2' : 'hover:scale-105'
               }`}
             />
           ))}
@@ -81,7 +81,7 @@ export function LocationForm(props: LocationFormProps) {
       />
 
       {props.error && (
-        <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+        <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-3">
           <p className="text-sm text-red-500">{props.error}</p>
         </div>
       )}

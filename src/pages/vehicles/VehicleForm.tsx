@@ -14,7 +14,7 @@ type VehicleFormProps = {
 export function VehicleForm(props: VehicleFormProps) {
   return (
     <form id={props.id} onSubmit={props.onSubmit} className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-8 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-8">
         <div className="sm:col-span-2">
           <FormInput
             id="vehicle-year"
@@ -77,7 +77,7 @@ export function VehicleForm(props: VehicleFormProps) {
         disabled={props.isLoading}
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <FormInput
           id="vehicle-battery-capacity"
           label="Battery Capacity (kWh)"
@@ -113,7 +113,7 @@ export function VehicleForm(props: VehicleFormProps) {
       />
 
       {props.error && (
-        <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+        <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-3">
           <p className="text-sm text-red-500">{props.error}</p>
         </div>
       )}

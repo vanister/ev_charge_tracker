@@ -13,8 +13,8 @@ export function SessionsEmptyState(props: SessionsEmptyStateProps) {
 
   if (hasFilters) {
     return (
-      <div className="flex flex-col items-center justify-center h-full px-4 text-center">
-        <p className="text-body-secondary text-lg mb-4">No sessions match your filters</p>
+      <div className="flex h-full flex-col items-center justify-center px-4 text-center">
+        <p className="text-body-secondary mb-4 text-lg">No sessions match your filters</p>
         <Button variant="secondary" onClick={onClearFilters}>
           Clear Filters
         </Button>
@@ -24,9 +24,9 @@ export function SessionsEmptyState(props: SessionsEmptyStateProps) {
 
   if (hasTimeRangeFilter) {
     return (
-      <div className="flex flex-col items-center justify-center h-full px-4 text-center">
-        <p className="text-body-secondary text-lg mb-2">No sessions in this time period</p>
-        <p className="text-body-tertiary text-sm mb-6">Try selecting a different time range</p>
+      <div className="flex h-full flex-col items-center justify-center px-4 text-center">
+        <p className="text-body-secondary mb-2 text-lg">No sessions in this time period</p>
+        <p className="text-body-tertiary mb-6 text-sm">Try selecting a different time range</p>
       </div>
     );
   }

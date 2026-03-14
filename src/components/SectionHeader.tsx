@@ -12,11 +12,11 @@ export function SectionHeader({ title, action }: SectionHeaderProps) {
   return (
     <div
       className={clsx('flex items-center', {
-        'justify-between mb-4': hasTitle,
-        'justify-end mb-6': !hasTitle
+        'mb-4 justify-between': hasTitle,
+        'mb-6 justify-end': !hasTitle
       })}
     >
-      {title && <h2 className="text-lg font-semibold text-body">{title}</h2>}
+      {title && <h2 className="text-body text-lg font-semibold">{title}</h2>}
       {action}
     </div>
   );

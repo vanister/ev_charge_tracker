@@ -55,14 +55,10 @@ export function SessionsFilter(props: SessionsFilterProps) {
   };
 
   return (
-    <div className={clsx('p-4 bg-surface border border-default rounded-lg', className ?? 'mb-6')}>
-      <button
-        type="button"
-        className="flex items-center gap-2 w-full text-left"
-        onClick={onToggle}
-      >
+    <div className={clsx('bg-surface border-default rounded-lg border p-4', className ?? 'mb-6')}>
+      <button type="button" className="flex w-full items-center gap-2 text-left" onClick={onToggle}>
         <Icon name="filter" size="sm" className="text-body-secondary" />
-        <h2 className="text-sm font-semibold text-body flex-1">Filters</h2>
+        <h2 className="text-body flex-1 text-sm font-semibold">Filters</h2>
         <Icon
           name="chevron-down"
           size="sm"
@@ -75,7 +71,7 @@ export function SessionsFilter(props: SessionsFilterProps) {
       >
         <div className="overflow-hidden">
           <div className="pt-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormSelect
                 id="time-range-filter"
                 label="Time Range"

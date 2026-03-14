@@ -137,7 +137,7 @@ export function VehicleDetails() {
 
   if (!formState.isInitialized) {
     return (
-      <div className="flex items-center justify-center min-h-100">
+      <div className="flex min-h-100 items-center justify-center">
         <div className="text-body-secondary">Loading...</div>
       </div>
     );
@@ -145,8 +145,8 @@ export function VehicleDetails() {
 
   if (formState.vehicleNotFound) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-8">
-        <div className="p-6 bg-surface border border-default rounded-lg text-center">
+      <div className="mx-auto max-w-2xl px-4 py-8">
+        <div className="bg-surface border-default rounded-lg border p-6 text-center">
           <p className="text-body-secondary mb-4">Vehicle not found</p>
           <button onClick={handleCancel} className="text-primary hover:text-primary-hover font-medium">
             Back to Vehicles
@@ -157,7 +157,7 @@ export function VehicleDetails() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 pt-8 pb-20">
+    <div className="mx-auto max-w-2xl px-4 pt-8 pb-20">
       <VehicleForm
         id="vehicle-form"
         formData={formState}

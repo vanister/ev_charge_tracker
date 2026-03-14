@@ -17,10 +17,10 @@ export function Onboarding() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4 py-8">
+    <div className="bg-background flex min-h-screen items-center justify-center px-4 py-8">
       <OnboardingStepIndicator currentStep={currentStep} totalSteps={3} />
 
-      <div className="max-w-2xl w-full pt-16 pb-32">
+      <div className="w-full max-w-2xl pt-16 pb-32">
         {/* Step 1: Welcome */}
         {currentStep === 1 && <OnboardingStep1Welcome onContinue={() => setCurrentStep(2)} />}
 

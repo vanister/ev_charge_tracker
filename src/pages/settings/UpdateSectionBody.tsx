@@ -9,10 +9,10 @@ export function UpdateSectionBody() {
   if (!needsUpdate) {
     return (
       <div className="flex items-center gap-3">
-        <div className="p-2 bg-primary/10 rounded-lg">
+        <div className="bg-primary/10 rounded-lg p-2">
           <Icon name="check-circle" size="md" className="text-primary" />
         </div>
-        <p className="text-sm text-body">App is up to date</p>
+        <p className="text-body text-sm">App is up to date</p>
       </div>
     );
   }
@@ -20,10 +20,10 @@ export function UpdateSectionBody() {
   return (
     <div className="flex items-center justify-between gap-3">
       <div className="flex items-center gap-3">
-        <div className="p-2 bg-primary/10 rounded-lg">
+        <div className="bg-primary/10 rounded-lg p-2">
           <Icon name="info" size="md" className="text-primary" />
         </div>
-        <p className="text-sm text-body">A new version is available</p>
+        <p className="text-body text-sm">A new version is available</p>
       </div>
       <Button variant="primary" onClick={applyUpdate} className="shrink-0">
         Reload

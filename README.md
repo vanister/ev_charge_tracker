@@ -127,12 +127,14 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## Why This App?
 
 Traditional EV charging tracking apps require:
+
 - App store approvals and fees
 - Cloud infrastructure and maintenance
 - User accounts and authentication
 - Internet connectivity
 
 This PWA approach offers:
+
 - Direct distribution via any web hosting
 - Zero backend costs
 - No user data collection

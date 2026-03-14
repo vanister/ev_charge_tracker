@@ -133,18 +133,15 @@ export function useSessions() {
     [db]
   );
 
-  const hasAnySessions = useCallback(
-    async (): Promise<Result<boolean>> => {
-      try {
-        const session = await db.sessions.limit(1).first();
-        return success(session != null);
-      } catch (err) {
-        console.error('Failed to check for sessions:', err);
-        return failure('Failed to check for sessions');
-      }
-    },
-    [db]
-  );
+  const hasAnySessions = useCallback(async (): Promise<Result<boolean>> => {
+    try {
+      const session = await db.sessions.limit(1).first();
+      return success(session != null);
+    } catch (err) {
+      console.error('Failed to check for sessions:', err);
+      return failure('Failed to check for sessions');
+    }
+  }, [db]);
 
   return {
     getSessionList,

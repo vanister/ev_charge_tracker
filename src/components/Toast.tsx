@@ -33,18 +33,18 @@ export function Toast({ id, message, variant, action, exiting, onDismiss }: Toas
       role="alert"
       aria-live="polite"
       className={clsx(
-        'bg-surface border border-default rounded-lg shadow-lg px-4 py-6 flex items-center gap-3',
+        'bg-surface border-default flex items-center gap-3 rounded-lg border px-4 py-6 shadow-lg',
         exiting ? 'animate-toast-out' : 'animate-toast-in'
       )}
     >
       <Icon name={icon} size="sm" className={clsx(iconClass, 'shrink-0')} />
-      <p className="text-sm text-body font-medium flex-1">{message}</p>
-      {action && (
-        action.to ? (
+      <p className="text-body flex-1 text-sm font-medium">{message}</p>
+      {action &&
+        (action.to ? (
           <Link
             to={action.to}
             onClick={() => onDismiss(id)}
-            className="px-3 py-1.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-hover transition-colors shrink-0"
+            className="bg-primary hover:bg-primary-hover shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium text-white transition-colors"
           >
             {action.label}
           </Link>
@@ -52,17 +52,16 @@ export function Toast({ id, message, variant, action, exiting, onDismiss }: Toas
           <button
             type="button"
             onClick={handleActionClick}
-            className="px-3 py-1.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-hover transition-colors shrink-0"
+            className="bg-primary hover:bg-primary-hover shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium text-white transition-colors"
           >
             {action.label}
           </button>
-        )
-      )}
+        ))}
       <button
         type="button"
         onClick={() => onDismiss(id)}
         aria-label="Dismiss notification"
-        className="text-muted hover:text-body transition-colors shrink-0"
+        className="text-muted hover:text-body shrink-0 transition-colors"
       >
         <Icon name="x" size="sm" />
       </button>

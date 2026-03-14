@@ -95,9 +95,7 @@ export function SessionsList() {
     }
 
     setState((draft) => {
-      draft.selectedVehicleId = draft.vehicles.find(
-        (v) => v.id === preferences.sessionsFilterVehicleId
-      )?.id;
+      draft.selectedVehicleId = draft.vehicles.find((v) => v.id === preferences.sessionsFilterVehicleId)?.id;
     });
     // Only run once after the vehicle list first loads; preferences are stable across this effect
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -110,9 +108,7 @@ export function SessionsList() {
     }
 
     setState((draft) => {
-      draft.selectedLocationId = draft.locations.find(
-        (l) => l.id === preferences.sessionsFilterLocationId
-      )?.id;
+      draft.selectedLocationId = draft.locations.find((l) => l.id === preferences.sessionsFilterLocationId)?.id;
     });
     // Only run once after the location list first loads; preferences are stable across this effect
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -221,7 +217,7 @@ export function SessionsList() {
 
   if (!state.isLoading && !state.hasAnySessions) {
     return (
-      <div className="flex-1 bg-background px-4 py-6 flex flex-col">
+      <div className="bg-background flex flex-1 flex-col px-4 py-6">
         <SessionsEmptyState
           hasFilters={hasActiveFilters}
           hasTimeRangeFilter={false}
@@ -234,7 +230,7 @@ export function SessionsList() {
 
   return (
     <div className="bg-background px-4 py-6">
-      <div className="max-w-2xl mx-auto">
+      <div className="mx-auto max-w-2xl">
         <SessionsFilter
           vehicles={state.vehicles}
           locations={state.locations}

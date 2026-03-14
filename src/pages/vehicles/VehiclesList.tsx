@@ -46,7 +46,7 @@ export function VehiclesList() {
 
   if (vehicles.length === 0) {
     return (
-      <div className="flex-1 bg-background px-4 py-6 flex flex-col">
+      <div className="bg-background flex flex-1 flex-col px-4 py-6">
         <EmptyState
           icon="car"
           title="No vehicles yet"
@@ -60,7 +60,7 @@ export function VehiclesList() {
 
   return (
     <div className="bg-background px-4 py-6">
-      <div className="max-w-2xl mx-auto">
+      <div className="mx-auto max-w-2xl">
         <ItemListButton label="Add vehicle" onClick={() => navigate('/vehicles/add')} className="mb-6" />
 
         <div className="space-y-3">

@@ -8,8 +8,7 @@ const BACKUP_FIXTURE = JSON.parse(
   readFileSync(new URL('../__test_data__/backup-v2.json', import.meta.url), 'utf-8')
 ) as Record<string, unknown>;
 
-const toFile = (data: unknown): File =>
-  new File([JSON.stringify(data)], 'backup.json', { type: 'application/json' });
+const toFile = (data: unknown): File => new File([JSON.stringify(data)], 'backup.json', { type: 'application/json' });
 
 class MockFileReader {
   onload: ((e: unknown) => void) | null = null;
@@ -56,9 +55,7 @@ const makeDb = (overrides: Record<string, unknown> = {}) => ({
     clear: vi.fn().mockResolvedValue(undefined),
     bulkAdd: vi.fn().mockResolvedValue(undefined)
   },
-  transaction: vi.fn().mockImplementation(
-    async (_mode: string, _tables: unknown, cb: () => Promise<void>) => cb()
-  ),
+  transaction: vi.fn().mockImplementation(async (_mode: string, _tables: unknown, cb: () => Promise<void>) => cb()),
   ...overrides
 });
 
@@ -120,9 +117,7 @@ describe('readBackupFile', () => {
   it('returns failure when a required store is missing', async () => {
     const withoutVehicles = {
       ...BACKUP_FIXTURE,
-      data: (BACKUP_FIXTURE.data as Record<string, unknown>[]).filter(
-        (s) => s.store !== 'vehicles'
-      )
+      data: (BACKUP_FIXTURE.data as Record<string, unknown>[]).filter((s) => s.store !== 'vehicles')
     };
     const result = await readBackupFile(toFile(withoutVehicles));
     expect(result.success).toBe(false);
@@ -133,7 +128,10 @@ describe('readBackupFile', () => {
       ...BACKUP_FIXTURE,
       data: (BACKUP_FIXTURE.data as Record<string, unknown>[]).map((s) =>
         s.store === 'vehicles'
-          ? { store: 'vehicles', records: [{ id: 123, make: 'Ford', model: 'Mach-E', year: 2022, icon: '🚗', createdAt: 0, isActive: 1 }] }
+          ? {
+              store: 'vehicles',
+              records: [{ id: 123, make: 'Ford', model: 'Mach-E', year: 2022, icon: '🚗', createdAt: 0, isActive: 1 }]
+            }
           : s
       )
     };
@@ -145,9 +143,7 @@ describe('readBackupFile', () => {
     const broken = {
       ...BACKUP_FIXTURE,
       data: (BACKUP_FIXTURE.data as Record<string, unknown>[]).map((s) =>
-        s.store === 'locations'
-          ? { store: 'locations', records: [{ id: 'loc-1', name: 123 }] }
-          : s
+        s.store === 'locations' ? { store: 'locations', records: [{ id: 'loc-1', name: 123 }] } : s
       )
     };
     const result = await readBackupFile(toFile(broken));
@@ -158,9 +154,7 @@ describe('readBackupFile', () => {
     const broken = {
       ...BACKUP_FIXTURE,
       data: (BACKUP_FIXTURE.data as Record<string, unknown>[]).map((s) =>
-        s.store === 'sessions'
-          ? { store: 'sessions', records: [{ id: 'sess-1', energyKwh: 'not-a-number' }] }
-          : s
+        s.store === 'sessions' ? { store: 'sessions', records: [{ id: 'sess-1', energyKwh: 'not-a-number' }] } : s
       )
     };
     const result = await readBackupFile(toFile(broken));
@@ -171,9 +165,7 @@ describe('readBackupFile', () => {
     const broken = {
       ...BACKUP_FIXTURE,
       data: (BACKUP_FIXTURE.data as Record<string, unknown>[]).map((s) =>
-        s.store === 'settings'
-          ? { store: 'settings', records: [{ key: 'wrong-key', onboardingComplete: true }] }
-          : s
+        s.store === 'settings' ? { store: 'settings', records: [{ key: 'wrong-key', onboardingComplete: true }] } : s
       )
     };
     const result = await readBackupFile(toFile(broken));
@@ -185,9 +177,11 @@ describe('exportBackup', () => {
   it('returns a BackupFile with the correct shape', async () => {
     const db = makeDb({
       vehicles: {
-        toArray: vi.fn().mockResolvedValue([
-          { id: 'v1', make: 'Ford', model: 'Mach-E', year: 2022, icon: '🚗', createdAt: 0, isActive: 1 }
-        ])
+        toArray: vi
+          .fn()
+          .mockResolvedValue([
+            { id: 'v1', make: 'Ford', model: 'Mach-E', year: 2022, icon: '🚗', createdAt: 0, isActive: 1 }
+          ])
       }
     });
     const result = await exportBackup(db as unknown as EvChargTrackerDb);

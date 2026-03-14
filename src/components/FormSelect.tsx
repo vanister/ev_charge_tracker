@@ -28,18 +28,18 @@ export function FormSelect({
 }: FormSelectProps) {
   return (
     <div>
-      <label htmlFor={id} className={clsx('block text-sm font-medium text-body mb-1', labelClassName)}>
+      <label htmlFor={id} className={clsx('text-body mb-1 block text-sm font-medium', labelClassName)}>
         {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
+        {required && <span className="ml-1 text-red-500">*</span>}
       </label>
       <div className="relative">
         <select
           id={id}
           required={required}
           className={clsx(
-            'w-full px-3 py-2 bg-surface border border-default rounded-lg',
+            'bg-surface border-default w-full rounded-lg border px-3 py-2',
             'text-body appearance-none focus:outline-none',
-            'focus:ring-2 focus:ring-primary focus:border-transparent',
+            'focus:ring-primary focus:border-transparent focus:ring-2',
             className
           )}
           {...selectProps}
@@ -54,7 +54,7 @@ export function FormSelect({
         <Icon
           name="chevron-down"
           size="sm"
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-body-secondary pointer-events-none"
+          className="text-body-secondary pointer-events-none absolute top-1/2 right-3 -translate-y-1/2"
         />
       </div>
     </div>

@@ -24,4 +24,3 @@ export function useUserPreferences(storage: Storage = localStorage) {
 
   return { preferences, updatePreferences, resetPreferences };
 }
-

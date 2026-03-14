@@ -1,0 +1,17 @@
+.claude
+.devcontainer
+.github
+.vscode
+.wrangler
+
+node_modules
+dist
+docs
+build
+coverage
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+.env

@@ -122,15 +122,15 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
       />
 
       <form onSubmit={handleSubmit}>
-        <div className="space-y-4 mb-6">
+        <div className="mb-6 space-y-4">
           {state.locationForms.map((form, index) => {
             const location = state.locations.find((loc) => loc.id === form.id);
             if (!location) return null;
 
             return (
-              <div key={form.id} className="p-4 bg-background rounded-lg border border-default">
+              <div key={form.id} className="bg-background border-default rounded-lg border p-4">
                 <div className="flex items-start gap-4">
-                  <div className="shrink-0 mt-2">
+                  <div className="mt-2 shrink-0">
                     <Icon name={location.icon} size="lg" color={location.color} />
                   </div>
 
@@ -164,17 +164,13 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
         </div>
 
         {state.error && (
-          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+          <div className="mb-4 rounded-lg border border-red-500/20 bg-red-500/10 p-3">
             <p className="text-sm text-red-500">{state.error}</p>
           </div>
         )}
 
         <FormFooter>
-          <OnboardingNavigationButtons
-            onBack={props.onBack}
-            continueLabel="Continue"
-            disabled={state.isLoading}
-          />
+          <OnboardingNavigationButtons onBack={props.onBack} continueLabel="Continue" disabled={state.isLoading} />
         </FormFooter>
       </form>
     </div>
