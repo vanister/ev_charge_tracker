@@ -1,4 +1,6 @@
-˝# High-Level Design: Data Sync System
+# High-Level Design: Data Sync System
+
+**PUT ON HOLD FOR NOW**
 
 ## 1. Objective
 To provide a manual, secure synchronization of the app's IndexedDB state to the user's personal cloud storage (Google Drive/iCloud), ensuring data portability and backup without a centralized backend.
