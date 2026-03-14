@@ -1,10 +1,11 @@
-import type { Vehicle, Location } from '../../data/data-types';
-import { Button } from '../../components/Button';
-import { Icon } from '../../components/Icon';
-import { FormSelect } from '../../components/FormSelect';
-import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
-import { TIME_FILTER_OPTIONS } from '../../constants';
-import type { TimeFilterValue } from '../../types/shared-types';
+import { clsx } from 'clsx';
+import type { Vehicle, Location } from '../data/data-types';
+import { Button } from '../components/Button';
+import { Icon } from '../components/Icon';
+import { FormSelect } from '../components/FormSelect';
+import { getVehicleDisplayName } from '../helpers/sessionHelpers';
+import { TIME_FILTER_OPTIONS } from '../constants';
+import type { TimeFilterValue } from '../types/shared-types';
 
 type SessionsFilterProps = {
   vehicles: Vehicle[];
@@ -18,6 +19,7 @@ type SessionsFilterProps = {
   onClearFilters: () => void;
   isOpen: boolean;
   onToggle: () => void;
+  className?: string;
 };
 
 export function SessionsFilter(props: SessionsFilterProps) {
@@ -32,7 +34,8 @@ export function SessionsFilter(props: SessionsFilterProps) {
     onTimeRangeChange,
     onClearFilters,
     isOpen,
-    onToggle
+    onToggle,
+    className
   } = props;
 
   const hasActiveFilters = !!(selectedVehicleId || selectedLocationId);
@@ -52,7 +55,7 @@ export function SessionsFilter(props: SessionsFilterProps) {
   };
 
   return (
-    <div className="mb-6 p-4 bg-surface border border-default rounded-lg">
+    <div className={clsx('p-4 bg-surface border border-default rounded-lg', className ?? 'mb-6')}>
       <button
         type="button"
         className="flex items-center gap-2 w-full text-left"

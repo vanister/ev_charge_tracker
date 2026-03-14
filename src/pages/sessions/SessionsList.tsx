@@ -8,7 +8,7 @@ import { usePageConfig } from '../../hooks/usePageConfig';
 import { useImmerState } from '../../hooks/useImmerState';
 import { useUserPreferences } from '../../hooks/useUserPreferences';
 import { ItemListButton } from '../../components/ItemListButton';
-import { SessionsFilter } from './SessionsFilter';
+import { SessionsFilter } from '../../components/SessionsFilter';
 import { SessionDateGroup } from './SessionDateGroup';
 import { SessionsEmptyState } from './SessionsEmptyState';
 import { formatDate, getDateRangeForTimeFilter } from '../../utilities/dateUtils';

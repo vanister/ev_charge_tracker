@@ -9,7 +9,9 @@ export const RECENT_SESSIONS_LIMIT = 10;
 export const DEFAULT_PREFERENCES: UserPreferences = {
   recentSessionsLimit: RECENT_SESSIONS_LIMIT,
   sessionsFilterTimeRange: '31d',
-  sessionsFilterIsOpen: true
+  sessionsFilterIsOpen: true,
+  dashboardFilterTimeRange: '31d',
+  dashboardFilterIsOpen: true
 };
 
 export const PAGE_TRANSITION_DURATION = 150; // ms
@@ -44,8 +46,6 @@ export const LOCATION_COLOR_OPTIONS: LocationColorOption[] = [
   { value: LOCATION_COLOR_HEX.orange, label: 'Orange', bgClass: 'bg-orange-400' }
 ];
 
-export const CHART_X_AXIS_INTERVAL = 4; // show a label every 5th bar (0-indexed)
-export const DASHBOARD_CHART_DAYS = 31;
 
 export const OAUTH_PROVIDERS = {
   google: {

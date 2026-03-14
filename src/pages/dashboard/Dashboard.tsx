@@ -1,20 +1,53 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { usePageConfig } from '../../hooks/usePageConfig';
+import { useUserPreferences } from '../../hooks/useUserPreferences';
+import { useImmerState } from '../../hooks/useImmerState';
 import { useDashboardData } from './useDashboardData';
 import { EmptyState } from '../../components/EmptyState';
 import { Section } from '../../components/Section';
+import { SessionsFilter } from '../../components/SessionsFilter';
 import { ChargeStats } from './ChargeStats';
 import { ChargeSessionsCharts } from './ChargeSessionsCharts';
 import { DashboardRecentSessions } from './DashboardRecentSessions';
+import type { DashboardFilter } from './dashboard-types';
+import type { TimeFilterValue } from '../../types/shared-types';
 
 export function Dashboard() {
   usePageConfig('Dashboard');
 
   const navigate = useNavigate();
-  const { stats, recentSessions, chartData, isLoading, error } = useDashboardData();
+  const { preferences, updatePreferences } = useUserPreferences();
 
-  const hasSessions = stats !== null && stats.sessionCount > 0;
+  const [filter, setFilter] = useImmerState<DashboardFilter>({
+    timeRange: (preferences.dashboardFilterTimeRange as TimeFilterValue) ?? '31d',
+    vehicleId: undefined,
+    locationId: undefined
+  });
+  const [filtersIsOpen, setFiltersIsOpen] = useState(preferences.dashboardFilterIsOpen ?? true);
+
+  const { stats, recentSessions, chartData, vehicles, locations, hasAnySessions, isLoading, error } =
+    useDashboardData(filter);
+
+  // Pre-fill vehicleId from preferences once vehicle list first loads
+  useEffect(() => {
+    if (vehicles.length === 0) return;
+    setFilter((draft) => {
+      draft.vehicleId = vehicles.find((v) => v.id === preferences.dashboardFilterVehicleId)?.id;
+    });
+    // Only run once after vehicles first load; preferences are stable across this effect
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vehicles]);
+
+  // Pre-fill locationId from preferences once location list first loads
+  useEffect(() => {
+    if (locations.length === 0) return;
+    setFilter((draft) => {
+      draft.locationId = locations.find((l) => l.id === preferences.dashboardFilterLocationId)?.id;
+    });
+    // Only run once after locations first load; preferences are stable across this effect
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locations]);
 
   useEffect(() => {
     if (error) {
@@ -22,7 +55,41 @@ export function Dashboard() {
     }
   }, [error, navigate]);
 
-  if (!isLoading && !hasSessions) {
+  const handleTimeRangeChange = (value: TimeFilterValue) => {
+    setFilter((draft) => {
+      draft.timeRange = value;
+    });
+    updatePreferences({ dashboardFilterTimeRange: value });
+  };
+
+  const handleVehicleChange = (id: string | undefined) => {
+    setFilter((draft) => {
+      draft.vehicleId = id;
+    });
+    updatePreferences({ dashboardFilterVehicleId: id });
+  };
+
+  const handleLocationChange = (id: string | undefined) => {
+    setFilter((draft) => {
+      draft.locationId = id;
+    });
+    updatePreferences({ dashboardFilterLocationId: id });
+  };
+
+  const handleClearFilters = () => {
+    setFilter((draft) => {
+      draft.vehicleId = undefined;
+      draft.locationId = undefined;
+    });
+    updatePreferences({ dashboardFilterVehicleId: undefined, dashboardFilterLocationId: undefined });
+  };
+
+  const handleFilterToggle = () => {
+    setFiltersIsOpen(!filtersIsOpen);
+    updatePreferences({ dashboardFilterIsOpen: !filtersIsOpen });
+  };
+
+  if (!isLoading && !hasAnySessions) {
     return (
       <div className="flex-1 bg-background px-4 py-6 flex flex-col">
         <EmptyState
@@ -43,7 +110,21 @@ export function Dashboard() {
   return (
     <div className="bg-background px-4 py-6">
       <div className="mx-auto max-w-2xl space-y-8">
-        <Section title="Last 31 Days" noCard>
+        <Section title="Charge Stats" noCard>
+          <SessionsFilter
+            vehicles={vehicles}
+            locations={locations}
+            selectedVehicleId={filter.vehicleId}
+            selectedLocationId={filter.locationId}
+            selectedTimeRange={filter.timeRange}
+            onVehicleChange={handleVehicleChange}
+            onLocationChange={handleLocationChange}
+            onTimeRangeChange={handleTimeRangeChange}
+            onClearFilters={handleClearFilters}
+            isOpen={filtersIsOpen}
+            onToggle={handleFilterToggle}
+            className="mb-4"
+          />
           <ChargeStats stats={stats} />
           <ChargeSessionsCharts data={chartData} stats={stats} />
         </Section>
