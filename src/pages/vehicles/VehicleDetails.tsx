@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useVehicles } from '../../hooks/useVehicles';
 import { usePageConfig } from '../../hooks/usePageConfig';
 import { useImmerState } from '../../hooks/useImmerState';
+import { useToast } from '../../hooks/useToast';
 import { Button } from '../../components/Button';
 import { FormFooter } from '../../components/FormFooter';
 import { VehicleForm } from './VehicleForm';
@@ -28,6 +29,7 @@ export function VehicleDetails() {
   const navigate = useNavigate();
   const isEditMode = !!id;
   const { getVehicle, createVehicle, updateVehicle } = useVehicles();
+  const { showToast } = useToast();
 
   const [formState, setFormState] = useImmerState<VehicleDetailsState>({
     ...DEFAULT_FORM_STATE,
@@ -125,6 +127,7 @@ export function VehicleDetails() {
       return;
     }
 
+    showToast({ message: isEditMode ? 'Vehicle updated' : 'Vehicle added' });
     navigate('/vehicles');
   };
 

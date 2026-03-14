@@ -18,7 +18,7 @@ export function PreferencesSectionBody() {
 
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     updatePreferences({ recentSessionsLimit: +e.target.value });
-    showToast({ message: 'Preferences saved', variant: 'success' });
+    showToast({ message: 'Preferences saved' });
   };
 
   const handleReset = () => {
@@ -31,7 +31,7 @@ export function PreferencesSectionBody() {
     }
 
     resetPreferences();
-    showToast({ message: 'Preferences reset to defaults', variant: 'success' });
+    showToast({ message: 'Preferences reset to defaults' });
   };
 
   return (

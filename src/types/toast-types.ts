@@ -17,4 +17,10 @@ export type Toast = {
   exiting?: boolean;
 };
 
-export type ShowToastOptions = Omit<Toast, 'id'>;
+export type ShowToastOptions = {
+  message: string;
+  variant?: ToastVariant;
+  persistent?: boolean;
+  duration?: number;
+  action?: ToastAction;
+};

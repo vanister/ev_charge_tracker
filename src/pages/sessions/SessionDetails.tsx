@@ -7,6 +7,7 @@ import { useUserPreferences } from '../../hooks/useUserPreferences';
 import type { Vehicle, Location as AppLocation } from '../../data/data-types';
 import { usePageConfig } from '../../hooks/usePageConfig';
 import { useImmerState } from '../../hooks/useImmerState';
+import { useToast } from '../../hooks/useToast';
 import { Button } from '../../components/Button';
 import { FormFooter } from '../../components/FormFooter';
 import { SessionForm } from './SessionForm';
@@ -47,6 +48,7 @@ export function SessionDetails() {
   usePageConfig(isEditMode ? 'Edit Session' : 'Add Session', true);
 
   const { getSession, createSession, updateSession } = useSessions();
+  const { showToast } = useToast();
   const { getVehicleList } = useVehicles();
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const { getLocationList } = useLocations();
@@ -224,6 +226,7 @@ export function SessionDetails() {
         lastLocationId: formState.locationId
       });
 
+      showToast({ message: isEditMode ? 'Session updated' : 'Session added' });
       navigate('/sessions');
     } catch {
       setFormState((draft) => {
