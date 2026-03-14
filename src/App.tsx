@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useAppInitialization } from './hooks/useAppInitialization';
 import { FullscreenLoader } from './components/FullscreenLoader';
+import { ToastProvider } from './providers/ToastProvider';
 
 export function App() {
   const { isInitialized, error } = useAppInitialization();
@@ -17,5 +18,9 @@ export function App() {
     return <FullscreenLoader />;
   }
 
-  return <Outlet />;
+  return (
+    <ToastProvider>
+      <Outlet />
+    </ToastProvider>
+  );
 }

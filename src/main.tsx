@@ -7,7 +7,6 @@ import { db } from './data/db';
 import { DatabaseProvider } from './providers/DatabaseProvider';
 import { AppInitializationProvider } from './providers/AppInitializationProvider';
 import { ThemeProvider } from './providers/ThemeProvider';
-import { ToastProvider } from './providers/ToastProvider';
 import { ErrorBoundary } from 'react-error-boundary';
 import { GenericError } from './components/GenericError';
 import { router } from './router';
@@ -19,15 +18,13 @@ const onError = (error: unknown, info: React.ErrorInfo) => {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary FallbackComponent={GenericError} onError={onError}>
-      <ToastProvider>
-        <DatabaseProvider db={db}>
-          <ThemeProvider>
-            <AppInitializationProvider>
-              <RouterProvider router={router} />
-            </AppInitializationProvider>
-          </ThemeProvider>
-        </DatabaseProvider>
-      </ToastProvider>
+      <DatabaseProvider db={db}>
+        <ThemeProvider>
+          <AppInitializationProvider>
+            <RouterProvider router={router} />
+          </AppInitializationProvider>
+        </ThemeProvider>
+      </DatabaseProvider>
     </ErrorBoundary>
   </StrictMode>
 );
