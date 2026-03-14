@@ -80,7 +80,7 @@ export function useDashboardData(filter: DashboardFilter): UseDashboardDataResul
 
       const isMonthly = MONTHLY_TIME_RANGES.has(filter.timeRange);
       const computedChartData = isMonthly
-        ? buildMonthlyChartData(filtered, locationsForChart, getChartNumMonths(filter.timeRange, filtered))
+        ? buildMonthlyChartData(filtered, locationsForChart, getChartNumMonths(filter.timeRange))
         : buildChartData(filtered, locationsForChart, getChartNumDays(filter.timeRange));
 
       const computedRecentSessions = buildRecentSessions(

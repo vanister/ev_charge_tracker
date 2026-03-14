@@ -10,7 +10,7 @@ type ChargeSessionsChartProps = {
 };
 
 export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) {
-  const { bars, locationConfigs } = data;
+  const { bars, locationConfigs, xAxisInterval } = data;
 
   // Only render locations that have at least one session in the window
   const activeLocations = useMemo(
@@ -18,9 +18,6 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
     [locationConfigs, bars]
   );
   const sortedByKwh = useMemo(() => [...stats.byLocation].sort((a, b) => b.totalKwh - a.totalKwh), [stats.byLocation]);
-
-  // Keep ~7 x-axis labels regardless of bar count
-  const xAxisInterval = Math.max(0, Math.floor(bars.length / 7) - 1);
 
   if (activeLocations.length === 0) {
     return (

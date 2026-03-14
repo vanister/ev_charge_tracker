@@ -5,6 +5,10 @@ import type { ChartData, ChartBarData, LocationChartConfig } from '../pages/dash
 import { LOCATION_COLOR_HEX } from '../constants';
 import type { TimeFilterValue } from '../types/shared-types';
 
+// Cost keys are stored alongside energy keys so the tooltip can look them up
+// from the raw bar payload without needing a separate data structure.
+const costKey = (locationId: string) => `${locationId}__cost`;
+
 export function buildChartData(
   sessions: ChargingSession[],
   locations: Location[],
@@ -22,6 +26,7 @@ export function buildChartData(
     };
     for (const loc of locations) {
       base[loc.id] = 0;
+      base[costKey(loc.id)] = 0;
     }
     return base;
   });
@@ -29,7 +34,7 @@ export function buildChartData(
   // Index bars by dateKey for O(1) lookup
   const barIndex = new Map<string, ChartBarData>(bars.map((d) => [d.dateKey, d]));
 
-  // Aggregate session energy into the correct day/location bucket
+  // Aggregate session energy and cost into the correct day/location bucket
   for (const session of sessions) {
     if (session.chargedAt < startTimestamp) {
       continue;
@@ -37,8 +42,9 @@ export function buildChartData(
     const dateKey = getDateGroupKey(session.chargedAt);
     const bar = barIndex.get(dateKey);
     if (bar) {
-      const current = (bar[session.locationId] as number) ?? 0;
-      bar[session.locationId] = current + session.energyKwh;
+      bar[session.locationId] = ((bar[session.locationId] as number) ?? 0) + session.energyKwh;
+      bar[costKey(session.locationId)] =
+        ((bar[costKey(session.locationId)] as number) ?? 0) + session.costCents;
     }
   }
 
@@ -48,7 +54,10 @@ export function buildChartData(
     color: loc.color || LOCATION_COLOR_HEX.slate
   }));
 
-  return { bars, locationConfigs };
+  // Aim for ~7 visible x-axis labels
+  const xAxisInterval = Math.max(0, Math.floor(numDays / 7) - 1);
+
+  return { bars, locationConfigs, xAxisInterval };
 }
 
 export function buildMonthlyChartData(
@@ -71,6 +80,7 @@ export function buildMonthlyChartData(
     const base: ChartBarData = { dateKey: monthKey, label };
     for (const loc of locations) {
       base[loc.id] = 0;
+      base[costKey(loc.id)] = 0;
     }
     return base;
   });
@@ -81,8 +91,9 @@ export function buildMonthlyChartData(
     const monthKey = format(session.chargedAt, 'yyyy-MM');
     const bar = barIndex.get(monthKey);
     if (bar) {
-      const current = (bar[session.locationId] as number) ?? 0;
-      bar[session.locationId] = current + session.energyKwh;
+      bar[session.locationId] = ((bar[session.locationId] as number) ?? 0) + session.energyKwh;
+      bar[costKey(session.locationId)] =
+        ((bar[costKey(session.locationId)] as number) ?? 0) + session.costCents;
     }
   }
 
@@ -92,7 +103,10 @@ export function buildMonthlyChartData(
     color: loc.color || LOCATION_COLOR_HEX.slate
   }));
 
-  return { bars, locationConfigs };
+  // Monthly labels are wider; aim for ~5 visible labels to avoid overlap
+  const xAxisInterval = Math.max(0, Math.floor(numMonths / 5) - 1);
+
+  return { bars, locationConfigs, xAxisInterval };
 }
 
 // Number of daily bars for time ranges up to 90d
@@ -110,14 +124,9 @@ export function getChartNumDays(timeRange: TimeFilterValue): number {
 }
 
 // Number of monthly bars for time ranges 6m / 12m / all
-export function getChartNumMonths(timeRange: TimeFilterValue, sessions: ChargingSession[]): number {
+export function getChartNumMonths(timeRange: TimeFilterValue): number {
   if (timeRange === '6m') return 6;
   if (timeRange === '12m') return 12;
-
-  // 'all' — compute from the earliest session, capped at 60 months (5 years)
-  if (sessions.length === 0) return 6;
-  const earliest = sessions.reduce((min, s) => Math.min(min, s.chargedAt), Infinity);
-  const monthsElapsed =
-    (Date.now() - earliest) / (1000 * 60 * 60 * 24 * 30.44) + 1;
-  return Math.min(Math.ceil(monthsElapsed), 60);
+  // 'all' — last 60 months (5 years) looking back from now
+  return 60;
 }
