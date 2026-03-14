@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import { Link } from 'react-router';
 import { Icon } from './Icon';
 import type { Toast } from '../types/toast-types';
 import type { IconName } from '../types/shared-types';
@@ -41,13 +40,13 @@ export function Toast({ id, message, variant, action, exiting, onDismiss }: Toas
       <p className="text-sm text-body font-medium flex-1">{message}</p>
       {action && (
         action.to ? (
-          <Link
-            to={action.to}
+          <a
+            href={action.to}
             onClick={() => onDismiss(id)}
             className="px-3 py-1.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-hover transition-colors shrink-0"
           >
             {action.label}
-          </Link>
+          </a>
         ) : (
           <button
             type="button"
