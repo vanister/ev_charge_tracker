@@ -27,18 +27,18 @@ A Vite + TypeScript + React 19 PWA for tracking EV charging sessions. Mobile-foc
 ## Project Rules
 
 - Arrow functions for component event handlers, callbacks, and internal functions
-- Named functions only for standalone helpers and utilities in separate utility files
+- Named functions only for standalone helpers and utilities in separate files
 - Arrow functions require parens, destructure objects
 - Components: `export function Component(props: ComponentProps) {...}`
-- Break down complex components into smaller ones, but avoid over-abstraction
+- Break down complex components into smaller ones, avoid over-abstraction
 - Keep logic in helpers/hooks, not in Components
 - Named exports only — no default exports
 - Use `type` for typing (not `interface`)
 - Single component per file
 - Single-purpose components encapsulating Tailwind CSS
 - No index barrel files
-- No re-exports — never re-export a value or type from another module (bad for Vite HMR)
-- Dates handled with `date-fns`
+- No re-exports
+- Dates handled with `date-fns` in `dateUtils.ts`
 - Import ordering: external deps → project deps
 - Keep types close to where they're used; move to a feature or shared location only if used outside of its originating Component, helper, or utility
 - No primitive constructors for coercion: use `+value` not `Number(value)`, `!!value` not `Boolean(value)`, `` `${value}` `` not `String(value)`
