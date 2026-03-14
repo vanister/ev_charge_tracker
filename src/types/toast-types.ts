@@ -13,6 +13,8 @@ export type Toast = {
   persistent?: boolean;
   duration?: number;
   action?: ToastAction;
+  // Internal animation state — set by ToastProvider during dismiss sequence
+  exiting?: boolean;
 };
 
 export type ShowToastOptions = Omit<Toast, 'id'>;

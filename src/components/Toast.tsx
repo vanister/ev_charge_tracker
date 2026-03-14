@@ -20,7 +20,7 @@ const variantConfig: Record<Toast['variant'], VariantConfig> = {
   info: { icon: 'info', iconClass: 'text-primary' }
 };
 
-export function Toast({ id, message, variant, action, onDismiss }: ToastProps) {
+export function Toast({ id, message, variant, action, exiting, onDismiss }: ToastProps) {
   const { icon, iconClass } = variantConfig[variant];
 
   const handleActionClick = () => {
@@ -32,7 +32,10 @@ export function Toast({ id, message, variant, action, onDismiss }: ToastProps) {
     <div
       role="alert"
       aria-live="polite"
-      className="bg-surface border border-default rounded-lg shadow-lg px-4 py-6 flex items-center gap-3"
+      className={clsx(
+        'bg-surface border border-default rounded-lg shadow-lg px-4 py-6 flex items-center gap-3',
+        exiting ? 'animate-toast-out' : 'animate-toast-in'
+      )}
     >
       <Icon name={icon} size="sm" className={clsx(iconClass, 'shrink-0')} />
       <p className="text-sm text-body font-medium flex-1">{message}</p>
