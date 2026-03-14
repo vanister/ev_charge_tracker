@@ -2,7 +2,8 @@ export type ToastVariant = 'success' | 'error' | 'info' | 'warning';
 
 export type ToastAction = {
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
+  to?: string;
 };
 
 export type Toast = {

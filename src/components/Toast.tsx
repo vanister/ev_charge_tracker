@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { Link } from 'react-router';
 import { Icon } from './Icon';
 import type { Toast } from '../types/toast-types';
 import type { IconName } from '../types/shared-types';
@@ -24,25 +25,35 @@ export function Toast({ id, message, variant, action, onDismiss }: ToastProps) {
 
   const handleActionClick = () => {
     onDismiss(id);
-    action?.onClick();
+    action?.onClick?.();
   };
 
   return (
     <div
       role="alert"
       aria-live="polite"
-      className="bg-surface border border-default rounded-lg shadow-lg px-4 py-3 flex items-center gap-3"
+      className="bg-surface border border-default rounded-lg shadow-lg px-4 py-6 flex items-center gap-3"
     >
       <Icon name={icon} size="sm" className={clsx(iconClass, 'shrink-0')} />
       <p className="text-sm text-body font-medium flex-1">{message}</p>
       {action && (
-        <button
-          type="button"
-          onClick={handleActionClick}
-          className="px-3 py-1.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-hover transition-colors shrink-0"
-        >
-          {action.label}
-        </button>
+        action.to ? (
+          <Link
+            to={action.to}
+            onClick={() => onDismiss(id)}
+            className="px-3 py-1.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-hover transition-colors shrink-0"
+          >
+            {action.label}
+          </Link>
+        ) : (
+          <button
+            type="button"
+            onClick={handleActionClick}
+            className="px-3 py-1.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-hover transition-colors shrink-0"
+          >
+            {action.label}
+          </button>
+        )
       )}
       <button
         type="button"

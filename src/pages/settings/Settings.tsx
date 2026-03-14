@@ -34,7 +34,7 @@ export function Settings() {
           <ExportRestoreSectionBody />
         </Section>
 
-        <Section title="Update">
+        <Section title="Update" id="update">
           <UpdateSectionBody />
         </Section>
 
