@@ -84,7 +84,7 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
       </div>
 
       {stats.totalKwh > 0 && sortedByKwh.length > 0 && (
-        <div className="bg-surface border-default mt-3 space-y-3 rounded-xl border px-4 py-4">
+        <div className="bg-surface border-default mt-4 space-y-3 rounded-xl border px-4 py-4">
           {sortedByKwh.map((loc) => {
             const pct = Math.round((loc.totalKwh / stats.totalKwh) * 100);
             return (
