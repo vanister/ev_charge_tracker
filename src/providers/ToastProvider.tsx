@@ -9,9 +9,12 @@ type ToastProviderProps = {
   children: ReactNode;
 };
 
+const TOAST_EXIT_ANIMATION_MS = 300;
+
 export function ToastProvider({ children }: ToastProviderProps) {
   const [toasts, setToasts] = useImmerState<Toast[]>([]);
   const timeouts = useRef(new Map<string, ReturnType<typeof setTimeout>>());
+  const animTimers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
 
   const clearTimer = (id: string) => {
     const timer = timeouts.current.get(id);
@@ -24,8 +27,8 @@ export function ToastProvider({ children }: ToastProviderProps) {
     timeouts.current.delete(id);
   };
 
-  const dismissToast = useCallback((id: string) => {
-    clearTimer(id);
+  const removeToast = useCallback((id: string) => {
+    animTimers.current.delete(id);
 
     setToasts((draft) => {
       const index = draft.findIndex((t) => t.id === id);
@@ -35,6 +38,21 @@ export function ToastProvider({ children }: ToastProviderProps) {
       }
     });
   }, [setToasts]);
+
+  const dismissToast = useCallback((id: string) => {
+    clearTimer(id);
+
+    setToasts((draft) => {
+      const toast = draft.find((t) => t.id === id);
+
+      if (toast && !toast.exiting) {
+        toast.exiting = true;
+      }
+    });
+
+    const timer = setTimeout(() => removeToast(id), TOAST_EXIT_ANIMATION_MS);
+    animTimers.current.set(id, timer);
+  }, [setToasts, removeToast]);
 
   const showToast = useCallback(
     ({ persistent = false, duration = TOAST_DEFAULT_DURATION, ...rest }: ShowToastOptions): string => {
