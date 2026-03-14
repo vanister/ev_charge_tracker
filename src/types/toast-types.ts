@@ -17,4 +17,4 @@ export type Toast = {
   exiting?: boolean;
 };
 
-export type ShowToastOptions = Omit<Toast, 'id'> & { variant?: ToastVariant };
+export type ShowToastOptions = Omit<Toast, 'id' | 'variant'> & { variant?: ToastVariant };
