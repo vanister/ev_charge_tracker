@@ -190,7 +190,7 @@ UserPreferences (localStorage) { lastVehicleId?, lastLocationId?, recentSessions
 ```
 
 **Key invariants:**
-- `costCents` is computed at session creation (`round(energyKwh × ratePerKwh × 100)`) and never recalculated
+- `costCents` is computed at session creation/update (`round(energyKwh × ratePerKwh × 100)`) and never recalculated
 - Vehicles and locations use soft-delete (`isActive: 0`) to preserve session history
 - Deletion is blocked if the entity has existing sessions
 - Theme persists to `localStorage` so it loads before IndexedDB is ready
