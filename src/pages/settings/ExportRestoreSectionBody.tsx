@@ -43,13 +43,13 @@ export function ExportRestoreSectionBody() {
 
     URL.revokeObjectURL(url);
 
-    showToast({ message: 'Backup exported successfully.', variant: 'success' });
+    showToast({ message: 'Backup exported successfully.' });
     setIsExporting(false);
   };
 
   const handleRestoreSuccess = () => {
     setIsRestoring(false);
-    showToast({ message: 'Restore completed successfully.', variant: 'success' });
+    showToast({ message: 'Restore completed successfully.' });
     window.location.reload();
   };
 

@@ -226,7 +226,7 @@ export function SessionDetails() {
         lastLocationId: formState.locationId
       });
 
-      showToast({ message: isEditMode ? 'Session updated' : 'Session added', variant: 'success' });
+      showToast({ message: isEditMode ? 'Session updated' : 'Session added' });
       navigate('/sessions');
     } catch {
       setFormState((draft) => {

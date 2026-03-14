@@ -55,9 +55,9 @@ export function ToastProvider({ children }: ToastProviderProps) {
   }, [setToasts, removeToast]);
 
   const showToast = useCallback(
-    ({ persistent = false, duration = TOAST_DEFAULT_DURATION, ...rest }: ShowToastOptions): string => {
+    ({ persistent = false, duration = TOAST_DEFAULT_DURATION, variant = 'success', ...rest }: ShowToastOptions): string => {
       const id = crypto.randomUUID();
-      const toast: Toast = { ...rest, persistent, duration, id };
+      const toast: Toast = { ...rest, variant, persistent, duration, id };
 
       setToasts((draft) => {
         // Evict oldest non-persistent toast if at cap

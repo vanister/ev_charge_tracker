@@ -116,7 +116,7 @@ export function LocationDetails() {
       return;
     }
 
-    showToast({ message: isEditMode ? 'Location updated' : 'Location added', variant: 'success' });
+    showToast({ message: isEditMode ? 'Location updated' : 'Location added' });
     navigate('/settings');
   };
 
