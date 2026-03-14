@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useLocations } from '../../hooks/useLocations';
 import { usePageConfig } from '../../hooks/usePageConfig';
 import { useImmerState } from '../../hooks/useImmerState';
+import { useToast } from '../../hooks/useToast';
 import { Button } from '../../components/Button';
 import { FormFooter } from '../../components/FormFooter';
 import { LocationForm } from './LocationForm';
@@ -30,6 +31,7 @@ export function LocationDetails() {
   const navigate = useNavigate();
   const isEditMode = !!id;
   const { getLocation, createLocation, updateLocation } = useLocations();
+  const { showToast } = useToast();
 
   const [formState, setFormState] = useImmerState<LocationDetailsState>({
     ...DEFAULT_FORM_STATE,
@@ -114,6 +116,7 @@ export function LocationDetails() {
       return;
     }
 
+    showToast({ message: isEditMode ? 'Location updated' : 'Location added', variant: 'success' });
     navigate('/settings');
   };
 
