@@ -25,7 +25,7 @@ export function useAppUpdateAvailable(dontToast = false) {
       message: 'A new version is available',
       variant: 'info',
       persistent: true,
-      action: { label: 'Reload', onClick: applyUpdate }
+      action: { label: 'View Update', to: '/settings#update' }
     });
   }, [needsUpdate, applyUpdate, showToast, dontToast]);
 

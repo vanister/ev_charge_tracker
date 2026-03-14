@@ -9,11 +9,12 @@ type SectionProps = {
   cardClassName?: string;
   // Skip the card wrapper when inner content already has its own card styling
   noCard?: boolean;
+  id?: string;
 };
 
-export function Section({ title, children, action, cardClassName, noCard }: SectionProps) {
+export function Section({ title, children, action, cardClassName, noCard, id }: SectionProps) {
   return (
-    <section>
+    <section id={id}>
       <SectionHeader title={title} action={action} />
       {noCard ? (
         children
