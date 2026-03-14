@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import type { ChartData } from './chart-types';
 import type { SessionStats } from './dashboard-types';
 import { ChartTooltip } from './ChartTooltip';
-import { formatCost } from '../../utilities/formatUtils';
+import { formatCost, formatEnergy } from '../../utilities/formatUtils';
 
 type ChargeSessionsChartProps = {
   data: ChartData;
@@ -93,7 +93,7 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
                 <div className="mb-1 flex items-baseline justify-between gap-2">
                   <span className="text-sm">{loc.name}</span>
                   <span className="text-body-secondary shrink-0 text-xs">
-                    {Math.round(loc.totalKwh)} kWh · {formatCost(loc.totalCostCents)} · {pct}%
+                    {formatEnergy(loc.totalKwh, 0)} · {formatCost(loc.totalCostCents)} · {pct}%
                   </span>
                 </div>
                 <div className="relative h-1.5 w-full overflow-hidden rounded-full">

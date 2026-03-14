@@ -1,5 +1,5 @@
 import type { ChartTooltipProps } from './chart-types';
-import { formatCost } from '../../utilities/formatUtils';
+import { formatCost, formatEnergy } from '../../utilities/formatUtils';
 
 export function ChartTooltip({ active, payload, label, locationConfigs }: ChartTooltipProps) {
   if (!active || !payload?.length) {
@@ -33,7 +33,7 @@ export function ChartTooltip({ active, payload, label, locationConfigs }: ChartT
             />
             <span className="text-xs text-body-secondary flex-1">{config?.name ?? entry.dataKey}</span>
             <span className="text-xs font-medium text-body">
-              {Math.round(entry.value ?? 0)} kWh
+              {formatEnergy(entry.value ?? 0, 0)}
             </span>
             <span className="text-xs text-body-secondary">{formatCost(costCents)}</span>
           </div>
@@ -43,7 +43,7 @@ export function ChartTooltip({ active, payload, label, locationConfigs }: ChartT
         <div className="flex justify-between border-t border-default mt-2 pt-1.5">
           <span className="text-xs text-body-secondary">Total</span>
           <span className="text-xs font-semibold text-body">
-            {Math.round(totalKwh)} kWh · {formatCost(totalCostCents)}
+            {formatEnergy(totalKwh, 0)} · {formatCost(totalCostCents)}
           </span>
         </div>
       )}
