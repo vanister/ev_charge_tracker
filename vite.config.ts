@@ -22,7 +22,7 @@ const appVersion = pkg.version + (commitSha ? `+${commitSha}` : '');
 // https://vite.dev/config/
 export default defineConfig({
   define: {
-    __APP_VERSION__: JSON.stringify(appVersion),
+    'import.meta.env.VITE_APP_VERSION': JSON.stringify(appVersion),
   },
   plugins: [
     react(),
