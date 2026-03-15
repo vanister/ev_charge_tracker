@@ -49,7 +49,7 @@ export const ChargingSessionSchema = z.object({
 export const SettingsSchema = z.object({
   key: z.literal('app-settings'),
   onboardingComplete: z.boolean(),
-  backupReminderInterval: z.enum(['1d', '3d', '7d', '14d', '30d']).optional(),
+  backupReminderInterval: z.enum(['1d', '3d', '7d', '14d', '30d']).default('3d'),
   // Epoch ms of the last successful backup export
   lastBackupAt: z.number().optional(),
   // Epoch ms of when the backup reminder was last dismissed

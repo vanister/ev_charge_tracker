@@ -44,7 +44,7 @@ export const SETTINGS_KEY = 'app-settings';
 export const DEFAULT_SETTINGS: Settings = {
   key: SETTINGS_KEY,
   onboardingComplete: false,
-  backupReminderInterval: '7d'
+  backupReminderInterval: '3d'
 };
 
 export const SYSTEM_CONFIG_KEY = 'system-config';

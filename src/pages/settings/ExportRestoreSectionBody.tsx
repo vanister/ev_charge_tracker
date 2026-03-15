@@ -68,7 +68,7 @@ export function ExportRestoreSectionBody() {
     await dismissReminder();
   };
 
-  const currentInterval = settingsData?.backupReminderInterval ?? '7d';
+  const currentInterval = settingsData?.backupReminderInterval ?? '3d';
   const lastBackupAt = settingsData?.lastBackupAt;
 
   return (

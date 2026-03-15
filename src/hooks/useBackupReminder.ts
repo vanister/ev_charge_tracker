@@ -22,7 +22,7 @@ export function useBackupReminder(dontToast = false) {
       return;
     }
 
-    const { backupReminderInterval = '7d', lastBackupAt, backupReminderDismissedAt } = result.data;
+    const { backupReminderInterval = '3d', lastBackupAt, backupReminderDismissedAt } = result.data;
     const overdue = isReminderOverdue(lastBackupAt, backupReminderDismissedAt, backupReminderInterval);
 
     setNeedsReminder(overdue);
