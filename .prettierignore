@@ -13,5 +13,6 @@ coverage
 *.tmp
 *.bak
 *.swp
+*.config.ts
 .DS_Store
 .env

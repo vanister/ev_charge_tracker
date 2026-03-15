@@ -2,10 +2,7 @@ import clsx from 'clsx';
 import { type OptionHTMLAttributes, type ReactNode, type SelectHTMLAttributes } from 'react';
 import { Icon } from './Icon';
 
-type SelectOption = {
-  value: string;
-  text: string;
-} & Omit<OptionHTMLAttributes<HTMLOptionElement>, 'value'>;
+type SelectOption = { value: string; text: string } & OptionHTMLAttributes<HTMLOptionElement>;
 
 type FormSelectProps = {
   id: string;

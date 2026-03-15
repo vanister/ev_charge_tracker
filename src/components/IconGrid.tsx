@@ -18,7 +18,7 @@ export function IconGrid({ selectedIcon, onIconSelect }: IconGridProps) {
           type="button"
           aria-label={icon}
           onClick={() => onIconSelect(icon)}
-          className={clsx('rounded-lg border p-3 transition-colors', {
+          className={clsx('bordertransition-colors rounded-lg p-3', {
             'border-primary bg-primary/10 ring-primary text-primary ring-2': selectedIcon === icon,
             'border-default bg-surface text-body-secondary hover:border-default-hover hover:bg-background':
               selectedIcon !== icon
