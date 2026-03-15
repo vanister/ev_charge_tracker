@@ -7,7 +7,6 @@ import { useSettings } from '../../hooks/useSettings';
 import { useBackupReminder } from '../../hooks/useBackupReminder';
 import { ExportBackupButton } from '../../components/ExportBackupButton';
 import { RestoreBackupButton } from '../../components/RestoreBackupButton';
-import { Button } from '../../components/Button';
 import { Icon } from '../../components/Icon';
 import { BACKUP_REMINDER_INTERVALS } from '../../constants';
 import type { BackupReminderInterval } from '../../constants';
@@ -64,12 +63,11 @@ export function ExportRestoreSectionBody() {
     await updateSettings({ backupReminderInterval: interval });
   };
 
-  const handleDismissReminder = async () => {
-    await dismissReminder();
-  };
-
   const currentInterval = settingsData?.backupReminderInterval ?? '3d';
   const lastBackupAt = settingsData?.lastBackupAt;
+  const lastBackupDescription = lastBackupAt
+    ? `Last backed up ${formatDistanceToNow(lastBackupAt, { addSuffix: true })}`
+    : 'Never backed up';
 
   return (
     <div className="flex flex-col gap-4">
@@ -101,52 +99,58 @@ export function ExportRestoreSectionBody() {
         {restoreError && <p className="text-sm text-red-600 dark:text-red-400">{restoreError}</p>}
       </div>
 
-      <div className="border-default border-t pt-4">
-        <div className="mb-3 flex items-center justify-between">
-          <div>
-            <p className="text-body text-sm font-medium">Backup Reminder</p>
-            <p className="text-body-secondary text-xs">
-              {lastBackupAt
-                ? `Last backed up ${formatDistanceToNow(lastBackupAt, { addSuffix: true })}`
-                : 'Never backed up'}
-            </p>
-          </div>
+      <div className="border-default flex flex-col gap-3 border-t pt-4">
+        <SectionRow title="Backup Reminder" description={lastBackupDescription}>
           {needsReminder && (
             <button
-              onClick={handleDismissReminder}
-              className="text-body-secondary hover:text-body flex items-center gap-1 text-xs transition-colors"
+              onClick={dismissReminder}
+              className="text-body-secondary hover:text-body flex shrink-0 items-center gap-1 text-xs transition-colors"
             >
               <Icon name="x" size="xs" />
               Dismiss
             </button>
           )}
-        </div>
-
-        {needsReminder && (
-          <div className="bg-primary/10 mb-3 flex items-center gap-2 rounded-lg p-3">
-            <Icon name="bell" size="sm" className="text-primary shrink-0" />
-            <p className="text-body text-xs">
-              It's been a while since your last backup. Export your data to keep it safe.
-            </p>
-          </div>
-        )}
-
-        <div className="flex gap-1.5">
-          {BACKUP_REMINDER_INTERVALS.map((interval) => (
-            <button
-              key={interval}
-              onClick={() => handleIntervalChange(interval)}
-              className={clsx('flex-1 rounded-md px-2 py-1.5 text-xs font-medium transition-colors', {
-                'bg-primary text-white': currentInterval === interval,
-                'bg-surface text-body-secondary hover:bg-primary/10': currentInterval !== interval
-              })}
-            >
-              {interval}
-            </button>
-          ))}
-        </div>
-        <p className="text-body-secondary mt-1.5 text-xs">Remind me to back up every {currentInterval}</p>
+        </SectionRow>
+        <BackupReminderControls
+          currentInterval={currentInterval}
+          needsReminder={needsReminder}
+          onIntervalChange={handleIntervalChange}
+        />
       </div>
+    </div>
+  );
+}
+
+type BackupReminderControlsProps = {
+  currentInterval: BackupReminderInterval;
+  needsReminder: boolean;
+  onIntervalChange: (interval: BackupReminderInterval) => void;
+};
+
+function BackupReminderControls({ currentInterval, needsReminder, onIntervalChange }: BackupReminderControlsProps) {
+  return (
+    <div className="flex flex-col gap-2">
+      {needsReminder && (
+        <div className="bg-primary/10 flex items-center gap-2 rounded-lg p-3">
+          <Icon name="bell" size="sm" className="text-primary shrink-0" />
+          <p className="text-body text-xs">It's been a while since your last backup. Export your data to keep it safe.</p>
+        </div>
+      )}
+      <div className="flex gap-1.5">
+        {BACKUP_REMINDER_INTERVALS.map((interval) => (
+          <button
+            key={interval}
+            onClick={() => onIntervalChange(interval)}
+            className={clsx('flex-1 rounded-md px-2 py-1.5 text-xs font-medium transition-colors', {
+              'bg-primary text-white': currentInterval === interval,
+              'bg-surface text-body-secondary hover:bg-primary/10': currentInterval !== interval
+            })}
+          >
+            {interval}
+          </button>
+        ))}
+      </div>
+      <p className="text-body-secondary text-xs">Remind me to back up every {currentInterval}</p>
     </div>
   );
 }
@@ -154,7 +158,7 @@ export function ExportRestoreSectionBody() {
 type SectionRowProps = {
   title: string;
   description: string;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 function SectionRow({ title, description, children }: SectionRowProps) {

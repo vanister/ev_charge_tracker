@@ -1,63 +1,79 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { useSettings } from './useSettings';
 import { useToast } from './useToast';
-import { BACKUP_REMINDER_INTERVAL_MS } from '../constants';
-import type { BackupReminderInterval } from '../constants';
-
-function isReminderOverdue(lastBackupAt: number | undefined, dismissedAt: number | undefined, interval: BackupReminderInterval): boolean {
-  const referenceTime = Math.max(lastBackupAt ?? 0, dismissedAt ?? 0);
-  return (Date.now() - referenceTime) >= BACKUP_REMINDER_INTERVAL_MS[interval];
-}
+import { isReminderOverdue } from '../utilities/backupReminderUtils';
 
 export function useBackupReminder(dontToast = false) {
   const { getSettings, updateSettings } = useSettings();
   const { showToast } = useToast();
   const [needsReminder, setNeedsReminder] = useState(false);
   const toastShownRef = useRef(false);
+  const dontToastRef = useRef(dontToast);
+  dontToastRef.current = dontToast;
 
-  const checkReminder = useCallback(async () => {
-    const result = await getSettings();
-
-    if (!result.success || !result.data) {
-      return;
-    }
-
-    const { backupReminderInterval = '3d', lastBackupAt, backupReminderDismissedAt } = result.data;
-    const overdue = isReminderOverdue(lastBackupAt, backupReminderDismissedAt, backupReminderInterval);
-
-    setNeedsReminder(overdue);
-
-    if (!overdue || toastShownRef.current || dontToast) {
-      return;
-    }
-
-    toastShownRef.current = true;
-    showToast({
-      message: 'Time to back up your data',
-      variant: 'info',
-      persistent: true,
-      action: { label: 'View Backup', to: '/settings#export-restore' }
-    });
-  }, [getSettings, showToast, dontToast]);
-
-  // Check on initial app load
+  // Check on app init — runs once on mount
   useEffect(() => {
-    checkReminder();
-  }, [checkReminder]);
+    const check = async () => {
+      const result = await getSettings();
 
-  // Re-check when the PWA is brought back to the foreground
-  useEffect(() => {
-    const onVisible = () => {
-      if (document.visibilityState === 'visible') {
-        checkReminder();
+      if (!result.success) {
+        return;
       }
+
+      const { backupReminderInterval = '3d', lastBackupAt, backupReminderDismissedAt } = result.data ?? {};
+      const overdue = isReminderOverdue(lastBackupAt, backupReminderDismissedAt, backupReminderInterval);
+
+      setNeedsReminder(overdue);
+
+      if (!overdue || toastShownRef.current || dontToastRef.current) {
+        return;
+      }
+
+      toastShownRef.current = true;
+      showToast({
+        message: 'Time to back up your data',
+        variant: 'info',
+        persistent: true,
+        action: { label: 'View Backup', to: '/settings#export-restore' }
+      });
     };
 
-    const onPageShow = (event: PageTransitionEvent) => {
-      // persisted=true means the page was restored from bfcache (back/forward nav)
-      if (event.persisted) {
-        checkReminder();
+    check();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Re-check when PWA is brought back to the foreground
+  useEffect(() => {
+    const onVisible = async () => {
+      if (document.visibilityState !== 'visible') {
+        return;
       }
+
+      const result = await getSettings();
+
+      if (!result.success) {
+        return;
+      }
+
+      const { backupReminderInterval = '3d', lastBackupAt, backupReminderDismissedAt } = result.data ?? {};
+
+      setNeedsReminder(isReminderOverdue(lastBackupAt, backupReminderDismissedAt, backupReminderInterval));
+    };
+
+    const onPageShow = async (event: PageTransitionEvent) => {
+      if (!event.persisted) {
+        return;
+      }
+
+      const result = await getSettings();
+
+      if (!result.success) {
+        return;
+      }
+
+      const { backupReminderInterval = '3d', lastBackupAt, backupReminderDismissedAt } = result.data ?? {};
+
+      setNeedsReminder(isReminderOverdue(lastBackupAt, backupReminderDismissedAt, backupReminderInterval));
     };
 
     document.addEventListener('visibilitychange', onVisible);
@@ -67,7 +83,8 @@ export function useBackupReminder(dontToast = false) {
       document.removeEventListener('visibilitychange', onVisible);
       window.removeEventListener('pageshow', onPageShow);
     };
-  }, [checkReminder]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const dismissReminder = useCallback(async () => {
     setNeedsReminder(false);
