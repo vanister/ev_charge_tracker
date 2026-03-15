@@ -1,3 +1,4 @@
+import { execSync } from 'child_process';
 import { readFileSync } from 'fs';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -6,7 +7,16 @@ import tailwindcss from '@tailwindcss/vite';
 import { cloudflare } from '@cloudflare/vite-plugin';
 
 const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
-const commitSha = process.env.CF_PAGES_COMMIT_SHA?.slice(0, 7);
+
+function getCommitSha(): string {
+  try {
+    return execSync('git rev-parse --short HEAD').toString().trim();
+  } catch {
+    return '';
+  }
+}
+
+const commitSha = getCommitSha();
 const appVersion = pkg.version + (commitSha ? `+${commitSha}` : '');
 
 // https://vite.dev/config/
