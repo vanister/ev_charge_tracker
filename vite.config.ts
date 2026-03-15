@@ -9,6 +9,11 @@ import { cloudflare } from '@cloudflare/vite-plugin';
 const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
 
 function getCommitSha(): string {
+  // CF_PAGES_COMMIT_SHA is injected by Cloudflare Pages builds; fall back to git locally
+  if (process.env.CF_PAGES_COMMIT_SHA) {
+    return process.env.CF_PAGES_COMMIT_SHA.slice(0, 7);
+  }
+
   try {
     return execSync('git rev-parse --short HEAD').toString().trim();
   } catch {
