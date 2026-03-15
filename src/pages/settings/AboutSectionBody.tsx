@@ -9,7 +9,7 @@ export function AboutSectionBody() {
         </div>
         <div>
           <p className="text-body text-base font-semibold">EV Charge Tracker</p>
-          <p className="text-body-secondary text-sm">Version 1.0.0</p>
+          <p className="text-body-secondary text-sm">Version {import.meta.env.VITE_APP_VERSION}</p>
         </div>
       </div>
       <p className="text-body-secondary text-sm">
