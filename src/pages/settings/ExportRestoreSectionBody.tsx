@@ -1,15 +1,11 @@
 import { useState, type ReactNode } from 'react';
 import { useToast } from '../../hooks/useToast';
-import { useBackup } from '../../hooks/useBackup';
 import { useNavigationGuard } from '../../hooks/useNavigationGuard';
-import { Button } from '../../components/Button';
+import { ExportBackupButton } from '../../components/ExportBackupButton';
 import { RestoreBackupButton } from '../../components/RestoreBackupButton';
-import { getDateGroupKey } from '../../utilities/dateUtils';
-import { BACKUP_FILE_NAME } from '../../data/constants';
 
 export function ExportRestoreSectionBody() {
   const { showToast } = useToast();
-  const { exportBackup } = useBackup();
   const [isExporting, setIsExporting] = useState(false);
   const [isRestoring, setIsRestoring] = useState(false);
   const [restoreError, setRestoreError] = useState<string | null>(null);
@@ -19,33 +15,6 @@ export function ExportRestoreSectionBody() {
     message: () =>
       `A ${isExporting ? 'backup export' : 'restore'} is in progress. Leaving now may corrupt your data. Are you sure you want to leave?`
   });
-
-  const handleExport = async () => {
-    setIsExporting(true);
-
-    const result = await exportBackup();
-
-    if (!result.success) {
-      showToast({ message: `Export failed: ${result.error}`, variant: 'error', persistent: true });
-      setIsExporting(false);
-      return;
-    }
-
-    const json = JSON.stringify(result.data, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const date = getDateGroupKey(Date.now());
-    const a = document.createElement('a');
-
-    a.href = url;
-    a.download = `${date}-${BACKUP_FILE_NAME}`;
-    a.click();
-
-    URL.revokeObjectURL(url);
-
-    showToast({ message: 'Backup exported successfully.' });
-    setIsExporting(false);
-  };
 
   const handleRestoreSuccess = () => {
     setIsRestoring(false);
@@ -61,14 +30,20 @@ export function ExportRestoreSectionBody() {
   return (
     <div className="flex flex-col gap-4">
       <SectionRow title="Export Backup" description="Download all your data as a JSON file">
-        <Button
-          variant="secondary"
-          onClick={handleExport}
-          disabled={isExporting || isRestoring}
+        <ExportBackupButton
+          label="Export"
+          disabled={isRestoring}
+          onExportStart={() => setIsExporting(true)}
+          onSuccess={() => {
+            setIsExporting(false);
+            showToast({ message: 'Backup exported successfully.' });
+          }}
+          onError={(error) => {
+            setIsExporting(false);
+            showToast({ message: error, variant: 'error', persistent: true });
+          }}
           className="w-28 shrink-0"
-        >
-          {isExporting ? 'Exporting…' : 'Export'}
-        </Button>
+        />
       </SectionRow>
 
       <div className="flex flex-col gap-1">
