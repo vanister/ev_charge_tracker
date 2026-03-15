@@ -50,7 +50,7 @@ export function ExportRestoreSectionBody() {
   const handleRestoreSuccess = () => {
     setIsRestoring(false);
     showToast({ message: 'Restore completed successfully.' });
-    window.location.reload();
+    location.reload();
   };
 
   const handleRestoreError = (error: string | null) => {

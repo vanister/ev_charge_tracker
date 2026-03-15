@@ -1,5 +1,4 @@
-import { subDays, startOfDay, formatDate, getDateGroupKey } from '../utilities/dateUtils';
-import { format, subMonths, startOfMonth } from 'date-fns';
+import { subDays, startOfDay, formatDate, getDateGroupKey, startOfMonth, subMonths } from '../utilities/dateUtils';
 import type { ChargingSession, Location } from '../data/data-types';
 import type { ChartData, ChartBarData, LocationChartConfig } from '../pages/dashboard/chart-types';
 import { LOCATION_COLOR_HEX } from '../constants';
@@ -20,10 +19,12 @@ export function buildChartData(sessions: ChargingSession[], locations: Location[
       dateKey: getDateGroupKey(date),
       label: formatDate(date, 'MM/dd')
     };
+
     for (const loc of locations) {
       base[loc.id] = 0;
       base[costKey(loc.id)] = 0;
     }
+
     return base;
   });
 
@@ -35,8 +36,10 @@ export function buildChartData(sessions: ChargingSession[], locations: Location[
     if (session.chargedAt < startTimestamp) {
       continue;
     }
+
     const dateKey = getDateGroupKey(session.chargedAt);
     const bar = barIndex.get(dateKey);
+
     if (bar) {
       bar[session.locationId] = ((bar[session.locationId] as number) ?? 0) + session.energyKwh;
       bar[costKey(session.locationId)] = ((bar[costKey(session.locationId)] as number) ?? 0) + session.costCents;
@@ -65,24 +68,27 @@ export function buildMonthlyChartData(
   // Generate months oldest-first: numMonths ago → current month
   const bars: ChartBarData[] = Array.from({ length: numMonths }, (_, i) => {
     const monthDate = startOfMonth(subMonths(now, numMonths - 1 - i));
-    const monthKey = format(monthDate, 'yyyy-MM');
+    const monthKey = formatDate(monthDate, 'yyyy-MM');
     // Show year only when it differs from the current year
     const label =
-      monthDate.getFullYear() === now.getFullYear() ? format(monthDate, 'MMM') : format(monthDate, "MMM ''yy");
+      monthDate.getFullYear() === now.getFullYear() ? formatDate(monthDate, 'MMM') : formatDate(monthDate, "MMM ''yy");
 
     const base: ChartBarData = { dateKey: monthKey, label };
+
     for (const loc of locations) {
       base[loc.id] = 0;
       base[costKey(loc.id)] = 0;
     }
+
     return base;
   });
 
   const barIndex = new Map<string, ChartBarData>(bars.map((b) => [b.dateKey, b]));
 
   for (const session of sessions) {
-    const monthKey = format(session.chargedAt, 'yyyy-MM');
+    const monthKey = formatDate(session.chargedAt, 'yyyy-MM');
     const bar = barIndex.get(monthKey);
+
     if (bar) {
       bar[session.locationId] = ((bar[session.locationId] as number) ?? 0) + session.energyKwh;
       bar[costKey(session.locationId)] = ((bar[costKey(session.locationId)] as number) ?? 0) + session.costCents;
@@ -101,7 +107,6 @@ export function buildMonthlyChartData(
   return { bars, locationConfigs, xAxisInterval };
 }
 
-// Number of daily bars for time ranges up to 90d
 export function getChartNumDays(timeRange: TimeFilterValue): number {
   switch (timeRange) {
     case '7d':
@@ -115,14 +120,21 @@ export function getChartNumDays(timeRange: TimeFilterValue): number {
   }
 }
 
-// Number of monthly bars for time ranges 6m / 12m / all
 export function getChartNumMonths(timeRange: TimeFilterValue, sessions: ChargingSession[]): number {
-  if (timeRange === '6m') return 6;
-  if (timeRange === '12m') return 12;
+  if (timeRange === '6m') {
+    return 6;
+  }
 
-  // 'all' — compute from the earliest session, capped at 60 months (5 years)
-  if (sessions.length === 0) return 6;
+  if (timeRange === '12m') {
+    return 12;
+  }
+
+  if (sessions.length === 0) {
+    return 6;
+  }
+
   const earliest = sessions.reduce((min, s) => Math.min(min, s.chargedAt), Infinity);
   const monthsElapsed = (Date.now() - earliest) / (1000 * 60 * 60 * 24 * 30.44) + 1;
+
   return Math.min(Math.ceil(monthsElapsed), 60);
 }

@@ -2,8 +2,9 @@ import {
   format,
   isSameDay as dateFnsIsSameDay,
   startOfDay as dateFnsStartOfDay,
+  startOfMonth as dateFnsStartOfMonth,
   subDays as dateFnsSubDays,
-  subMonths
+  subMonths as dateFnsSubMonths
 } from 'date-fns';
 import type { DateRange } from '../types/shared-types';
 import type { TimeFilterValue } from '../types/shared-types';
@@ -21,15 +22,15 @@ export function getDateRangeForTimeFilter(value: TimeFilterValue): DateRange | u
     case '90d':
       return { start: dateFnsSubDays(end, 90).getTime(), end };
     case '6m':
-      return { start: subMonths(end, 6).getTime(), end };
+      return { start: dateFnsSubMonths(end, 6).getTime(), end };
     case '12m':
-      return { start: subMonths(end, 12).getTime(), end };
+      return { start: dateFnsSubMonths(end, 12).getTime(), end };
     default:
       return undefined;
   }
 }
 
-export function formatDate(timestamp: number, formatStr = 'MMM dd, yyyy'): string {
+export function formatDate(timestamp: Date | number, formatStr = 'MMM dd, yyyy'): string {
   return format(timestamp, formatStr);
 }
 
@@ -55,4 +56,12 @@ export function subDays(timestamp: number, days: number): number {
 
 export function getDateGroupKey(timestamp: number): string {
   return format(timestamp, 'yyyy-MM-dd');
+}
+
+export function startOfMonth(date: Date): Date {
+  return dateFnsStartOfMonth(date);
+}
+
+export function subMonths(date: Date, months: number): Date {
+  return dateFnsSubMonths(date, months);
 }
