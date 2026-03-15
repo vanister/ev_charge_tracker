@@ -30,7 +30,7 @@ export function Settings() {
           <StorageSectionBody />
         </Section>
 
-        <Section title="Export & Restore" cardClassName="space-y-3">
+        <Section title="Export & Restore" id="export-restore" cardClassName="space-y-3">
           <ExportRestoreSectionBody />
         </Section>
 
