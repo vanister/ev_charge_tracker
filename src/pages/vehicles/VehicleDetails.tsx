@@ -127,7 +127,7 @@ export function VehicleDetails() {
       return;
     }
 
-    showToast({ message: isEditMode ? 'Vehicle updated' : 'Vehicle added' });
+    showToast({ message: isEditMode ? 'Vehicle updated' : 'Vehicle added', variant: 'success' });
     navigate('/vehicles');
   };
 

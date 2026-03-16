@@ -1,15 +1,13 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useSettings } from './useSettings';
 import { useToast } from './useToast';
-import { isReminderOverdue } from '../utilities/backupReminderUtils';
+import { isBackupOverdue } from '../utilities/backupUtils';
 
-export function useBackupReminder(dontToast = false) {
+export function useBackupReminder() {
   const { getSettings, updateSettings } = useSettings();
   const { showToast } = useToast();
   const [needsReminder, setNeedsReminder] = useState(false);
   const toastShownRef = useRef(false);
-  const dontToastRef = useRef(dontToast);
-  dontToastRef.current = dontToast;
 
   // Check on app init — runs once on mount
   useEffect(() => {
@@ -21,18 +19,17 @@ export function useBackupReminder(dontToast = false) {
       }
 
       const { backupReminderInterval = '3d', lastBackupAt, backupReminderDismissedAt } = result.data ?? {};
-      const overdue = isReminderOverdue(lastBackupAt, backupReminderDismissedAt, backupReminderInterval);
+      const overdue = isBackupOverdue(lastBackupAt, backupReminderDismissedAt, backupReminderInterval);
 
       setNeedsReminder(overdue);
 
-      if (!overdue || toastShownRef.current || dontToastRef.current) {
+      if (!overdue || toastShownRef.current) {
         return;
       }
 
       toastShownRef.current = true;
       showToast({
         message: 'Time to back up your data',
-        variant: 'info',
         persistent: true,
         action: { label: 'View Backup', to: '/settings#export-restore' }
       });
@@ -44,11 +41,7 @@ export function useBackupReminder(dontToast = false) {
 
   // Re-check when PWA is brought back to the foreground
   useEffect(() => {
-    const onVisible = async () => {
-      if (document.visibilityState !== 'visible') {
-        return;
-      }
-
+    const doBackupReminderCheck = async () => {
       const result = await getSettings();
 
       if (!result.success) {
@@ -57,7 +50,15 @@ export function useBackupReminder(dontToast = false) {
 
       const { backupReminderInterval = '3d', lastBackupAt, backupReminderDismissedAt } = result.data ?? {};
 
-      setNeedsReminder(isReminderOverdue(lastBackupAt, backupReminderDismissedAt, backupReminderInterval));
+      setNeedsReminder(isBackupOverdue(lastBackupAt, backupReminderDismissedAt, backupReminderInterval));
+    };
+
+    const onVisible = async () => {
+      if (document.visibilityState !== 'visible') {
+        return;
+      }
+
+      await doBackupReminderCheck();
     };
 
     const onPageShow = async (event: PageTransitionEvent) => {
@@ -65,15 +66,7 @@ export function useBackupReminder(dontToast = false) {
         return;
       }
 
-      const result = await getSettings();
-
-      if (!result.success) {
-        return;
-      }
-
-      const { backupReminderInterval = '3d', lastBackupAt, backupReminderDismissedAt } = result.data ?? {};
-
-      setNeedsReminder(isReminderOverdue(lastBackupAt, backupReminderDismissedAt, backupReminderInterval));
+      await doBackupReminderCheck();
     };
 
     document.addEventListener('visibilitychange', onVisible);
@@ -83,8 +76,7 @@ export function useBackupReminder(dontToast = false) {
       document.removeEventListener('visibilitychange', onVisible);
       window.removeEventListener('pageshow', onPageShow);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getSettings]);
 
   const dismissReminder = useCallback(async () => {
     setNeedsReminder(false);

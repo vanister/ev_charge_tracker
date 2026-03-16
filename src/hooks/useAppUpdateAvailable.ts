@@ -23,7 +23,6 @@ export function useAppUpdateAvailable(dontToast = false) {
     toastShownRef.current = true;
     showToast({
       message: 'A new version is available',
-      variant: 'info',
       persistent: true,
       action: { label: 'View Update', to: '/settings#update' }
     });

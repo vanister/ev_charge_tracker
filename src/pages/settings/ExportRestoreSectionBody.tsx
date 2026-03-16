@@ -44,12 +44,12 @@ export function ExportRestoreSectionBody() {
     setIsExporting(false);
     setSettingsData((prev) => (prev ? { ...prev, lastBackupAt: now } : prev));
     await updateSettings({ lastBackupAt: now });
-    showToast({ message: 'Backup exported successfully.' });
+    showToast({ message: 'Backup exported successfully.', variant: 'success' });
   };
 
   const handleRestoreSuccess = () => {
     setIsRestoring(false);
-    showToast({ message: 'Restore completed successfully.' });
+    showToast({ message: 'Restore completed successfully.', variant: 'success' });
     location.reload();
   };
 
@@ -106,7 +106,7 @@ export function ExportRestoreSectionBody() {
               onClick={dismissReminder}
               className="text-body-secondary hover:text-body flex shrink-0 items-center gap-1 text-xs transition-colors"
             >
-              <Icon name="x" size="xs" />
+              <Icon name="x" size="sm" />
               Dismiss
             </button>
           )}

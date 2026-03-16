@@ -64,7 +64,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
     ({
       persistent = false,
       duration = TOAST_DEFAULT_DURATION,
-      variant = 'success',
+      variant = 'info',
       ...rest
     }: ShowToastOptions): string => {
       const id = crypto.randomUUID();

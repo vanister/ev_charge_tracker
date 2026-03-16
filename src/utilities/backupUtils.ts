@@ -4,6 +4,7 @@ import type { ChargingSession, EvChargTrackerDb, Location, Settings, Vehicle } f
 import type { BackupFile } from '../pages/settings/settings-types';
 import { BACKUP_FILE_VERSION } from '../data/constants';
 import { BackupFileSchema } from '../data/backup-schema';
+import { BACKUP_REMINDER_INTERVAL_MS, type BackupReminderInterval } from '../constants';
 
 export async function exportBackup(db: EvChargTrackerDb): Promise<Result<BackupFile>> {
   try {
@@ -80,6 +81,15 @@ export async function restoreBackup(db: EvChargTrackerDb, backup: BackupFile): P
     const msg = err instanceof Error ? err.message : 'Failed to restore backup data.';
     return failure(msg);
   }
+}
+
+export function isBackupOverdue(
+  lastBackupAt: number | undefined,
+  dismissedAt: number | undefined,
+  interval: BackupReminderInterval
+): boolean {
+  const referenceTime = Math.max(lastBackupAt ?? 0, dismissedAt ?? 0);
+  return Date.now() - referenceTime >= BACKUP_REMINDER_INTERVAL_MS[interval];
 }
 
 function validateBackup(parsed: unknown): Result<BackupFile> {
