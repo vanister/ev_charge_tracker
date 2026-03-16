@@ -61,8 +61,10 @@ export function BackupReminderSectionBody() {
           </button>
         ))}
       </div>
-      <p className="text-body-secondary text-xs">Remind me to back up every {formatBackupReminderInterval(currentInterval)}</p>
-      <p className="text-body-secondary text-xs">{lastBackupDescription}</p>
+      <p className="text-body-secondary text-xs">
+        Remind me to back up every {formatBackupReminderInterval(currentInterval)}
+      </p>
+      <p className="text-body-secondary text-xs italic">{lastBackupDescription}</p>
     </div>
   );
 }
