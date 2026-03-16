@@ -1,3 +1,10 @@
+import type { BackupReminderInterval } from '../constants';
+
+export function formatBackupReminderInterval(interval: BackupReminderInterval): string {
+  const days = +interval.replace('d', '');
+  return days === 1 ? '1 day' : `${days} days`;
+}
+
 export function formatCost(costCents: number, decimalPlaces: number = 2): string {
   const dollars = costCents / 100;
   return `$${dollars.toFixed(decimalPlaces)}`;

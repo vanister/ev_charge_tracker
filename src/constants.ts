@@ -46,6 +46,18 @@ export const LOCATION_COLOR_OPTIONS: LocationColorOption[] = [
   { value: LOCATION_COLOR_HEX.orange, label: 'Orange', bgClass: 'bg-orange-400' }
 ];
 
+export const BACKUP_REMINDER_INTERVALS = ['1d', '3d', '7d', '14d', '30d'] as const;
+export type BackupReminderInterval = (typeof BACKUP_REMINDER_INTERVALS)[number];
+
+const DAY_MS = 86_400_000;
+export const BACKUP_REMINDER_INTERVAL_MS: Record<BackupReminderInterval, number> = {
+  '1d': DAY_MS,
+  '3d': 3 * DAY_MS,
+  '7d': 7 * DAY_MS,
+  '14d': 14 * DAY_MS,
+  '30d': 30 * DAY_MS
+};
+
 export const OAUTH_PROVIDERS = {
   google: {
     authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',

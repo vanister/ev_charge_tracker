@@ -24,6 +24,7 @@ import {
   XCircle,
   AlertTriangle,
   Info,
+  Bell,
   type LucideProps
 } from 'lucide-react';
 import { type IconName } from '../types/shared-types';
@@ -53,5 +54,6 @@ export const iconMap: Record<IconName, React.FC<LucideProps>> = {
   'check-circle': CheckCircle,
   'x-circle': XCircle,
   'alert-triangle': AlertTriangle,
-  info: Info
+  info: Info,
+  bell: Bell
 };

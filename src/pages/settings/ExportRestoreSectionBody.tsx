@@ -1,11 +1,13 @@
 import { useState, type ReactNode } from 'react';
 import { useToast } from '../../hooks/useToast';
 import { useNavigationGuard } from '../../hooks/useNavigationGuard';
+import { useSettings } from '../../hooks/useSettings';
 import { ExportBackupButton } from '../../components/ExportBackupButton';
 import { RestoreBackupButton } from '../../components/RestoreBackupButton';
 
 export function ExportRestoreSectionBody() {
   const { showToast } = useToast();
+  const { updateSettings } = useSettings();
   const [isExporting, setIsExporting] = useState(false);
   const [isRestoring, setIsRestoring] = useState(false);
   const [restoreError, setRestoreError] = useState<string | null>(null);
@@ -16,9 +18,15 @@ export function ExportRestoreSectionBody() {
       `A ${isExporting ? 'backup export' : 'restore'} is in progress. Leaving now may corrupt your data. Are you sure you want to leave?`
   });
 
+  const handleExportSuccess = async () => {
+    setIsExporting(false);
+    await updateSettings({ lastBackupAt: Date.now() });
+    showToast({ message: 'Backup exported successfully.', variant: 'success' });
+  };
+
   const handleRestoreSuccess = () => {
     setIsRestoring(false);
-    showToast({ message: 'Restore completed successfully.' });
+    showToast({ message: 'Restore completed successfully.', variant: 'success' });
     location.reload();
   };
 
@@ -34,10 +42,7 @@ export function ExportRestoreSectionBody() {
           label="Export"
           disabled={isRestoring}
           onExportStart={() => setIsExporting(true)}
-          onSuccess={() => {
-            setIsExporting(false);
-            showToast({ message: 'Backup exported successfully.' });
-          }}
+          onSuccess={handleExportSuccess}
           onError={(error) => {
             setIsExporting(false);
             showToast({ message: error, variant: 'error', persistent: true });
@@ -65,8 +70,8 @@ export function ExportRestoreSectionBody() {
 
 type SectionRowProps = {
   title: string;
-  description: string;
-  children: ReactNode;
+  description?: string;
+  children?: ReactNode;
 };
 
 function SectionRow({ title, description, children }: SectionRowProps) {
@@ -74,7 +79,7 @@ function SectionRow({ title, description, children }: SectionRowProps) {
     <div className="flex items-start justify-between">
       <div className="mr-4">
         <p className="text-body text-sm font-medium">{title}</p>
-        <p className="text-body-secondary text-xs">{description}</p>
+        {description && <p className="text-body-secondary text-xs">{description}</p>}
       </div>
       {children}
     </div>

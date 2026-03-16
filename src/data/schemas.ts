@@ -48,7 +48,12 @@ export const ChargingSessionSchema = z.object({
 
 export const SettingsSchema = z.object({
   key: z.literal('app-settings'),
-  onboardingComplete: z.boolean()
+  onboardingComplete: z.boolean(),
+  backupReminderInterval: z.enum(['1d', '3d', '7d', '14d', '30d']).default('3d'),
+  // used with backupReminderDismissedAt to determine when the next reminder is due
+  lastBackupAt: z.number().optional(),
+  // allows skipping a reminder cycle without performing a backup
+  backupReminderDismissedAt: z.number().optional()
 });
 
 export const ProviderConfigSchema = z.object({
