@@ -30,8 +30,6 @@ export function useBackupReminder(dontShow = false) {
         action: { label: 'View Backup', to: '/settings#export-restore' }
       });
     }
-
-    return overdue;
   }, [dontShow, getSettings, showToast]);
 
   // Check on app init — runs once on mount
@@ -40,11 +38,8 @@ export function useBackupReminder(dontShow = false) {
       return;
     }
 
-    const check = async () => {
-      await doBackupReminderCheck();
-    };
-
-    check();
+    doBackupReminderCheck();
+    // doBackupReminderCheck intentionally omitted — we only want this to fire once on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dontShow]);
 
@@ -73,7 +68,7 @@ export function useBackupReminder(dontShow = false) {
       document.removeEventListener('visibilitychange', onVisible);
       window.removeEventListener('pageshow', onPageShow);
     };
-  }, [getSettings]);
+  }, [doBackupReminderCheck]);
 
   const dismissReminder = useCallback(async () => {
     setNeedsReminder(false);

@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { clsx } from 'clsx';
-import { formatDistanceToNow } from 'date-fns';
 import { useSettings } from '../../hooks/useSettings';
 import { useBackupReminder } from '../../hooks/useBackupReminder';
 import { Icon } from '../../components/Icon';
+import { formatDistanceToNow } from '../../utilities/dateUtils';
 import { formatBackupReminderInterval } from '../../utilities/formatUtils';
-import { BACKUP_REMINDER_INTERVALS } from '../../constants';
-import type { BackupReminderInterval } from '../../constants';
+import { BACKUP_REMINDER_INTERVALS, type BackupReminderInterval } from '../../constants';
 
 export function BackupReminderSectionBody() {
   const { getSettings, updateSettings } = useSettings();
@@ -33,7 +32,7 @@ export function BackupReminderSectionBody() {
   };
 
   const lastBackupDescription = lastBackupAt
-    ? `Last backed up ${formatDistanceToNow(lastBackupAt, { addSuffix: true })}`
+    ? `Last backed up ${formatDistanceToNow(lastBackupAt)}`
     : 'Never backed up';
 
   return (

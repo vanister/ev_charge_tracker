@@ -1,5 +1,6 @@
 import {
   format,
+  formatDistanceToNow as dateFnsFormatDistanceToNow,
   isSameDay as dateFnsIsSameDay,
   startOfDay as dateFnsStartOfDay,
   startOfMonth as dateFnsStartOfMonth,
@@ -64,4 +65,8 @@ export function startOfMonth(date: Date): Date {
 
 export function subMonths(date: Date, months: number): Date {
   return dateFnsSubMonths(date, months);
+}
+
+export function formatDistanceToNow(timestamp: number): string {
+  return dateFnsFormatDistanceToNow(timestamp, { addSuffix: true });
 }
