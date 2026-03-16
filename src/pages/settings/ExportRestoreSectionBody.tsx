@@ -1,37 +1,16 @@
-import { useState, useEffect, type ReactNode } from 'react';
-import { clsx } from 'clsx';
-import { formatDistanceToNow } from 'date-fns';
+import { useState, type ReactNode } from 'react';
 import { useToast } from '../../hooks/useToast';
 import { useNavigationGuard } from '../../hooks/useNavigationGuard';
 import { useSettings } from '../../hooks/useSettings';
-import { useBackupReminder } from '../../hooks/useBackupReminder';
 import { ExportBackupButton } from '../../components/ExportBackupButton';
 import { RestoreBackupButton } from '../../components/RestoreBackupButton';
-import { Icon } from '../../components/Icon';
-import { BACKUP_REMINDER_INTERVALS } from '../../constants';
-import type { BackupReminderInterval } from '../../constants';
-import type { Settings } from '../../data/data-types';
 
 export function ExportRestoreSectionBody() {
   const { showToast } = useToast();
-  const { getSettings, updateSettings } = useSettings();
-  const { needsReminder, dismissReminder } = useBackupReminder(true);
+  const { updateSettings } = useSettings();
   const [isExporting, setIsExporting] = useState(false);
   const [isRestoring, setIsRestoring] = useState(false);
   const [restoreError, setRestoreError] = useState<string | null>(null);
-  const [settingsData, setSettingsData] = useState<Settings | null>(null);
-
-  useEffect(() => {
-    const load = async () => {
-      const result = await getSettings();
-
-      if (result.success && result.data) {
-        setSettingsData(result.data);
-      }
-    };
-
-    load();
-  }, [getSettings]);
 
   useNavigationGuard({
     enabled: isExporting || isRestoring,
@@ -40,10 +19,8 @@ export function ExportRestoreSectionBody() {
   });
 
   const handleExportSuccess = async () => {
-    const now = Date.now();
     setIsExporting(false);
-    setSettingsData((prev) => (prev ? { ...prev, lastBackupAt: now } : prev));
-    await updateSettings({ lastBackupAt: now });
+    await updateSettings({ lastBackupAt: Date.now() });
     showToast({ message: 'Backup exported successfully.', variant: 'success' });
   };
 
@@ -57,17 +34,6 @@ export function ExportRestoreSectionBody() {
     setIsRestoring(false);
     setRestoreError(error);
   };
-
-  const handleIntervalChange = async (interval: BackupReminderInterval) => {
-    setSettingsData((prev) => (prev ? { ...prev, backupReminderInterval: interval } : prev));
-    await updateSettings({ backupReminderInterval: interval });
-  };
-
-  const currentInterval = settingsData?.backupReminderInterval ?? '3d';
-  const lastBackupAt = settingsData?.lastBackupAt;
-  const lastBackupDescription = lastBackupAt
-    ? `Last backed up ${formatDistanceToNow(lastBackupAt, { addSuffix: true })}`
-    : 'Never backed up';
 
   return (
     <div className="flex flex-col gap-4">
@@ -98,66 +64,13 @@ export function ExportRestoreSectionBody() {
         </SectionRow>
         {restoreError && <p className="text-sm text-red-600 dark:text-red-400">{restoreError}</p>}
       </div>
-
-      <div className="border-default flex flex-col gap-3 border-t pt-4">
-        <SectionRow title="Backup Reminder" description={lastBackupDescription}>
-          {needsReminder && (
-            <button
-              onClick={dismissReminder}
-              className="text-body-secondary hover:text-body flex shrink-0 items-center gap-1 text-xs transition-colors"
-            >
-              <Icon name="x" size="sm" />
-              Dismiss
-            </button>
-          )}
-        </SectionRow>
-        <BackupReminderControls
-          currentInterval={currentInterval}
-          needsReminder={needsReminder}
-          onIntervalChange={handleIntervalChange}
-        />
-      </div>
-    </div>
-  );
-}
-
-type BackupReminderControlsProps = {
-  currentInterval: BackupReminderInterval;
-  needsReminder: boolean;
-  onIntervalChange: (interval: BackupReminderInterval) => void;
-};
-
-function BackupReminderControls({ currentInterval, needsReminder, onIntervalChange }: BackupReminderControlsProps) {
-  return (
-    <div className="flex flex-col gap-2">
-      {needsReminder && (
-        <div className="bg-primary/10 flex items-center gap-2 rounded-lg p-3">
-          <Icon name="bell" size="sm" className="text-primary shrink-0" />
-          <p className="text-body text-xs">It's been a while since your last backup. Export your data to keep it safe.</p>
-        </div>
-      )}
-      <div className="flex gap-1.5">
-        {BACKUP_REMINDER_INTERVALS.map((interval) => (
-          <button
-            key={interval}
-            onClick={() => onIntervalChange(interval)}
-            className={clsx('flex-1 rounded-md px-2 py-1.5 text-xs font-medium transition-colors', {
-              'bg-primary text-white': currentInterval === interval,
-              'bg-surface text-body-secondary hover:bg-primary/10': currentInterval !== interval
-            })}
-          >
-            {interval}
-          </button>
-        ))}
-      </div>
-      <p className="text-body-secondary text-xs">Remind me to back up every {currentInterval}</p>
     </div>
   );
 }
 
 type SectionRowProps = {
   title: string;
-  description: string;
+  description?: string;
   children?: ReactNode;
 };
 
@@ -166,7 +79,7 @@ function SectionRow({ title, description, children }: SectionRowProps) {
     <div className="flex items-start justify-between">
       <div className="mr-4">
         <p className="text-body text-sm font-medium">{title}</p>
-        <p className="text-body-secondary text-xs">{description}</p>
+        {description && <p className="text-body-secondary text-xs">{description}</p>}
       </div>
       {children}
     </div>

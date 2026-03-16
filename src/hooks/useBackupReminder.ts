@@ -3,56 +3,53 @@ import { useSettings } from './useSettings';
 import { useToast } from './useToast';
 import { isBackupOverdue } from '../utilities/backupUtils';
 
-export function useBackupReminder() {
+export function useBackupReminder(dontShow = false) {
   const { getSettings, updateSettings } = useSettings();
   const { showToast } = useToast();
   const [needsReminder, setNeedsReminder] = useState(false);
   const toastShownRef = useRef(false);
 
-  // Check on app init — runs once on mount
-  useEffect(() => {
-    const check = async () => {
-      const result = await getSettings();
+  const doBackupReminderCheck = useCallback(async () => {
+    const result = await getSettings();
 
-      if (!result.success) {
-        return;
-      }
+    if (!result.success) {
+      return;
+    }
 
-      const { backupReminderInterval = '3d', lastBackupAt, backupReminderDismissedAt } = result.data ?? {};
-      const overdue = isBackupOverdue(lastBackupAt, backupReminderDismissedAt, backupReminderInterval);
+    const { backupReminderInterval = '3d', lastBackupAt, backupReminderDismissedAt } = result.data ?? {};
+    const overdue = isBackupOverdue(lastBackupAt, backupReminderDismissedAt, backupReminderInterval);
 
-      setNeedsReminder(overdue);
+    setNeedsReminder(overdue);
 
-      if (!overdue || toastShownRef.current) {
-        return;
-      }
-
+    if (overdue && !dontShow && !toastShownRef.current) {
       toastShownRef.current = true;
+
       showToast({
         message: 'Time to back up your data',
         persistent: true,
         action: { label: 'View Backup', to: '/settings#export-restore' }
       });
+    }
+
+    return overdue;
+  }, [dontShow, getSettings, showToast]);
+
+  // Check on app init — runs once on mount
+  useEffect(() => {
+    if (dontShow) {
+      return;
+    }
+
+    const check = async () => {
+      await doBackupReminderCheck();
     };
 
     check();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dontShow]);
 
   // Re-check when PWA is brought back to the foreground
   useEffect(() => {
-    const doBackupReminderCheck = async () => {
-      const result = await getSettings();
-
-      if (!result.success) {
-        return;
-      }
-
-      const { backupReminderInterval = '3d', lastBackupAt, backupReminderDismissedAt } = result.data ?? {};
-
-      setNeedsReminder(isBackupOverdue(lastBackupAt, backupReminderDismissedAt, backupReminderInterval));
-    };
-
     const onVisible = async () => {
       if (document.visibilityState !== 'visible') {
         return;

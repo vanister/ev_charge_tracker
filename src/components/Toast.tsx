@@ -28,12 +28,15 @@ export function Toast({ id, message, variant, action, exiting, onDismiss }: Toas
     action?.onClick?.();
   };
 
+  const buttonLinkClasses =
+    'bg-primary hover:bg-primary-hover shrink-0 rounded-lg px-3 py-3 text-sm font-medium text-white transition-colors';
+
   return (
     <div
       role="alert"
       aria-live="polite"
       className={clsx(
-        'bg-surface border-default flex items-center gap-3 rounded-lg border px-4 py-6 shadow-lg',
+        'bg-surface border-default flex items-center gap-3 rounded-lg border px-4 py-5 shadow-lg',
         exiting ? 'animate-toast-out' : 'animate-toast-in'
       )}
     >
@@ -41,19 +44,11 @@ export function Toast({ id, message, variant, action, exiting, onDismiss }: Toas
       <p className="text-body flex-1 text-sm font-medium">{message}</p>
       {action &&
         (action.to ? (
-          <Link
-            to={action.to}
-            onClick={() => onDismiss(id)}
-            className="bg-primary hover:bg-primary-hover shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium text-white transition-colors"
-          >
+          <Link to={action.to} onClick={() => onDismiss(id)} className={buttonLinkClasses}>
             {action.label}
           </Link>
         ) : (
-          <button
-            type="button"
-            onClick={handleActionClick}
-            className="bg-primary hover:bg-primary-hover shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium text-white transition-colors"
-          >
+          <button type="button" onClick={handleActionClick} className={buttonLinkClasses}>
             {action.label}
           </button>
         ))}
