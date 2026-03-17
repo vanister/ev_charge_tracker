@@ -6,7 +6,9 @@ export function useScrollToHash() {
   const { hash } = useLocation();
 
   useEffect(() => {
-    if (!hash) return;
+    if (!hash) {
+      return;
+    }
 
     const id = hash.slice(1);
     const timer = setTimeout(() => {
