@@ -25,7 +25,7 @@ Refactor the code in context to follow these project rules:
 - Named functions only for standalone helpers/utilities in separate files
 - Arrow functions require parens, destructure objects
 - Single component per file
-- Logic in helpers/hooks, not in components
+- Move complex or business logic into helpers/hooks, not in components
 - No index barrel files, no re-exports
 
 ## Cleanup
