@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { clsx } from 'clsx';
 import { useSettings } from '../../hooks/useSettings';
 import { useBackupReminder } from '../../hooks/useBackupReminder';
+import { ButtonRow } from '../../components/ButtonRow';
 import { Icon } from '../../components/Icon';
 import { formatDistanceToNow } from '../../utilities/dateUtils';
 import { formatBackupReminderInterval } from '../../utilities/formatUtils';
@@ -46,20 +46,11 @@ export function BackupReminderSectionBody() {
           </p>
         </div>
       )}
-      <div className="flex gap-1.5">
-        {BACKUP_REMINDER_INTERVALS.map((interval) => (
-          <button
-            key={interval}
-            onClick={() => handleIntervalChange(interval)}
-            className={clsx('flex-1 rounded-md px-2 py-1.5 text-xs font-medium transition-colors', {
-              'bg-primary text-white': currentInterval === interval,
-              'bg-surface text-body-secondary hover:bg-primary/10': currentInterval !== interval
-            })}
-          >
-            {interval}
-          </button>
-        ))}
-      </div>
+      <ButtonRow
+        options={BACKUP_REMINDER_INTERVALS}
+        value={currentInterval}
+        onChange={(v) => handleIntervalChange(v as BackupReminderInterval)}
+      />
       <p className="text-body-secondary text-xs">
         Remind me to back up every {formatBackupReminderInterval(currentInterval)}
       </p>

@@ -1,23 +1,16 @@
 import { useUserPreferences } from '../../hooks/useUserPreferences';
 import { useToast } from '../../hooks/useToast';
-import { FormSelect } from '../../components/FormSelect';
+import { ButtonRow } from '../../components/ButtonRow';
 import { Button } from '../../components/Button';
 
-const RECENT_SESSIONS_LIMIT_OPTIONS = [
-  { value: '5', text: '5' },
-  { value: '10', text: '10' },
-  { value: '15', text: '15' },
-  { value: '25', text: '25' },
-  { value: '50', text: '50' },
-  { value: '100', text: '100' }
-];
+const RECENT_SESSIONS_LIMIT_OPTIONS = ['5', '10', '15', '25', '50', '100'] as const;
 
 export function PreferencesSectionBody() {
   const { preferences, updatePreferences, resetPreferences } = useUserPreferences();
   const { showToast } = useToast();
 
-  const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    updatePreferences({ recentSessionsLimit: +e.target.value });
+  const handleLimitChange = (value: string) => {
+    updatePreferences({ recentSessionsLimit: +value });
     showToast({ message: 'Preferences saved', variant: 'success' });
   };
 
@@ -36,13 +29,14 @@ export function PreferencesSectionBody() {
 
   return (
     <div className="space-y-4">
-      <FormSelect
-        id="recent-sessions-limit"
-        label="Recent sessions to show"
-        value={`${preferences.recentSessionsLimit}`}
-        options={RECENT_SESSIONS_LIMIT_OPTIONS}
-        onChange={handleLimitChange}
-      />
+      <div className="flex flex-col gap-2">
+        <p className="text-body text-sm font-medium">Recent sessions to show</p>
+        <ButtonRow
+          options={RECENT_SESSIONS_LIMIT_OPTIONS}
+          value={`${preferences.recentSessionsLimit}`}
+          onChange={handleLimitChange}
+        />
+      </div>
       <div className="flex justify-end">
         <Button variant="secondary" onClick={handleReset} className="w-32">
           Reset
