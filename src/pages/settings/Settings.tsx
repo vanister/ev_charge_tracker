@@ -1,4 +1,5 @@
 import { usePageConfig } from '../../hooks/usePageConfig';
+import { useScrollToHash } from '../../hooks/useScrollToHash';
 import { Section } from '../../components/Section';
 import { LocationsSectionBody } from './LocationsSection';
 import { PreferencesSectionBody } from './PreferencesSectionBody';
@@ -11,6 +12,7 @@ import { ThemeSectionBody } from './ThemeSectionBody';
 
 export function Settings() {
   usePageConfig('Settings');
+  useScrollToHash();
 
   return (
     <div className="bg-background px-4 py-6">
