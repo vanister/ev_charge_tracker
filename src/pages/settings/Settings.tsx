@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { usePageConfig } from '../../hooks/usePageConfig';
+import { useScrollToHash } from '../../hooks/useScrollToHash';
 import { Section } from '../../components/Section';
 import { LocationsSectionBody } from './LocationsSection';
 import { PreferencesSectionBody } from './PreferencesSectionBody';
@@ -10,21 +9,10 @@ import { AboutSectionBody } from './AboutSectionBody';
 import { ExportRestoreSectionBody } from './ExportRestoreSectionBody';
 import { BackupReminderSectionBody } from './BackupReminderSectionBody';
 import { ThemeSectionBody } from './ThemeSectionBody';
-import { PAGE_TRANSITION_DURATION } from '../../constants';
 
 export function Settings() {
   usePageConfig('Settings');
-
-  const { hash } = useLocation();
-
-  useEffect(() => {
-    if (!hash) return;
-    const id = hash.slice(1);
-    const timer = setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, PAGE_TRANSITION_DURATION);
-    return () => clearTimeout(timer);
-  }, [hash]);
+  useScrollToHash();
 
   return (
     <div className="bg-background px-4 py-6">
