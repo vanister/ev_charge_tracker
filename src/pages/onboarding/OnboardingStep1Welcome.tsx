@@ -12,7 +12,7 @@ type OnboardingStep1WelcomeProps = {
 
 export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
   const navigate = useNavigate();
-  const { getSettings } = useSettings();
+  const { getSettings, updateSettings } = useSettings();
   const [onboardingComplete, setOnboardingComplete] = useState(false);
   const [restoreError, setRestoreError] = useState<string | null>(null);
   const [isRestoring, setIsRestoring] = useState(false);
@@ -46,7 +46,10 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
         <RestoreBackupButton
           label="Restore from backup"
           skipConfirm={!onboardingComplete}
-          onSuccess={() => navigate('/', { replace: true })}
+          onSuccess={async () => {
+            await updateSettings({ lastBackupAt: Date.now() });
+            navigate('/', { replace: true });
+          }}
           onRestoreStart={() => setIsRestoring(true)}
           onError={(error) => {
             setIsRestoring(false);
