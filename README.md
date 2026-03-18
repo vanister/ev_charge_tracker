@@ -2,6 +2,8 @@
 
 An offline, mobile-optimized, Progressive Web App (PWA) for tracking electric vehicle charging sessions. All data is stored locally on your device using IndexedDB. No internet connection required after installation.
 
+**Live app**: [evchargetracker.vanister.workers.dev](https://evchargetracker.vanister.workers.dev)
+
 ## Features
 
 - **📱 Offline-First**: Works completely without an internet connection
@@ -12,9 +14,10 @@ An offline, mobile-optimized, Progressive Web App (PWA) for tracking electric ve
 - **📈 Charts & Analytics**: Bar chart of charge sessions over time (7d / 30d / 90d) with custom tooltips
 - **🔍 Filterable Sessions**: Collapsible filter panel with persistent open/closed state
 - **💾 Backup & Restore**: Export all data to JSON and restore from backup with version validation
+- **⏰ Backup Reminders**: Configurable reminders to prompt regular data backups
 - **⚙️ Preferences**: Configure recent session limit and other per-user settings
 - **🌓 Dark Mode**: Full dark/light theme support with smooth transitions
-- **🗄️ Local Storage**: All data stays on your device, no cloud sync
+- **🗄️ Local Storage**: All data stays on your device
 - **📲 Install as App**: Install directly from your browser, no app store needed
 - **🔔 Auto-Update**: Service worker update notification with one-tap reload
 
@@ -25,11 +28,15 @@ An offline, mobile-optimized, Progressive Web App (PWA) for tracking electric ve
 - **[TypeScript](https://www.typescriptlang.org/)** - Type safety
 - **[Dexie.js](https://dexie.org/)** - IndexedDB wrapper for offline-first storage
 - **[Tailwind CSS v4](https://tailwindcss.com/)** - Utility-first styling
-- **[Lucide React](https://lucide.dev/)** - Beautiful icon library
+- **[Lucide React](https://lucide.dev/)** - Icon library
 - **[React Router v7](https://reactrouter.com/)** - Client-side routing
+- **[Recharts](https://recharts.org/)** - Chart library
 - **[Immer](https://immerjs.github.io/immer/)** - Immutable state updates
+- **[Zod](https://zod.dev/)** - Schema validation
 - **[date-fns](https://date-fns.org/)** - Date utilities
+- **[react-error-boundary](https://github.com/bvaughn/react-error-boundary)** - Error boundary components
 - **[Vite PWA Plugin](https://vite-pwa-org.netlify.app/)** - Service worker generation
+- **[Cloudflare Workers / Wrangler](https://developers.cloudflare.com/workers/)** - Deployment
 
 ## Getting Started
 
@@ -59,40 +66,41 @@ Visit `http://localhost:5173` in your browser.
 # Build the app
 npm run build
 
-# Preview production build locally
+# Preview production build locally (requires Wrangler)
 npm run preview
-```
 
-The production build will be in the `dist/` directory, ready to deploy to any static hosting service.
+# Deploy to Cloudflare Workers
+npm run deploy
+```
 
 ## Project Structure
 
 ```
 src/
-├── components/       # Reusable UI components (Button, EmptyState, Icon, FormInput, etc.)
+├── components/       # Reusable UI components (Button, EmptyState, Icon, FormInput, Toast, etc.)
 ├── contexts/         # React context definitions
 ├── data/             # Database schema, types, constants, repositories
-├── helpers/          # Domain helpers (session, stats)
+├── helpers/          # Domain helpers (session, stats, chart, preference)
 ├── hooks/            # Custom React hooks
 ├── pages/            # Page components
-│   ├── dashboard/    # Dashboard, stats cards, recent sessions
-│   ├── layout/       # App shell (header, nav, drawer)
+│   ├── auth/         # OAuth callback handler
+│   ├── dashboard/    # Dashboard, stats cards, recent sessions, charts
+│   ├── layout/       # App shell (header, nav, bottom tab bar)
 │   ├── onboarding/   # 3-step onboarding wizard
 │   ├── sessions/     # Session list, form, details
-│   ├── settings/     # Settings, locations management
-│   ├── vehicles/     # Vehicle list, form, details
-│   └── ...
+│   ├── settings/     # Settings, locations, preferences, backup, theme
+│   └── vehicles/     # Vehicle list, form, details
 ├── providers/        # Context providers
 ├── types/            # Shared TypeScript types
-├── utilities/        # Pure utility functions
+├── utilities/        # Pure utility functions (auth, backup, PKCE, sync, date, format)
 └── App.tsx           # Root component and router
 ```
 
-## Development Status (100% complete — 54/54 core tasks)
+## Development Status
 
-### ✅ Completed
+### ✅ Complete (54/54 core tasks)
 
-- Setup & dependencies
+- Project setup and dependencies
 - Database schema with Dexie.js
 - Core data hooks (vehicles, sessions, locations, settings, stats, backup, preferences)
 - App initialization, routing, and layout shell
@@ -101,19 +109,36 @@ src/
 - Session logging and management (list, add, edit, delete, filterable with collapsible panel)
 - Vehicle management (list, add, edit, delete with safety checks)
 - Settings page with location management, preferences, storage info, and backup/restore
-- Dashboard page with stats cards, recent sessions, and charge sessions bar chart (Recharts)
+- Dashboard with stats cards, recent sessions, and charge sessions bar chart
 - PWA configuration, icons, and persistent storage request
 - Service worker update notification
 - Export/restore with JSON backup and database version validation
-- Build and deploy to static hosting
+- Backup reminder system
+- Build and deploy to Cloudflare Workers
 
-See [docs/tasks.md](docs/tasks.md) for the complete development roadmap.
+### 🚧 In Progress — Cloud Sync (2/4 modules)
+
+- **Auth Module** ✅ — PKCE OAuth flow (Google), token exchange, secure token storage
+- **Export/Import Module** ✅ — IDB serialization, schema versioning, restore logic
+- **Transport Module** ❌ — Cloud API communication (not started)
+- **UI & Orchestration** ❌ — Sync triggers, conflict resolution UI (not started)
+
+See [docs/sync-system-tasks.md](docs/sync-system-tasks.md) for the full sync implementation checklist.
+
+### Post-MVP Backlog
+
+- Vehicle image upload (custom photo instead of emoji)
+- More charts (monthly, yearly, custom range)
+
+See [docs/tasks.md](docs/tasks.md) for the complete task history.
 
 ## Documentation
 
 - **[Design Outline](docs/design-outline.md)** - High-level design and architecture
 - **[Technical Design](docs/technical-design.md)** - Detailed technical specifications
-- **[Tasks](docs/tasks.md)** - Development roadmap and task tracking
+- **[Sync System Design](docs/sync-system.md)** - Cloud sync architecture
+- **[Tasks](docs/tasks.md)** - Core development roadmap
+- **[Sync Tasks](docs/sync-system-tasks.md)** - Sync implementation checklist
 - **[Color Palette](docs/color-palette.md)** - Theme colors and design tokens
 
 ## Contributing
