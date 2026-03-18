@@ -2,7 +2,7 @@
 
 An offline, mobile-optimized, Progressive Web App (PWA) for tracking electric vehicle charging sessions. All data is stored locally on your device using IndexedDB. No internet connection required after installation.
 
-**Live app**: [evchargetracker.vanister.workers.dev](https://evchargetracker.vanister.workers.dev)
+**Live app**: [EV Charge Tracker](https://evchargetracker.vanister.workers.dev)
 
 ## Features
 
