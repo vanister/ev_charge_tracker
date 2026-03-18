@@ -83,7 +83,6 @@ src/
 ├── helpers/          # Domain helpers (session, stats, chart, preference)
 ├── hooks/            # Custom React hooks
 ├── pages/            # Page components
-│   ├── auth/         # OAuth callback handler
 │   ├── dashboard/    # Dashboard, stats cards, recent sessions, charts
 │   ├── layout/       # App shell (header, nav, bottom tab bar)
 │   ├── onboarding/   # 3-step onboarding wizard
@@ -92,7 +91,7 @@ src/
 │   └── vehicles/     # Vehicle list, form, details
 ├── providers/        # Context providers
 ├── types/            # Shared TypeScript types
-├── utilities/        # Pure utility functions (auth, backup, PKCE, sync, date, format)
+├── utilities/        # Pure utility functions (backup, date, format, etc.)
 └── App.tsx           # Root component and router
 ```
 
@@ -116,15 +115,6 @@ src/
 - Backup reminder system
 - Build and deploy to Cloudflare Workers
 
-### 🚧 In Progress — Cloud Sync (2/4 modules)
-
-- **Auth Module** ✅ — PKCE OAuth flow (Google), token exchange, secure token storage
-- **Export/Import Module** ✅ — IDB serialization, schema versioning, restore logic
-- **Transport Module** ❌ — Cloud API communication (not started)
-- **UI & Orchestration** ❌ — Sync triggers, conflict resolution UI (not started)
-
-See [docs/sync-system-tasks.md](docs/sync-system-tasks.md) for the full sync implementation checklist.
-
 ### Post-MVP Backlog
 
 - Vehicle image upload (custom photo instead of emoji)
@@ -136,9 +126,7 @@ See [docs/tasks.md](docs/tasks.md) for the complete task history.
 
 - **[Design Outline](docs/design-outline.md)** - High-level design and architecture
 - **[Technical Design](docs/technical-design.md)** - Detailed technical specifications
-- **[Sync System Design](docs/sync-system.md)** - Cloud sync architecture
-- **[Tasks](docs/tasks.md)** - Core development roadmap
-- **[Sync Tasks](docs/sync-system-tasks.md)** - Sync implementation checklist
+- **[Tasks](docs/tasks.md)** - Development roadmap
 - **[Color Palette](docs/color-palette.md)** - Theme colors and design tokens
 
 ## Contributing
