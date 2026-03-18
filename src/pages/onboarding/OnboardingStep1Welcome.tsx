@@ -27,6 +27,11 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
     load();
   }, [getSettings]);
 
+  const handleRestoreSuccess = async () => {
+    await updateSettings({ lastBackupAt: Date.now() });
+    navigate('/', { replace: true });
+  };
+
   return (
     <div className="text-center">
       <OnboardingHeader
@@ -46,10 +51,7 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
         <RestoreBackupButton
           label="Restore from backup"
           skipConfirm={!onboardingComplete}
-          onSuccess={async () => {
-            await updateSettings({ lastBackupAt: Date.now() });
-            navigate('/', { replace: true });
-          }}
+          onSuccess={handleRestoreSuccess}
           onRestoreStart={() => setIsRestoring(true)}
           onError={(error) => {
             setIsRestoring(false);
