@@ -24,8 +24,9 @@ export function ExportRestoreSectionBody() {
     showToast({ message: 'Backup exported successfully.', variant: 'success' });
   };
 
-  const handleRestoreSuccess = () => {
+  const handleRestoreSuccess = async () => {
     setIsRestoring(false);
+    await updateSettings({ lastBackupAt: Date.now() });
     showToast({ message: 'Restore completed successfully.', variant: 'success' });
     location.reload();
   };
