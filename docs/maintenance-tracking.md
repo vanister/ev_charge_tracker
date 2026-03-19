@@ -6,7 +6,7 @@
 
 Add a maintenance and service record log to the app, allowing users to track scheduled and completed vehicle servicing (tire rotations, brake checks, inspections, software updates, etc.) alongside their charging history.
 
-Records are associated to a specific vehicle. The feature lives at its own root route (`/maintenance`) that is accessible from the dashboard but is not part of the bottom tab bar navigation.
+Records are associated to a specific vehicle. The feature lives under the `/vehicles` route, scoped to a single vehicle at a time, and is accessible from the dashboard but is not part of the bottom tab bar navigation.
 
 ---
 
@@ -71,7 +71,7 @@ Indexed by `[vehicleId+servicedAt]` for efficient per-vehicle listing sorted by 
 
 ## 3. File Structure
 
-Mirrors the sessions page structure exactly.
+Mirrors the sessions page structure. Lives under `src/pages/maintenance/` co-located with its own logic, but mounted under the `/vehicles` router path.
 
 ```
 src/
@@ -83,8 +83,8 @@ src/
 │   └── maintenance/
 │       ├── maintenance-types.ts          # MaintenanceFormData, MaintenanceInputData
 │       ├── maintenanceFormHelpers.ts     # buildInputData, getDefaultDateTime
-│       ├── MaintenanceList.tsx           # /maintenance — list page
-│       ├── MaintenanceDetails.tsx        # /maintenance/add and /maintenance/:id/edit
+│       ├── MaintenanceList.tsx           # /vehicles/:vehicleId/maintenance — list page
+│       ├── MaintenanceDetails.tsx        # /vehicles/:vehicleId/maintenance/add and .../maintenance/:id/edit
 │       ├── MaintenanceForm.tsx           # Reusable form component
 │       ├── MaintenanceItem.tsx           # Individual record row/card
 │       ├── MaintenanceItemActions.tsx    # Edit / delete inline actions
@@ -127,22 +127,24 @@ type MaintenanceInputData = {
 
 ## 4. Routing
 
-Maintenance lives inside the `Layout` wrapper (gets `AppHeader` + `BottomTabBar`) but is **not** registered in `BottomTabBar`'s `TABS` array. Access is via dashboard only.
+Maintenance is nested under `/vehicles/:vehicleId`, scoping all records to a single vehicle per page load. It lives inside the `Layout` wrapper but is **not** registered in `BottomTabBar`'s `TABS` array.
 
 ```
 Layout
-├── /maintenance                MaintenanceList        (tab bar visible)
-├── /maintenance/add            MaintenanceDetails     (tab bar hidden)
-└── /maintenance/:id/edit       MaintenanceDetails     (tab bar hidden)
+├── /vehicles/:vehicleId/maintenance            MaintenanceList        (tab bar visible)
+├── /vehicles/:vehicleId/maintenance/add        MaintenanceDetails     (tab bar hidden)
+└── /vehicles/:vehicleId/maintenance/:id/edit   MaintenanceDetails     (tab bar hidden)
 ```
 
-Add to `src/router.tsx` alongside existing protected routes:
+Add to `src/router.tsx` alongside existing vehicle routes:
 
 ```typescript
-{ path: '/maintenance',          element: <MaintenanceList /> },
-{ path: '/maintenance/add',      element: <MaintenanceDetails /> },
-{ path: '/maintenance/:id/edit', element: <MaintenanceDetails /> },
+{ path: '/vehicles/:vehicleId/maintenance',          element: <MaintenanceList /> },
+{ path: '/vehicles/:vehicleId/maintenance/add',      element: <MaintenanceDetails /> },
+{ path: '/vehicles/:vehicleId/maintenance/:id/edit', element: <MaintenanceDetails /> },
 ```
+
+`vehicleId` is read from `useParams()` in both `MaintenanceList` and `MaintenanceDetails` — it is the source of truth for which vehicle the records belong to. The form does not expose a vehicle selector field.
 
 `MaintenanceDetails` calls `usePageConfig('Add Service Record', true)` or `usePageConfig('Edit Service Record', true)` to hide the tab bar — matching the pattern of `SessionDetails` and `VehicleDetails`.
 
@@ -188,39 +190,46 @@ Add a `MaintenanceSummaryCard` component to the dashboard (below the charging st
 - Count of service records for the currently filtered vehicle (or all vehicles if no filter)
 - The most recent service type and date
 
-The card uses `DashboardStatCard` with an action:
+The card uses `DashboardStatCard` with an action. Since maintenance is now scoped per vehicle, the action navigates to the last used (or currently filtered) vehicle's maintenance page:
 
 ```tsx
 <DashboardStatCard
   label="Last Service"
   value={lastServiceLabel}     // e.g. "Tire Rotation · 12 days ago"
   icon="wrench"
-  action={{ label: 'View all →', onClick: () => navigate('/maintenance') }}
+  action={{
+    label: 'View all →',
+    onClick: () => navigate(`/vehicles/${activeVehicleId}/maintenance`),
+  }}
 />
 ```
 
-If no records exist, `value` is `"No records yet"` and the action label is `"Add first record →"`.
+`activeVehicleId` is resolved from the dashboard's current vehicle filter, falling back to `preferences.lastVehicleId`. If neither is available (no vehicles yet), the card is omitted from the dashboard entirely.
+
+If no records exist for the active vehicle, `value` is `"No records yet"` and the action label is `"Add first record →"`.
 
 ---
 
 ## 6. UI & UX
 
-### MaintenanceList (`/maintenance`)
+### MaintenanceList (`/vehicles/:vehicleId/maintenance`)
 
 - Page title: `"Maintenance"` via `usePageConfig('Maintenance', false)`
-- Filter bar: vehicle selector (reuse `SessionsFilter` vehicle dropdown pattern)
+- No vehicle filter — scope is fixed to the `:vehicleId` URL param
+- Vehicle name displayed in a sub-heading or breadcrumb for context (e.g. `"Tesla Model 3"`)
 - Records grouped by year-month (e.g. `"March 2026"`), newest first
 - Each `MaintenanceItem` shows: type label + icon, description, date, optional cost + mileage
-- FAB or header button: `"+ Add Record"` → navigates to `/maintenance/add`
+- FAB or header button: `"+ Add Record"` → navigates to `/vehicles/:vehicleId/maintenance/add`
 - Empty state: `MaintenanceEmptyState` with prompt to log first record
 
-### MaintenanceDetails (`/maintenance/add`, `/maintenance/:id/edit`)
+### MaintenanceDetails (`/vehicles/:vehicleId/maintenance/add`, `.../maintenance/:id/edit`)
+
+`vehicleId` is sourced from `useParams()` — the form has no vehicle selector.
 
 Form fields (in order):
 
 | Field            | Input type         | Required |
 |------------------|--------------------|----------|
-| Vehicle          | Select             | Yes      |
 | Service type     | Select (enum)      | Yes      |
 | Description      | Text               | Yes      |
 | Date of service  | `datetime-local`   | Yes      |
@@ -231,9 +240,9 @@ Form fields (in order):
 | Next due mileage | Number (integer)   | No       |
 | Notes            | Textarea           | No       |
 
-- Vehicle pre-fills from `preferences.lastVehicleId` (same as session form)
 - Date of service defaults to current datetime
 - `FormFooter` with Save / Cancel buttons (same pattern as `SessionDetails`)
+- Cancel navigates back to `/vehicles/:vehicleId/maintenance`
 
 ---
 
@@ -250,7 +259,7 @@ Form fields (in order):
 
 | Decision | Choice | Rationale |
 |---|---|---|
-| Access route | Dashboard card only (not tab bar) | Maintenance is less frequent than charging; keeps tab bar focused |
+| Access route | Under `/vehicles/:vehicleId/maintenance` (not tab bar) | Natural ownership — maintenance belongs to a vehicle; keeps tab bar focused |
 | Data relationship | One record → one vehicle | Mirrors sessions; maintenance is always vehicle-specific |
 | Cost storage | Integer cents | Consistent with `ChargingSession.costCents`; avoids float precision issues |
 | Dashboard entry point | New stat card with action prop | Extends existing `DashboardStatCard` cleanly; no new layout components |
