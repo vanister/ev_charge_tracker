@@ -127,7 +127,7 @@ type MaintenanceInputData = {
 
 ## 4. Routing
 
-Maintenance is nested under `/vehicles/:vehicleId`, scoping all records to a single vehicle per page load. It lives inside the `Layout` wrapper but is **not** registered in `BottomTabBar`'s `TABS` array.
+Maintenance is nested under `/vehicles/:vehicleId`, scoping all records to a single vehicle per page load. It lives inside the `Layout` wrapper but is **not** registered in `BottomTabBar`'s `TABS` array. Because `BottomTabBar` uses `currentPath.startsWith(tab.path)` for active state, the Vehicles tab stays highlighted automatically on all maintenance routes.
 
 ```
 Layout
