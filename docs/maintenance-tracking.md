@@ -212,6 +212,24 @@ If no records exist for the active vehicle, `value` is `"No records yet"` and th
 
 ## 6. UI & UX
 
+### VehicleItem entry point
+
+Add a wrench icon `Link` to `VehicleItem` alongside the existing edit and delete actions:
+
+```tsx
+<Link
+  to={`/vehicles/${vehicle.id}/maintenance`}
+  className="text-body-secondary hover:text-body hover:bg-background rounded-lg p-2 transition-colors"
+  aria-label="View maintenance records"
+>
+  <Icon name="wrench" size="sm" />
+</Link>
+```
+
+Action order: **wrench → edit → delete**. No other changes to `VehicleItem`.
+
+---
+
 ### MaintenanceList (`/vehicles/:vehicleId/maintenance`)
 
 - Page title: `"Maintenance"` via `usePageConfig('Maintenance', false)`
@@ -260,6 +278,7 @@ Form fields (in order):
 | Decision | Choice | Rationale |
 |---|---|---|
 | Access route | Under `/vehicles/:vehicleId/maintenance` (not tab bar) | Natural ownership — maintenance belongs to a vehicle; keeps tab bar focused |
+| Entry points | Wrench icon on `VehicleItem` (primary) + dashboard stat card (secondary) | Vehicle list is the natural place to discover per-vehicle actions; dashboard provides a quick summary shortcut |
 | Data relationship | One record → one vehicle | Mirrors sessions; maintenance is always vehicle-specific |
 | Cost storage | Integer cents | Consistent with `ChargingSession.costCents`; avoids float precision issues |
 | Dashboard entry point | New stat card with action prop | Extends existing `DashboardStatCard` cleanly; no new layout components |
