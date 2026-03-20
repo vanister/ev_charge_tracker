@@ -1,6 +1,6 @@
 # Feature Design: Maintenance & Service Tracking
 
-**Status: Draft** — See [tasks.md](./tasks.md) for implementation tracking.
+**Status: Draft** — See [maintenance-tasks.md](./maintenance-tasks.md) for implementation tracking.
 
 ## 1. Objective
 
@@ -190,16 +190,18 @@ This prop is optional and backward-compatible — existing stat cards remain unc
 
 ### 5b. Maintenance Summary on Dashboard
 
-Add a `MaintenanceSummaryCard` component to the dashboard (below the charging stats grid). It shows:
-- Count of service records for the currently filtered vehicle (or all vehicles if no filter)
-- The most recent service type and date
+Add two `DashboardStatCard` instances to the dashboard below the charging stats grid, rendered side-by-side in the same 2-column grid to keep the layout balanced. Both cards are scoped to the active vehicle and omitted entirely when no vehicles exist.
 
-The card uses `DashboardStatCard` with an action. Since maintenance is now scoped per vehicle, the action navigates to the last used (or currently filtered) vehicle's maintenance page:
+`activeVehicleId` is resolved from the dashboard's current vehicle filter, falling back to `preferences.lastVehicleId`.
+
+**Card 1 — Last Service**
+
+Shows the most recent service type. Action navigates to the vehicle's maintenance list:
 
 ```tsx
 <DashboardStatCard
   label="Last Service"
-  value={lastServiceLabel}     // e.g. "Tire Rotation · 12 days ago"
+  value={lastServiceLabel}     // e.g. "Tire Rotation" or "No records yet"
   icon="wrench"
   action={{
     label: 'View all →',
@@ -208,9 +210,23 @@ The card uses `DashboardStatCard` with an action. Since maintenance is now scope
 />
 ```
 
-`activeVehicleId` is resolved from the dashboard's current vehicle filter, falling back to `preferences.lastVehicleId`. If neither is available (no vehicles yet), the card is omitted from the dashboard entirely.
+If no records exist, `value` is `"No records yet"` and the action label is `"Add first record →"`.
 
-If no records exist for the active vehicle, `value` is `"No records yet"` and the action label is `"Add first record →"`.
+**Card 2 — Last Serviced**
+
+Shows the date of the most recent service record:
+
+```tsx
+<DashboardStatCard
+  label="Last Serviced"
+  value={lastServicedDate}     // e.g. "Mar 8, 2026" or "—"
+  icon="calendar"
+/>
+```
+
+`value` is formatted with `date-fns` (`MMM d, yyyy`). When no records exist, `value` is `"—"`. No action prop on this card.
+
+Both cards are wrapped in a shared `MaintenanceSummaryCard` component that queries the records once and renders both `DashboardStatCard` instances.
 
 ---
 
