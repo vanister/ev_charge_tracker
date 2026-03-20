@@ -70,13 +70,13 @@ Implementation tasks for the [Maintenance & Service Tracking](./maintenance-trac
   - Render a small text button below the stat value when `action` is provided
   - Must be backward-compatible — existing cards unchanged
 - [ ] 12. Create `MaintenanceSummaryCard.tsx` in `src/pages/dashboard/`
-  - Uses `DashboardStatCard` with `icon="wrench"`
-  - Shows count of records and most recent service type + date for the active vehicle
+  - Queries maintenance records once for the active vehicle and renders two side-by-side `DashboardStatCard` instances
   - `activeVehicleId` resolved from dashboard vehicle filter, falling back to `preferences.lastVehicleId`
-  - Omit card entirely when no vehicles exist
-  - `value="No records yet"` and action label `"Add first record →"` when no records for active vehicle
+  - Omit both cards entirely when no vehicles exist
+  - **Card 1 — Last Service** (`icon="wrench"`): shows most recent service type; action navigates to the vehicle's maintenance list; `value="No records yet"` and action label `"Add first record →"` when empty
+  - **Card 2 — Last Serviced** (`icon="calendar"`): shows date of most recent record formatted as `MMM d, yyyy` via `date-fns`; `value="—"` when empty; no action prop
 - [ ] 13. Add `MaintenanceSummaryCard` to the Dashboard page
-  - Position below the charging stats grid
+  - Position below the charging stats grid in its own 2-column grid row
   - Pass `activeVehicleId` and navigate action
 
 ### Phase 5 - Vehicle Entry Point
