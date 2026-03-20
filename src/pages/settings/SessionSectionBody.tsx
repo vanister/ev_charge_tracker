@@ -4,7 +4,7 @@ import { ButtonRow } from '../../components/ButtonRow';
 
 const RECENT_SESSIONS_LIMIT_OPTIONS = ['5', '10', '15', '25', '50', '100'] as const;
 
-export function PreferencesSectionBody() {
+export function SessionSectionBody() {
   const { preferences, updatePreferences } = useUserPreferences();
   const { showToast } = useToast();
 
