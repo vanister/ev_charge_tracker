@@ -7,7 +7,8 @@ import type {
   SettingsSchema,
   SystemConfigSchema,
   ProviderConfigSchema,
-  OAuthTokensSchema
+  OAuthTokensSchema,
+  MaintenanceRecordSchema
 } from './schemas';
 
 export type ActiveState = 0 | 1;
@@ -19,6 +20,7 @@ export type Settings = z.infer<typeof SettingsSchema>;
 export type SystemConfig = z.infer<typeof SystemConfigSchema>;
 export type ProviderConfig = z.infer<typeof ProviderConfigSchema>;
 export type OAuthTokens = z.infer<typeof OAuthTokensSchema>;
+export type MaintenanceRecord = z.infer<typeof MaintenanceRecordSchema>;
 
 export type EvChargTrackerDb = Dexie & {
   vehicles: EntityTable<Vehicle, 'id'>;
@@ -26,4 +28,5 @@ export type EvChargTrackerDb = Dexie & {
   settings: EntityTable<Settings, 'key'>;
   locations: EntityTable<Location, 'id'>;
   systemConfig: EntityTable<SystemConfig, 'key'>;
+  maintenanceRecords: EntityTable<MaintenanceRecord, 'id'>;
 };

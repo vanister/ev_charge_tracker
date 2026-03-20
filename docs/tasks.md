@@ -19,6 +19,30 @@
 
 ## TODO
 
+### Maintenance Tracking
+
+- [x] 1. Data layer — `MaintenanceRecord` schema, types, DB version, CRUD hook
+  - `MaintenanceRecordSchema` in `schemas.ts`
+  - `MaintenanceRecord` type and `EvChargTrackerDb.maintenanceRecords` table in `data-types.ts`
+  - `db.version(3)` with `maintenanceRecords` store in `db.ts`
+  - `useMaintenanceRecords` hook with full CRUD
+  - `maintenanceRecords` added to backup schema
+- [ ] 2. Maintenance list page (`/maintenance`)
+  - List all maintenance records across all vehicles, sorted by `performedAt` desc
+  - Show vehicle name, service type, date, cost, odometer
+  - Empty state when no records exist
+  - Link to add a new record
+- [ ] 3. Maintenance detail page (`/maintenance/add`, `/maintenance/:id/edit`)
+  - Form for creating and editing maintenance records
+  - Fields: vehicle (select), service type, date, odometer (optional), cost (optional), notes (optional)
+  - Validate required fields before save
+- [ ] 4. Wire maintenance into routing and navigation
+  - Add `/maintenance` routes to `router.tsx`
+  - Add Maintenance link to the main nav in the Layout
+- [ ] 5. Vehicle page integration
+  - Show a summary of recent maintenance on the vehicle detail page
+  - Delete maintenance records when a vehicle is deleted
+
 ### Post-MVP
 
 - [ ] 1. Support vehicle image upload

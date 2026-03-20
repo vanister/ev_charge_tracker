@@ -1,6 +1,6 @@
 import { failure, success } from './resultUtils';
 import type { Result } from './resultUtils';
-import type { ChargingSession, EvChargTrackerDb, Location, Settings, Vehicle } from '../data/data-types';
+import type { ChargingSession, EvChargTrackerDb, Location, MaintenanceRecord, Settings, Vehicle } from '../data/data-types';
 import type { BackupFile } from '../pages/settings/settings-types';
 import { BACKUP_FILE_VERSION } from '../data/constants';
 import { BackupFileSchema } from '../data/backup-schema';
@@ -8,11 +8,12 @@ import { BACKUP_REMINDER_INTERVAL_MS, type BackupReminderInterval } from '../con
 
 export async function exportBackup(db: EvChargTrackerDb): Promise<Result<BackupFile>> {
   try {
-    const [vehicles, sessions, locations, settings] = await Promise.all([
+    const [vehicles, sessions, locations, settings, maintenanceRecords] = await Promise.all([
       db.vehicles.toArray(),
       db.sessions.toArray(),
       db.locations.toArray(),
-      db.settings.toArray()
+      db.settings.toArray(),
+      db.maintenanceRecords.toArray()
     ]);
 
     return success({
@@ -23,7 +24,8 @@ export async function exportBackup(db: EvChargTrackerDb): Promise<Result<BackupF
         { store: 'vehicles' as const, records: vehicles },
         { store: 'sessions' as const, records: sessions },
         { store: 'locations' as const, records: locations },
-        { store: 'settings' as const, records: settings }
+        { store: 'settings' as const, records: settings },
+        { store: 'maintenanceRecords' as const, records: maintenanceRecords }
       ]
     });
   } catch (err) {
@@ -64,15 +66,22 @@ export async function restoreBackup(db: EvChargTrackerDb, backup: BackupFile): P
   };
 
   try {
-    const tables = [db.vehicles, db.sessions, db.locations, db.settings];
+    const tables = [db.vehicles, db.sessions, db.locations, db.settings, db.maintenanceRecords];
 
     await db.transaction('rw', tables, async () => {
-      await Promise.all([db.vehicles.clear(), db.sessions.clear(), db.locations.clear(), db.settings.clear()]);
+      await Promise.all([
+        db.vehicles.clear(),
+        db.sessions.clear(),
+        db.locations.clear(),
+        db.settings.clear(),
+        db.maintenanceRecords.clear()
+      ]);
       await Promise.all([
         db.vehicles.bulkAdd(getRecords<Vehicle>('vehicles')),
         db.sessions.bulkAdd(getRecords<ChargingSession>('sessions')),
         db.locations.bulkAdd(getRecords<Location>('locations')),
-        db.settings.bulkAdd(getRecords<Settings>('settings'))
+        db.settings.bulkAdd(getRecords<Settings>('settings')),
+        db.maintenanceRecords.bulkAdd(getRecords<MaintenanceRecord>('maintenanceRecords'))
       ]);
     });
 
