@@ -71,7 +71,7 @@ Indexed by `[vehicleId+servicedAt]` for efficient per-vehicle listing sorted by 
 
 ## 3. File Structure
 
-Mirrors the sessions page structure. Lives under `src/pages/maintenance/` co-located with its own logic, but mounted under the `/vehicles` router path.
+Mirrors the sessions page structure. Co-located under `src/pages/vehicles/maintenance/` to mirror the app's route hierarchy — maintenance is a sub-feature of vehicles, not a standalone section.
 
 ```
 src/
@@ -80,15 +80,16 @@ src/
 ├── helpers/
 │   └── maintenanceHelpers.ts             # groupRecordsByDate, createTypeLabel, sortRecords
 ├── pages/
-│   └── maintenance/
-│       ├── maintenance-types.ts          # MaintenanceFormData, MaintenanceInputData
-│       ├── maintenanceFormHelpers.ts     # buildInputData, getDefaultDateTime
-│       ├── MaintenanceList.tsx           # /vehicles/:vehicleId/maintenance — list page
-│       ├── MaintenanceDetails.tsx        # /vehicles/:vehicleId/maintenance/add and .../maintenance/:id/edit
-│       ├── MaintenanceForm.tsx           # Reusable form component
-│       ├── MaintenanceItem.tsx           # Individual record row/card
-│       ├── MaintenanceItemActions.tsx    # Edit / delete inline actions
-│       └── MaintenanceEmptyState.tsx     # Empty state for no records
+│   └── vehicles/
+│       └── maintenance/
+│           ├── maintenance-types.ts          # MaintenanceFormData, MaintenanceRecord
+│           ├── maintenanceFormHelpers.ts     # buildRecord, getDefaultDateTime
+│           ├── MaintenanceList.tsx           # /vehicles/:vehicleId/maintenance — list page
+│           ├── MaintenanceDetails.tsx        # /vehicles/:vehicleId/maintenance/add and .../maintenance/:id/edit
+│           ├── MaintenanceForm.tsx           # Reusable form component
+│           ├── MaintenanceItem.tsx           # Individual record row/card
+│           ├── MaintenanceItemActions.tsx    # Edit / delete inline actions
+│           └── MaintenanceEmptyState.tsx     # Empty state for no records
 ```
 
 ### Type Conventions (`maintenance-types.ts`)
@@ -109,7 +110,10 @@ type MaintenanceFormData = {
 };
 
 // Validated, ready-to-persist shape
-type MaintenanceInputData = {
+// NOTE: Rename all "InputData" types used for Dexie persistence to "Record" (e.g. MaintenanceRecord).
+// "InputData" implies a transient/form shape; "Record" correctly signals it is the stored entity.
+// Apply this convention to any existing InputData types across the codebase when encountered.
+type MaintenanceRecord = {
   vehicleId: string;
   type: MaintenanceType;
   description: string;
