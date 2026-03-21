@@ -179,7 +179,7 @@ describe('readBackupFile', () => {
 });
 
 describe('exportBackup', () => {
-  it('returns a BackupFile with the correct shape', async () => {
+  it('returns a BackupFile with all 5 stores including maintenanceRecords', async () => {
     const db = makeDb({
       vehicles: {
         toArray: vi
