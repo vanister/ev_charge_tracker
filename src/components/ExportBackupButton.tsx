@@ -36,7 +36,7 @@ export function ExportBackupButton(props: ExportBackupButtonProps) {
     const a = document.createElement('a');
 
     a.href = url;
-    a.download = `${date}-${BACKUP_FILE_NAME}`;
+    a.download = `${date}-v${result.data.dbVersion}-${BACKUP_FILE_NAME}`;
     a.click();
 
     URL.revokeObjectURL(url);

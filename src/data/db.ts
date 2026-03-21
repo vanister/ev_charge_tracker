@@ -14,3 +14,7 @@ db.version(1).stores({
 db.version(2).stores({
   systemConfig: 'key'
 });
+
+db.version(3).stores({
+  maintenanceRecords: 'id, vehicleId, performedAt, [vehicleId+performedAt]'
+});

@@ -34,7 +34,7 @@ class ErrorFileReader {
 }
 
 const makeDb = (overrides: Record<string, unknown> = {}) => ({
-  verno: 2,
+  verno: 3,
   vehicles: {
     toArray: vi.fn().mockResolvedValue([]),
     clear: vi.fn().mockResolvedValue(undefined),
@@ -51,6 +51,11 @@ const makeDb = (overrides: Record<string, unknown> = {}) => ({
     bulkAdd: vi.fn().mockResolvedValue(undefined)
   },
   settings: {
+    toArray: vi.fn().mockResolvedValue([]),
+    clear: vi.fn().mockResolvedValue(undefined),
+    bulkAdd: vi.fn().mockResolvedValue(undefined)
+  },
+  maintenanceRecords: {
     toArray: vi.fn().mockResolvedValue([]),
     clear: vi.fn().mockResolvedValue(undefined),
     bulkAdd: vi.fn().mockResolvedValue(undefined)
@@ -174,7 +179,7 @@ describe('readBackupFile', () => {
 });
 
 describe('exportBackup', () => {
-  it('returns a BackupFile with the correct shape', async () => {
+  it('returns a BackupFile with all 5 stores including maintenanceRecords', async () => {
     const db = makeDb({
       vehicles: {
         toArray: vi
@@ -191,7 +196,7 @@ describe('exportBackup', () => {
     expect(typeof result.data.fileVersion).toBe('number');
     expect(typeof result.data.timestamp).toBe('number');
     expect(Array.isArray(result.data.data)).toBe(true);
-    expect(result.data.data).toHaveLength(4);
+    expect(result.data.data).toHaveLength(5);
   });
 
   it('returns failure when the db throws', async () => {
@@ -206,17 +211,17 @@ describe('exportBackup', () => {
 });
 
 describe('restoreBackup', () => {
-  it('returns failure when backup dbVersion does not match db.verno', async () => {
-    // Fixture has dbVersion: 2; db.verno: 1 — mismatch
+  it('returns failure when backup dbVersion is newer than db.verno', async () => {
+    // Fixture has dbVersion: 2; db.verno: 1 — backup is newer, should fail
     const db = makeDb({ verno: 1 });
     const result = await restoreBackup(db as unknown as EvChargTrackerDb, BACKUP_FIXTURE as unknown as BackupFile);
     expect(result.success).toBe(false);
     if (result.success) return;
-    expect(result.error).toMatch(/version/i);
+    expect(result.error).toMatch(/newer version/i);
   });
 
-  it('clears all stores and bulk-adds records on version match', async () => {
-    const db = makeDb(); // verno: 2 matches fixture dbVersion: 2
+  it('clears all stores and bulk-adds records when versions match', async () => {
+    const db = makeDb({ verno: 2 }); // matches fixture dbVersion: 2
     const result = await restoreBackup(db as unknown as EvChargTrackerDb, BACKUP_FIXTURE as unknown as BackupFile);
     expect(result.success).toBe(true);
     expect(db.vehicles.clear).toHaveBeenCalled();
@@ -227,6 +232,15 @@ describe('restoreBackup', () => {
     expect(db.sessions.bulkAdd).toHaveBeenCalled();
     expect(db.locations.bulkAdd).toHaveBeenCalled();
     expect(db.settings.bulkAdd).toHaveBeenCalled();
+  });
+
+  it('succeeds restoring an older backup into a newer db version', async () => {
+    // v2 fixture into v3 db — maintenanceRecords missing from backup, restored as empty
+    const db = makeDb(); // verno: 3
+    const result = await restoreBackup(db as unknown as EvChargTrackerDb, BACKUP_FIXTURE as unknown as BackupFile);
+    expect(result.success).toBe(true);
+    expect(db.maintenanceRecords.clear).toHaveBeenCalled();
+    expect(db.maintenanceRecords.bulkAdd).toHaveBeenCalledWith([]);
   });
 
   it('returns failure when the transaction throws', async () => {

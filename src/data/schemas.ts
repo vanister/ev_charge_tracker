@@ -56,6 +56,17 @@ export const SettingsSchema = z.object({
   backupReminderDismissedAt: z.number().optional()
 });
 
+export const MaintenanceRecordSchema = z.object({
+  id: z.string(),
+  vehicleId: z.string(),
+  serviceType: z.string(),
+  performedAt: z.number(),
+  odometer: z.number().int().optional(),
+  costCents: z.number().int().optional(),
+  notes: z.string().optional(),
+  createdAt: z.number()
+});
+
 export const ProviderConfigSchema = z.object({
   provider: OAuthProviderSchema,
   clientId: z.string()
