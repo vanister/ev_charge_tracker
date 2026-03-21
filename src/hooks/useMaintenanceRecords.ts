@@ -13,13 +13,9 @@ export function useMaintenanceRecords() {
   const getMaintenanceRecordList = useCallback(
     async (vehicleId?: string): Promise<Result<MaintenanceRecord[]>> => {
       try {
-        let results: MaintenanceRecord[];
-
-        if (vehicleId) {
-          results = await db.maintenanceRecords.where('vehicleId').equals(vehicleId).reverse().sortBy('performedAt');
-        } else {
-          results = await db.maintenanceRecords.orderBy('performedAt').reverse().toArray();
-        }
+        const results = vehicleId
+          ? await db.maintenanceRecords.where('vehicleId').equals(vehicleId).reverse().sortBy('performedAt')
+          : await db.maintenanceRecords.orderBy('performedAt').reverse().toArray();
 
         return success(results);
       } catch (err) {
