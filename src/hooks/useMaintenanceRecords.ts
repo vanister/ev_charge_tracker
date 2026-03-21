@@ -14,8 +14,8 @@ export function useMaintenanceRecords() {
     async (vehicleId?: string): Promise<Result<MaintenanceRecord[]>> => {
       try {
         const results = vehicleId
-          ? await db.maintenanceRecords.where('vehicleId').equals(vehicleId).reverse().sortBy('performedAt')
-          : await db.maintenanceRecords.orderBy('performedAt').reverse().toArray();
+          ? await db.maintenanceRecords.where('vehicleId').equals(vehicleId).reverse().sortBy('servicedAt')
+          : await db.maintenanceRecords.orderBy('servicedAt').reverse().toArray();
 
         return success(results);
       } catch (err) {

@@ -56,13 +56,32 @@ export const SettingsSchema = z.object({
   backupReminderDismissedAt: z.number().optional()
 });
 
+export const MAINTENANCE_TYPES = [
+  'tire_rotation',
+  'tire_replacement',
+  'brake_service',
+  'battery_service',
+  'software_update',
+  'inspection',
+  'cabin_filter',
+  'wiper_replacement',
+  'coolant_service',
+  'other'
+] as const;
+
+export type MaintenanceType = (typeof MAINTENANCE_TYPES)[number];
+
 export const MaintenanceRecordSchema = z.object({
   id: z.string(),
   vehicleId: z.string(),
-  serviceType: z.string(),
-  performedAt: z.number(),
-  odometer: z.number().int().optional(),
+  type: z.enum(MAINTENANCE_TYPES),
+  description: z.string(),
   costCents: z.number().int().optional(),
+  mileage: z.number().int().optional(),
+  serviceProvider: z.string().optional(),
+  servicedAt: z.number(),
+  nextDueDate: z.number().optional(),
+  nextDueMileage: z.number().int().optional(),
   notes: z.string().optional(),
   createdAt: z.number()
 });
