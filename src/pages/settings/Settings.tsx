@@ -6,8 +6,7 @@ import { SessionSectionBody } from './SessionSectionBody';
 import { StorageSectionBody } from './StorageSectionBody';
 import { UpdateSectionBody } from './UpdateSectionBody';
 import { AboutSectionBody } from './AboutSectionBody';
-import { ExportRestoreSectionBody } from './ExportRestoreSectionBody';
-import { BackupReminderSectionBody } from './BackupReminderSectionBody';
+import { BackupRestoreSectionBody } from './BackupRestoreSectionBody';
 import { ThemeSectionBody } from './ThemeSectionBody';
 
 export function Settings() {
@@ -33,12 +32,8 @@ export function Settings() {
           <StorageSectionBody />
         </Section>
 
-        <Section title="Export & Restore" id="export-restore" cardClassName="space-y-3">
-          <ExportRestoreSectionBody />
-        </Section>
-
-        <Section title="Backup Reminder">
-          <BackupReminderSectionBody />
+        <Section title="Backup & Restore" id="backup-restore" cardClassName="space-y-3">
+          <BackupRestoreSectionBody />
         </Section>
 
         <Section title="Update" id="update">
