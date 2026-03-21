@@ -18,3 +18,7 @@ db.version(2).stores({
 db.version(3).stores({
   maintenanceRecords: 'id, vehicleId, performedAt, [vehicleId+performedAt]'
 });
+
+db.version(4).stores({
+  maintenanceRecords: 'id, vehicleId, servicedAt, [vehicleId+servicedAt]'
+});
