@@ -15,5 +15,6 @@ Mobile-focused, fully offline with IndexedDB via Dexie.js. Deployed to Cloudflar
 ## Key Conventions
 - Use `/refactor` to clean up code to project standards
 - Use `/review` before considering anything done
+- Use `/component` to scaffold a react component
 - Return `Result<T>` instead of throwing exceptions
 - No default exports, no barrel files
