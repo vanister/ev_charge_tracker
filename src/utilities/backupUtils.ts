@@ -54,9 +54,9 @@ export function readBackupFile(file: File): Promise<Result<BackupFile>> {
 }
 
 export async function restoreBackup(db: EvChargTrackerDb, backup: BackupFile): Promise<Result<void>> {
-  if (backup.dbVersion !== db.verno) {
+  if (backup.dbVersion > db.verno) {
     return failure(
-      `Backup database version (${backup.dbVersion}) does not match the app's database version (${db.verno}). Restore is not possible.`
+      `Backup was created with a newer version of the app (v${backup.dbVersion}) and cannot be restored here (v${db.verno}). Please update the app first.`
     );
   }
 
