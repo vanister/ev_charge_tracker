@@ -27,7 +27,7 @@ export function useBackupReminder(dontShow = false) {
       showToast({
         message: 'Time to back up your data',
         persistent: true,
-        action: { label: 'View Backup', to: '/settings#export-restore' }
+        action: { label: 'View Backup', to: '/settings#backup-restore' }
       });
     }
   }, [dontShow, getSettings, showToast]);
