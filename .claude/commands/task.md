@@ -31,4 +31,5 @@ While implementing:
 When done:
 - Run `/review` on all changed code before considering the task complete
 - Summarize what changed and why
-- Flag anything left incomplete or any follow-up tasks worth adding to tasks.md
+- Mark the task complete in the task list
+- Flag anything left incomplete or any follow-up tasks worth adding to task list
