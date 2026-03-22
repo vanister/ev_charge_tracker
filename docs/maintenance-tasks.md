@@ -5,11 +5,11 @@ Phase numbers correspond directly to sections in the design doc (e.g. Phase 1 �
 
 ## Progress Summary
 
-- **Phase 1 - Data Model** [§1]: 🟨 2/3 (schema + DB done; `maintenance-types.ts` missing)
-- **Phase 2 - File Structure & Helpers** [§2]: ⬜ 0/2
-- **Phase 3 - Routing** [§3]: ⬜ 0/1
-- **Phase 4 - Dashboard Integration** [§4]: ⬜ 0/3
-- **Phase 5 - UI & UX** [§5]: ⬜ 0/5
+- **Phase 1 - Data Model** [§1]: 2/3 (schema + DB done; `maintenance-types.ts` missing)
+- **Phase 2 - File Structure & Helpers** [§2]: 0/2
+- **Phase 3 - Routing** [§3]: 0/1
+- **Phase 4 - Dashboard Integration** [§4]: 0/3
+- **Phase 5 - UI & UX** [§5]: 0/5
 
 **Overall Progress**: 2/14 tasks complete
 
