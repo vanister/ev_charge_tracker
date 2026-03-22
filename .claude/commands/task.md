@@ -11,6 +11,8 @@ If no task list was specified, check `docs/` for available task list files (e.g.
 
 If a task list was identified but no specific task was given, read the file, list the outstanding tasks, and ask the user which one to implement. If it is still unclear after asking, pick the next outstanding task and state why.
 
+Only implement one task at a time unless the user explicitly asks for more than one.
+
 Before writing any code:
 1. State which task list and task you're implementing
 2. Identify all files likely to be affected
