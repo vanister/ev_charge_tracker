@@ -2,7 +2,7 @@
 
 **Status: Draft** — See [maintenance-tasks.md](./maintenance-tasks.md) for implementation tracking.
 
-## 1. Objective
+## Objective
 
 Add a maintenance and service record log to the app, allowing users to track scheduled and completed vehicle servicing (tire rotations, brake checks, inspections, software updates, etc.) alongside their charging history.
 
@@ -10,7 +10,7 @@ Records are associated to a specific vehicle. The feature lives under the `/vehi
 
 ---
 
-## 2. Data Model
+## 1. Data Model
 
 ### MaintenanceType Enum
 
@@ -69,7 +69,7 @@ Indexed by `[vehicleId+servicedAt]` for efficient per-vehicle listing sorted by 
 
 ---
 
-## 3. File Structure
+## 2. File Structure
 
 Mirrors the sessions page structure. Co-located under `src/pages/vehicles/maintenance/` to mirror the app's route hierarchy — maintenance is a sub-feature of vehicles, not a standalone section.
 
@@ -129,7 +129,7 @@ type MaintenanceRecord = {
 
 ---
 
-## 4. Routing
+## 3. Routing
 
 Maintenance is nested under `/vehicles/:vehicleId`, scoping all records to a single vehicle per page load. It lives inside the `Layout` wrapper but is **not** registered in `BottomTabBar`'s `TABS` array. Because `BottomTabBar` uses `currentPath.startsWith(tab.path)` for active state, the Vehicles tab stays highlighted automatically on all maintenance routes.
 
@@ -154,9 +154,9 @@ Add to `src/router.tsx` alongside existing vehicle routes:
 
 ---
 
-## 5. Dashboard Integration
+## 4. Dashboard Integration
 
-### 5a. Extend DashboardStatCard
+### 4a. Extend DashboardStatCard
 
 Add an optional `action` prop to `DashboardStatCard` so any card can render a tappable link at the bottom:
 
@@ -188,7 +188,7 @@ When `action` is provided, render a small text button below the stat value:
 
 This prop is optional and backward-compatible — existing stat cards remain unchanged.
 
-### 5b. Maintenance Summary on Dashboard
+### 4b. Maintenance Summary on Dashboard
 
 Add two `DashboardStatCard` instances to the dashboard below the charging stats grid, rendered side-by-side in the same 2-column grid to keep the layout balanced. Both cards are scoped to the active vehicle and omitted entirely when no vehicles exist.
 
@@ -230,7 +230,7 @@ Both cards are wrapped in a shared `MaintenanceSummaryCard` component that queri
 
 ---
 
-## 6. UI & UX
+## 5. UI & UX
 
 ### VehicleItem entry point
 
@@ -284,7 +284,7 @@ Form fields (in order):
 
 ---
 
-## 7. Business Logic
+## 6. Business Logic
 
 - **Cost immutability**: `costCents` is computed once on save and stored. It is never recalculated, preserving the record's historical value regardless of future currency formatting changes.
 - **Soft-deleted vehicles**: When loading records, join against `Vehicle.isActive`. Records for inactive vehicles remain in the list but the vehicle name is rendered with a `(removed)` label — same approach as sessions.
@@ -293,7 +293,7 @@ Form fields (in order):
 
 ---
 
-## 8. Key Design Decisions
+## 7. Key Design Decisions
 
 | Decision | Choice | Rationale |
 |---|---|---|

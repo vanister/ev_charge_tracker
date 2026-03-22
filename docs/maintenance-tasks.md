@@ -1,87 +1,103 @@
 # Maintenance Tracking - Implementation Tasks
 
 Implementation tasks for the [Maintenance & Service Tracking](./maintenance-tracking.md) feature.
+Phase numbers correspond directly to sections in the design doc (e.g. Phase 1 → §1, Phase 2 → §2).
 
 ## Progress Summary
 
-- **Phase 1 - Data Model**: ⬜ 0/3
-- **Phase 2 - Routing**: ⬜ 0/1
-- **Phase 3 - Core Components**: ⬜ 0/6
-- **Phase 4 - Dashboard Integration**: ⬜ 0/3
-- **Phase 5 - Vehicle Entry Point**: ⬜ 0/1
+- **Phase 1 - Data Model** [§1]: 2/3 (schema + DB done; `maintenance-types.ts` missing)
+- **Phase 2 - File Structure & Helpers** [§2]: 0/2
+- **Phase 3 - Routing** [§3]: 0/1
+- **Phase 4 - Dashboard Integration** [§4]: 0/3
+- **Phase 5 - UI & UX** [§5]: 0/5
 
-**Overall Progress**: 0/14 tasks complete
+**Overall Progress**: 2/14 tasks complete
 
 ---
 
 ## TODO
 
-### Phase 1 - Data Model
+### Phase 1 - Data Model [§1]
 
-- [ ] 1. Add `MaintenanceRecordSchema` and `MAINTENANCE_TYPES` to `src/data/schemas.ts`
-  - Add the `MAINTENANCE_TYPES` const array
-  - Add `MaintenanceType` derived type
-  - Add `MaintenanceRecordSchema` Zod schema matching the spec
-- [ ] 2. Add `MaintenanceFormData` and `MaintenanceRecord` types to `src/pages/vehicles/maintenance/maintenance-types.ts`
+> Ref: [§1 Data Model](./maintenance-tracking.md#1-data-model) — schema, types, Dexie table.
+>
+> Note: `useMaintenanceRecords` hook (`src/hooks/useMaintenanceRecords.ts`) is also complete — full CRUD and backup integration.
+
+- [x] 1. Add `MaintenanceRecordSchema` and `MAINTENANCE_TYPES` to `src/data/schemas.ts` [§1 — MaintenanceType Enum, MaintenanceRecord Schema]
+  - `MAINTENANCE_TYPES` const array (10 values: `tire_rotation` … `other`) ✓
+  - `MaintenanceType` derived type ✓
+  - `MaintenanceRecordSchema` Zod schema with all §1 fields ✓
+- [ ] 2. Add `MaintenanceFormData` and `MaintenanceRecord` types to `src/pages/vehicles/maintenance/maintenance-types.ts` [§1 — MaintenanceRecord Schema, §2 — Type Conventions]
+  - `MaintenanceRecord` exists in `src/data/data-types.ts` (inferred from schema) but `MaintenanceFormData` is missing entirely
+  - Create `src/pages/vehicles/maintenance/maintenance-types.ts` with both types
   - `MaintenanceFormData` — string fields for form binding, `type` allows `''`
-  - `MaintenanceRecord` — validated shape ready for Dexie persistence
-- [ ] 3. Add `maintenanceRecords` table to Dexie schema in `src/data/db.ts`
-  - Index: `'++id, vehicleId, servicedAt, [vehicleId+servicedAt]'`
-  - Bump the database version
+  - Follow naming convention from §2: use `Record` suffix (not `InputData`) for the stored entity shape
+- [x] 3. Add `maintenanceRecords` table to Dexie schema in `src/data/db.ts` [§1 — Dexie Table]
+  - `maintenanceRecords` table present in `db.version(3)` and `db.version(4)` ✓
+  - Index: `'id, vehicleId, servicedAt, [vehicleId+servicedAt]'` ✓
 
-### Phase 2 - Routing
+### Phase 2 - File Structure & Helpers [§2]
 
-- [ ] 4. Register maintenance routes in `src/router.tsx`
+> Ref: [§2 File Structure](./maintenance-tracking.md#2-file-structure) — helpers and utilities co-located under `src/pages/vehicles/maintenance/`.
+
+- [ ] 4. Create `src/pages/vehicles/maintenance/maintenanceFormHelpers.ts` [§2 — maintenanceFormHelpers.ts]
+  - `buildRecord(formData, vehicleId): MaintenanceRecord` — converts string inputs to typed values; computes `costCents` once via `Math.round(cost * 100)` and does not recalculate [§6 — Cost immutability]
+  - `getDefaultDateTime(): string` — returns current datetime as ISO string for `datetime-local` input
+- [ ] 5. Create `src/helpers/maintenanceHelpers.ts` [§2 — maintenanceHelpers.ts]
+  - `groupRecordsByDate(records)` — groups by year-month, newest first (used by `MaintenanceList` per §5)
+  - `createTypeLabel(type: MaintenanceType): string` — human-readable label
+  - `sortRecords(records)` — sorts by `servicedAt` descending
+
+### Phase 3 - Routing [§3]
+
+> Ref: [§3 Routing](./maintenance-tracking.md#3-routing) — nested under `/vehicles/:vehicleId`, inside `Layout`, excluded from `BottomTabBar`.
+
+- [ ] 6. Register maintenance routes in `src/router.tsx` [§3]
   - `/vehicles/:vehicleId/maintenance` → `<MaintenanceList />`
   - `/vehicles/:vehicleId/maintenance/add` → `<MaintenanceDetails />`
   - `/vehicles/:vehicleId/maintenance/:id/edit` → `<MaintenanceDetails />`
+  - Routes live inside the `Layout` wrapper; no `BottomTabBar` entry needed — Vehicles tab stays active via `startsWith` matching
 
-### Phase 3 - Core Components
+### Phase 4 - Dashboard Integration [§4]
 
-- [ ] 5. Create `src/pages/vehicles/maintenance/maintenanceFormHelpers.ts`
-  - `buildRecord(formData, vehicleId): MaintenanceRecord` — converts string inputs to typed values
-  - `getDefaultDateTime(): string` — returns current datetime as ISO string for `datetime-local` input
-- [ ] 6. Create `src/helpers/maintenanceHelpers.ts`
-  - `groupRecordsByDate(records)` — groups by year-month, newest first
-  - `createTypeLabel(type: MaintenanceType): string` — human-readable label
-  - `sortRecords(records)` — sorts by `servicedAt` descending
-- [ ] 7. Create `MaintenanceForm.tsx` — reusable form component
-  - Fields in order: service type (select), description, date of service, cost, mileage, service provider, next due date, next due mileage, notes
-  - `FormFooter` with Save / Cancel buttons (same pattern as `SessionDetails`)
-- [ ] 8. Create `MaintenanceList.tsx` — `/vehicles/:vehicleId/maintenance`
-  - `usePageConfig('Maintenance', false)` — tab bar visible
-  - Vehicle name sub-heading sourced from `:vehicleId` param
-  - Records grouped by month via `groupRecordsByDate`, rendered as `MaintenanceItem`
-  - FAB / header button navigates to `.../add`
-  - Renders `MaintenanceEmptyState` when no records
-- [ ] 9. Create `MaintenanceDetails.tsx` — add and edit page
-  - `usePageConfig('Add Service Record', true)` or `usePageConfig('Edit Service Record', true)` — tab bar hidden
-  - `vehicleId` from `useParams()` — no vehicle selector in form
-  - Wraps `MaintenanceForm`; on save persists to Dexie; on cancel navigates back to list
-- [ ] 10. Create supporting components
-  - `MaintenanceItem.tsx` — type label + icon, description, date, optional cost + mileage
-  - `MaintenanceItemActions.tsx` — Edit / Delete inline actions
-  - `MaintenanceEmptyState.tsx` — empty state with prompt to log first record
+> Ref: [§4 Dashboard Integration](./maintenance-tracking.md#4-dashboard-integration) — extends `DashboardStatCard` and adds a `MaintenanceSummaryCard`.
 
-### Phase 4 - Dashboard Integration
-
-- [ ] 11. Extend `DashboardStatCard` with optional `action` prop
+- [ ] 7. Extend `DashboardStatCard` with optional `action` prop [§4a — Extend DashboardStatCard]
   - Add `action?: { label: string; onClick: () => void }` to props type
-  - Render a small text button below the stat value when `action` is provided
+  - Render a `<button className="text-primary mt-2 text-xs font-medium">` below the stat value when `action` is provided
   - Must be backward-compatible — existing cards unchanged
-- [ ] 12. Create `MaintenanceSummaryCard.tsx` in `src/pages/dashboard/`
-  - Queries maintenance records once for the active vehicle and renders two side-by-side `DashboardStatCard` instances
-  - `activeVehicleId` resolved from dashboard vehicle filter, falling back to `preferences.lastVehicleId`
-  - Omit both cards entirely when no vehicles exist
-  - **Card 1 — Last Service** (`icon="wrench"`): shows most recent service type; action navigates to the vehicle's maintenance list; `value="No records yet"` and action label `"Add first record →"` when empty
-  - **Card 2 — Last Serviced** (`icon="calendar"`): shows date of most recent record formatted as `MMM d, yyyy` via `date-fns`; `value="—"` when empty; no action prop
-- [ ] 13. Add `MaintenanceSummaryCard` to the Dashboard page
+- [ ] 8. Create `MaintenanceSummaryCard.tsx` in `src/pages/dashboard/` [§4b — Maintenance Summary on Dashboard]
+  - Queries maintenance records once for the active vehicle
+  - `activeVehicleId` resolved from dashboard vehicle filter, falling back to `preferences.lastVehicleId`; omit both cards entirely when no vehicles exist
+  - **Card 1 — Last Service** (`icon="wrench"`): value = most recent service type label; action navigates to `/vehicles/${activeVehicleId}/maintenance`; when no records: `value="No records yet"`, action label `"Add first record →"`
+  - **Card 2 — Last Serviced** (`icon="calendar"`): value = most recent `servicedAt` formatted as `MMM d, yyyy` via `date-fns`; `value="—"` when no records; no `action` prop
+- [ ] 9. Add `MaintenanceSummaryCard` to the Dashboard page [§4b]
   - Position below the charging stats grid in its own 2-column grid row
   - Pass `activeVehicleId` and navigate action
 
-### Phase 5 - Vehicle Entry Point
+### Phase 5 - UI & UX [§5]
 
-- [ ] 14. Add wrench icon link to `VehicleItem.tsx`
-  - `<Link to={'/vehicles/${vehicle.id}/maintenance'}>` with `<Icon name="wrench" size="sm" />`
-  - Action order: wrench → edit → delete
+> Ref: [§5 UI & UX](./maintenance-tracking.md#5-ui--ux) — `VehicleItem` entry point, `MaintenanceList`, `MaintenanceDetails`, `MaintenanceForm`, supporting components.
+
+- [ ] 10. Add wrench icon link to `VehicleItem.tsx` [§5 — VehicleItem entry point]
+  - `<Link to={`/vehicles/${vehicle.id}/maintenance`}>` with `<Icon name="wrench" size="sm" />`
+  - Action order: **wrench → edit → delete**
   - `aria-label="View maintenance records"`
+- [ ] 11. Create `MaintenanceList.tsx` — `/vehicles/:vehicleId/maintenance` [§5 — MaintenanceList]
+  - `usePageConfig('Maintenance', false)` — tab bar visible
+  - Vehicle name sub-heading sourced from `:vehicleId` param; inactive vehicles shown with `(removed)` label [§6 — Soft-deleted vehicles]
+  - Records grouped by month via `groupRecordsByDate` from `maintenanceHelpers.ts`, rendered as `MaintenanceItem`
+  - FAB / header button navigates to `.../add`
+  - Renders `MaintenanceEmptyState` when no records
+- [ ] 12. Create `MaintenanceDetails.tsx` — add and edit page [§5 — MaintenanceDetails]
+  - `usePageConfig('Add Service Record', true)` or `usePageConfig('Edit Service Record', true)` — tab bar hidden (matches `SessionDetails` / `VehicleDetails` pattern)
+  - `vehicleId` from `useParams()` — no vehicle selector in form
+  - Wraps `MaintenanceForm`; on save persists to Dexie via `buildRecord`; on cancel navigates back to list
+- [ ] 13. Create `MaintenanceForm.tsx` — reusable form component [§5 — MaintenanceDetails form fields table]
+  - Fields in order: service type (select from `MAINTENANCE_TYPES`), description, date of service (`datetime-local`, defaults to now), cost (number/currency, optional), mileage (integer, optional), service provider (text, optional), next due date (`date`, optional), next due mileage (integer, optional), notes (textarea, optional)
+  - `FormFooter` with Save / Cancel buttons (same pattern as `SessionDetails`)
+  - Required fields: service type, description, date of service
+- [ ] 14. Create supporting components [§5]
+  - `MaintenanceItem.tsx` — type label + icon, description, date, optional cost + mileage
+  - `MaintenanceItemActions.tsx` — Edit / Delete inline actions
+  - `MaintenanceEmptyState.tsx` — empty state with prompt to log first record
