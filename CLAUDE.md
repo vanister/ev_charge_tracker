@@ -57,7 +57,7 @@ Mobile-focused, fully offline with IndexedDB via Dexie.js. Deployed to Cloudflar
 
 ## Key Conventions
 - Use `/refactor` to clean up code to project standards
-- Use `/review` before considering anything done
+- **ALWAYS run `/review` after every code change before considering it complete — no exceptions**
 - Use `/component` to scaffold a React component
 
 ## Task Rules
