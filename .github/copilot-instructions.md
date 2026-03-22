@@ -2,9 +2,9 @@
 
 A Vite + TypeScript + React 19 PWA for tracking EV charging sessions. Mobile-focused, fully offline with all data persisted in IndexedDB via Dexie.js. Deployed to Cloudflare via Wrangler.
 
-**For project context and design rationale, see [design-outline.md](./docs/design-outline.md)**
-**For full technical architecture, see [technical-design.md](./docs/technical-design.md)**
-**For outstanding tasks, see [tasks.md](./docs/tasks.md)**
+**For project context and design rationale, see [design-outline.md](../docs/design-outline.md)**
+**For full technical architecture, see [technical-design.md](../docs/technical-design.md)**
+**For outstanding tasks, see [tasks.md](../docs/tasks.md)**
 
 ---
 
