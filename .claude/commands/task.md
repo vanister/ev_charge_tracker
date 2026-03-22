@@ -1,6 +1,6 @@
 ---
 name: task
-description: Implement a task from tasks.md. Use when picking up a new task or feature to implement.
+description: Implement a task from a task list. Use when picking up a new task or feature to implement.
 ---
 
 ## Task selection
