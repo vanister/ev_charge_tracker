@@ -1,6 +1,6 @@
 # Feature Design: Maintenance & Service Tracking
 
-**Status: Draft** — See [maintenance-tasks.md](./maintenance-tasks.md) for implementation tracking.
+**Status: Draft** — See [maintenance-tracking-tasks.md](./maintenance-tracking-tasks.md) for implementation tracking.
 
 ## Objective
 
