@@ -4,6 +4,8 @@
 
 ## Objective
 
+App feature v1.5.0
+
 Add a maintenance and service record log to the app, allowing users to track scheduled and completed vehicle servicing (tire rotations, brake checks, inspections, software updates, etc.) alongside their charging history.
 
 Records are associated to a specific vehicle. The feature lives under the `/vehicles` route, scoped to a single vehicle at a time, and is accessible from the dashboard but is not part of the bottom tab bar navigation.
@@ -266,17 +268,17 @@ Action order: **wrench → edit → delete**. No other changes to `VehicleItem`.
 
 Form fields (in order):
 
-| Field            | Input type         | Required |
-|------------------|--------------------|----------|
-| Service type     | Select (enum)      | Yes      |
-| Description      | Text               | Yes      |
-| Date of service  | `datetime-local`   | Yes      |
-| Cost             | Number (currency)  | No       |
-| Mileage          | Number (integer)   | No       |
-| Service provider | Text               | No       |
-| Next due date    | `date`             | No       |
-| Next due mileage | Number (integer)   | No       |
-| Notes            | Textarea           | No       |
+| Field            | Input type        | Required |
+| ---------------- | ----------------- | -------- |
+| Service type     | Select (enum)     | Yes      |
+| Description      | Text              | Yes      |
+| Date of service  | `datetime-local`  | Yes      |
+| Cost             | Number (currency) | No       |
+| Mileage          | Number (integer)  | No       |
+| Service provider | Text              | No       |
+| Next due date    | `date`            | No       |
+| Next due mileage | Number (integer)  | No       |
+| Notes            | Textarea          | No       |
 
 - Date of service defaults to current datetime
 - `FormFooter` with Save / Cancel buttons (same pattern as `SessionDetails`)
@@ -295,13 +297,13 @@ Form fields (in order):
 
 ## 7. Key Design Decisions
 
-| Decision | Choice | Rationale |
-|---|---|---|
-| Access route | Under `/vehicles/:vehicleId/maintenance` (not tab bar) | Natural ownership — maintenance belongs to a vehicle; keeps tab bar focused |
-| Entry points | Wrench icon on `VehicleItem` (primary) + dashboard stat card (secondary) | Vehicle list is the natural place to discover per-vehicle actions; dashboard provides a quick summary shortcut |
-| Data relationship | One record → one vehicle | Mirrors sessions; maintenance is always vehicle-specific |
-| Cost storage | Integer cents | Consistent with `ChargingSession.costCents`; avoids float precision issues |
-| Dashboard entry point | New stat card with action prop | Extends existing `DashboardStatCard` cleanly; no new layout components |
-| Grouping in list | By month | Maintenance is sparse (monthly/quarterly); date-grouping would be too granular |
-| `nextDue` fields | Stored, no active reminders | Captures the data now; reminder system is a separate future feature |
-| Mileage unit | Miles (integer) | Matches US-centric defaults; unit label can be made configurable later |
+| Decision              | Choice                                                                   | Rationale                                                                                                      |
+| --------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| Access route          | Under `/vehicles/:vehicleId/maintenance` (not tab bar)                   | Natural ownership — maintenance belongs to a vehicle; keeps tab bar focused                                    |
+| Entry points          | Wrench icon on `VehicleItem` (primary) + dashboard stat card (secondary) | Vehicle list is the natural place to discover per-vehicle actions; dashboard provides a quick summary shortcut |
+| Data relationship     | One record → one vehicle                                                 | Mirrors sessions; maintenance is always vehicle-specific                                                       |
+| Cost storage          | Integer cents                                                            | Consistent with `ChargingSession.costCents`; avoids float precision issues                                     |
+| Dashboard entry point | New stat card with action prop                                           | Extends existing `DashboardStatCard` cleanly; no new layout components                                         |
+| Grouping in list      | By month                                                                 | Maintenance is sparse (monthly/quarterly); date-grouping would be too granular                                 |
+| `nextDue` fields      | Stored, no active reminders                                              | Captures the data now; reminder system is a separate future feature                                            |
+| Mileage unit          | Miles (integer)                                                          | Matches US-centric defaults; unit label can be made configurable later                                         |
