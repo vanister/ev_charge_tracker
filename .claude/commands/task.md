@@ -23,8 +23,10 @@ While implementing:
 - Return `Result<T>` instead of throwing
 - `Result<T>` is defined in `src/types/shared-types.ts` — use that, don't redefine it
 - No default exports, no barrel files
+- Use `/component` to scaffold any new React components
 - Run `npm run build` to verify no build errors after major changes
 
 When done:
+- Run `/review` on all changed code before considering the task complete
 - Summarize what changed and why
 - Flag anything left incomplete or any follow-up tasks worth adding to tasks.md
