@@ -1,23 +1,31 @@
-import { format } from 'date-fns';
 import type { MaintenanceType } from '../../../constants';
 import type { MaintenanceRecord } from '../../../data/data-types';
+import { formatDate } from '../../../utilities/dateUtils';
 import type { MaintenanceGroup } from './maintenance-types';
 
-const TYPE_LABELS: Record<MaintenanceType, string> = {
-  tire_rotation: 'Tire Rotation',
-  tire_replacement: 'Tire Replacement',
-  brake_service: 'Brake Service',
-  battery_service: 'Battery Service',
-  software_update: 'Software Update',
-  inspection: 'Inspection',
-  cabin_filter: 'Cabin Filter',
-  wiper_replacement: 'Wiper Replacement',
-  coolant_service: 'Coolant Service',
-  other: 'Other'
-};
-
 export function createTypeLabel(type: MaintenanceType): string {
-  return TYPE_LABELS[type];
+  switch (type) {
+    case 'tire_rotation':
+      return 'Tire Rotation';
+    case 'tire_replacement':
+      return 'Tire Replacement';
+    case 'brake_service':
+      return 'Brake Service';
+    case 'battery_service':
+      return 'Battery Service';
+    case 'software_update':
+      return 'Software Update';
+    case 'inspection':
+      return 'Inspection';
+    case 'cabin_filter':
+      return 'Cabin Filter';
+    case 'wiper_replacement':
+      return 'Wiper Replacement';
+    case 'coolant_service':
+      return 'Coolant Service';
+    default:
+      return 'Other';
+  }
 }
 
 export function sortRecords(records: MaintenanceRecord[]): MaintenanceRecord[] {
@@ -29,7 +37,7 @@ export function groupRecordsByDate(records: MaintenanceRecord[]): MaintenanceGro
 
   // yyyy-MM key preserves correct sort order when comparing month strings
   const grouped = sorted.reduce((map, record) => {
-    const key = format(record.servicedAt, 'yyyy-MM');
+    const key = formatDate(record.servicedAt, 'yyyy-MM');
     const existing = map.get(key);
 
     if (existing) {
@@ -44,7 +52,7 @@ export function groupRecordsByDate(records: MaintenanceRecord[]): MaintenanceGro
   return Array.from(grouped.entries())
     .sort(([a], [b]) => b.localeCompare(a))
     .map(([key, recs]) => ({
-      label: format(new Date(`${key}-01`), 'MMMM yyyy'),
+      label: formatDate(new Date(`${key}-01`), 'MMMM yyyy'),
       records: recs
     }));
 }
