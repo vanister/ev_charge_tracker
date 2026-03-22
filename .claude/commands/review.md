@@ -31,6 +31,7 @@ Review the code in context against these project standards before signing off.
 - Named function declarations, not arrow functions
 - Single responsibility
 - `Result<T>` returned for fallible operations
+- All `date-fns` usage must be through [dateUtils.ts](../../src/utilities//dateUtils.ts)
 
 ### General
 - No JSDocs or XML comments
