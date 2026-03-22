@@ -6,12 +6,12 @@ Phase numbers correspond directly to sections in the design doc (e.g. Phase 1 �
 ## Progress Summary
 
 - **Phase 1 - Data Model** [§1]: 3/3 ✅
-- **Phase 2 - File Structure & Helpers** [§2]: 1/2
+- **Phase 2 - File Structure & Helpers** [§2]: 2/2 ✅
 - **Phase 3 - Routing** [§3]: 0/1
 - **Phase 4 - Dashboard Integration** [§4]: 0/3
 - **Phase 5 - UI & UX** [§5]: 0/5
 
-**Overall Progress**: 4/14 tasks complete
+**Overall Progress**: 5/14 tasks complete
 
 ---
 
@@ -43,7 +43,7 @@ Phase numbers correspond directly to sections in the design doc (e.g. Phase 1 �
 - [x] 4. Create `src/pages/vehicles/maintenance/maintenanceFormHelpers.ts` [§2 — maintenanceFormHelpers.ts]
   - `buildRecord(formData, vehicleId): MaintenanceRecord` — converts string inputs to typed values; computes `costCents` once via `Math.round(cost * 100)` and does not recalculate [§6 — Cost immutability]
   - `getDefaultDateTime(): string` — returns current datetime as ISO string for `datetime-local` input
-- [ ] 5. Create `src/helpers/maintenanceHelpers.ts` [§2 — maintenanceHelpers.ts]
+- [x] 5. Create `src/pages/vehicles/maintenance/maintenanceHelpers.ts` [§2 — maintenanceHelpers.ts]
   - `groupRecordsByDate(records)` — groups by year-month, newest first (used by `MaintenanceList` per §5)
   - `createTypeLabel(type: MaintenanceType): string` — human-readable label
   - `sortRecords(records)` — sorts by `servicedAt` descending
