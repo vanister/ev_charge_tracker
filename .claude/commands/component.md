@@ -28,7 +28,7 @@ Create a new React component based on my description.
 
 ## Example shape
 ```tsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SomeChild } from './SomeChild';
 import { formatLabel } from './helpers';
 
@@ -39,6 +39,10 @@ type MyComponentProps = {
 
 export function MyComponent({ label, onAction }: MyComponentProps) {
   const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    // hooks defined here above handlers, after consts
+  }, [/* deps */])
 
   const handleClick = () => {
     setActive(!active);
