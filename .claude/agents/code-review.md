@@ -1,5 +1,5 @@
 ---
-name: review
+name: code-review
 description: Reviews code for correctness, style, and project conventions. Use after implementing any feature or fix, or when asked to review recent changes.
 tools: Read, Glob, Grep, Bash
 model: sonnet
