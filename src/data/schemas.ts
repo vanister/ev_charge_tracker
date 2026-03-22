@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { ALL_ICONS } from '../types/shared-types';
-import { OAUTH_PROVIDERS } from '../constants';
+import { BACKUP_REMINDER_INTERVALS, MAINTENANCE_TYPES, OAUTH_PROVIDERS } from '../constants';
 
 const ActiveStateSchema = z.union([z.literal(0), z.literal(1)]);
 
@@ -49,27 +49,12 @@ export const ChargingSessionSchema = z.object({
 export const SettingsSchema = z.object({
   key: z.literal('app-settings'),
   onboardingComplete: z.boolean(),
-  backupReminderInterval: z.enum(['1d', '3d', '7d', '14d', '30d']).default('3d'),
+  backupReminderInterval: z.enum(BACKUP_REMINDER_INTERVALS).default('3d'),
   // used with backupReminderDismissedAt to determine when the next reminder is due
   lastBackupAt: z.number().optional(),
   // allows skipping a reminder cycle without performing a backup
   backupReminderDismissedAt: z.number().optional()
 });
-
-export const MAINTENANCE_TYPES = [
-  'tire_rotation',
-  'tire_replacement',
-  'brake_service',
-  'battery_service',
-  'software_update',
-  'inspection',
-  'cabin_filter',
-  'wiper_replacement',
-  'coolant_service',
-  'other'
-] as const;
-
-export type MaintenanceType = (typeof MAINTENANCE_TYPES)[number];
 
 export const MaintenanceRecordSchema = z.object({
   id: z.string(),

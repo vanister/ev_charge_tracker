@@ -1,23 +1,17 @@
 import type { IconName, LocationColorOption } from './types/shared-types';
 import type { UserPreferences } from './types/preference-types';
 
+// Storage keys
 export const THEME_STORAGE_KEY = 'ev-charge-tracker-theme';
 export const USER_PREFERENCES_STORAGE_KEY = 'ev-charge-tracker-preferences';
 
-export const RECENT_SESSIONS_LIMIT = 10;
-
-export const DEFAULT_PREFERENCES: UserPreferences = {
-  recentSessionsLimit: RECENT_SESSIONS_LIMIT,
-  sessionsFilterTimeRange: '31d',
-  sessionsFilterIsOpen: true,
-  dashboardFilterTimeRange: '31d',
-  dashboardFilterIsOpen: true
-};
-
+// UI
 export const PAGE_TRANSITION_DURATION = 150; // ms
-
 export const TOAST_MAX_COUNT = 4;
 export const TOAST_DEFAULT_DURATION = 3500;
+
+// Sessions
+export const RECENT_SESSIONS_LIMIT = 10;
 
 export const TIME_FILTER_OPTIONS = [
   { label: 'Last 7 Days', value: '7d' },
@@ -29,6 +23,16 @@ export const TIME_FILTER_OPTIONS = [
   { label: 'All', value: 'all' }
 ] as const;
 
+// Preferences
+export const DEFAULT_PREFERENCES: UserPreferences = {
+  recentSessionsLimit: RECENT_SESSIONS_LIMIT,
+  sessionsFilterTimeRange: '31d',
+  sessionsFilterIsOpen: true,
+  dashboardFilterTimeRange: '31d',
+  dashboardFilterIsOpen: true
+};
+
+// Locations
 export const LOCATION_ICON_OPTIONS: IconName[] = ['home', 'building', 'map-pin', 'zap', 'car'];
 
 // Hex values matching the CSS custom properties in index.css
@@ -46,6 +50,23 @@ export const LOCATION_COLOR_OPTIONS: LocationColorOption[] = [
   { value: LOCATION_COLOR_HEX.orange, label: 'Orange', bgClass: 'bg-orange-400' }
 ];
 
+// Maintenance
+export const MAINTENANCE_TYPES = [
+  'tire_rotation',
+  'tire_replacement',
+  'brake_service',
+  'battery_service',
+  'software_update',
+  'inspection',
+  'cabin_filter',
+  'wiper_replacement',
+  'coolant_service',
+  'other'
+] as const;
+
+export type MaintenanceType = (typeof MAINTENANCE_TYPES)[number];
+
+// Backup
 export const BACKUP_REMINDER_INTERVALS = ['1d', '3d', '7d', '14d', '30d'] as const;
 export type BackupReminderInterval = (typeof BACKUP_REMINDER_INTERVALS)[number];
 
@@ -58,6 +79,7 @@ export const BACKUP_REMINDER_INTERVAL_MS: Record<BackupReminderInterval, number>
   '30d': 30 * DAY_MS
 };
 
+// OAuth
 export const OAUTH_PROVIDERS = {
   google: {
     authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',

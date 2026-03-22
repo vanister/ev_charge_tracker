@@ -1,4 +1,4 @@
-import type { MaintenanceType } from '../../../data/schemas';
+import type { MaintenanceType } from '../../../constants';
 
 export type MaintenanceFormData = {
   type: MaintenanceType;
