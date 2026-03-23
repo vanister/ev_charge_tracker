@@ -8,10 +8,10 @@ Phase numbers correspond directly to sections in the design doc (e.g. Phase 1 �
 - **Phase 1 - Data Model** [§1]: 3/3 ✅
 - **Phase 2 - File Structure & Helpers** [§2]: 2/2 ✅
 - **Phase 3 - Routing** [§3]: 1/1 ✅
-- **Phase 4 - Dashboard Integration** [§4]: 0/3
+- **Phase 4 - Dashboard Integration** [§4]: 3/3 ✅
 - **Phase 5 - UI & UX** [§5]: 0/5
 
-**Overall Progress**: 6/14 tasks complete
+**Overall Progress**: 9/14 tasks complete
 
 ---
 
@@ -62,16 +62,16 @@ Phase numbers correspond directly to sections in the design doc (e.g. Phase 1 �
 
 > Ref: [§4 Dashboard Integration](./maintenance-tracking.md#4-dashboard-integration) — extends `DashboardStatCard` and adds a `MaintenanceSummaryCard`.
 
-- [ ] 7. Extend `DashboardStatCard` with optional `action` prop [§4a — Extend DashboardStatCard]
+- [x] 7. Extend `DashboardStatCard` with optional `action` prop [§4a — Extend DashboardStatCard]
   - Add `action?: { label: string; onClick: () => void }` to props type
   - Render a `<button className="text-primary mt-2 text-xs font-medium">` below the stat value when `action` is provided
   - Must be backward-compatible — existing cards unchanged
-- [ ] 8. Create `MaintenanceSummaryCard.tsx` in `src/pages/dashboard/` [§4b — Maintenance Summary on Dashboard]
+- [x] 8. Create `MaintenanceSummaryCard.tsx` in `src/pages/dashboard/` [§4b — Maintenance Summary on Dashboard]
   - Queries maintenance records once for the active vehicle
   - `activeVehicleId` resolved from dashboard vehicle filter, falling back to `preferences.lastVehicleId`; omit both cards entirely when no vehicles exist
   - **Card 1 — Last Service** (`icon="wrench"`): value = most recent service type label; action navigates to `/vehicles/${activeVehicleId}/maintenance`; when no records: `value="No records yet"`, action label `"Add first record →"`
   - **Card 2 — Last Serviced** (`icon="calendar"`): value = most recent `servicedAt` formatted as `MMM d, yyyy` via `date-fns`; `value="—"` when no records; no `action` prop
-- [ ] 9. Add `MaintenanceSummaryCard` to the Dashboard page [§4b]
+- [x] 9. Add `MaintenanceSummaryCard` to the Dashboard page [§4b]
   - Position below the charging stats grid in its own 2-column grid row
   - Pass `activeVehicleId` and navigate action
 

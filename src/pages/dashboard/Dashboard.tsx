@@ -10,6 +10,7 @@ import { SessionsFilter } from '../../components/SessionsFilter';
 import { ChargeStats } from './ChargeStats';
 import { ChargeSessionsCharts } from './ChargeSessionsCharts';
 import { DashboardRecentSessions } from './DashboardRecentSessions';
+import { MaintenanceSummary } from './MaintenanceSummary';
 import type { DashboardFilter } from './dashboard-types';
 import type { TimeFilterValue } from '../../types/shared-types';
 
@@ -107,6 +108,8 @@ export function Dashboard() {
     return null;
   }
 
+  const activeVehicleId = filter.vehicleId ?? preferences.lastVehicleId ?? vehicles[0]?.id;
+
   return (
     <div className="bg-background px-4 py-6">
       <div className="mx-auto max-w-2xl space-y-8">
@@ -128,6 +131,12 @@ export function Dashboard() {
           <ChargeStats stats={stats} />
           <ChargeSessionsCharts data={chartData} stats={stats} />
         </Section>
+
+        {activeVehicleId && (
+          <Section title="Maintenance" noCard>
+            <MaintenanceSummary activeVehicleId={activeVehicleId} />
+          </Section>
+        )}
 
         {recentSessions.length > 0 && (
           <Section

@@ -7,7 +7,7 @@ description: Implement a task from a task list. Use when picking up a new task o
 
 Use the task list and specific task from the user's prompt if provided.
 
-If no task list was specified, check `docs/` for available task list files (e.g. `tasks.md`, `sync-system-tasks.md`, `maintenance-tracking-tasks.md`) and ask the user which one to use, defaulting to `docs/tasks.md`.
+If no task list was specified, check `docs/` for available task list files (e.g. `tasks.md`, `sync-system-tasks.md`, `maintenance-tracking-tasks.md`), list them, and ask the user which one to use. Do not assume or default to any file — always ask.
 
 If a task list was identified but no specific task was given, read the file, list the outstanding tasks, and ask the user which one to implement. If it is still unclear after asking, pick the next outstanding task and state why.
 
