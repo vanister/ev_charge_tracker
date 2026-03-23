@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useMaintenanceRecords } from '../../hooks/useMaintenanceRecords';
 import { formatDate } from '../../utilities/dateUtils';
 import { DashboardStatCard } from './DashboardStatCard';
@@ -11,7 +10,6 @@ type MaintenanceSummaryCardProps = {
 };
 
 export function MaintenanceSummaryCard({ activeVehicleId }: MaintenanceSummaryCardProps) {
-  const navigate = useNavigate();
   const { getMaintenanceRecordList } = useMaintenanceRecords();
   const [lastRecord, setLastRecord] = useState<MaintenanceRecord | null>(null);
 
@@ -44,7 +42,7 @@ export function MaintenanceSummaryCard({ activeVehicleId }: MaintenanceSummaryCa
         icon="wrench"
         action={{
           label: actionLabel,
-          onClick: () => navigate(`/vehicles/${activeVehicleId}/maintenance`)
+          to: `/vehicles/${activeVehicleId}/maintenance`
         }}
       />
       <DashboardStatCard label="Last Serviced" value={lastServicedDate} icon="calendar" />
