@@ -43,7 +43,8 @@ export const ALL_ICONS = [
   'x-circle',
   'alert-triangle',
   'info',
-  'bell'
+  'bell',
+  'wrench'
 ] as const;
 
 export type IconName = (typeof ALL_ICONS)[number];
