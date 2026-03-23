@@ -12,6 +12,8 @@ export function useAppUpdateAvailable(dontToast = false) {
   const toastShownRef = useRef(false);
 
   const applyUpdate = useCallback(() => {
+    // Clear the hash so the page doesn't scroll back to the update section after reload
+    history.replaceState(null, '', window.location.pathname + window.location.search);
     updateServiceWorker(true);
   }, [updateServiceWorker]);
 
