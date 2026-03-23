@@ -9,7 +9,7 @@ type MaintenanceSummaryCardProps = {
   activeVehicleId: string;
 };
 
-export function MaintenanceSummaryCard({ activeVehicleId }: MaintenanceSummaryCardProps) {
+export function MaintenanceSummary({ activeVehicleId }: MaintenanceSummaryCardProps) {
   const { getMaintenanceRecordList } = useMaintenanceRecords();
   const [lastRecord, setLastRecord] = useState<MaintenanceRecord | null>(null);
 

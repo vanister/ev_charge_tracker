@@ -10,7 +10,7 @@ import { SessionsFilter } from '../../components/SessionsFilter';
 import { ChargeStats } from './ChargeStats';
 import { ChargeSessionsCharts } from './ChargeSessionsCharts';
 import { DashboardRecentSessions } from './DashboardRecentSessions';
-import { MaintenanceSummaryCard } from './MaintenanceSummaryCard';
+import { MaintenanceSummary } from './MaintenanceSummary';
 import type { DashboardFilter } from './dashboard-types';
 import type { TimeFilterValue } from '../../types/shared-types';
 
@@ -134,7 +134,7 @@ export function Dashboard() {
 
         {activeVehicleId && (
           <Section title="Maintenance" noCard>
-            <MaintenanceSummaryCard activeVehicleId={activeVehicleId} />
+            <MaintenanceSummary activeVehicleId={activeVehicleId} />
           </Section>
         )}
 
