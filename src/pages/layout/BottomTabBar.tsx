@@ -29,7 +29,7 @@ export function BottomTabBar(props: BottomTabBarProps) {
       className={clsx('bg-surface border-default fixed right-0 bottom-0 left-0 z-10 border-t', { hidden })}
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
-      <div className="mx-auto grid max-w-md grid-cols-4">
+      <div className="mx-auto grid w-full max-w-2xl grid-cols-4">
         {TABS.map((tab) => {
           const isActive = tab.path === '/' ? currentPath === '/' : currentPath.startsWith(tab.path);
 

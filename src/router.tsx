@@ -11,6 +11,8 @@ import { SessionsList } from './pages/sessions/SessionsList';
 import { SessionDetails } from './pages/sessions/SessionDetails';
 import { VehiclesList } from './pages/vehicles/VehiclesList';
 import { VehicleDetails } from './pages/vehicles/VehicleDetails';
+import { MaintenanceList } from './pages/vehicles/maintenance/MaintenanceList';
+import { MaintenanceDetails } from './pages/vehicles/maintenance/MaintenanceDetails';
 import { Settings } from './pages/settings/Settings';
 import { LocationDetails } from './pages/settings/LocationDetails';
 
@@ -34,6 +36,9 @@ export const router = createBrowserRouter([
               { path: '/vehicles', element: <VehiclesList /> },
               { path: '/vehicles/add', element: <VehicleDetails /> },
               { path: '/vehicles/:id/edit', element: <VehicleDetails /> },
+              { path: '/vehicles/:vehicleId/maintenance', element: <MaintenanceList /> },
+              { path: '/vehicles/:vehicleId/maintenance/add', element: <MaintenanceDetails /> },
+              { path: '/vehicles/:vehicleId/maintenance/:id/edit', element: <MaintenanceDetails /> },
               { path: '/settings', element: <Settings /> },
               { path: '/settings/locations/:id/edit', element: <LocationDetails /> },
               { path: '*', element: <NotFoundPage /> }

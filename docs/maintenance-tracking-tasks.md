@@ -7,11 +7,11 @@ Phase numbers correspond directly to sections in the design doc (e.g. Phase 1 �
 
 - **Phase 1 - Data Model** [§1]: 3/3 ✅
 - **Phase 2 - File Structure & Helpers** [§2]: 2/2 ✅
-- **Phase 3 - Routing** [§3]: 0/1
+- **Phase 3 - Routing** [§3]: 1/1 ✅
 - **Phase 4 - Dashboard Integration** [§4]: 0/3
 - **Phase 5 - UI & UX** [§5]: 0/5
 
-**Overall Progress**: 5/14 tasks complete
+**Overall Progress**: 6/14 tasks complete
 
 ---
 
@@ -52,7 +52,7 @@ Phase numbers correspond directly to sections in the design doc (e.g. Phase 1 �
 
 > Ref: [§3 Routing](./maintenance-tracking.md#3-routing) — nested under `/vehicles/:vehicleId`, inside `Layout`, excluded from `BottomTabBar`.
 
-- [ ] 6. Register maintenance routes in `src/router.tsx` [§3]
+- [x] 6. Register maintenance routes in `src/router.tsx` [§3]
   - `/vehicles/:vehicleId/maintenance` → `<MaintenanceList />`
   - `/vehicles/:vehicleId/maintenance/add` → `<MaintenanceDetails />`
   - `/vehicles/:vehicleId/maintenance/:id/edit` → `<MaintenanceDetails />`
