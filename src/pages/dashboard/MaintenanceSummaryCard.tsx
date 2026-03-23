@@ -31,7 +31,7 @@ export function MaintenanceSummaryCard({ activeVehicleId }: MaintenanceSummaryCa
     load();
   }, [activeVehicleId, getMaintenanceRecordList]);
 
-  const hasRecord = lastRecord !== null;
+  const hasRecord = !!lastRecord;
   const lastServiceLabel = hasRecord ? createTypeLabel(lastRecord.type) : 'No records yet';
   const lastServicedDate = hasRecord ? formatDate(lastRecord.servicedAt, 'MMM d, yyyy') : '—';
   const actionLabel = hasRecord ? 'View all →' : 'Add first record →';
