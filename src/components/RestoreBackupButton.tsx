@@ -24,8 +24,13 @@ export function RestoreBackupButton(props: RestoreBackupButtonProps) {
   };
 
   const handleFileSelected = async (file: File) => {
+    // Disable all buttons immediately — file reads can be slow for large backups
+    setIsRestoring(true);
+    props.onRestoreStart?.();
+
     const readResult = await readBackupFile(file);
     if (!readResult.success) {
+      setIsRestoring(false);
       props.onError?.(readResult.error);
       return;
     }
@@ -36,11 +41,10 @@ export function RestoreBackupButton(props: RestoreBackupButtonProps) {
         'This will permanently overwrite all existing data with the contents of the backup file. This cannot be undone. Continue?'
       )
     ) {
+      setIsRestoring(false);
+      props.onError?.(null);
       return;
     }
-
-    props.onRestoreStart?.();
-    setIsRestoring(true);
 
     const restoreResult = await restoreBackup(readResult.data);
 
