@@ -38,7 +38,7 @@ export function VehicleForm(props: VehicleFormProps) {
             required
             value={props.formData.make}
             onChange={(e) => props.onChange('make', e.target.value)}
-            placeholder="Tesla"
+            placeholder="Ford"
             disabled={props.isLoading}
           />
         </div>
@@ -51,7 +51,7 @@ export function VehicleForm(props: VehicleFormProps) {
             required
             value={props.formData.model}
             onChange={(e) => props.onChange('model', e.target.value)}
-            placeholder="Model 3"
+            placeholder="Mustang Mach-E"
             disabled={props.isLoading}
           />
         </div>
@@ -63,7 +63,7 @@ export function VehicleForm(props: VehicleFormProps) {
         type="text"
         value={props.formData.name}
         onChange={(e) => props.onChange('name', e.target.value)}
-        placeholder="My EV (optional)"
+        placeholder="American Stallion (optional)"
         disabled={props.isLoading}
       />
 
@@ -73,7 +73,7 @@ export function VehicleForm(props: VehicleFormProps) {
         type="text"
         value={props.formData.trim}
         onChange={(e) => props.onChange('trim', e.target.value)}
-        placeholder="Long Range (optional)"
+        placeholder="Extended Range Premium AWD (optional)"
         disabled={props.isLoading}
       />
 
@@ -85,7 +85,7 @@ export function VehicleForm(props: VehicleFormProps) {
           min="1"
           value={props.formData.batteryCapacity}
           onChange={(e) => props.onChange('batteryCapacity', e.target.value)}
-          placeholder="75 (optional)"
+          placeholder="91 (optional)"
           disabled={props.isLoading}
         />
 
@@ -96,7 +96,7 @@ export function VehicleForm(props: VehicleFormProps) {
           min="1"
           value={props.formData.range}
           onChange={(e) => props.onChange('range', e.target.value)}
-          placeholder="358 (optional)"
+          placeholder="290 (optional)"
           disabled={props.isLoading}
         />
       </div>
