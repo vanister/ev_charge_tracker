@@ -18,6 +18,7 @@ Review the code in context against these project standards before signing off.
 - No primitive constructors: `+value`, `!!value`, `` `${value}` `` preferred
 - Types are defined close to where they're used
 - No implicit `any`
+- Avoid explicit `!== null` or `!== undefined`, use `!!value` for non-falsy checks
 
 ### Components
 - Named export only, no default export
