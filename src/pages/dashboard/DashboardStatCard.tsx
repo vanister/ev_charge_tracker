@@ -12,8 +12,10 @@ type DashboardStatCardProps = {
 export function DashboardStatCard({ label, value, icon, action }: DashboardStatCardProps) {
   return (
     <div className="bg-surface border-default rounded-lg border p-4">
-      <Icon name={icon} size="sm" className="text-primary" />
-      <p className="text-body-secondary mt-2 text-xs tracking-wide uppercase">{label}</p>
+      <div className="flex items-center gap-1.5">
+        <Icon name={icon} size="sm" className="text-primary" />
+        <p className="text-body-secondary text-xs tracking-wide uppercase">{label}</p>
+      </div>
       <p className="text-body mt-1 text-xl font-semibold">{value}</p>
       {action && (
         <Link to={action.to} className="text-primary mt-2 text-xs font-medium">
