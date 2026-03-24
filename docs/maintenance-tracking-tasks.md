@@ -9,9 +9,9 @@ Phase numbers correspond directly to sections in the design doc (e.g. Phase 1 �
 - **Phase 2 - File Structure & Helpers** [§2]: 2/2 ✅
 - **Phase 3 - Routing** [§3]: 1/1 ✅
 - **Phase 4 - Dashboard Integration** [§4]: 3/3 ✅
-- **Phase 5 - UI & UX** [§5]: 0/5
+- **Phase 5 - UI & UX** [§5]: 1/5
 
-**Overall Progress**: 9/14 tasks complete
+**Overall Progress**: 10/14 tasks complete
 
 ---
 
@@ -79,7 +79,7 @@ Phase numbers correspond directly to sections in the design doc (e.g. Phase 1 �
 
 > Ref: [§5 UI & UX](./maintenance-tracking.md#5-ui--ux) — `VehicleItem` entry point, `MaintenanceList`, `MaintenanceDetails`, `MaintenanceForm`, supporting components.
 
-- [ ] 10. Add wrench icon link to `VehicleItem.tsx` [§5 — VehicleItem entry point]
+- [x] 10. Add wrench icon link to `VehicleItem.tsx` [§5 — VehicleItem entry point]
   - `<Link to={`/vehicles/${vehicle.id}/maintenance`}>` with `<Icon name="wrench" size="sm" />`
   - Action order: **wrench → edit → delete**
   - `aria-label="View maintenance records"`

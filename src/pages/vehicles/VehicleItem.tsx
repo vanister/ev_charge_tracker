@@ -28,6 +28,13 @@ export function VehicleItem(props: VehicleItemProps) {
 
         <div className="flex items-center gap-2">
           <Link
+            to={`/vehicles/${vehicle.id}/maintenance`}
+            className="text-body-secondary hover:text-body hover:bg-background rounded-lg p-2 transition-colors"
+            aria-label="View maintenance records"
+          >
+            <Icon name="wrench" size="sm" />
+          </Link>
+          <Link
             to={`/vehicles/${vehicle.id}/edit`}
             className="text-body-secondary hover:text-body hover:bg-background rounded-lg p-2 transition-colors"
             aria-label="Edit vehicle"
