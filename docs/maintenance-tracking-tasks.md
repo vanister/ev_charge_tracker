@@ -9,9 +9,9 @@ Phase numbers correspond directly to sections in the design doc (e.g. Phase 1 �
 - **Phase 2 - File Structure & Helpers** [§2]: 2/2 ✅
 - **Phase 3 - Routing** [§3]: 1/1 ✅
 - **Phase 4 - Dashboard Integration** [§4]: 3/3 ✅
-- **Phase 5 - UI & UX** [§5]: 1/5
+- **Phase 5 - UI & UX** [§5]: 2/5
 
-**Overall Progress**: 10/14 tasks complete
+**Overall Progress**: 11/14 tasks complete
 
 ---
 
@@ -83,7 +83,7 @@ Phase numbers correspond directly to sections in the design doc (e.g. Phase 1 �
   - `<Link to={`/vehicles/${vehicle.id}/maintenance`}>` with `<Icon name="wrench" size="sm" />`
   - Action order: **wrench → edit → delete**
   - `aria-label="View maintenance records"`
-- [ ] 11. Create `MaintenanceList.tsx` — `/vehicles/:vehicleId/maintenance` [§5 — MaintenanceList]
+- [x] 11. Create `MaintenanceList.tsx` — `/vehicles/:vehicleId/maintenance` [§5 — MaintenanceList]
   - `usePageConfig('Maintenance', false)` — tab bar visible
   - Vehicle name sub-heading sourced from `:vehicleId` param; inactive vehicles shown with `(removed)` label [§6 — Soft-deleted vehicles]
   - Records grouped by month via `groupRecordsByDate` from `maintenanceHelpers.ts`, rendered as `MaintenanceItem`
