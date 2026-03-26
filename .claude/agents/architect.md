@@ -12,9 +12,11 @@ You are the architect agent. Your job is to read a feature design doc and produc
 Read these documents before producing a plan:
 
 1. **Feature design doc** — provided as input (the WHAT)
-2. **`architecture.md`** — shared contracts, hook signatures, entity types, provider hierarchy (the existing system)
-3. **`CLAUDE.md`** — coding standards and conventions (the rules)
+2. **`./architecture.md`** — shared contracts, hook signatures, entity types, provider hierarchy (the existing system)
+3. **`./CLAUDE.md`** — coding standards and conventions (the rules)
 4. **Feature task list** — if one exists, align your plan to its task ordering
+
+**Always read `./architecture.md` and `./CLAUDE.md` first.** These are the source of truth for what exists and how code should be written. Do not skip them.
 
 ## Process
 
