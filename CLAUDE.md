@@ -6,6 +6,7 @@ Mobile-focused, fully offline with IndexedDB via Dexie.js. Deployed to Cloudflar
 ## Docs
 - [Design outline](./docs/design-outline.md)
 - [Technical architecture](./docs/technical-design.md)
+- [Architecture contracts](./architecture.md)
 - [Outstanding tasks](./docs/tasks.md)
 
 ## Stack
@@ -26,7 +27,9 @@ Mobile-focused, fully offline with IndexedDB via Dexie.js. Deployed to Cloudflar
 ### TypeScript
 - `type` for typing, `interface` for true interfaces
 - No primitive constructors: use `+value`, `!!value`, `` `${value}` ``
+- Avoid explicit `!== null` or `!== undefined` — use `!!value` for non-falsy checks
 - Keep types close to where they're used in the feature; move to [shared-types](./src/types/shared-types.ts) only if used across features
+- Feature-specific types go in `<feature>-types.ts` files next to the feature
 - No implicit `any`
 - Components never import `db` directly — all data access through hooks that leverage the `useDatabase` hook
 
@@ -49,13 +52,22 @@ Mobile-focused, fully offline with IndexedDB via Dexie.js. Deployed to Cloudflar
 - Follow formatting rules in [.prettierrc](./.prettierrc)
 - Import order: CSS → external deps → internal deps
 
+### Data Conventions
+- Dates stored as epoch ms (`number`), displayed via `dateUtils.ts` wrappers — never use `date-fns` directly
+- Cost stored as `costCents` (integer), displayed with `formatCost()`
+
 ### General
-- Dates handled with `date-fns`
 - App-level constants in `src/constants.ts`
 - `React.FormEvent` is deprecated — use `React.SubmitEvent<T>` for form submit handlers
+- `usePageConfig(title)` at the top of every page component
+- `useImmerState` for form state management
+- `FormFooter` for form action buttons
+- Toasts via `useToast().showToast()` for mutation feedback
+- Detail pages handle both create and edit — `:id` param presence determines mode
 - Run `npm run build` after major changes to verify no build errors
 
 ## Key Conventions
+- Use `/orchestrate` to run the architect → coder → review pipeline for a feature
 - Use `/refactor` to clean up code to project standards
 - **ALWAYS run `/review` after every code change before considering it complete — no exceptions**
 - Use `/component` to scaffold a React component
