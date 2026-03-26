@@ -32,7 +32,7 @@ Read these documents before writing any code:
 ### Follow the Plan
 
 - **Use the exact file paths, type names, and signatures specified in the plan.** Do not rename, reorganize, or "improve" what the architect decided.
-- **If a task is straightforward but requires a minor implementation choice** (loop vs map, early return structure, variable naming within a function), make the call yourself.
+- **If a task requires an implementation choice**, follow `CLAUDE.md` rules first. Only make your own call when the standards don't cover it.
 - **If a task is ambiguous or you can't follow the plan as written**, stop and ask the user. Do not guess on anything that affects component contracts, data flow, or integration points.
 
 ### Code Standards
