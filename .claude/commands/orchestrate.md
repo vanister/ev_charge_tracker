@@ -39,7 +39,11 @@ When the coder finishes, report what was built and any issues the coder flagged.
 
 ### Step 3 — Review
 
-Run `/review` on all code the coder changed.
+Spawn the **code-review** agent (`.claude/agents/code-review.md`) for a fresh, cold-context review. It should have no shared context from the coder — only the code, the design doc, `architecture.md`, and `CLAUDE.md`.
+
+Prompt it with:
+
+> Review the code changes for the `<feature-name>` feature. The design doc is at `<design-doc-path>`. Check against project standards in `./CLAUDE.md` and contracts in `./architecture.md`.
 
 Report the review results to the user:
 - If the review passes, summarize the completed feature
