@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Reviews code for correctness, style, and project conventions. Use after implementing any feature or fix, or when asked to review recent changes.
+description: Reviews code for correctness, style, and project conventions. Use after implementing any feature or fix, or when asked to review recent changes. Accepts an optional PR number to review a specific pull request.
 tools: Read, Glob, Grep, Bash
 model: sonnet
 ---
@@ -16,6 +16,13 @@ Read these documents before reviewing any code:
 3. **Feature design doc** — if provided, verify the code matches the spec.
 
 **Always read `./CLAUDE.md` and the architecture doc first.** These are the source of truth. The checklist below is a focus guide, not a replacement.
+
+## What to Review
+
+- **PR number provided**: run `gh pr diff <number>` for the diff and `gh pr view <number> --json title,body,files` for context. List changed files with `gh pr diff <number> --name-only`.
+- **No PR number**: run `git diff HEAD` to get pending changes. List changed files with `git diff HEAD --name-only`.
+
+Always read each changed file in full with the Read tool — the diff alone misses context like missing imports, incorrect hook usage, or patterns established elsewhere in the file.
 
 ## Checklist
 
