@@ -9,9 +9,9 @@ Phase numbers correspond directly to sections in the design doc (e.g. Phase 1 �
 - **Phase 2 - File Structure & Helpers** [§2]: 2/2 ✅
 - **Phase 3 - Routing** [§3]: 1/1 ✅
 - **Phase 4 - Dashboard Integration** [§4]: 3/3 ✅
-- **Phase 5 - UI & UX** [§5]: 2/5
+- **Phase 5 - UI & UX** [§5]: 5/5 ✅
 
-**Overall Progress**: 11/14 tasks complete
+**Overall Progress**: 14/14 tasks complete ✅
 
 ---
 
@@ -89,15 +89,15 @@ Phase numbers correspond directly to sections in the design doc (e.g. Phase 1 �
   - Records grouped by month via `groupRecordsByDate` from `maintenanceHelpers.ts`, rendered as `MaintenanceItem`
   - FAB / header button navigates to `.../add`
   - Renders `MaintenanceEmptyState` when no records
-- [ ] 12. Create `MaintenanceDetails.tsx` — add and edit page [§5 — MaintenanceDetails]
+- [x] 12. Create `MaintenanceDetails.tsx` — add and edit page [§5 — MaintenanceDetails]
   - `usePageConfig('Add Service Record', true)` or `usePageConfig('Edit Service Record', true)` — tab bar hidden (matches `SessionDetails` / `VehicleDetails` pattern)
   - `vehicleId` from `useParams()` — no vehicle selector in form
   - Wraps `MaintenanceForm`; on save persists to Dexie via `buildRecord`; on cancel navigates back to list
-- [ ] 13. Create `MaintenanceForm.tsx` — reusable form component [§5 — MaintenanceDetails form fields table]
+- [x] 13. Create `MaintenanceForm.tsx` — reusable form component [§5 — MaintenanceDetails form fields table]
   - Fields in order: service type (select from `MAINTENANCE_TYPES`), description, date of service (`datetime-local`, defaults to now), cost (number/currency, optional), mileage (integer, optional), service provider (text, optional), next due date (`date`, optional), next due mileage (integer, optional), notes (textarea, optional)
   - `FormFooter` with Save / Cancel buttons (same pattern as `SessionDetails`)
   - Required fields: service type, description, date of service
-- [ ] 14. Create supporting components [§5]
+- [x] 14. Create supporting components [§5]
   - `MaintenanceItem.tsx` — type label + icon, description, date, optional cost + mileage
   - `MaintenanceItemActions.tsx` — Edit / Delete inline actions
   - `MaintenanceEmptyState.tsx` — empty state with prompt to log first record

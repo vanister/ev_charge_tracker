@@ -1,17 +1,19 @@
+import { EmptyState } from '../../../components/EmptyState';
+
 type MaintenanceEmptyStateProps = {
   onAdd: () => void;
 };
 
-// Stub — fully implemented in task 14
 export function MaintenanceEmptyState(props: MaintenanceEmptyStateProps) {
   const { onAdd } = props;
 
   return (
-    <div>
-      <p>No maintenance records yet.</p>
-      <button type="button" onClick={onAdd}>
-        Add first record
-      </button>
-    </div>
+    <EmptyState
+      icon="wrench"
+      title="No maintenance records"
+      message="Log the first service record for this vehicle."
+      actionLabel="Add Record"
+      onAction={onAdd}
+    />
   );
 }
