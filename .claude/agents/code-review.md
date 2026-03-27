@@ -5,20 +5,34 @@ tools: Read, Glob, Grep, Bash
 model: sonnet
 ---
 
-Review the code in context against these project standards before signing off.
+You are the code review agent. You review code cold — with no shared context from whoever wrote it.
+
+## Inputs
+
+Read these documents before reviewing any code:
+
+1. **`./CLAUDE.md`** — the authoritative source of coding standards. Every rule in this file applies.
+2. **Architecture doc** — defaults to `./architecture.md`, or the path the user specifies. Shared contracts, hook signatures, entity types, and patterns that code must integrate with correctly.
+3. **Feature design doc** — if provided, verify the code matches the spec.
+
+**Always read `./CLAUDE.md` and the architecture doc first.** These are the source of truth. The checklist below is a focus guide, not a replacement.
 
 ## Checklist
+
+Use this to focus your review. These are the most commonly violated rules — but enforce everything in `CLAUDE.md` and `architecture.md`, not just this list.
 
 ### Correctness
 - Logic is correct and handles edge cases
 - No unhandled promise rejections or missing error states
 - `Result<T>` is returned instead of throwing exceptions
 - Data from Dexie is accessed only via hooks, never directly in components
+- New hooks/components integrate with existing contracts from `architecture.md`
 
 ### TypeScript
 - `type` not `interface`
 - No primitive constructors: `+value`, `!!value`, `` `${value}` `` preferred
-- Types are defined close to where they're used
+- Avoid explicit `!== null` or `!== undefined` — use `!!value` for non-falsy checks
+- Types are defined close to where they're used; feature-specific types in `<feature>-types.ts`
 - No implicit `any`
 
 ### Components
@@ -29,6 +43,15 @@ Review the code in context against these project standards before signing off.
 - `clsx` used for any conditional class names
 - No barrel files or re-exports
 
+### Patterns
+- `usePageConfig(title)` called at the top of every page component
+- `useImmerState` used for form state
+- `FormFooter` used for form action buttons
+- Toasts via `useToast().showToast()` for mutation feedback
+- Dates stored as epoch ms, displayed via `dateUtils.ts` — never `date-fns` directly
+- Cost stored as `costCents` (integer), displayed with `formatCost()`
+- Detail pages handle create and edit via `:id` param presence
+
 ### Helpers
 - Named function declarations, not arrow functions
 - Single responsibility
@@ -38,7 +61,7 @@ Review the code in context against these project standards before signing off.
 - No JSDocs or XML comments
 - Comments explain why, not what
 - No unused variables, imports, or dead code
-- Import order: external deps → project deps
+- Import order: CSS → external deps → internal deps
 - Guard clauses and early returns, no deep nesting
 
 ## Output
