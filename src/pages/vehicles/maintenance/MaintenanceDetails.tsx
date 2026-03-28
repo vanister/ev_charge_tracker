@@ -7,6 +7,7 @@ import { useMaintenanceRecords } from '../../../hooks/useMaintenanceRecords';
 import { Button } from '../../../components/Button';
 import { FormFooter } from '../../../components/FormFooter';
 import { formatDate, timestampToDatetimeLocal } from '../../../utilities/dateUtils';
+import { DATE_INPUT_FORMAT } from '../../../constants';
 import { MaintenanceForm } from './MaintenanceForm';
 import { buildRecord, getDefaultDateTime } from './maintenanceFormHelpers';
 import type { MaintenanceFormData } from './maintenance-types';
@@ -90,7 +91,7 @@ export function MaintenanceDetails() {
         draft.cost = !!record.costCents ? (record.costCents / 100).toFixed(2) : '';
         draft.mileage = !!record.mileage ? `${record.mileage}` : '';
         draft.serviceProvider = record.serviceProvider ?? '';
-        draft.nextDueDate = !!record.nextDueDate ? formatDate(record.nextDueDate, 'yyyy-MM-dd') : '';
+        draft.nextDueDate = !!record.nextDueDate ? formatDate(record.nextDueDate, DATE_INPUT_FORMAT) : '';
         draft.nextDueMileage = !!record.nextDueMileage ? `${record.nextDueMileage}` : '';
         draft.notes = record.notes ?? '';
         draft.isInitialized = true;

@@ -7,6 +7,7 @@ import {
   subDays as dateFnsSubDays,
   subMonths as dateFnsSubMonths
 } from 'date-fns';
+import { DATE_INPUT_FORMAT } from '../constants';
 import type { DateRange } from '../types/shared-types';
 import type { TimeFilterValue } from '../types/shared-types';
 
@@ -56,7 +57,7 @@ export function subDays(timestamp: number, days: number): number {
 }
 
 export function getDateGroupKey(timestamp: number): string {
-  return format(timestamp, 'yyyy-MM-dd');
+  return format(timestamp, DATE_INPUT_FORMAT);
 }
 
 export function startOfMonth(date: Date): Date {

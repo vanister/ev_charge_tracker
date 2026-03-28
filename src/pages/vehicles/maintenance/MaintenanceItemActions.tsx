@@ -1,3 +1,4 @@
+import { Button } from '../../../components/Button';
 import { Icon } from '../../../components/Icon';
 
 type MaintenanceItemActionsProps = {
@@ -12,22 +13,17 @@ export function MaintenanceItemActions({ recordId, onEdit, onDelete }: Maintenan
 
   return (
     <div className="flex shrink-0 items-center gap-1">
-      <button
-        type="button"
-        onClick={handleEdit}
-        className="text-body-secondary hover:text-body hover:bg-background rounded-lg p-1.5 transition-colors"
-        aria-label="Edit record"
-      >
+      <Button variant="ghost" aria-label="Edit record" onClick={handleEdit}>
         <Icon name="edit" size="sm" />
-      </button>
-      <button
-        type="button"
-        onClick={handleDelete}
-        className="text-body-secondary hover:bg-background rounded-lg p-1.5 transition-colors hover:text-red-600 dark:hover:text-red-400"
+      </Button>
+      <Button
+        variant="ghost"
         aria-label="Delete record"
+        onClick={handleDelete}
+        className="hover:text-red-600 dark:hover:text-red-400"
       >
         <Icon name="trash-2" size="sm" />
-      </button>
+      </Button>
     </div>
   );
 }
