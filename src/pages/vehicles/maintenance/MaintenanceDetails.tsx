@@ -6,10 +6,10 @@ import { useToast } from '../../../hooks/useToast';
 import { useMaintenanceRecords } from '../../../hooks/useMaintenanceRecords';
 import { Button } from '../../../components/Button';
 import { FormFooter } from '../../../components/FormFooter';
-import { formatDate, timestampToDatetimeLocal } from '../../../utilities/dateUtils';
+import { formatDate } from '../../../utilities/dateUtils';
 import { DATE_INPUT_FORMAT } from '../../../constants';
 import { MaintenanceForm } from './MaintenanceForm';
-import { buildRecord, getDefaultDateTime } from './maintenanceFormHelpers';
+import { buildRecord, getDefaultDate } from './maintenanceFormHelpers';
 import type { MaintenanceFormData } from './maintenance-types';
 import type { MaintenanceType } from '../../../constants';
 
@@ -44,7 +44,7 @@ export function MaintenanceDetails() {
 
   const [formState, setFormState] = useImmerState<MaintenanceDetailsState>({
     ...DEFAULT_FORM_DATA,
-    servicedAt: getDefaultDateTime(),
+    servicedAt: getDefaultDate(),
     isLoading: false,
     error: '',
     isInitialized: !isEditMode,
@@ -87,7 +87,7 @@ export function MaintenanceDetails() {
       setFormState((draft) => {
         draft.type = record.type;
         draft.description = record.description;
-        draft.servicedAt = timestampToDatetimeLocal(record.servicedAt);
+        draft.servicedAt = formatDate(record.servicedAt, DATE_INPUT_FORMAT);
         draft.cost = !!record.costCents ? (record.costCents / 100).toFixed(2) : '';
         draft.mileage = !!record.mileage ? `${record.mileage}` : '';
         draft.serviceProvider = record.serviceProvider ?? '';

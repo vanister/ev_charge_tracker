@@ -81,3 +81,9 @@ export function timestampToDatetimeLocal(timestamp: number): string {
   const minutes = `${date.getMinutes()}`.padStart(2, '0');
   return `${year}-${month}-${day}T${hours}:${minutes}`;
 }
+
+// Parses a yyyy-MM-dd date input string as local midnight to avoid UTC shift
+export function dateInputToTimestamp(dateStr: string): number {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  return new Date(year, month - 1, day).getTime();
+}

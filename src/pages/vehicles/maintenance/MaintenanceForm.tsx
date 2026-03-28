@@ -46,7 +46,7 @@ export function MaintenanceForm(props: MaintenanceFormProps) {
       <FormInput
         id="servicedAt"
         label="Date of Service"
-        type="datetime-local"
+        type="date"
         required
         value={formData.servicedAt}
         onChange={(e) => onChange('servicedAt', e.target.value)}
