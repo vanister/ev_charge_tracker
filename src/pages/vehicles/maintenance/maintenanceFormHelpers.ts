@@ -1,24 +1,26 @@
-import { timestampToDatetimeLocal } from '../../sessions/sessionFormHelpers';
+import { formatDate, dateInputToTimestamp } from '../../../utilities/dateUtils';
+import { DATE_INPUT_FORMAT } from '../../../constants';
 import type { MaintenanceRecord } from '../../../data/data-types';
 import type { MaintenanceFormData } from './maintenance-types';
 
-export function buildRecord(formData: MaintenanceFormData, vehicleId: string): MaintenanceRecord {
+export function buildRecord(
+  formData: MaintenanceFormData,
+  vehicleId: string
+): Omit<MaintenanceRecord, 'id' | 'createdAt'> {
   return {
-    id: crypto.randomUUID(),
     vehicleId,
     type: formData.type,
     description: formData.description,
-    servicedAt: new Date(formData.servicedAt).getTime(),
+    servicedAt: dateInputToTimestamp(formData.servicedAt),
     costCents: formData.cost ? Math.round(+formData.cost * 100) : undefined,
     mileage: formData.mileage ? +formData.mileage : undefined,
     serviceProvider: formData.serviceProvider || undefined,
-    nextDueDate: formData.nextDueDate ? new Date(formData.nextDueDate).getTime() : undefined,
+    nextDueDate: formData.nextDueDate ? dateInputToTimestamp(formData.nextDueDate) : undefined,
     nextDueMileage: formData.nextDueMileage ? +formData.nextDueMileage : undefined,
-    notes: formData.notes || undefined,
-    createdAt: Date.now()
+    notes: formData.notes || undefined
   };
 }
 
-export function getDefaultDateTime(): string {
-  return timestampToDatetimeLocal(Date.now());
+export function getDefaultDate(): string {
+  return formatDate(Date.now(), DATE_INPUT_FORMAT);
 }

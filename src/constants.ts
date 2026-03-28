@@ -51,6 +51,8 @@ export const LOCATION_COLOR_OPTIONS: LocationColorOption[] = [
 ];
 
 // Maintenance
+export const DATE_INPUT_FORMAT = 'yyyy-MM-dd';
+
 export const MAINTENANCE_TYPES = [
   'tire_rotation',
   'tire_replacement',

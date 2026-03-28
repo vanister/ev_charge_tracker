@@ -1,4 +1,9 @@
 import type { MaintenanceRecord } from '../../../data/data-types';
+import { Icon } from '../../../components/Icon';
+import { formatDate } from '../../../utilities/dateUtils';
+import { formatCost } from '../../../utilities/formatUtils';
+import { createTypeLabel } from './maintenanceHelpers';
+import { MaintenanceItemActions } from './MaintenanceItemActions';
 
 type MaintenanceItemProps = {
   record: MaintenanceRecord;
@@ -6,9 +11,39 @@ type MaintenanceItemProps = {
   onDelete: (id: string) => void;
 };
 
-// Stub — fully implemented in task 14
 export function MaintenanceItem(props: MaintenanceItemProps) {
-  const { record } = props;
+  const { record, onEdit, onDelete } = props;
 
-  return <div>{record.description}</div>;
+  const typeLabel = createTypeLabel(record.type);
+  const date = formatDate(record.servicedAt, 'MMM d, yyyy');
+
+  return (
+    <div className="bg-surface border-default rounded-lg border p-4">
+      <div className="mb-2 flex items-center justify-between gap-2">
+        <div className="flex min-w-0 items-center gap-2">
+          <Icon name="wrench" size="sm" className="text-body-secondary shrink-0" />
+          <span className="text-body font-medium">{typeLabel}</span>
+        </div>
+        <MaintenanceItemActions recordId={record.id} onEdit={onEdit} onDelete={onDelete} />
+      </div>
+
+      <p className="text-body-secondary mb-2 text-sm">{record.description}</p>
+
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+        <span className="text-body-secondary">{date}</span>
+        {!!record.costCents && (
+          <>
+            <span className="text-body-tertiary">•</span>
+            <span className="text-body">{formatCost(record.costCents)}</span>
+          </>
+        )}
+        {!!record.mileage && (
+          <>
+            <span className="text-body-tertiary">•</span>
+            <span className="text-body-secondary">{record.mileage.toLocaleString()} mi</span>
+          </>
+        )}
+      </div>
+    </div>
+  );
 }
