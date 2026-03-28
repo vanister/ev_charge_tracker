@@ -97,7 +97,7 @@ export function MaintenanceList() {
   if (!state.isLoading && state.records.length === 0) {
     return (
       <div className="bg-background flex flex-1 flex-col py-6">
-        <MaintenanceEmptyState onAdd={handleAdd} label={vehicleHeading} />
+        <MaintenanceEmptyState onAdd={handleAdd} vehicleLabel={vehicleHeading} />
       </div>
     );
   }
