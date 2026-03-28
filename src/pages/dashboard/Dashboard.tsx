@@ -133,7 +133,15 @@ export function Dashboard() {
         </Section>
 
         {activeVehicleId && (
-          <Section title="Maintenance" noCard>
+          <Section
+            title="Maintenance"
+            action={
+              <Link to={`/vehicles/${activeVehicleId}/maintenance`} className="text-primary text-sm font-medium">
+                View all
+              </Link>
+            }
+            noCard
+          >
             <MaintenanceSummary activeVehicleId={activeVehicleId} />
           </Section>
         )}
