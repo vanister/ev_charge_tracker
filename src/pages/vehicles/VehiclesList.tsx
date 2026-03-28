@@ -46,7 +46,7 @@ export function VehiclesList() {
 
   if (vehicles.length === 0) {
     return (
-      <div className="bg-background flex flex-1 flex-col px-4 py-6">
+      <div className="bg-background flex flex-1 flex-col py-6">
         <EmptyState
           icon="car"
           title="No vehicles yet"

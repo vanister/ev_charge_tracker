@@ -217,7 +217,7 @@ export function SessionsList() {
 
   if (!state.isLoading && !state.hasAnySessions) {
     return (
-      <div className="bg-background flex flex-1 flex-col px-4 py-6">
+      <div className="bg-background flex flex-1 flex-col py-6">
         <SessionsEmptyState
           hasFilters={hasActiveFilters}
           hasTimeRangeFilter={false}
