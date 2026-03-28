@@ -51,8 +51,12 @@ export function groupRecordsByDate(records: MaintenanceRecord[]): MaintenanceGro
 
   return Array.from(grouped.entries())
     .sort(([a], [b]) => b.localeCompare(a))
-    .map(([key, recs]) => ({
-      label: formatDate(new Date(`${key}-01`), 'MMMM yyyy'),
-      records: recs
-    }));
+    .map(([key, recs]) => {
+      // Construct local-time date to avoid UTC parsing shifting the month back by one day
+      const [year, month] = key.split('-').map(Number);
+      return {
+        label: formatDate(new Date(year, month - 1, 1), 'MMMM yyyy'),
+        records: recs
+      };
+    });
 }
