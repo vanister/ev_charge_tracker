@@ -24,13 +24,14 @@ const DEFAULT_STATE: MaintenanceListState = {
 };
 
 export function MaintenanceList() {
-  usePageConfig('Maintenance', false);
-
   const { vehicleId } = useParams<{ vehicleId: string }>();
   const navigate = useNavigate();
   const { getMaintenanceRecordList, deleteMaintenanceRecord } = useMaintenanceRecords();
   const { getVehicle } = useVehicles();
   const [state, setState] = useImmerState<MaintenanceListState>(DEFAULT_STATE);
+
+  const vehicleName = state.vehicle ? getVehicleDisplayName(state.vehicle) : undefined;
+  usePageConfig(vehicleName ? `${vehicleName} Maintenance` : 'Maintenance', false);
 
   const groups = useMemo(() => groupRecordsByDate(state.records), [state.records]);
 
@@ -88,16 +89,10 @@ export function MaintenanceList() {
     });
   };
 
-  const vehicleHeading = state.vehicle
-    ? state.vehicle.isActive === 0
-      ? `${getVehicleDisplayName(state.vehicle)} (removed)`
-      : getVehicleDisplayName(state.vehicle)
-    : undefined;
-
   if (!state.isLoading && state.records.length === 0) {
     return (
       <div className="bg-background flex flex-1 flex-col py-6">
-        <MaintenanceEmptyState onAdd={handleAdd} vehicleLabel={vehicleHeading} />
+        <MaintenanceEmptyState onAdd={handleAdd} />
       </div>
     );
   }
@@ -105,7 +100,6 @@ export function MaintenanceList() {
   return (
     <div className="bg-background px-4 py-6">
       <div className="mx-auto max-w-2xl">
-        {vehicleHeading && <p className="text-body-secondary mb-4 text-sm">{vehicleHeading}</p>}
         <ItemListButton className="mb-6" label="Add Record" onClick={handleAdd} />
         {groups.map((group) => (
           <div key={group.label} className="mb-6">
