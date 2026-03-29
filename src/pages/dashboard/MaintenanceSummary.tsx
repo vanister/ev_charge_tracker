@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useMaintenanceRecords } from '../../hooks/useMaintenanceRecords';
-import { formatDate } from '../../utilities/dateUtils';
+import { formatDate, getDateRangeForTimeFilter } from '../../utilities/dateUtils';
+import { formatCost } from '../../utilities/formatUtils';
 import { DashboardStatCard } from './DashboardStatCard';
-import { createTypeLabel } from '../vehicles/maintenance/maintenanceHelpers';
 import type { MaintenanceRecord } from '../../data/data-types';
+import type { TimeFilterValue } from '../../types/shared-types';
 
 type MaintenanceSummaryCardProps = {
   activeVehicleId: string;
+  timeRange: TimeFilterValue;
 };
 
-export function MaintenanceSummary({ activeVehicleId }: MaintenanceSummaryCardProps) {
+export function MaintenanceSummary({ activeVehicleId, timeRange }: MaintenanceSummaryCardProps) {
   const { getMaintenanceRecordList } = useMaintenanceRecords();
-  const [lastRecord, setLastRecord] = useState<MaintenanceRecord | null>(null);
+  const [filteredRecords, setFilteredRecords] = useState<MaintenanceRecord[]>([]);
 
   useEffect(() => {
     const load = async () => {
@@ -22,21 +24,26 @@ export function MaintenanceSummary({ activeVehicleId }: MaintenanceSummaryCardPr
         return;
       }
 
-      // Records are sorted newest first; take the first one
-      setLastRecord(result.data[0] ?? null);
+      const dateRange = getDateRangeForTimeFilter(timeRange);
+      const records = dateRange
+        ? result.data.filter((r) => r.servicedAt >= dateRange.start && r.servicedAt <= dateRange.end)
+        : result.data;
+
+      setFilteredRecords(records);
     };
 
     load();
-  }, [activeVehicleId, getMaintenanceRecordList]);
+  }, [activeVehicleId, timeRange, getMaintenanceRecordList]);
 
-  const hasRecord = !!lastRecord;
-  const lastServiceLabel = hasRecord ? createTypeLabel(lastRecord.type) : 'No records yet';
-  const lastServicedDate = hasRecord ? formatDate(lastRecord.servicedAt, 'MMM d, yyyy') : '—';
+  const lastRecord = filteredRecords[0] ?? null;
+  const lastServicedDate = lastRecord ? formatDate(lastRecord.servicedAt, 'MMM d, yyyy') : '—';
+  const totalCostCents = filteredRecords.reduce((sum, r) => sum + (r.costCents ?? 0), 0);
+  const totalCostLabel = filteredRecords.length > 0 ? formatCost(totalCostCents) : '—';
 
   return (
     <div className="grid grid-cols-2 gap-3">
-      <DashboardStatCard label="Last Service" value={lastServiceLabel} icon="wrench" />
       <DashboardStatCard label="Last Serviced" value={lastServicedDate} icon="calendar" />
+      <DashboardStatCard label="Total Service Cost" value={totalCostLabel} icon="wrench" />
     </div>
   );
 }
