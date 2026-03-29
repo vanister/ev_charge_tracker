@@ -60,7 +60,7 @@ export const MaintenanceRecordSchema = z.object({
   id: z.string(),
   vehicleId: z.string(),
   type: z.enum(MAINTENANCE_TYPES),
-  description: z.string(),
+  description: z.string().optional(),
   costCents: z.number().int().optional(),
   mileage: z.number().int().optional(),
   serviceProvider: z.string().optional(),

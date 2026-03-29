@@ -106,7 +106,7 @@ export function MaintenanceDetails() {
 
       setFormState((draft) => {
         draft.type = record.type;
-        draft.description = record.description;
+        draft.description = record.description ?? '';
         draft.servicedAt = formatDate(record.servicedAt, DATE_INPUT_FORMAT);
         draft.cost = !!record.costCents ? (record.costCents / 100).toFixed(2) : '';
         draft.mileage = !!record.mileage ? `${record.mileage}` : '';

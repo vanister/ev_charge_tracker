@@ -10,7 +10,7 @@ export function buildRecord(
   return {
     vehicleId,
     type: formData.type,
-    description: formData.description,
+    description: formData.description || undefined,
     servicedAt: dateInputToTimestamp(formData.servicedAt),
     costCents: formData.cost ? Math.round(+formData.cost * 100) : undefined,
     mileage: formData.mileage ? +formData.mileage : undefined,

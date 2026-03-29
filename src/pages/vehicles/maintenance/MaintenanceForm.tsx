@@ -34,9 +34,8 @@ export function MaintenanceForm(props: MaintenanceFormProps) {
 
       <FormInput
         id="description"
-        label="Description"
+        label="Description (optional)"
         type="text"
-        required
         value={formData.description}
         onChange={(e) => onChange('description', e.target.value)}
         placeholder="Brief description of the service"
