@@ -1,5 +1,11 @@
 import { z } from 'zod';
-import { VehicleSchema, LocationSchema, ChargingSessionSchema, SettingsSchema, MaintenanceRecordSchema } from './schemas';
+import {
+  VehicleSchema,
+  LocationSchema,
+  ChargingSessionSchema,
+  SettingsSchema,
+  MaintenanceRecordSchema
+} from './schemas';
 
 const StoreExportSchema = z.discriminatedUnion('store', [
   z.object({ store: z.literal('vehicles'), records: z.array(VehicleSchema) }),

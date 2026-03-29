@@ -1,6 +1,13 @@
 import { failure, success } from './resultUtils';
 import type { Result } from './resultUtils';
-import type { ChargingSession, EvChargTrackerDb, Location, MaintenanceRecord, Settings, Vehicle } from '../data/data-types';
+import type {
+  ChargingSession,
+  EvChargTrackerDb,
+  Location,
+  MaintenanceRecord,
+  Settings,
+  Vehicle
+} from '../data/data-types';
 import type { BackupFile } from '../pages/settings/settings-types';
 import { BACKUP_FILE_VERSION } from '../data/constants';
 import { BackupFileSchema } from '../data/backup-schema';
@@ -43,8 +50,7 @@ export function readBackupFile(file: File): Promise<Result<BackupFile>> {
         const parsed: unknown = JSON.parse(event.target?.result as string);
         resolve(validateBackup(parsed));
       } catch {
-        const msg = 'Failed to parse the backup file. Make sure it is a valid JSON file.';
-        resolve(failure(msg));
+        resolve(failure('Failed to parse the backup file. Make sure it is a valid JSON file.'));
       }
     };
 
@@ -76,6 +82,7 @@ export async function restoreBackup(db: EvChargTrackerDb, backup: BackupFile): P
         db.settings.clear(),
         db.maintenanceRecords.clear()
       ]);
+
       await Promise.all([
         db.vehicles.bulkAdd(getRecords<Vehicle>('vehicles')),
         db.sessions.bulkAdd(getRecords<ChargingSession>('sessions')),
