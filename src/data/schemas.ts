@@ -53,7 +53,11 @@ export const SettingsSchema = z.object({
   // used with backupReminderDismissedAt to determine when the next reminder is due
   lastBackupAt: z.number().optional(),
   // allows skipping a reminder cycle without performing a backup
-  backupReminderDismissedAt: z.number().optional()
+  backupReminderDismissedAt: z.number().optional(),
+  // gas comparison settings — undefined until user configures them
+  gasPriceCents: z.number().int().optional(),
+  comparisonMpg: z.number().optional(),
+  defaultMiPerKwh: z.number().optional()
 });
 
 export const MaintenanceRecordSchema = z.object({

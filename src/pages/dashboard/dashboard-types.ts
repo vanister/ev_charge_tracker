@@ -21,3 +21,10 @@ export type SessionStats = {
   sessionCount: number;
   byLocation: LocationStat[];
 };
+
+export type GasComparisonStats = {
+  miPerKwh: number;
+  mpge: number;
+  gasCostCents: number;
+  savingsCents: number;
+};

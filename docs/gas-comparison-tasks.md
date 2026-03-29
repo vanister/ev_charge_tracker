@@ -4,16 +4,16 @@ The design doc is located here: [gas-comparison-design.md](./gas-comparison-desi
 
 ## Phase 1: Data & Constants
 
-- [ ] 1. Add constants to `src/constants.ts`
+- [x] 1. Add constants to `src/constants.ts`
   - `KWH_PER_GALLON = 33.7` (EPA standard)
   - `DEFAULT_GAS_PRICE_CENTS = 350` ($3.50/gal)
   - `DEFAULT_COMPARISON_MPG = 40`
   - `DEFAULT_MI_PER_KWH = 2.7`
-- [ ] 2. Add optional fields to `SettingsSchema` in `src/data/schemas.ts`
+- [x] 2. Add optional fields to `SettingsSchema` in `src/data/schemas.ts`
   - `gasPriceCents: z.number().int().optional()` — avg gas price in cents/gal
   - `comparisonMpg: z.number().optional()` — gas car MPG to compare against
   - `defaultMiPerKwh: z.number().optional()` — fallback when vehicle has no battery capacity + range
-- [ ] 3. Add `GasComparisonStats` type to `src/pages/dashboard/dashboard-types.ts`
+- [x] 3. Add `GasComparisonStats` type to `src/pages/dashboard/dashboard-types.ts`
   - `miPerKwh`, `mpge`, `gasCostCents`, `savingsCents`
 
 ## Phase 2: Calculation Helpers & Formatters
