@@ -136,13 +136,13 @@ export function Dashboard() {
           <Section
             title="Maintenance"
             action={
-              <Link to={`/vehicles/${activeVehicleId}/maintenance`} className="text-primary text-sm font-medium">
+              <Link to="/vehicles" className="text-primary text-sm font-medium">
                 View all
               </Link>
             }
             noCard
           >
-            <MaintenanceSummary activeVehicleId={activeVehicleId} />
+            <MaintenanceSummary activeVehicleId={activeVehicleId} timeRange={filter.timeRange} />
           </Section>
         )}
 
