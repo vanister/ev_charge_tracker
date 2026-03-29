@@ -38,7 +38,9 @@ export function useSettings() {
   );
 
   const completeOnboarding = useCallback(async (): Promise<void> => {
-    await updateSettings({ onboardingComplete: true });
+    // Set lastBackupAt so the backup reminder interval starts from onboarding completion,
+    // not from epoch 0 (which would trigger an immediate reminder)
+    await updateSettings({ onboardingComplete: true, lastBackupAt: Date.now() });
   }, [updateSettings]);
 
   return {
