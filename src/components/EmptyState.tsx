@@ -20,7 +20,7 @@ export function EmptyState({
   buttonVariant = 'primary'
 }: EmptyStateProps) {
   return (
-    <div className="mx-auto max-w-2xl p-6">
+    <div className="mx-auto max-w-2xl px-4 pt-8">
       <div className="bg-surface border-default rounded-lg border p-6 text-center">
         {icon && <Icon name={icon} size="lg" className="text-body-secondary mx-auto mb-4" />}
         <h3 className="text-body mb-2 text-lg font-medium">{title}</h3>

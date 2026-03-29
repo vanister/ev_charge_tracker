@@ -92,7 +92,7 @@ export function Dashboard() {
 
   if (!isLoading && !hasAnySessions) {
     return (
-      <div className="bg-background flex flex-1 flex-col px-4 py-6">
+      <div className="bg-background flex flex-1 flex-col py-6">
         <EmptyState
           icon="zap"
           title="No charging sessions yet"
@@ -133,7 +133,15 @@ export function Dashboard() {
         </Section>
 
         {activeVehicleId && (
-          <Section title="Maintenance" noCard>
+          <Section
+            title="Maintenance"
+            action={
+              <Link to={`/vehicles/${activeVehicleId}/maintenance`} className="text-primary text-sm font-medium">
+                View all
+              </Link>
+            }
+            noCard
+          >
             <MaintenanceSummary activeVehicleId={activeVehicleId} />
           </Section>
         )}

@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { usePageConfig } from '../../../hooks/usePageConfig';
 import { useImmerState } from '../../../hooks/useImmerState';
 import { useToast } from '../../../hooks/useToast';
 import { useMaintenanceRecords } from '../../../hooks/useMaintenanceRecords';
+import { useVehicles } from '../../../hooks/useVehicles';
+import { getVehicleDisplayName } from '../vehicleHelpers';
 import { Button } from '../../../components/Button';
 import { FormFooter } from '../../../components/FormFooter';
 import { formatDate } from '../../../utilities/dateUtils';
@@ -40,7 +42,25 @@ export function MaintenanceDetails() {
   usePageConfig(isEditMode ? 'Edit Service Record' : 'Add Service Record', true);
 
   const { getMaintenanceRecord, createMaintenanceRecord, updateMaintenanceRecord } = useMaintenanceRecords();
+  const { getVehicle } = useVehicles();
   const { showToast } = useToast();
+  const [vehicleName, setVehicleName] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (!vehicleId) {
+      return;
+    }
+
+    const loadVehicle = async () => {
+      const result = await getVehicle(vehicleId);
+
+      if (result.success && result.data) {
+        setVehicleName(getVehicleDisplayName(result.data));
+      }
+    };
+
+    loadVehicle();
+  }, [vehicleId, getVehicle]);
 
   const [formState, setFormState] = useImmerState<MaintenanceDetailsState>({
     ...DEFAULT_FORM_DATA,
@@ -164,6 +184,7 @@ export function MaintenanceDetails() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 pt-8 pb-20">
+      {vehicleName && <p className="text-body-secondary mb-4 text-sm">{vehicleName}</p>}
       <MaintenanceForm
         id="maintenance-form"
         formData={formState}

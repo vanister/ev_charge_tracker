@@ -32,19 +32,10 @@ export function MaintenanceSummary({ activeVehicleId }: MaintenanceSummaryCardPr
   const hasRecord = !!lastRecord;
   const lastServiceLabel = hasRecord ? createTypeLabel(lastRecord.type) : 'No records yet';
   const lastServicedDate = hasRecord ? formatDate(lastRecord.servicedAt, 'MMM d, yyyy') : '—';
-  const actionLabel = hasRecord ? 'View all →' : 'Add first record →';
 
   return (
     <div className="grid grid-cols-2 gap-3">
-      <DashboardStatCard
-        label="Last Service"
-        value={lastServiceLabel}
-        icon="wrench"
-        action={{
-          label: actionLabel,
-          to: `/vehicles/${activeVehicleId}/maintenance`
-        }}
-      />
+      <DashboardStatCard label="Last Service" value={lastServiceLabel} icon="wrench" />
       <DashboardStatCard label="Last Serviced" value={lastServicedDate} icon="calendar" />
     </div>
   );
