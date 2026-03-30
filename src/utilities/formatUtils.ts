@@ -7,7 +7,14 @@ export function formatBackupReminderInterval(interval: BackupReminderInterval): 
 
 export function formatCost(costCents: number, decimalPlaces: number = 2): string {
   const dollars = costCents / 100;
-  return `$${dollars.toFixed(decimalPlaces)}`;
+  const formattedCost = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: decimalPlaces,
+    maximumFractionDigits: decimalPlaces
+  }).format(dollars);
+
+  return formattedCost;
 }
 
 export function formatEnergy(kwh: number, decimalPlaces: number = 1): string {

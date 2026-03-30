@@ -2,7 +2,7 @@ import type { MaintenanceRecord } from '../../../data/data-types';
 import { Icon } from '../../../components/Icon';
 import { formatDate } from '../../../utilities/dateUtils';
 import { formatCost } from '../../../utilities/formatUtils';
-import { createTypeLabel } from './maintenanceHelpers';
+import { getMaintenanceTypeLabel } from './maintenanceHelpers';
 import { MaintenanceItemActions } from './MaintenanceItemActions';
 
 type MaintenanceItemProps = {
@@ -14,7 +14,7 @@ type MaintenanceItemProps = {
 export function MaintenanceItem(props: MaintenanceItemProps) {
   const { record, onEdit, onDelete } = props;
 
-  const typeLabel = createTypeLabel(record.type);
+  const typeLabel = getMaintenanceTypeLabel(record.type);
   const date = formatDate(record.servicedAt, 'MMM d, yyyy');
 
   return (

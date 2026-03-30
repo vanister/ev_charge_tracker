@@ -3,7 +3,7 @@ import type { MaintenanceRecord } from '../../../data/data-types';
 import { formatDate } from '../../../utilities/dateUtils';
 import type { MaintenanceGroup } from './maintenance-types';
 
-export function createTypeLabel(type: MaintenanceType): string {
+export function getMaintenanceTypeLabel(type: MaintenanceType): string {
   switch (type) {
     case 'tire_rotation':
       return 'Tire Rotation';
