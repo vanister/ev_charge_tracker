@@ -142,7 +142,7 @@ export function Dashboard() {
             }
             noCard
           >
-            <MaintenanceSummary activeVehicleId={activeVehicleId} timeRange={filter.timeRange} />
+            <MaintenanceSummary />
           </Section>
         )}
 
