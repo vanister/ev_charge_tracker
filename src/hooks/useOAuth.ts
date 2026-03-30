@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { failure, success, type Result } from '../utilities/resultUtils';
 import { useDatabase } from './useDatabase';
-import type { OAuthTokens, ProviderConfig } from '../data/data-types';
+import type { OAuthTokensRecord, ProviderConfigRecord } from '../data/data-types';
 import type { OAuthProvider } from '../types/shared-types';
 import { SYSTEM_CONFIG_KEY } from '../data/constants';
 import type { TokenExchangeConfig } from '../types/auth-types';
@@ -11,7 +11,7 @@ export function useOAuth() {
   const { db } = useDatabase();
 
   const saveTokens = useCallback(
-    async (provider: OAuthProvider, tokens: OAuthTokens): Promise<Result<boolean>> => {
+    async (provider: OAuthProvider, tokens: OAuthTokensRecord): Promise<Result<boolean>> => {
       try {
         await db.systemConfig
           .where('key')
@@ -33,7 +33,7 @@ export function useOAuth() {
   );
 
   const getTokens = useCallback(
-    async (provider: OAuthProvider): Promise<Result<OAuthTokens>> => {
+    async (provider: OAuthProvider): Promise<Result<OAuthTokensRecord>> => {
       try {
         const systemConfig = await db.systemConfig.get(SYSTEM_CONFIG_KEY);
         const tokens = systemConfig?.oauthTokens?.[provider];
@@ -52,7 +52,7 @@ export function useOAuth() {
   );
 
   const getProviderConfig = useCallback(
-    async (provider: OAuthProvider): Promise<Result<ProviderConfig>> => {
+    async (provider: OAuthProvider): Promise<Result<ProviderConfigRecord>> => {
       try {
         const systemConfig = await db.systemConfig.get(SYSTEM_CONFIG_KEY);
         const config = systemConfig?.oAuthSettings[provider];

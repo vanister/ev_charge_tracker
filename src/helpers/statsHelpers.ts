@@ -1,10 +1,13 @@
-import type { ChargingSession, Vehicle, Location } from '../data/data-types';
+import type { ChargingSessionRecord, VehicleRecord, LocationRecord } from '../data/data-types';
 import { getVehicleDisplayName } from './sessionHelpers';
 import type { SessionWithMetadata } from './sessionHelpers';
 import type { SessionStats, LocationStat } from '../pages/dashboard/dashboard-types';
 import { RECENT_SESSIONS_LIMIT } from '../constants';
 
-export function computeStats(sessions: ChargingSession[], locationMap: Map<string, Location>): SessionStats {
+export function computeStats(
+  sessions: ChargingSessionRecord[],
+  locationMap: Map<string, LocationRecord>
+): SessionStats {
   const totalKwh = sessions.reduce((sum, s) => sum + s.energyKwh, 0);
   const totalCostCents = sessions.reduce((sum, s) => sum + s.costCents, 0);
 
@@ -40,9 +43,9 @@ export function computeStats(sessions: ChargingSession[], locationMap: Map<strin
 }
 
 export function buildRecentSessions(
-  sessions: ChargingSession[],
-  vehicleMap: Map<string, Vehicle>,
-  locationMap: Map<string, Location>,
+  sessions: ChargingSessionRecord[],
+  vehicleMap: Map<string, VehicleRecord>,
+  locationMap: Map<string, LocationRecord>,
   limit: number = RECENT_SESSIONS_LIMIT
 ): SessionWithMetadata[] {
   const recentSessions = sessions

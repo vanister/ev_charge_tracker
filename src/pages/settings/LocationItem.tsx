@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import type { Location } from '../../data/data-types';
+import type { LocationRecord } from '../../data/data-types';
 import { Icon } from '../../components/Icon';
 import { formatRate } from '../../utilities/formatUtils';
 
 type LocationItemProps = {
-  location: Location;
+  location: LocationRecord;
 };
 
 export function LocationItem(props: LocationItemProps) {

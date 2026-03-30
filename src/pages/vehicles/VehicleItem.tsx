@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import type { Vehicle } from '../../data/data-types';
+import type { VehicleRecord } from '../../data/data-types';
 import { Icon } from '../../components/Icon';
 import { getVehicleDisplayName } from './vehicleHelpers';
 
 type VehicleItemProps = {
-  vehicle: Vehicle;
+  vehicle: VehicleRecord;
   onDelete: (id: string) => void;
 };
 

@@ -1,9 +1,9 @@
-import type { Location, Settings, SystemConfig } from './data-types';
+import type { LocationRecord, SettingsRecord, SystemConfigRecord } from './data-types';
 import { LOCATION_COLOR_HEX } from '../constants';
 
 export const DB_NAME = 'EVChargeTrackerDB';
 
-export const DEFAULT_LOCATIONS: Omit<Location, 'id' | 'createdAt' | 'isActive'>[] = [
+export const DEFAULT_LOCATIONS: Omit<LocationRecord, 'id' | 'createdAt' | 'isActive'>[] = [
   {
     name: 'Home',
     icon: 'home',
@@ -41,14 +41,14 @@ export const SYNC_FILE_VERSION = 1;
 export const SYNC_FILE_NAME = 'ev-charge-tracker-sync.json';
 
 export const SETTINGS_KEY = 'app-settings';
-export const DEFAULT_SETTINGS: Settings = {
+export const DEFAULT_SETTINGS: SettingsRecord = {
   key: SETTINGS_KEY,
   onboardingComplete: false,
   backupReminderInterval: '3d'
 };
 
 export const SYSTEM_CONFIG_KEY = 'system-config';
-export const DEFAULT_SYSTEM_CONFIG: SystemConfig = {
+export const DEFAULT_SYSTEM_CONFIG: SystemConfigRecord = {
   key: SYSTEM_CONFIG_KEY,
   oAuthSettings: {
     google: {

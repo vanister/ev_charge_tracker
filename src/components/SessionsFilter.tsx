@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import type { Vehicle, Location } from '../data/data-types';
+import type { VehicleRecord, LocationRecord } from '../data/data-types';
 import { Button } from '../components/Button';
 import { Icon } from '../components/Icon';
 import { FormSelect } from '../components/FormSelect';
@@ -8,8 +8,8 @@ import { TIME_FILTER_OPTIONS } from '../constants';
 import type { TimeFilterValue } from '../types/shared-types';
 
 type SessionsFilterProps = {
-  vehicles: Vehicle[];
-  locations: Location[];
+  vehicles: VehicleRecord[];
+  locations: LocationRecord[];
   selectedVehicleId: string | undefined;
   selectedLocationId: string | undefined;
   selectedTimeRange: TimeFilterValue;

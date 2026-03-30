@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDatabase } from './useDatabase';
-import type { Vehicle } from '../data/data-types';
+import type { VehicleRecord } from '../data/data-types';
 import { generateId } from '../utilities/dataUtils';
 import { success, failure, type Result } from '../utilities/resultUtils';
 import type { CreateVehicleInput, UpdateVehicleInput } from '../pages/vehicles/vehicle-types';
@@ -11,7 +11,7 @@ export function useVehicles() {
   const { db } = useDatabase();
 
   const getVehicleList = useCallback(
-    async (activeOnly = true): Promise<Result<Vehicle[]>> => {
+    async (activeOnly = true): Promise<Result<VehicleRecord[]>> => {
       try {
         if (activeOnly) {
           const vehicles = await db.vehicles.where('isActive').equals(1).sortBy('createdAt');
@@ -29,7 +29,7 @@ export function useVehicles() {
   );
 
   const getVehicle = useCallback(
-    async (id: string): Promise<Result<Vehicle | undefined>> => {
+    async (id: string): Promise<Result<VehicleRecord | undefined>> => {
       try {
         const vehicle = await db.vehicles.get(id);
         return success(vehicle);
@@ -42,8 +42,8 @@ export function useVehicles() {
   );
 
   const createVehicle = useCallback(
-    async (input: CreateVehicleInput): Promise<Result<Vehicle>> => {
-      const vehicle: Vehicle = {
+    async (input: CreateVehicleInput): Promise<Result<VehicleRecord>> => {
+      const vehicle: VehicleRecord = {
         ...input,
         icon: '🚗',
         id: generateId(),
@@ -63,7 +63,7 @@ export function useVehicles() {
   );
 
   const updateVehicle = useCallback(
-    async (id: string, input: UpdateVehicleInput): Promise<Result<Vehicle>> => {
+    async (id: string, input: UpdateVehicleInput): Promise<Result<VehicleRecord>> => {
       try {
         const existing = await db.vehicles.get(id);
 
@@ -71,7 +71,7 @@ export function useVehicles() {
           return failure('Vehicle not found');
         }
 
-        const updated: Vehicle = { ...existing, ...input, icon: '🚗' };
+        const updated: VehicleRecord = { ...existing, ...input, icon: '🚗' };
 
         await db.vehicles.put(updated);
         return success(updated);

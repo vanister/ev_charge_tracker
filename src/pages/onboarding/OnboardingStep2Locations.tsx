@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocations } from '../../hooks/useLocations';
-import type { Location } from '../../data/data-types';
+import type { LocationRecord } from '../../data/data-types';
 import { useImmerState } from '../../hooks/useImmerState';
 import { Icon } from '../../components/Icon';
 import { FormInput } from '../../components/FormInput';
@@ -15,7 +15,7 @@ type OnboardingLocationFormData = {
 };
 
 type Step2State = {
-  locations: Location[];
+  locations: LocationRecord[];
   locationForms: OnboardingLocationFormData[];
   isLoading: boolean;
   error: string;

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import type { Location } from '../../data/data-types';
+import type { LocationRecord } from '../../data/data-types';
 import { useLocations } from '../../hooks/useLocations';
 import { EmptyState } from '../../components/EmptyState';
 import { LocationItem } from './LocationItem';
 
 export function LocationsSectionBody() {
   const { getLocationList } = useLocations();
-  const [locations, setLocations] = useState<Location[]>([]);
+  const [locations, setLocations] = useState<LocationRecord[]>([]);
 
   useEffect(() => {
     const loadLocations = async () => {

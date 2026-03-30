@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useSettings } from '../hooks/useSettings';
 import { FullscreenLoader } from './FullscreenLoader';
-import type { Settings } from '../data/data-types';
+import type { SettingsRecord } from '../data/data-types';
 
 export function RequireOnboarding() {
   const { getSettings } = useSettings();
-  const [settings, setSettings] = useState<Settings | undefined>();
+  const [settings, setSettings] = useState<SettingsRecord | undefined>();
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 

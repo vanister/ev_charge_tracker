@@ -4,7 +4,7 @@ import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import { useLocations } from '../../hooks/useLocations';
 import { useUserPreferences } from '../../hooks/useUserPreferences';
-import type { Vehicle, Location as AppLocation } from '../../data/data-types';
+import type { VehicleRecord, LocationRecord as AppLocation } from '../../data/data-types';
 import { usePageConfig } from '../../hooks/usePageConfig';
 import { useImmerState } from '../../hooks/useImmerState';
 import { useToast } from '../../hooks/useToast';
@@ -50,7 +50,7 @@ export function SessionDetails() {
   const { getSession, createSession, updateSession } = useSessions();
   const { showToast } = useToast();
   const { getVehicleList } = useVehicles();
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [vehicles, setVehicles] = useState<VehicleRecord[]>([]);
   const { getLocationList } = useLocations();
   const [locations, setLocations] = useState<AppLocation[]>([]);
   const { preferences, updatePreferences } = useUserPreferences();
