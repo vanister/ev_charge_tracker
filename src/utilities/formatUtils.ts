@@ -18,6 +18,10 @@ export function formatRate(ratePerKwh: number, decimalPlaces: number = 2): strin
   return `$${ratePerKwh.toFixed(decimalPlaces)}/kWh`;
 }
 
+export function formatMpge(mpge: number): string {
+  return `${Math.round(mpge)} MPGe`;
+}
+
 export function formatBytes(bytes: number, decimalPlaces: number = 1): string {
   if (bytes < 1024 * 1024) {
     return `${(bytes / 1024).toFixed(decimalPlaces)} KB`;

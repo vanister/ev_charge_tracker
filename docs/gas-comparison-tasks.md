@@ -18,12 +18,12 @@ The design doc is located here: [gas-comparison-design.md](./gas-comparison-desi
 
 ## Phase 2: Calculation Helpers & Formatters
 
-- [ ] 4. Create `src/helpers/gasComparisonHelpers.ts`
+- [x] 4. Create `src/helpers/gasComparisonHelpers.ts`
   - `getMiPerKwh(vehicle, defaultMiPerKwh)` — use vehicle `range / batteryCapacity` if both exist, otherwise fallback
   - `calcMpge(miPerKwh)` — `miPerKwh * KWH_PER_GALLON`
   - `calcGasCostCents(totalKwh, miPerKwh, gasPriceCents, comparisonMpg)` — equivalent gas cost for same miles
   - `computeGasComparison(totalKwh, totalCostCents, vehicle, settings)` — orchestrator returning `GasComparisonStats`
-- [ ] 5. Add `formatMpge(mpge)` to `src/utilities/formatUtils.ts`
+- [x] 5. Add `formatMpge(mpge)` to `src/utilities/formatUtils.ts`
 
 ## Phase 3: Settings UI
 
@@ -52,12 +52,12 @@ The design doc is located here: [gas-comparison-design.md](./gas-comparison-desi
 
 ## Phase 5: Finalize
 
-- [ ] 11. Create `src/helpers/__tests__/gasComparisonHelpers.test.ts`
+- [x] 11. Create `src/helpers/__tests__/gasComparisonHelpers.test.ts`
   - `getMiPerKwh` — vehicle-derived vs fallback
   - `calcMpge` — known values (e.g. 2.7 mi/kWh = ~91 MPGe)
   - `calcGasCostCents` — edge cases: zero kWh, zero MPG
   - `computeGasComparison` — end-to-end with realistic inputs
   - Savings positive when EV cheaper, negative otherwise
-- [ ] 12. Bump version to `1.6.0` in `package.json`
-- [ ] 13. Run `npm run build` — verify no errors
-- [ ] 14. Run `/review`
+- [x] 12. Bump version to `1.6.0` in `package.json`
+- [x] 13. Run `npm run build` — verify no errors
+- [x] 14. Run `/review`
