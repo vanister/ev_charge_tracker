@@ -20,13 +20,13 @@ export function Dashboard() {
 
   const navigate = useNavigate();
   const { preferences, updatePreferences } = useUserPreferences();
+  const [filtersIsOpen, setFiltersIsOpen] = useState(preferences.dashboardFilterIsOpen ?? true);
 
   const [filter, setFilter] = useImmerState<DashboardFilter>({
     timeRange: (preferences.dashboardFilterTimeRange as TimeFilterValue) ?? '31d',
     vehicleId: undefined,
     locationId: undefined
   });
-  const [filtersIsOpen, setFiltersIsOpen] = useState(preferences.dashboardFilterIsOpen ?? true);
 
   const { stats, recentSessions, chartData, vehicles, locations, hasAnySessions, gasComparison, isLoading, error } =
     useDashboardData(filter);
