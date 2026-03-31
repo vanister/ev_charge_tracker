@@ -10,17 +10,26 @@ type GasComparisonValues = {
 };
 
 function formatGasPrice(cents: number | undefined): string {
-  if (cents == null) return '--';
+  if (cents == null) {
+    return '--';
+  }
+
   return `$${(cents / 100).toFixed(2)}/gal`;
 }
 
 function formatMpg(mpg: number | undefined): string {
-  if (mpg == null) return '--';
+  if (mpg == null) {
+    return '--';
+  }
+
   return `${mpg} MPG`;
 }
 
 function formatMiPerKwh(miPerKwh: number | undefined): string {
-  if (miPerKwh == null) return '--';
+  if (miPerKwh == null) {
+    return '--';
+  }
+
   return `${miPerKwh} mi/kWh`;
 }
 
