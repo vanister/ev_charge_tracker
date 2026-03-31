@@ -27,11 +27,11 @@ The design doc is located here: [gas-comparison-design.md](./gas-comparison-desi
 
 ## Phase 3: Settings UI
 
-- [ ] 6. Create `src/pages/settings/GasComparisonSectionBody.tsx`
+- [x] 6. Create `src/pages/settings/GasComparisonSectionBody.tsx`
   - Number inputs for: Gas Price ($/gal, stored as cents), Comparison MPG, Default mi/kWh
   - Follows `SessionSectionBody` pattern: load via `useSettings().getSettings()`, save via `updateSettings()`, toast on save
   - Helper text explaining mi/kWh is only used when vehicle specs are missing
-- [ ] 7. Add "Gas Comparison" section to `src/pages/settings/Settings.tsx`
+- [x] 7. Add "Gas Comparison" section to `src/pages/settings/Settings.tsx`
   - Place between Session and Storage sections
   - Use `id="gas-comparison"` for deep linking from dashboard
 
