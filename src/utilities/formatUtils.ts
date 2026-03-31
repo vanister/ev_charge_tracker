@@ -5,16 +5,15 @@ export function formatBackupReminderInterval(interval: BackupReminderInterval): 
   return days === 1 ? '1 day' : `${days} days`;
 }
 
-export function formatCost(costCents: number, decimalPlaces: number = 2): string {
+export function formatCost(costCents: number): string {
   const dollars = costCents / 100;
-  const formattedCost = new Intl.NumberFormat('en-US', {
+  const decimalPlaces = Math.abs(costCents) < 100_000 ? 2 : 0;
+  return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: decimalPlaces,
     maximumFractionDigits: decimalPlaces
   }).format(dollars);
-
-  return formattedCost;
 }
 
 export function formatEnergy(kwh: number, decimalPlaces: number = 1): string {

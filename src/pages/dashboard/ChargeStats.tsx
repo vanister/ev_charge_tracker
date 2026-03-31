@@ -7,8 +7,7 @@ type ChargeStatsProps = {
 };
 
 export function ChargeStats({ stats }: ChargeStatsProps) {
-  const formattedCost =
-    stats.totalCostCents < 100 * 1000 ? formatCost(stats.totalCostCents) : formatCost(stats.totalCostCents, 0);
+  const formattedCost = formatCost(stats.totalCostCents);
 
   return (
     <div className="grid grid-cols-2 gap-3">

@@ -36,12 +36,7 @@ export function MaintenanceSummary() {
   const lastServiceType = getMaintenanceTypeLabel(lastRecord?.type ?? 'other');
   // only show cents if cost is less than 1000 dollars to avoid cluttering the UI with unnecessary detail for large costs
   const totalCostCents = filteredRecords.reduce((sum, r) => sum + (r.costCents ?? 0), 0);
-  const totalCostLabel =
-    filteredRecords.length > 0
-      ? totalCostCents >= 100 * 1000
-        ? formatCost(totalCostCents, 0)
-        : formatCost(totalCostCents)
-      : '—';
+  const totalCostLabel = filteredRecords.length > 0 ? formatCost(totalCostCents) : '—';
 
   return (
     <div className="grid grid-cols-2 gap-3">
