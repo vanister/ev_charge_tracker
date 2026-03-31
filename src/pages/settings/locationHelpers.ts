@@ -1,4 +1,4 @@
-import type { Location } from '../../data/data-types';
+import type { LocationRecord } from '../../data/data-types';
 import { LOCATION_COLOR_HEX } from '../../constants';
 
 export type LocationFormData = {
@@ -15,7 +15,7 @@ export const DEFAULT_LOCATION_FORM_DATA: LocationFormData = {
   defaultRate: ''
 };
 
-export type NewLocation = Omit<Location, 'id' | 'createdAt' | 'isActive'>;
+export type NewLocation = Omit<LocationRecord, 'id' | 'createdAt' | 'isActive'>;
 
 // @deprecated Named colors are no longer used; this map exists only to migrate legacy data on save.
 const DEPRECATED_NAMED_COLORS: Record<string, string> = {

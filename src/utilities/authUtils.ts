@@ -1,6 +1,6 @@
 import { OAUTH_PROVIDERS } from '../constants';
 import type { OAuthProvider } from '../types/shared-types';
-import type { OAuthTokens } from '../data/data-types';
+import type { OAuthTokensRecord } from '../data/data-types';
 import type { TokenExchangeConfig } from '../types/auth-types';
 import { type Result, success, failure } from './resultUtils';
 
@@ -90,7 +90,7 @@ export async function exchangeCodeForTokens({
   codeVerifier,
   clientId,
   redirectUri
-}: TokenExchangeConfig): Promise<Result<OAuthTokens>> {
+}: TokenExchangeConfig): Promise<Result<OAuthTokensRecord>> {
   const { tokenEndpoint } = OAUTH_PROVIDERS[provider];
 
   const body = new URLSearchParams({

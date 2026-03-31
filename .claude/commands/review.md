@@ -40,6 +40,7 @@ Review the code in context against these project standards before signing off.
 - No unused variables, imports, or dead code
 - Import order: external deps → project deps
 - Guard clauses and early returns, no deep nesting
+- Dispatch a sub-agent if the changes are more than 100 lines of code to do a cold review of the changes
 
 ## Output
 

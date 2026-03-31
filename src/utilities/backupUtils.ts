@@ -1,12 +1,12 @@
 import { failure, success } from './resultUtils';
 import type { Result } from './resultUtils';
 import type {
-  ChargingSession,
+  ChargingSessionRecord,
   EvChargTrackerDb,
-  Location,
+  LocationRecord,
   MaintenanceRecord,
-  Settings,
-  Vehicle
+  SettingsRecord,
+  VehicleRecord
 } from '../data/data-types';
 import type { BackupFile } from '../pages/settings/settings-types';
 import { BACKUP_FILE_VERSION } from '../data/constants';
@@ -84,10 +84,10 @@ export async function restoreBackup(db: EvChargTrackerDb, backup: BackupFile): P
       ]);
 
       await Promise.all([
-        db.vehicles.bulkAdd(getRecords<Vehicle>('vehicles')),
-        db.sessions.bulkAdd(getRecords<ChargingSession>('sessions')),
-        db.locations.bulkAdd(getRecords<Location>('locations')),
-        db.settings.bulkAdd(getRecords<Settings>('settings')),
+        db.vehicles.bulkAdd(getRecords<VehicleRecord>('vehicles')),
+        db.sessions.bulkAdd(getRecords<ChargingSessionRecord>('sessions')),
+        db.locations.bulkAdd(getRecords<LocationRecord>('locations')),
+        db.settings.bulkAdd(getRecords<SettingsRecord>('settings')),
         db.maintenanceRecords.bulkAdd(getRecords<MaintenanceRecord>('maintenanceRecords'))
       ]);
     });

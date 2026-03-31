@@ -1,4 +1,4 @@
-import type { Vehicle } from '../../data/data-types';
+import type { VehicleRecord } from '../../data/data-types';
 
 export type VehicleFormData = {
   year: string;
@@ -22,6 +22,6 @@ export const DEFAULT_VEHICLE_FORM_DATA: VehicleFormData = {
   notes: ''
 };
 
-export function getVehicleDisplayName(vehicle: Vehicle): string {
+export function getVehicleDisplayName(vehicle: VehicleRecord): string {
   return vehicle.name || `${vehicle.make} ${vehicle.model}`;
 }

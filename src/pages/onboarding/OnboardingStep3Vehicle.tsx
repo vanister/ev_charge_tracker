@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useVehicles } from '../../hooks/useVehicles';
-import type { Vehicle } from '../../data/data-types';
+import type { VehicleRecord } from '../../data/data-types';
 import { useImmerState } from '../../hooks/useImmerState';
 import { OnboardingHeader } from './OnboardingHeader';
 import { FormFooter } from '../../components/FormFooter';
@@ -26,7 +26,7 @@ const DEFAULT_STATE: Step3State = {
 
 export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
   const { createVehicle, getVehicleList } = useVehicles();
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [vehicles, setVehicles] = useState<VehicleRecord[]>([]);
 
   useEffect(() => {
     const loadVehicles = async () => {

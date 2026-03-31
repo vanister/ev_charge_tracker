@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
 import { useDatabase } from './useDatabase';
-import type { Settings } from '../data/data-types';
+import type { SettingsRecord } from '../data/data-types';
 import { SETTINGS_KEY } from '../data/constants';
 import { success, failure, type Result } from '../utilities/resultUtils';
 
 export function useSettings() {
   const { db } = useDatabase();
 
-  const getSettings = useCallback(async (): Promise<Result<Settings | undefined>> => {
+  const getSettings = useCallback(async (): Promise<Result<SettingsRecord | undefined>> => {
     try {
       const settings = await db.settings.get(SETTINGS_KEY);
       return success(settings);
@@ -18,7 +18,7 @@ export function useSettings() {
   }, [db]);
 
   const updateSettings = useCallback(
-    async (updates: Partial<Omit<Settings, 'key'>>): Promise<Result<boolean>> => {
+    async (updates: Partial<Omit<SettingsRecord, 'key'>>): Promise<Result<boolean>> => {
       try {
         await db.settings
           .where('key')

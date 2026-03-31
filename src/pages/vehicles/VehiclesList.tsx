@@ -5,14 +5,14 @@ import { usePageConfig } from '../../hooks/usePageConfig';
 import { ItemListButton } from '../../components/ItemListButton';
 import { EmptyState } from '../../components/EmptyState';
 import { VehicleItem } from './VehicleItem';
-import type { Vehicle } from '../../data/data-types';
+import type { VehicleRecord } from '../../data/data-types';
 
 export function VehiclesList() {
   usePageConfig('Vehicles');
 
   const navigate = useNavigate();
   const { getVehicleList, deleteVehicle } = useVehicles();
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [vehicles, setVehicles] = useState<VehicleRecord[]>([]);
   const sortedVehicles = useMemo(() => [...vehicles].sort((a, b) => b.createdAt - a.createdAt), [vehicles]);
 
   useEffect(() => {

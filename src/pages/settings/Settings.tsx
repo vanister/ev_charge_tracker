@@ -3,6 +3,7 @@ import { useScrollToHash } from '../../hooks/useScrollToHash';
 import { Section } from '../../components/Section';
 import { LocationsSectionBody } from './LocationsSection';
 import { SessionSectionBody } from './SessionSectionBody';
+import { GasComparisonSectionBody } from './GasComparisonSectionBody';
 import { StorageSectionBody } from './StorageSectionBody';
 import { UpdateSectionBody } from './UpdateSectionBody';
 import { AboutSectionBody } from './AboutSectionBody';
@@ -26,6 +27,10 @@ export function Settings() {
 
         <Section title="Session" cardClassName="space-y-4">
           <SessionSectionBody />
+        </Section>
+
+        <Section title="Gas Comparison" id="gas-comparison" cardClassName="space-y-4">
+          <GasComparisonSectionBody />
         </Section>
 
         <Section title="Storage" cardClassName="space-y-3">

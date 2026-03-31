@@ -1,4 +1,4 @@
-import type { Vehicle } from '../../data/data-types';
+import type { VehicleRecord } from '../../data/data-types';
 
-export type CreateVehicleInput = Omit<Vehicle, 'id' | 'createdAt' | 'isActive'>;
-export type UpdateVehicleInput = Partial<Omit<Vehicle, 'id' | 'createdAt'>>;
+export type CreateVehicleInput = Omit<VehicleRecord, 'id' | 'createdAt' | 'isActive'>;
+export type UpdateVehicleInput = Partial<Omit<VehicleRecord, 'id' | 'createdAt'>>;

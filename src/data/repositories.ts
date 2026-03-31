@@ -6,7 +6,7 @@ import {
   SETTINGS_KEY,
   SYSTEM_CONFIG_KEY
 } from './constants';
-import type { ActiveState, EvChargTrackerDb, Location, Settings, SystemConfig } from './data-types';
+import type { ActiveState, EvChargTrackerDb, LocationRecord, SettingsRecord, SystemConfigRecord } from './data-types';
 
 /******************************************************************************************
   Simple repository functions to abstract away direct db access from the rest of the app 
@@ -22,7 +22,7 @@ export async function seedDefaultLocations(db: EvChargTrackerDb): Promise<void> 
   }
 
   const now = Date.now();
-  const locations: Location[] = DEFAULT_LOCATIONS.map(({ name, color, icon, defaultRate, order }) => ({
+  const locations: LocationRecord[] = DEFAULT_LOCATIONS.map(({ name, color, icon, defaultRate, order }) => ({
     id: generateId(),
     name,
     icon,
@@ -36,7 +36,7 @@ export async function seedDefaultLocations(db: EvChargTrackerDb): Promise<void> 
   await db.locations.bulkPut(locations);
 }
 
-export async function loadSystemConfig(db: EvChargTrackerDb): Promise<SystemConfig> {
+export async function loadSystemConfig(db: EvChargTrackerDb): Promise<SystemConfigRecord> {
   const existing = await db.systemConfig.get(SYSTEM_CONFIG_KEY);
 
   if (existing) {
@@ -49,7 +49,7 @@ export async function loadSystemConfig(db: EvChargTrackerDb): Promise<SystemConf
   return defaultConfig;
 }
 
-export async function loadSettings(db: EvChargTrackerDb): Promise<Settings> {
+export async function loadSettings(db: EvChargTrackerDb): Promise<SettingsRecord> {
   const existingSettings = await db.settings.get(SETTINGS_KEY);
 
   if (existingSettings) {

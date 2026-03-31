@@ -1,4 +1,4 @@
-import type { ChargingSession } from '../../data/data-types';
+import type { ChargingSessionRecord } from '../../data/data-types';
 import type { IconName } from '../../types/shared-types';
 import { Icon } from '../../components/Icon';
 import { formatTime, formatDateTime } from '../../utilities/dateUtils';
@@ -6,7 +6,7 @@ import { formatCost, formatEnergy } from '../../utilities/formatUtils';
 import { SessionItemActions } from './SessionItemActions';
 
 type SessionItemProps = {
-  session: ChargingSession;
+  session: ChargingSessionRecord;
   vehicleName: string;
   locationName: string;
   locationIcon: IconName;

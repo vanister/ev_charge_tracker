@@ -13,6 +13,10 @@ Mobile-focused, fully offline with IndexedDB via Dexie.js. Deployed to Cloudflar
 - React 19, TypeScript, Vite, Tailwind CSS, clsx
 - Dexie.js (IndexedDB), date-fns, Cloudflare/Wrangler
 
+## Project Structure
+- `src/` — application source code
+- `tests/` — Vitest unit tests (mirrors `src/` structure)
+
 ## Universal Rules
 - Guard clauses, early returns, avoid deep nesting
 - `if` statements must have bodies
@@ -67,8 +71,6 @@ Mobile-focused, fully offline with IndexedDB via Dexie.js. Deployed to Cloudflar
 - Run `npm run build` after major changes to verify no build errors
 
 ## Key Conventions
-- Use `/orchestrate` to run the architect → coder → review pipeline for a feature
-- Use `/refactor` to clean up code to project standards
 - **ALWAYS run `/review` after every code change before considering it complete — no exceptions**
 - Use `/component` to scaffold a React component
 

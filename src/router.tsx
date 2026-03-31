@@ -15,6 +15,7 @@ import { MaintenanceList } from './pages/vehicles/maintenance/MaintenanceList';
 import { MaintenanceDetails } from './pages/vehicles/maintenance/MaintenanceDetails';
 import { Settings } from './pages/settings/Settings';
 import { LocationDetails } from './pages/settings/LocationDetails';
+import { GasComparisonDetails } from './pages/settings/GasComparisonDetails';
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +42,7 @@ export const router = createBrowserRouter([
               { path: '/vehicles/:vehicleId/maintenance/:id/edit', element: <MaintenanceDetails /> },
               { path: '/settings', element: <Settings /> },
               { path: '/settings/locations/:id/edit', element: <LocationDetails /> },
+              { path: '/settings/gas-comparison/edit', element: <GasComparisonDetails /> },
               { path: '*', element: <NotFoundPage /> }
             ]
           }

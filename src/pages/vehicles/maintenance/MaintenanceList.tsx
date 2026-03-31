@@ -9,11 +9,11 @@ import { groupRecordsByDate } from './maintenanceHelpers';
 import { getVehicleDisplayName } from '../vehicleHelpers';
 import { MaintenanceItem } from './MaintenanceItem';
 import { MaintenanceEmptyState } from './MaintenanceEmptyState';
-import type { MaintenanceRecord, Vehicle } from '../../../data/data-types';
+import type { MaintenanceRecord, VehicleRecord } from '../../../data/data-types';
 
 type MaintenanceListState = {
   records: MaintenanceRecord[];
-  vehicle: Vehicle | undefined;
+  vehicle: VehicleRecord | undefined;
   isLoading: boolean;
 };
 

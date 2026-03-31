@@ -68,6 +68,13 @@ export const MAINTENANCE_TYPES = [
 
 export type MaintenanceType = (typeof MAINTENANCE_TYPES)[number];
 
+// Gas Comparison
+// EPA standard: 1 gallon of gasoline = 33.7 kWh of energy
+export const KWH_PER_GALLON = 33.7;
+export const DEFAULT_GAS_PRICE_CENTS = 350; // $3.50/gal
+export const DEFAULT_COMPARISON_MPG = 40;
+export const DEFAULT_MI_PER_KWH = 2.7;
+
 // Backup
 export const BACKUP_REMINDER_INTERVALS = ['1d', '3d', '7d', '14d', '30d'] as const;
 export type BackupReminderInterval = (typeof BACKUP_REMINDER_INTERVALS)[number];

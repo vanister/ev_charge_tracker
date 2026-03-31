@@ -2,7 +2,7 @@ import { FormInput } from '../../components/FormInput';
 import { FormTextarea } from '../../components/FormTextarea';
 import { FormSelect } from '../../components/FormSelect';
 import { formatCost } from '../../utilities/formatUtils';
-import type { Vehicle, Location } from '../../data/data-types';
+import type { VehicleRecord, LocationRecord } from '../../data/data-types';
 import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
 import type { SessionFormData } from './session-types';
 
@@ -13,8 +13,8 @@ type SessionFormProps = {
   onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void;
   isLoading: boolean;
   error: string;
-  vehicles: Vehicle[];
-  locations: Location[];
+  vehicles: VehicleRecord[];
+  locations: LocationRecord[];
   calculatedCost: number;
 };
 

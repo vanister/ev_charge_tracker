@@ -1,17 +1,17 @@
 import { useCallback } from 'react';
 import { useDatabase } from './useDatabase';
-import type { ActiveState, Location } from '../data/data-types';
+import type { ActiveState, LocationRecord } from '../data/data-types';
 import { success, failure, type Result } from '../utilities/resultUtils';
 import { generateId } from '../utilities/dataUtils';
 import type { NewLocation } from '../pages/settings/locationHelpers';
 
-type UpdateLocation = Partial<Omit<Location, 'id' | 'createdAt'>>;
+type UpdateLocation = Partial<Omit<LocationRecord, 'id' | 'createdAt'>>;
 
 export function useLocations() {
   const { db } = useDatabase();
 
   const getLocationList = useCallback(
-    async (all = false): Promise<Result<Location[]>> => {
+    async (all = false): Promise<Result<LocationRecord[]>> => {
       try {
         const locations = all
           ? await db.locations.orderBy('order').toArray()
@@ -27,7 +27,7 @@ export function useLocations() {
   );
 
   const getLocation = useCallback(
-    async (id: string): Promise<Result<Location | undefined>> => {
+    async (id: string): Promise<Result<LocationRecord | undefined>> => {
       try {
         const location = await db.locations.get(id);
         return success(location);
@@ -40,8 +40,8 @@ export function useLocations() {
   );
 
   const createLocation = useCallback(
-    async (loc: NewLocation): Promise<Result<Location>> => {
-      const location: Location = {
+    async (loc: NewLocation): Promise<Result<LocationRecord>> => {
+      const location: LocationRecord = {
         ...loc,
         id: generateId(),
         createdAt: Date.now(),
@@ -60,7 +60,7 @@ export function useLocations() {
   );
 
   const updateLocation = useCallback(
-    async (id: string, loc: UpdateLocation): Promise<Result<Location>> => {
+    async (id: string, loc: UpdateLocation): Promise<Result<LocationRecord>> => {
       try {
         const existing = await db.locations.get(id);
 
@@ -68,7 +68,7 @@ export function useLocations() {
           return failure('Location not found');
         }
 
-        const updated: Location = { ...existing, ...loc };
+        const updated: LocationRecord = { ...existing, ...loc };
 
         await db.locations.put(updated);
         return success(updated);

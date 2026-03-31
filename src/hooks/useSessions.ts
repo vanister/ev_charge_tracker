@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDatabase } from './useDatabase';
-import type { ChargingSession } from '../data/data-types';
+import type { ChargingSessionRecord } from '../data/data-types';
 import { success, failure, type Result } from '../utilities/resultUtils';
 import { generateId } from '../utilities/dataUtils';
 
@@ -13,14 +13,14 @@ type SessionFilters = {
   };
 };
 
-type CreateSessionInput = Omit<ChargingSession, 'id' | 'costCents'>;
-type UpdateSessionInput = Partial<Omit<ChargingSession, 'id'>>;
+type CreateSessionInput = Omit<ChargingSessionRecord, 'id' | 'costCents'>;
+type UpdateSessionInput = Partial<Omit<ChargingSessionRecord, 'id'>>;
 
 export function useSessions() {
   const { db } = useDatabase();
 
   const getSessionList = useCallback(
-    async (filters?: SessionFilters): Promise<Result<ChargingSession[]>> => {
+    async (filters?: SessionFilters): Promise<Result<ChargingSessionRecord[]>> => {
       try {
         let query = db.sessions.orderBy('chargedAt');
 
@@ -55,7 +55,7 @@ export function useSessions() {
   );
 
   const getSession = useCallback(
-    async (id: string): Promise<Result<ChargingSession | undefined>> => {
+    async (id: string): Promise<Result<ChargingSessionRecord | undefined>> => {
       try {
         const session = await db.sessions.get(id);
         return success(session);
@@ -68,10 +68,10 @@ export function useSessions() {
   );
 
   const createSession = useCallback(
-    async (input: CreateSessionInput): Promise<Result<ChargingSession>> => {
+    async (input: CreateSessionInput): Promise<Result<ChargingSessionRecord>> => {
       const costCents = Math.round(input.energyKwh * input.ratePerKwh * 100);
 
-      const session: ChargingSession = {
+      const session: ChargingSessionRecord = {
         ...input,
         id: generateId(),
         costCents
@@ -89,7 +89,7 @@ export function useSessions() {
   );
 
   const updateSession = useCallback(
-    async (id: string, input: UpdateSessionInput): Promise<Result<ChargingSession>> => {
+    async (id: string, input: UpdateSessionInput): Promise<Result<ChargingSessionRecord>> => {
       try {
         const existing = await db.sessions.get(id);
 
@@ -104,7 +104,7 @@ export function useSessions() {
             ? Math.round(energyKwh * ratePerKwh * 100)
             : existing.costCents;
 
-        const updated: ChargingSession = {
+        const updated: ChargingSessionRecord = {
           ...existing,
           ...input,
           costCents

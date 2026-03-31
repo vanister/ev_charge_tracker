@@ -2,7 +2,7 @@ import { MAINTENANCE_TYPES } from '../../../constants';
 import { FormInput } from '../../../components/FormInput';
 import { FormTextarea } from '../../../components/FormTextarea';
 import { FormSelect } from '../../../components/FormSelect';
-import { createTypeLabel } from './maintenanceHelpers';
+import { getMaintenanceTypeLabel } from './maintenanceHelpers';
 import type { MaintenanceFormData } from './maintenance-types';
 
 type MaintenanceFormProps = {
@@ -28,7 +28,7 @@ export function MaintenanceForm(props: MaintenanceFormProps) {
         disabled={isLoading}
         options={[
           { value: '', text: 'Select service type' },
-          ...MAINTENANCE_TYPES.map((t) => ({ value: t, text: createTypeLabel(t) }))
+          ...MAINTENANCE_TYPES.map((t) => ({ value: t, text: getMaintenanceTypeLabel(t) }))
         ]}
       />
 

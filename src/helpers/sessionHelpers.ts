@@ -1,9 +1,9 @@
-import type { ChargingSession, Vehicle, Location } from '../data/data-types';
+import type { ChargingSessionRecord, VehicleRecord, LocationRecord } from '../data/data-types';
 import type { IconName } from '../types/shared-types';
 import { getDateGroupKey } from '../utilities/dateUtils';
 
 export type SessionWithMetadata = {
-  session: ChargingSession;
+  session: ChargingSessionRecord;
   vehicleName: string;
   locationName: string;
   locationIcon: IconName;
@@ -12,22 +12,22 @@ export type SessionWithMetadata = {
 
 export type SessionsByDate = [string, SessionWithMetadata[]][];
 
-export function createVehicleMap(vehicles: Vehicle[]): Map<string, Vehicle> {
-  return new Map<string, Vehicle>(vehicles.map((v) => [v.id, v]));
+export function createVehicleMap(vehicles: VehicleRecord[]): Map<string, VehicleRecord> {
+  return new Map<string, VehicleRecord>(vehicles.map((v) => [v.id, v]));
 }
 
-export function createLocationMap(locations: Location[]): Map<string, Location> {
-  return new Map<string, Location>(locations.map((l) => [l.id, l]));
+export function createLocationMap(locations: LocationRecord[]): Map<string, LocationRecord> {
+  return new Map<string, LocationRecord>(locations.map((l) => [l.id, l]));
 }
 
-export function getVehicleDisplayName(vehicle: Vehicle): string {
+export function getVehicleDisplayName(vehicle: VehicleRecord): string {
   return vehicle.name || `${vehicle.make} ${vehicle.model}`;
 }
 
 export function groupSessionsByDate(
-  sessions: ChargingSession[],
-  vehicleMap: Map<string, Vehicle>,
-  locationMap: Map<string, Location>
+  sessions: ChargingSessionRecord[],
+  vehicleMap: Map<string, VehicleRecord>,
+  locationMap: Map<string, LocationRecord>
 ): SessionsByDate {
   const grouped = new Map<string, SessionWithMetadata[]>();
 

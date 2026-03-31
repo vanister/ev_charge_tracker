@@ -1,5 +1,5 @@
 import { subDays, startOfDay, formatDate, getDateGroupKey, startOfMonth, subMonths } from '../utilities/dateUtils';
-import type { ChargingSession, Location } from '../data/data-types';
+import type { ChargingSessionRecord, LocationRecord } from '../data/data-types';
 import type { ChartData, ChartBarData, LocationChartConfig } from '../pages/dashboard/chart-types';
 import { LOCATION_COLOR_HEX } from '../constants';
 import type { TimeFilterValue } from '../types/shared-types';
@@ -8,7 +8,11 @@ import type { TimeFilterValue } from '../types/shared-types';
 // from the raw bar payload without needing a separate data structure.
 const costKey = (locationId: string) => `${locationId}__cost`;
 
-export function buildChartData(sessions: ChargingSession[], locations: Location[], numDays: number = 31): ChartData {
+export function buildChartData(
+  sessions: ChargingSessionRecord[],
+  locations: LocationRecord[],
+  numDays: number = 31
+): ChartData {
   const now = Date.now();
   const startTimestamp = startOfDay(subDays(now, numDays - 1));
 
@@ -59,8 +63,8 @@ export function buildChartData(sessions: ChargingSession[], locations: Location[
 }
 
 export function buildMonthlyChartData(
-  sessions: ChargingSession[],
-  locations: Location[],
+  sessions: ChargingSessionRecord[],
+  locations: LocationRecord[],
   numMonths: number
 ): ChartData {
   const now = new Date();
@@ -120,7 +124,7 @@ export function getChartNumDays(timeRange: TimeFilterValue): number {
   }
 }
 
-export function getChartNumMonths(timeRange: TimeFilterValue, sessions: ChargingSession[]): number {
+export function getChartNumMonths(timeRange: TimeFilterValue, sessions: ChargingSessionRecord[]): number {
   if (timeRange === '6m') {
     return 6;
   }

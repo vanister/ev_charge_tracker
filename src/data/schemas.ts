@@ -8,7 +8,7 @@ const OAuthProviderSchema = z.enum(
   Object.keys(OAUTH_PROVIDERS) as [keyof typeof OAUTH_PROVIDERS, ...Array<keyof typeof OAUTH_PROVIDERS>]
 );
 
-export const VehicleSchema = z.object({
+export const VehicleRecordSchema = z.object({
   id: z.string(),
   name: z.string().optional(),
   make: z.string(),
@@ -24,7 +24,7 @@ export const VehicleSchema = z.object({
   isActive: ActiveStateSchema
 });
 
-export const LocationSchema = z.object({
+export const LocationRecordSchema = z.object({
   id: z.string(),
   name: z.string(),
   icon: z.enum(ALL_ICONS),
@@ -35,7 +35,7 @@ export const LocationSchema = z.object({
   order: z.number().optional()
 });
 
-export const ChargingSessionSchema = z.object({
+export const ChargingSessionRecordSchema = z.object({
   id: z.string(),
   vehicleId: z.string(),
   locationId: z.string(),
@@ -46,14 +46,18 @@ export const ChargingSessionSchema = z.object({
   notes: z.string().optional()
 });
 
-export const SettingsSchema = z.object({
+export const SettingsRecordSchema = z.object({
   key: z.literal('app-settings'),
   onboardingComplete: z.boolean(),
   backupReminderInterval: z.enum(BACKUP_REMINDER_INTERVALS).default('3d'),
   // used with backupReminderDismissedAt to determine when the next reminder is due
   lastBackupAt: z.number().optional(),
   // allows skipping a reminder cycle without performing a backup
-  backupReminderDismissedAt: z.number().optional()
+  backupReminderDismissedAt: z.number().optional(),
+  // gas comparison settings — undefined until user configures them
+  gasPriceCents: z.number().int().optional(),
+  comparisonMpg: z.number().optional(),
+  defaultMiPerKwh: z.number().optional()
 });
 
 export const MaintenanceRecordSchema = z.object({
@@ -71,21 +75,21 @@ export const MaintenanceRecordSchema = z.object({
   createdAt: z.number()
 });
 
-export const ProviderConfigSchema = z.object({
+export const ProviderConfigRecordSchema = z.object({
   provider: OAuthProviderSchema,
   clientId: z.string()
 });
 
-export const OAuthTokensSchema = z.object({
+export const OAuthTokensRecordSchema = z.object({
   accessToken: z.string(),
   refreshToken: z.string(),
   expiresAt: z.number()
 });
 
-export const SystemConfigSchema = z.object({
+export const SystemConfigRecordSchema = z.object({
   key: z.literal('system-config'),
-  oAuthSettings: z.record(OAuthProviderSchema, ProviderConfigSchema),
-  oauthTokens: z.record(OAuthProviderSchema, OAuthTokensSchema).optional(),
+  oAuthSettings: z.record(OAuthProviderSchema, ProviderConfigRecordSchema),
+  oauthTokens: z.record(OAuthProviderSchema, OAuthTokensRecordSchema).optional(),
   // Persisted device identifier included in sync file metadata
   deviceId: z.string().optional(),
   // Epoch ms of last successful sync — used by Transport module for diff-check
