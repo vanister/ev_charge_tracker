@@ -1,5 +1,5 @@
 import type { GasComparisonStats } from './dashboard-types';
-import { formatCost, formatMpge } from '../../utilities/formatUtils';
+import { formatCost } from '../../utilities/formatUtils';
 import { DashboardStatCard } from './DashboardStatCard';
 
 type GasComparisonProps = {
@@ -20,7 +20,6 @@ export function GasComparison({ gasComparison }: GasComparisonProps) {
 
   return (
     <div className="grid grid-cols-2 gap-3">
-      <DashboardStatCard label="MPGe" value={formatMpge(gasComparison.mpge)} icon="car" />
       <DashboardStatCard label="Gas Equiv." value={formatCost(gasComparison.gasCostCents)} icon="dollar-sign" />
       <DashboardStatCard
         label="Savings"
