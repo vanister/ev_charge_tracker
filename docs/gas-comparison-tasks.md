@@ -1,5 +1,7 @@
 # Gas Comparison & MPGe — Implementation Tasks (v1.6.0)
 
+**Feature completed**
+
 The design doc is located here: [gas-comparison-design.md](./gas-comparison-design.md)
 
 ## Phase 1: Data & Constants
