@@ -13,7 +13,7 @@ export function AboutSectionBody() {
         </div>
       </div>
       <p className="text-body-secondary text-sm">
-        Track your electric vehicle charging sessions, costs, and usage across all your locations.
+        Track your electric vehicle charging sessions, costs, maintenance and usage across all your locations.
       </p>
     </>
   );

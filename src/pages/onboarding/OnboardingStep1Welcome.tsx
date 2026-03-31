@@ -36,8 +36,8 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
     <div className="text-center">
       <OnboardingHeader
         title="EV Charge Tracker"
-        description="Track your electric vehicle charging sessions with ease."
-        subDescription="Work completely offline, manage multiple vehicles, and analyze your charging costs across different locations."
+        description="Track your electric vehicle charging sessions, maintenance and usage with ease."
+        subDescription="Work completely offline, manage multiple vehicles and analyze your charging costs across different locations."
       />
 
       <FormFooter>
