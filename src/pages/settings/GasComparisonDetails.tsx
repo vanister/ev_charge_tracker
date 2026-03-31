@@ -95,8 +95,8 @@ export function GasComparisonDetails() {
     <div className="mx-auto max-w-2xl px-4 pt-8 pb-20">
       <form id="gas-comparison-form" onSubmit={handleSubmit} className="space-y-4">
         <FormInput
-          id="gas-price"
-          label="Gas Price ($/gal)"
+          id="average-gas-price"
+          label="Average Gas Price ($/gal)"
           type="number"
           step="0.01"
           min="0"
@@ -111,8 +111,8 @@ export function GasComparisonDetails() {
           }
         />
         <FormInput
-          id="comparison-mpg"
-          label="Comparison MPG"
+          id="target-mpg"
+          label="Target MPG"
           type="number"
           step="1"
           min="1"
@@ -143,7 +143,7 @@ export function GasComparisonDetails() {
               })
             }
           />
-          <p className="text-body-secondary mt-3 text-xs">
+          <p className="text-body-secondary mt-3 text-xs italic">
             Used as fallback when a vehicle doesn't have battery capacity and range set
           </p>
         </div>

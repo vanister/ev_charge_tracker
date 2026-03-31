@@ -17,7 +17,7 @@ type SessionsFilterProps = {
   onLocationChange: (id: string | undefined) => void;
   onTimeRangeChange: (value: TimeFilterValue) => void;
   onClearFilters: () => void;
-  isOpen: boolean;
+  isOpen?: boolean;
   onToggle: () => void;
   className?: string;
 };
@@ -33,7 +33,7 @@ export function SessionsFilter(props: SessionsFilterProps) {
     onLocationChange,
     onTimeRangeChange,
     onClearFilters,
-    isOpen,
+    isOpen = false,
     onToggle,
     className
   } = props;
@@ -62,12 +62,15 @@ export function SessionsFilter(props: SessionsFilterProps) {
         <Icon
           name="chevron-down"
           size="sm"
-          className={`text-body-secondary transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          className={clsx('text-body-secondary transition-transform duration-200', { 'rotate-180': isOpen })}
         />
       </button>
 
       <div
-        className={`grid transition-[grid-template-rows] duration-200 ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+        className={clsx('grid transition-[grid-template-rows] duration-200', {
+          'grid-rows-[1fr]': isOpen,
+          'grid-rows-[0fr]': !isOpen
+        })}
       >
         <div className="overflow-hidden">
           <div className="pt-4">

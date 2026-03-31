@@ -48,17 +48,20 @@ export function GasComparisonSectionBody() {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between text-sm">
-        <span className="text-body-secondary">Gas Price</span>
+        <span className="text-body-secondary">Average Gas Price</span>
         <span className="text-body font-medium">{formatGasPrice(values.gasPriceCents)}</span>
       </div>
       <div className="flex items-center justify-between text-sm">
-        <span className="text-body-secondary">Comparison MPG</span>
+        <span className="text-body-secondary">Target MPG</span>
         <span className="text-body font-medium">{formatMpg(values.comparisonMpg)}</span>
       </div>
       <div className="flex items-center justify-between text-sm">
         <span className="text-body-secondary">Default mi/kWh</span>
         <span className="text-body font-medium">{formatMiPerKwh(values.defaultMiPerKwh)}</span>
       </div>
+      <p className="text-body-secondary text-xs italic">
+        Used as fallback when a vehicle doesn't have battery capacity and range set
+      </p>
       <div className="flex justify-end">
         <Button variant="secondary" onClick={() => navigate('/settings/gas-comparison/edit')}>
           Update
