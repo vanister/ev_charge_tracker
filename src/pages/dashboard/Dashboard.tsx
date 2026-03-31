@@ -8,6 +8,7 @@ import { EmptyState } from '../../components/EmptyState';
 import { Section } from '../../components/Section';
 import { SessionsFilter } from '../../components/SessionsFilter';
 import { ChargeStats } from './ChargeStats';
+import { GasComparison } from './GasComparison';
 import { ChargeSessionsCharts } from './ChargeSessionsCharts';
 import { DashboardRecentSessions } from './DashboardRecentSessions';
 import { MaintenanceSummary } from './MaintenanceSummary';
@@ -27,7 +28,7 @@ export function Dashboard() {
   });
   const [filtersIsOpen, setFiltersIsOpen] = useState(preferences.dashboardFilterIsOpen ?? true);
 
-  const { stats, recentSessions, chartData, vehicles, locations, hasAnySessions, isLoading, error } =
+  const { stats, recentSessions, chartData, vehicles, locations, hasAnySessions, gasComparison, isLoading, error } =
     useDashboardData(filter);
 
   // Pre-fill vehicleId from preferences once vehicle list first loads
@@ -114,6 +115,7 @@ export function Dashboard() {
     <div className="bg-background px-4 py-6">
       <div className="mx-auto max-w-2xl space-y-8">
         <Section title="Charge Stats" noCard>
+          {/* todo - clean the da up by wrapping SessionFilter in a DashboardSessionFilter component */}
           <SessionsFilter
             vehicles={vehicles}
             locations={locations}
@@ -128,8 +130,11 @@ export function Dashboard() {
             onToggle={handleFilterToggle}
             className="mb-4"
           />
-          <ChargeStats stats={stats} />
-          <ChargeSessionsCharts data={chartData} stats={stats} />
+          <div className="space-y-4">
+            <ChargeStats stats={stats} />
+            <GasComparison gasComparison={gasComparison} />
+            <ChargeSessionsCharts data={chartData} stats={stats} />
+          </div>
         </Section>
 
         {activeVehicleId && (

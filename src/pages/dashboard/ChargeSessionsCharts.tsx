@@ -29,7 +29,7 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
   }
 
   return (
-    <div className="mt-4">
+    <div>
       <div className="bg-surface border-default rounded-xl border px-2 pt-4 pb-3">
         <ResponsiveContainer width="100%" height={180}>
           <BarChart data={bars} barCategoryGap="35%" margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>

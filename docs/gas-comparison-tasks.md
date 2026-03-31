@@ -37,15 +37,15 @@ The design doc is located here: [gas-comparison-design.md](./gas-comparison-desi
 
 ## Phase 4: Dashboard Integration
 
-- [ ] 8. Extend `DashboardStatCard` with optional `action` prop
+- [x] 8. Extend `DashboardStatCard` with optional `action` prop
   - `action?: { label: string; to: string }` — renders a small link below the value
-- [ ] 9. Update `src/pages/dashboard/useDashboardData.ts`
+- [x] 9. Update `src/pages/dashboard/useDashboardData.ts`
   - Load settings alongside existing data in `Promise.all`
   - Compute gas comparison stats when settings are configured
   - Return `gasComparison: GasComparisonStats | null`
   - When "All Vehicles" filter is active, use `defaultMiPerKwh` from settings
   - When specific vehicle is selected, derive mi/kWh from its specs if available
-- [ ] 10. Update `src/pages/dashboard/ChargeStats.tsx`
+- [x] 10. Update `src/pages/dashboard/ChargeStats.tsx`
   - Accept optional `gasComparison` prop
   - When configured: show stat cards for MPGe, Gas Cost (equivalent), Savings (green/red)
   - When not configured: show placeholder callout using `DashboardStatCard` with `--` values and action link to `/settings#gas-comparison`

@@ -3,13 +3,15 @@ import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import { useLocations } from '../../hooks/useLocations';
 import { useUserPreferences } from '../../hooks/useUserPreferences';
+import { useSettings } from '../../hooks/useSettings';
 import { createVehicleMap, createLocationMap } from '../../helpers/sessionHelpers';
 import type { SessionWithMetadata } from '../../helpers/sessionHelpers';
 import type { VehicleRecord, LocationRecord } from '../../data/data-types';
-import type { SessionStats, DashboardFilter } from './dashboard-types';
+import type { SessionStats, DashboardFilter, GasComparisonStats } from './dashboard-types';
 import { computeStats, buildRecentSessions } from '../../helpers/statsHelpers';
 import { buildChartData, buildMonthlyChartData, getChartNumDays, getChartNumMonths } from '../../helpers/chartHelpers';
 import { getDateRangeForTimeFilter } from '../../utilities/dateUtils';
+import { computeGasComparison } from '../../helpers/gasComparisonHelpers';
 import type { ChartData } from './chart-types';
 
 type UseDashboardDataResult = {
@@ -19,6 +21,7 @@ type UseDashboardDataResult = {
   vehicles: VehicleRecord[];
   locations: LocationRecord[];
   hasAnySessions: boolean;
+  gasComparison: GasComparisonStats | null;
   isLoading: boolean;
   error: string | null;
 };
@@ -32,6 +35,7 @@ export function useDashboardData(filter: DashboardFilter): UseDashboardDataResul
   const [vehicles, setVehicles] = useState<VehicleRecord[]>([]);
   const [locations, setLocations] = useState<LocationRecord[]>([]);
   const [hasAnySessions, setHasAnySessions] = useState(false);
+  const [gasComparison, setGasComparison] = useState<GasComparisonStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -39,13 +43,15 @@ export function useDashboardData(filter: DashboardFilter): UseDashboardDataResul
   const { getVehicleList } = useVehicles();
   const { getLocationList } = useLocations();
   const { preferences } = useUserPreferences();
+  const { getSettings } = useSettings();
 
   useEffect(() => {
     const loadData = async () => {
-      const [sessionResult, vehicleResult, locationResult] = await Promise.all([
+      const [sessionResult, vehicleResult, locationResult, settingsResult] = await Promise.all([
         getSessionList(),
         getVehicleList(),
-        getLocationList(true)
+        getLocationList(true),
+        getSettings()
       ]);
 
       if (!sessionResult.success || !vehicleResult.success || !locationResult.success) {
@@ -73,6 +79,14 @@ export function useDashboardData(filter: DashboardFilter): UseDashboardDataResul
 
       const computedStats = computeStats(filtered, locationMap);
 
+      const selectedVehicle = filter.vehicleId
+        ? vehicleResult.data.find((v) => v.id === filter.vehicleId) ?? null
+        : null;
+      const computedGasComparison =
+        settingsResult.success && settingsResult.data
+          ? computeGasComparison(computedStats.totalKwh, computedStats.totalCostCents, selectedVehicle, settingsResult.data)
+          : null;
+
       // When filtering by location, only show that location in the chart
       const locationsForChart = filter.locationId
         ? locationResult.data.filter((l) => l.id === filter.locationId)
@@ -93,6 +107,7 @@ export function useDashboardData(filter: DashboardFilter): UseDashboardDataResul
       setStats(computedStats);
       setChartData(computedChartData);
       setRecentSessions(computedRecentSessions);
+      setGasComparison(computedGasComparison);
       setIsLoading(false);
     };
 
@@ -101,11 +116,12 @@ export function useDashboardData(filter: DashboardFilter): UseDashboardDataResul
     getSessionList,
     getVehicleList,
     getLocationList,
+    getSettings,
     filter.timeRange,
     filter.vehicleId,
     filter.locationId,
     preferences.recentSessionsLimit
   ]);
 
-  return { stats, recentSessions, chartData, vehicles, locations, hasAnySessions, isLoading, error };
+  return { stats, recentSessions, chartData, vehicles, locations, hasAnySessions, gasComparison, isLoading, error };
 }
