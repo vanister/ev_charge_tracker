@@ -4,7 +4,7 @@ import type { IconName } from '../../types/shared-types';
 
 type DashboardStatCardProps = {
   label: string;
-  value?: string;
+  value: string;
   icon: IconName;
   subtitle?: string;
   action?: { label: string; to: string };

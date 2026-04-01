@@ -11,6 +11,7 @@ export function GasComparison({ gasComparison }: GasComparisonProps) {
     return (
       <DashboardStatCard
         label="Gas Savings"
+        value="--"
         icon="trending-up"
         action={{ label: 'Configure gas comparison →', to: '/settings#gas-comparison' }}
       />

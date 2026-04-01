@@ -27,9 +27,9 @@ export const TIME_FILTER_OPTIONS = [
 export const DEFAULT_PREFERENCES: UserPreferences = {
   recentSessionsLimit: RECENT_SESSIONS_LIMIT,
   sessionsFilterTimeRange: '31d',
-  sessionsFilterIsOpen: true,
+  sessionsFilterIsOpen: false,
   dashboardFilterTimeRange: '31d',
-  dashboardFilterIsOpen: true
+  dashboardFilterIsOpen: false
 };
 
 // Locations
