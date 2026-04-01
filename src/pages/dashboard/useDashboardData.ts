@@ -26,7 +26,7 @@ type UseDashboardDataResult = {
   error: string | null;
 };
 
-const MONTHLY_TIME_RANGES = new Set(['6m', '12m', 'all']);
+const MONTHLY_TIME_RANGES = new Set(['3m', '6m', '12m', 'all']);
 
 export function useDashboardData(filter: DashboardFilter): UseDashboardDataResult {
   const [stats, setStats] = useState<SessionStats | null>(null);

@@ -17,7 +17,7 @@ export const TIME_FILTER_OPTIONS = [
   { label: 'Last 7 Days', value: '7d' },
   { label: 'Last 14 Days', value: '14d' },
   { label: 'Last 31 Days', value: '31d' },
-  { label: 'Last 90 Days', value: '90d' },
+  { label: 'Last 3 Months', value: '3m' },
   { label: 'Last 6 Months', value: '6m' },
   { label: 'Last 12 Months', value: '12m' },
   { label: 'All', value: 'all' }
@@ -27,9 +27,9 @@ export const TIME_FILTER_OPTIONS = [
 export const DEFAULT_PREFERENCES: UserPreferences = {
   recentSessionsLimit: RECENT_SESSIONS_LIMIT,
   sessionsFilterTimeRange: '31d',
-  sessionsFilterIsOpen: true,
+  sessionsFilterIsOpen: false,
   dashboardFilterTimeRange: '31d',
-  dashboardFilterIsOpen: true
+  dashboardFilterIsOpen: false
 };
 
 // Locations

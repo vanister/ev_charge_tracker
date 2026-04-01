@@ -17,7 +17,7 @@ export function DashboardStatCard({ label, value, icon, subtitle, action }: Dash
         <Icon name={icon} size="sm" className="text-primary" />
         <p className="text-body-secondary text-xs tracking-wide uppercase">{label}</p>
       </div>
-      <p className="text-body mt-1 text-xl font-semibold">{value}</p>
+      {value && <p className="text-body mt-1 text-xl font-semibold">{value}</p>}
       {subtitle && <p className="text-body-secondary mt-0.5 text-xs">{subtitle}</p>}
       {action && (
         <Link to={action.to} className="text-primary mt-1 block text-xs font-medium">
