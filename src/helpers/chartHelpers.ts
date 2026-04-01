@@ -125,6 +125,10 @@ export function getChartNumDays(timeRange: TimeFilterValue): number {
 }
 
 export function getChartNumMonths(timeRange: TimeFilterValue, sessions: ChargingSessionRecord[]): number {
+  if (timeRange === '3m') {
+    return 3;
+  }
+
   if (timeRange === '6m') {
     return 6;
   }
