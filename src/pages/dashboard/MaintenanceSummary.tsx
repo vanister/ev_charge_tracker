@@ -33,7 +33,7 @@ export function MaintenanceSummary() {
   const lastRecord = filteredRecords[0] ?? null;
   const lastServicedDate = lastRecord ? formatDate(lastRecord.servicedAt, 'MMM d, yyyy') : '—';
   // format the service type to be human readable
-  const lastServiceType = getMaintenanceTypeLabel(lastRecord?.type ?? 'other');
+  const lastServiceType = lastRecord ? getMaintenanceTypeLabel(lastRecord.type) : undefined;
   // only show cents if cost is less than 1000 dollars to avoid cluttering the UI with unnecessary detail for large costs
   const totalCostCents = filteredRecords.reduce((sum, r) => sum + (r.costCents ?? 0), 0);
   const totalCostLabel = filteredRecords.length > 0 ? formatCost(totalCostCents) : '—';
