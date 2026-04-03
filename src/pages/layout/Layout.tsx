@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { useAppUpdateAvailable } from '../../hooks/useAppUpdateAvailable';
 import { useBackupReminder } from '../../hooks/useBackupReminder';
+import { useServiceWorkerMessages } from '../../hooks/useServiceWorkerMessages';
 import { LayoutConfigProvider } from '../../providers/LayoutConfigProvider';
 import { AppHeader } from './AppHeader';
 import { BottomTabBar } from './BottomTabBar';
@@ -14,6 +15,7 @@ export function Layout() {
 
   useAppUpdateAvailable();
   useBackupReminder();
+  useServiceWorkerMessages();
 
   return (
     <div className="bg-background flex min-h-screen flex-col">
