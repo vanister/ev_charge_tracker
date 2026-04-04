@@ -32,6 +32,7 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    cloudflare(),
     VitePWA({
       registerType: 'prompt',
       workbox: {
@@ -90,6 +91,5 @@ export default defineConfig({
         ]
       }
     }),
-    cloudflare()
   ]
 });
