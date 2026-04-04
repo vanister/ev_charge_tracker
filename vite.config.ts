@@ -32,8 +32,12 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    cloudflare(),
     VitePWA({
       registerType: 'prompt',
+      workbox: {
+        importScripts: ['./sw-notifications.js']
+      },
       manifest: {
         name: 'EV Charge Tracker',
         short_name: 'Charge Tracker',
@@ -87,6 +91,5 @@ export default defineConfig({
         ]
       }
     }),
-    cloudflare()
   ]
 });
