@@ -116,11 +116,13 @@ export function BackupRestoreSectionBody() {
           value={currentInterval}
           onChange={(v) => handleIntervalChange(v as BackupReminderInterval)}
         />
-        <NotificationPermissionRow />
-        <p className="text-body-secondary text-xs">
-          Remind me to back up every {formatBackupReminderInterval(currentInterval)}
-        </p>
-        <p className="text-body-secondary text-xs italic">{lastBackupDescription}</p>
+        <div className="mt-3 flex flex-col gap-2">
+          <NotificationPermissionRow />
+          <p className="text-body-secondary text-xs">
+            Remind me to back up every {formatBackupReminderInterval(currentInterval)}
+          </p>
+          <p className="text-body-secondary text-xs italic">{lastBackupDescription}</p>
+        </div>
       </div>
     </div>
   );
