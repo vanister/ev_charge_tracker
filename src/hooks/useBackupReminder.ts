@@ -2,10 +2,6 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { useSettings } from './useSettings';
 import { useToast } from './useToast';
 import { isBackupOverdue } from '../utilities/backupUtils';
-import {
-  isNotificationSupported,
-  showBackupReminderNotification
-} from '../utilities/notificationUtils';
 
 export function useBackupReminder(dontShow = false) {
   const { getSettings, updateSettings } = useSettings();
@@ -35,20 +31,7 @@ export function useBackupReminder(dontShow = false) {
 
     if (overdue && !dontShow && !reminderShownRef.current) {
       reminderShownRef.current = true;
-
-      const useOsNotification =
-        isNotificationSupported() && Notification.permission === 'granted';
-
-      if (useOsNotification) {
-        const notifResult = await showBackupReminderNotification();
-
-        // Fall back to toast if notification failed
-        if (!notifResult.success) {
-          showBackupReminderToast();
-        }
-      } else {
-        showBackupReminderToast();
-      }
+      showBackupReminderToast();
     }
   }, [dontShow, getSettings, showBackupReminderToast]);
 

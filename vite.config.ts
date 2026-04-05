@@ -35,9 +35,6 @@ export default defineConfig({
     cloudflare(),
     VitePWA({
       registerType: 'prompt',
-      workbox: {
-        importScripts: ['./sw-notifications.js']
-      },
       manifest: {
         name: 'EV Charge Tracker',
         short_name: 'Charge Tracker',

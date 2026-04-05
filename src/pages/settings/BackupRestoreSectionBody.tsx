@@ -10,7 +10,6 @@ import { Icon } from '../../components/Icon';
 import { formatDistanceToNow } from '../../utilities/dateUtils';
 import { formatBackupReminderInterval } from '../../utilities/formatUtils';
 import { BACKUP_REMINDER_INTERVALS, type BackupReminderInterval } from '../../constants';
-import { NotificationPermissionRow } from './NotificationPermissionRow';
 
 export function BackupRestoreSectionBody() {
   const { showToast } = useToast();
@@ -117,7 +116,6 @@ export function BackupRestoreSectionBody() {
           onChange={(v) => handleIntervalChange(v as BackupReminderInterval)}
         />
         <div className="mt-3 flex flex-col gap-2">
-          <NotificationPermissionRow />
           <p className="text-body-secondary text-xs">
             Remind me to back up every {formatBackupReminderInterval(currentInterval)}
           </p>
