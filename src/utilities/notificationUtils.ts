@@ -39,7 +39,7 @@ export async function showBackupReminderNotification(): Promise<Result<void>> {
   try {
     const registration = await navigator.serviceWorker.ready;
 
-    await registration.showNotification('EV Charge Tracker', {
+    await registration.showNotification('Backup Reminder', {
       body: 'Time to back up your data',
       icon: '/icons/icon-192x192.png',
       tag: 'backup-reminder',
