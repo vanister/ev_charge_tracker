@@ -28,8 +28,18 @@ export function useBackupReminder(dontShow = false) {
       return;
     }
 
-    const { backupReminderInterval = '3d', lastBackupAt, backupReminderDismissedAt } = result.data ?? {};
-    const overdue = isBackupOverdue(lastBackupAt, backupReminderDismissedAt, backupReminderInterval);
+    const {
+      backupReminderInterval = '3d',
+      lastBackupAt,
+      backupReminderDismissedAt,
+      lastNotificationPushedAt
+    } = result.data ?? {};
+    const overdue = isBackupOverdue(
+      lastBackupAt,
+      backupReminderDismissedAt,
+      backupReminderInterval,
+      lastNotificationPushedAt
+    );
 
     setNeedsReminder(overdue);
 
@@ -49,6 +59,8 @@ export function useBackupReminder(dontShow = false) {
       } else {
         showBackupReminderToast();
       }
+
+      await updateSettings({ lastNotificationPushedAt: Date.now() });
     }
   }, [dontShow, getSettings, showBackupReminderToast]);
 

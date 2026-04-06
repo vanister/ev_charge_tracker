@@ -54,6 +54,8 @@ export const SettingsRecordSchema = z.object({
   lastBackupAt: z.number().optional(),
   // allows skipping a reminder cycle without performing a backup
   backupReminderDismissedAt: z.number().optional(),
+  // epoch ms of the last notification or toast pushed — used to escalate to daily reminders
+  lastNotificationPushedAt: z.number().optional(),
   // gas comparison settings — undefined until user configures them
   gasPriceCents: z.number().int().optional(),
   comparisonMpg: z.number().optional(),

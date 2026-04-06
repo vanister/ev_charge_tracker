@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { readFileSync } from 'node:fs';
 import type { EvChargTrackerDb } from '../../src/data/data-types';
 import type { BackupFile } from '../../src/pages/settings/settings-types';
-import { exportBackup, readBackupFile, restoreBackup } from '../../src/utilities/backupUtils';
+import { exportBackup, isBackupOverdue, readBackupFile, restoreBackup } from '../../src/utilities/backupUtils';
 
 const BACKUP_FIXTURE = JSON.parse(
   readFileSync(new URL('../__test_data__/backup-v2.json', import.meta.url), 'utf-8')
@@ -251,5 +251,74 @@ describe('restoreBackup', () => {
     expect(result.success).toBe(false);
     if (result.success) return;
     expect(result.error).toMatch(/transaction failed/);
+  });
+});
+
+describe('isBackupOverdue', () => {
+  const DAY_MS = 86_400_000;
+  const now = 1_000_000_000_000;
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(now);
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('returns true when no backup has ever occurred (reference time is epoch 0)', () => {
+    // referenceTime = 0; now - 0 >> any interval
+    expect(isBackupOverdue(undefined, undefined, '3d', undefined)).toBe(true);
+  });
+
+  it('returns true when configured interval has elapsed with no backup', () => {
+    const lastBackupAt = now - 4 * DAY_MS;
+    expect(isBackupOverdue(lastBackupAt, undefined, '3d', undefined)).toBe(true);
+  });
+
+  it('returns false when configured interval has not elapsed', () => {
+    const lastBackupAt = now - 2 * DAY_MS;
+    expect(isBackupOverdue(lastBackupAt, undefined, '3d', undefined)).toBe(false);
+  });
+
+  it('returns true after 1 day once a notification was pushed and user has not backed up', () => {
+    const lastNotificationPushedAt = now - DAY_MS;
+    expect(isBackupOverdue(undefined, undefined, '7d', lastNotificationPushedAt)).toBe(true);
+  });
+
+  it('returns false before 1 day has passed since notification push', () => {
+    const lastNotificationPushedAt = now - DAY_MS / 2;
+    expect(isBackupOverdue(undefined, undefined, '7d', lastNotificationPushedAt)).toBe(false);
+  });
+
+  it('reverts to configured interval once user backs up after a notification', () => {
+    const lastNotificationPushedAt = now - 2 * DAY_MS;
+    // backup happened after the notification — daily mode should not apply
+    const lastBackupAt = now - DAY_MS / 2;
+    // 7d interval has not elapsed since backup, so should be false
+    expect(isBackupOverdue(lastBackupAt, undefined, '7d', lastNotificationPushedAt)).toBe(false);
+  });
+
+  it('returns true when configured interval elapses after backup resets the cycle', () => {
+    const lastNotificationPushedAt = now - 10 * DAY_MS;
+    // backup happened after the notification
+    const lastBackupAt = now - 8 * DAY_MS;
+    // 7d interval has elapsed since backup
+    expect(isBackupOverdue(lastBackupAt, undefined, '7d', lastNotificationPushedAt)).toBe(true);
+  });
+
+  it('dismissedAt snoozes daily reminder in escalation mode', () => {
+    const lastNotificationPushedAt = now - 2 * DAY_MS;
+    // user dismissed 12 hours ago — less than 1 day, so not overdue yet
+    const dismissedAt = now - DAY_MS / 2;
+    expect(isBackupOverdue(undefined, dismissedAt, '7d', lastNotificationPushedAt)).toBe(false);
+  });
+
+  it('dismissedAt snooze expires after 1 day in escalation mode', () => {
+    const lastNotificationPushedAt = now - 3 * DAY_MS;
+    // user dismissed more than 1 day ago
+    const dismissedAt = now - DAY_MS - 1;
+    expect(isBackupOverdue(undefined, dismissedAt, '7d', lastNotificationPushedAt)).toBe(true);
   });
 });
