@@ -102,8 +102,18 @@ export async function restoreBackup(db: EvChargTrackerDb, backup: BackupFile): P
 export function isBackupOverdue(
   lastBackupAt: number | undefined,
   dismissedAt: number | undefined,
-  interval: BackupReminderInterval
+  interval: BackupReminderInterval,
+  lastNotificationPushedAt: number | undefined
 ): boolean {
+  // After the first notification, escalate to daily reminders until the user backs up
+  const notYetBackedUpSinceNotification =
+    !!lastNotificationPushedAt && (lastBackupAt ?? 0) < lastNotificationPushedAt;
+
+  if (notYetBackedUpSinceNotification) {
+    const referenceTime = Math.max(lastNotificationPushedAt, dismissedAt ?? 0);
+    return Date.now() - referenceTime >= BACKUP_REMINDER_INTERVAL_MS['1d'];
+  }
+
   const referenceTime = Math.max(lastBackupAt ?? 0, dismissedAt ?? 0);
   return Date.now() - referenceTime >= BACKUP_REMINDER_INTERVAL_MS[interval];
 }
