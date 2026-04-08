@@ -2,7 +2,7 @@
 
 Living document of shared contracts, patterns, and structure for the EV Charge Tracker codebase. Agents and contributors use this to understand what exists and how to integrate with it.
 
-Last updated: 2026-03-26
+Last updated: 2026-04-08
 
 ---
 
@@ -234,6 +234,8 @@ function useNavigationGuard(options: { enabled: boolean; message?: string | (() 
 function useBackupReminder(dontShow?: boolean): { needsReminder: boolean; dismissReminder(): Promise<void> };
 function useAppUpdateAvailable(dontToast?: boolean): { needsUpdate: boolean; applyUpdate(): void };
 function useScrollToHash(): void;
+function useNotificationPermission(): { permission: NotificationPermission; requestPermission(): Promise<void> };
+function useOAuth(): { saveTokens, getTokens, getProviderConfig, exchangeAndSave };
 ```
 
 ---
@@ -279,6 +281,7 @@ React Router v7 with this route tree:
     /vehicles/:vehicleId/maintenance/:id/edit   → MaintenanceDetails (edit)
     /settings                         → Settings
     /settings/locations/:id/edit      → LocationDetails
+    /settings/gas-comparison/edit     → GasComparisonDetails
     *                                 → NotFoundPage
 ```
 
@@ -337,6 +340,9 @@ buildMonthlyChartData(sessions, locations, numMonths): ChartData
 getChartNumDays(timeRange: TimeFilterValue): number
 getChartNumMonths(timeRange: TimeFilterValue, sessions): number
 
+// gasComparisonHelpers.ts
+computeGasComparison(sessions, settings, vehicles): GasComparisonResult
+
 // preferenceHelpers.ts
 readPreferences(storage?): UserPreferences
 writePreferences(prefs, storage?): void
@@ -351,8 +357,9 @@ clearPreferences(storage?): void
 // dateUtils.ts — date-fns wrappers: formatDate, formatDateTime, isSameDay, startOfDay, subDays, getDateRangeForTimeFilter, etc.
 // formatUtils.ts — formatCost, formatEnergy, formatRate, formatBytes, formatBackupReminderInterval
 // backupUtils.ts — exportBackup, readBackupFile, restoreBackup, isBackupOverdue
-// authUtils.ts — OAuth helpers: buildAuthorizationUrl, parseAuthCallback, exchangeCodeForTokens, state/verifier storage
 // themeUtils.ts — getSystemTheme, getStoredTheme, applyTheme
+// notificationUtils.ts — browser notification API helpers
+// authUtils.ts — OAuth helpers: buildAuthorizationUrl, parseAuthCallback, exchangeCodeForTokens, state/verifier storage
 // syncUtils.ts — buildSyncFile, parseSyncFile, exportSyncFile, importSyncFile
 // pkceUtils.ts — generatePkcePair
 ```
@@ -372,14 +379,14 @@ src/
 ├── helpers/          ← domain logic (session grouping, stats, charts)
 ├── utilities/        ← pure utility functions (dates, formatting, results)
 ├── pages/
-│   ├── layout/       ← app shell (header, tab bar)
-│   ├── dashboard/    ← stats, charts, recent sessions
-│   ├── sessions/     ← session list, details/form
+│   ├── layout/       ← app shell (header, bottom tab bar)
+│   ├── dashboard/    ← stats, charts, recent sessions, gas comparison, maintenance summary
+│   ├── sessions/     ← session list, details/form, date grouping
 │   ├── vehicles/     ← vehicle list, details/form
 │   │   └── maintenance/  ← maintenance records (nested under vehicles)
-│   ├── settings/     ← settings, locations, backup
+│   ├── settings/     ← settings, locations, backup, theme, gas comparison, notifications
 │   ├── onboarding/   ← 3-step wizard
-│   └── auth/         ← OAuth callback
+│   └── auth/         ← OAuth callback (infrastructure only)
 ├── App.tsx           ← root component (init check + ToastProvider)
 ├── main.tsx          ← entry point (provider hierarchy)
 ├── router.tsx        ← route definitions

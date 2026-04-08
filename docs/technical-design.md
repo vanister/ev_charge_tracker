@@ -1,6 +1,6 @@
-# EV Charge Tracker - Technical Architecture v3
+# EV Charge Tracker - Technical Architecture
 
-> **Implementation Status**: All pages implemented. Database schema, hooks, providers, contexts, onboarding, dashboard, session management, vehicle management, settings, and theme support are all fully functional. Remaining: Recharts implementation, PWA icons, service worker update notification.
+> Detailed technical specifications. For hook APIs and shared contracts, see [architecture.md](../architecture.md). For a high-level overview, see [design-outline.md](./design-outline.md).
 
 ## Overview
 
@@ -10,52 +10,48 @@ A fully offline PWA for tracking EV charging sessions. Designed to function as a
 
 ### Core
 
-- **Vite** - Build tool and dev server
-- **React 19** - UI framework
-- **TypeScript** - Type safety
-- **Dexie.js** - IndexedDB wrapper with React hooks
-- **Vite PWA Plugin** - Service worker generation
+- **Vite** -- build tool and dev server
+- **React 19** -- UI framework
+- **TypeScript** -- type safety
+- **Dexie.js v4** -- IndexedDB wrapper
+- **Zod** -- schema validation (entity schemas in `src/data/schemas.ts`)
+- **vite-plugin-pwa** -- service worker generation
 
 ### UI & Styling
 
-- **Tailwind CSS v4** - Utility-first CSS framework (bundled via `@tailwindcss/vite` plugin)
+- **Tailwind CSS v4** -- utility-first CSS (bundled via `@tailwindcss/vite` plugin)
+- **Lucide React** -- tree-shakeable SVG icon components
+- **Recharts** -- chart components for dashboard analytics
+- **clsx** -- conditional className utility
 
 ### Additional
 
-- **Lucide React** - Tree-shakeable SVG icon components
-- **Recharts** - Chart components (installed, not yet used)
-- **React Router v7** - Client-side routing
-- **date-fns** - Date utilities
-- **Immer** - Immutable state updates (via `useImmerState` hook)
-- **clsx** - Conditional className utility
+- **React Router v7** -- client-side routing
+- **Immer** -- immutable state updates (via `useImmerState` hook)
+- **date-fns** -- date utilities (wrapped by `src/utilities/dateUtils.ts`)
+- **react-error-boundary** -- error boundary components
+
+### Deployment
+
+- **Cloudflare Workers / Wrangler** -- hosting and deployment
 
 ## Architecture Principles
 
 ### Offline-First Design
 
-```
-NO_NETWORK_REQUIRED:
-  - All features work without internet connection
-  - No backend API, no cloud sync
-  - Data never leaves the device
-  - Network only needed for initial app download/updates
-
-STORAGE_STRATEGY:
-  - IndexedDB for all persistent data
-  - Request persistent storage to survive browser cleanup
-  - Warn user if storage quota is low
-```
+- All features work without internet connection
+- No backend API, no cloud sync (yet)
+- Data never leaves the device
+- Network only needed for initial app download and updates
+- IndexedDB for all persistent data
+- Persistent storage requested to survive browser cleanup
 
 ### PWA as App Store Alternative
 
-```
-DISTRIBUTION:
-  - Host on any static hosting (Vercel, Netlify, GitHub Pages)
-  - Users install directly from browser
-  - Auto-updates via service worker
-  - No app store review process
-  - No platform fees
-```
+- Hosted on Cloudflare Workers
+- Users install directly from browser
+- Auto-updates via service worker with user-prompted reload
+- No app store review process or platform fees
 
 ---
 
@@ -63,121 +59,34 @@ DISTRIBUTION:
 
 ### Entity Relationships
 
-```mermaid
-erDiagram
-    Vehicle ||--o{ ChargingSession : has
-    Location ||--o{ ChargingSession : has
-    Settings ||--|| Settings : singleton
-
-    Vehicle {
-        uuid id PK
-        string name
-        string make
-        string model
-        number year
-        string icon
-        timestamp createdAt
-        boolean isActive
-    }
-
-    Location {
-        uuid id PK
-        string name
-        string icon
-        string color
-        number defaultRatePerKwh
-        timestamp createdAt
-        boolean isActive
-    }
-
-    ChargingSession {
-        uuid id PK
-        uuid vehicleId FK
-        uuid locationId FK
-        number energyKwh
-        number ratePerKwh
-        number costCents
-        timestamp chargedAt
-        string notes
-    }
-
-    Settings {
-        string key PK
-        boolean onboardingComplete
-    }
+```
+Vehicle  --< ChargingSession >--  Location
+Vehicle  --< MaintenanceRecord
+Settings (singleton, key='app-settings')
+SystemConfig (singleton, key='system-config')
 ```
 
-### Entities
+### Database Schema (Dexie v4, 4 versions)
 
 ```
-Vehicle
-  - id: uuid
-  - name: string (user-friendly label, e.g., "Daily Driver")
-  - make: string? (e.g., "Tesla")
-  - model: string? (e.g., "Model 3")
-  - year: number? (e.g., 2023)
-  - icon: IconName (Lucide icon identifier, default "car")
-  - createdAt: timestamp
-  - isActive: boolean (soft delete)
+v1:
+  vehicles:    ++id, isActive, createdAt
+  sessions:    ++id, vehicleId, locationId, chargedAt, [vehicleId+chargedAt]
+  settings:    key
+  locations:   ++id, isActive, createdAt, order
 
-ChargingSession
-  - id: uuid
-  - vehicleId: uuid (FK)
-  - locationType: enum[HOME, WORK, OTHER, DC]
-  - energyKwh: number
-  - ratePerKwh: number
-  - costCents: number (computed at creation, stored permanently)
-  - chargedAt: timestamp
-  - notes: string?
+v2:
+  systemConfig: key
 
-Settings
-  - key: 'app-settings' (singleton)
-  - defaultRates: {
-      HOME: number,
-      WORK: number,
-      OTHER: number,
-      DC: number
-    }
-  - onboardingComplete: boolean
+v3-v4:
+  maintenanceRecords: ++id, vehicleId, servicedAt, [vehicleId+servicedAt]
 ```
 
-### Default Locations
+### Entity Schemas
 
-```
-DEFAULT_LOCATIONS = [
-  { name: 'Home',            icon: 'home',     color: 'teal',   defaultRate: 0.15 },
-  { name: 'Work',            icon: 'building', color: 'slate',  defaultRate: 0.17 },
-  { name: 'Other',           icon: 'map-pin',  color: 'purple', defaultRate: 0.11 },
-  { name: 'DC Fast Charger', icon: 'zap',      color: 'orange', defaultRate: 0.35 }
-]
+Types are inferred from Zod schemas defined in `src/data/schemas.ts` and exported from `src/data/data-types.ts`. See [architecture.md](../architecture.md) for complete type definitions.
 
-// Seeded on first launch, user can add/edit/delete
-// Deletion prevented if sessions reference the location
-```
-
-### Database Schema
-
-```
-STORE: vehicles
-  INDEX: id (primary)
-  INDEX: isActive
-  INDEX: createdAt
-
-STORE: locations
-  INDEX: id (primary)
-  INDEX: isActive
-  INDEX: createdAt
-
-STORE: sessions
-  INDEX: id (primary)
-  INDEX: vehicleId
-  INDEX: locationId
-  INDEX: chargedAt
-  INDEX: [vehicleId, chargedAt] (compound)
-
-STORE: settings
-  INDEX: key (primary)
-```
+Key entities: `Vehicle`, `Location`, `ChargingSession`, `MaintenanceRecord`, `Settings`, `SystemConfig`.
 
 ---
 
@@ -185,319 +94,65 @@ STORE: settings
 
 ### App Initialization Flow
 
-```mermaid
-flowchart TD
-    A[App Launch] --> B{Settings exist?}
-    B -->|No| C[Create default settings]
-    C --> D{Locations exist?}
-    B -->|Yes| D
-    D -->|No| E[Seed default locations]
-    E --> F{onboardingComplete?}
-    D -->|Yes| F
-    F -->|No| G[Show Onboarding]
-    F -->|Yes| H[Show Dashboard]
-
-    G --> I[Welcome Screen]
-    I --> J[Review/Edit Locations]
-    J --> K[Add First Vehicle]
-    K --> L[Mark onboarding complete]
-    L --> H
+```
+App Launch
+  -> Settings exist? No -> Create defaults
+  -> Locations exist? No -> Seed default locations
+  -> onboardingComplete? No -> Show Onboarding
+  -> Otherwise -> Show Dashboard
 ```
 
-### Default Settings Initialization
+### Onboarding Steps
 
-```
-ON_FIRST_LAUNCH:
-  CREATE settings {
-    key: 'app-settings',
-    onboardingComplete: false
-  }
-
-  SEED locations [
-    { name: 'Home',            icon: 'home',     color: 'teal',   defaultRate: 0.15 },
-    { name: 'Work',            icon: 'building', color: 'slate',  defaultRate: 0.17 },
-    { name: 'Other',           icon: 'map-pin',  color: 'purple', defaultRate: 0.11 },
-    { name: 'DC Fast Charger', icon: 'zap',      color: 'orange', defaultRate: 0.35 }
-  ]
-```
-
-### Onboarding Screens
-
-```
-SCREEN 1: Welcome
-  - App name and purpose
-  - "Get Started" button
-
-SCREEN 2: Review/Edit Locations
-  - Show 4 seeded default locations
-  - Allow edit (name, icon, color, rate)
-  - Allow add new locations
-  - Explain these can be changed later in Settings
-  - "Next" button
-
-SCREEN 3: First Vehicle
-  - Required: name
-  - Optional: make, model, year
-  - Icon picker (Lucide icon grid)
-  - "Add Vehicle" â†’ mark onboarding complete â†’ go to Dashboard
-```
-
-### Empty States (Post-Onboarding)
-
-```
-DASHBOARD_EMPTY:
-  When: 0 sessions exist
-  Show: "No charging sessions yet"
-  Action: "Log your first charge" â†’ Add Session
-
-SESSIONS_LIST_EMPTY:
-  When: 0 sessions match filters
-  Show: "No sessions found"
-  Action: Suggest clearing filters or adding session
-
-VEHICLES_EMPTY:
-  When: 0 active vehicles (edge case after deletion)
-  Show: "Add a vehicle to start tracking"
-  Action: "Add Vehicle" button
-```
+1. **Welcome** -- app name and purpose, "Get Started" button
+2. **Review/Edit Locations** -- show seeded defaults, allow editing, explain they can be changed in Settings
+3. **First Vehicle** -- required: make/model/year, optional: name, icon picker -> mark onboarding complete -> Dashboard
 
 ---
 
 ## PWA Configuration
 
-### Installation & Icons
+### Icons
 
-```
-ICON_SIZES:
-  - 192x192 (Android home screen)
-  - 512x512 (Android splash, PWA install)
-  - 180x180 (iOS touch icon)
-  - 32x32, 16x16 (favicon)
+Seven icon assets in `public/icons/`: 192x192, 192x192-maskable, 512x512, 512x512-maskable, 180x180 (iOS), 32x32, 16x16 (favicon).
 
-ICON DESIGN:
-  - All icons (including favicon) must visually match the Lucide "zap" icon used in Settings > About
+### Manifest
 
-MANIFEST:
-  name: "EV Charge Tracker"
-  short_name: "Charge Tracker"
-  description: "Track your EV charging sessions offline"
-  start_url: "/"
-  display: "standalone"
-  background_color: "#ffffff"
-  theme_color: "#14b8a6" (teal-500)
-  icons: [192x192 + maskable, 512x512 + maskable]
-```
+- Name: "EV Charge Tracker"
+- Short name: "Charge Tracker"
+- Theme color: `#14b8a6` (teal-500)
+- Display: `standalone`
 
-### Service Worker Strategy
+### Service Worker
 
-```
-PRECACHE (install time):
-  - index.html
-  - All JS/CSS bundles
-  - App icons
-  - Fonts (if any)
-
-RUNTIME:
-  - No network requests needed
-  - All functionality offline
-
-UPDATE_FLOW:
-  ON new service worker detected:
-    Show unobtrusive "Update available" indicator
-    ON user action OR next app launch:
-      Activate new service worker
-      Reload app
-```
+- **Register type**: `prompt` -- user is prompted to apply updates
+- Precaches all JS/CSS bundles and app shell at install time
+- Custom notification handling via `sw-notifications.js`
+- Update flow: detect new SW -> show toast notification -> user taps to reload
 
 ### Persistent Storage
 
-```
-ON_APP_INIT:
-  if navigator.storage.persist:
-    granted = await navigator.storage.persist()
-    if not granted:
-      // Browser may still evict data under storage pressure
-      // Continue normally, most browsers won't evict active PWAs
-
-ON_SETTINGS_PAGE:
-  estimate = await navigator.storage.estimate()
-  Display: "{used} of {quota} used"
-```
+On app init, requests `navigator.storage.persist()`. Settings page displays storage quota usage via `navigator.storage.estimate()`.
 
 ---
-
-## High-Level Architecture
-
-```mermaid
-graph TB
-    subgraph ReactApp["React App"]
-        Router["React Router"]
-        Pages["Pages"]
-        Components["Components"]
-        Hooks["Custom Hooks"]
-    end
-
-    Router --> Pages
-    Pages --> Components
-    Pages --> Hooks
-    Components --> Hooks
-
-    Hooks --> DexieHooks["Dexie useLiveQuery()"]
-    DexieHooks --> IndexedDB
-
-    subgraph IndexedDB["IndexedDB (On-Device)"]
-        Vehicles[("vehicles")]
-        Sessions[("sessions")]
-        Settings[("settings")]
-        Locations[("locations")]
-    end
-
-    subgraph ServiceWorker["Service Worker"]
-        Cache["Precached App Shell"]
-    end
-
-    ServiceWorker -.->|serves| ReactApp
-```
-
-## Routing Structure
-
-```
-/error                         # ErrorPage (initialization failures)
-/onboarding                    # Onboarding flow (3 steps, public)
-
-Protected (RequireOnboarding guard):
-/                              # Dashboard
-/sessions                      # SessionsList
-/sessions/add                  # SessionDetails (create)
-/sessions/:id/edit             # SessionDetails (edit)
-/vehicles                      # VehiclesList
-/vehicles/add                  # VehicleDetails (create)
-/vehicles/:id/edit             # VehicleDetails (edit)
-/settings                      # Settings
-/settings/locations/add        # LocationDetails (create)
-/settings/locations/:id/edit   # LocationDetails (edit)
-* (all others)                 # Redirect to /
-```
 
 ## Data Access Pattern
 
 ### Context Providers
 
-```
-DatabaseProvider
-  - Provides: db (Dexie instance)
-  - Used by: All hooks and AppInitializationProvider
-  - Why: Single source of truth, prevents multiple Dexie instances
+See [architecture.md](../architecture.md) for the full provider hierarchy and hook contracts.
 
-ThemeProvider
-  - Provides: theme, resolvedTheme ('light'|'dark'), updateTheme(theme)
-  - Persists to localStorage (key: 'ev-charge-tracker-theme')
-  - Listens to prefers-color-scheme; applies data-theme="dark" to <html>
-  - Why: Global theme management with system preference sync
-
-AppInitializationProvider
-  - Provides: isInitialized, error
-  - Uses: DatabaseProvider's db
-  - Handles on mount (protected by useRef from double-init in Strict Mode):
-    * Load or create default settings
-    * Seed default locations (one-time)
-    * Request persistent storage (navigator.storage.persist)
-  - Why: Centralized initialization, runs once at app root
-
-LayoutConfigProvider
-  - Provides: title, setTitle(title)
-  - Why: Allows pages to set the AppHeader title dynamically
-
-App Structure:
-  <DatabaseProvider>
-    <ThemeProvider>
-      <AppInitializationProvider>
-        <BrowserRouter>
-          <App /> (routes + LayoutConfigProvider inside Layout)
-        </BrowserRouter>
-      </AppInitializationProvider>
-    </ThemeProvider>
-  </DatabaseProvider>
-```
+- **DatabaseProvider** -- single Dexie instance via context
+- **ThemeProvider** -- light/dark/system, persisted to localStorage
+- **AppInitializationProvider** -- seeds defaults, requests persistent storage
+- **ToastProvider** -- toast notification queue
+- **LayoutConfigProvider** -- per-page title and tab bar visibility
 
 ### Custom Hooks
 
-All data-mutation hooks use a **Result<T>** pattern — they return `Success<T> | Failure` instead of throwing.
+All data-mutation hooks return `Promise<Result<T>>` instead of throwing. Components never import `db` directly -- all access through hooks that use `useDatabase()`.
 
-```
-useDatabase() → { db }
-  // Access db from DatabaseContext; throws if used outside DatabaseProvider
-
-useAppInitialization() → { isInitialized, error }
-  // Access initialization state; throws if used outside AppInitializationProvider
-
-useVehicles() {
-  db = useDatabase()
-  return {
-    getVehicleList(activeOnly?) → Promise<Vehicle[]>
-    getVehicle(id) → Promise<Vehicle | undefined>
-    createVehicle(input) → Promise<Result<Vehicle>>
-    updateVehicle(id, input) → Promise<Result<Vehicle>>
-    deleteVehicle(id) → Promise<Result<void>>  // fails if vehicle has sessions
-  }
-}
-
-useLocations() {
-  db = useDatabase()
-  return {
-    getLocationList(all?) → Promise<Location[]>  // default: active only
-    getLocation(id) → Promise<Location | undefined>
-    createLocation(data) → Promise<Result<Location>>
-    updateLocation(id, data) → Promise<Result<Location>>
-    deleteLocation(id) → Promise<Result<void>>  // fails if location has sessions
-  }
-}
-
-useSessions() {
-  db = useDatabase()
-  return {
-    getSessionList(filters?) → Promise<ChargingSession[]>
-    getSession(id) → Promise<ChargingSession | undefined>
-    createSession(input) → Promise<Result<ChargingSession>>  // auto-calculates costCents
-    updateSession(id, input) → Promise<Result<ChargingSession>>
-    deleteSession(id) → Promise<Result<void>>
-  }
-  // filters: { vehicleId?, locationId?, dateRange? }
-  // compound vehicleId+locationId filters applied in-memory
-}
-
-useSettings() {
-  db = useDatabase()
-  return {
-    getSettings() → Promise<Settings | undefined>
-    updateSettings(updates) → Promise<Result<Settings>>
-    completeOnboarding() → Promise<Result<Settings>>
-  }
-}
-
-useStats() {
-  db = useDatabase()
-  return {
-    stats: SessionStats | null,
-    recentSessions: SessionWithMetadata[],  // 5 most recent
-    isLoading: boolean
-  }
-  // SessionStats: { totalKwh, totalCostCents, avgRatePerKwh, sessionCount, byLocation[] }
-  // Fetches sessions, vehicles, and locations in parallel
-}
-
-useTheme() → { theme, resolvedTheme, updateTheme }
-  // theme: 'light' | 'dark' | 'system'; resolvedTheme: 'light' | 'dark'
-
-useImmerState(initialValue) → [state, setImmerState]
-  // setImmerState accepts a value or an Immer draft updater function
-
-usePageTitle(title) → { updateTitle }
-  // Sets the AppHeader title for the current page
-
-useLayoutConfig() → { title, setTitle }
-  // Direct access to LayoutConfigContext
-```
+See [architecture.md](../architecture.md) for complete hook signatures.
 
 ---
 
@@ -506,124 +161,50 @@ useLayoutConfig() → { title, setTitle }
 ### Cost Calculation
 
 ```
-ON_SESSION_CREATE:
-  costCents = ROUND(energyKwh Ã— ratePerKwh Ã— 100)
-  // Stored permanently, never recalculated
-  // Changing default rates does NOT affect existing sessions
+costCents = Math.round(energyKwh * ratePerKwh * 100)
 ```
+
+Stored permanently at session creation. Changing default rates does not affect existing sessions.
 
 ### Vehicle Deletion
 
-```
-ON_DELETE_VEHICLE:
-  sessionCount = COUNT sessions WHERE vehicleId = id
-
-  if sessionCount > 0:
-    SHOW error "Cannot delete vehicle with existing sessions"
-    OFFER "Delete all sessions first?" (dangerous action)
-  else:
-    DELETE vehicle
-```
+Blocked if the vehicle has any sessions. User must delete sessions first.
 
 ### Location Deletion
 
-```
-ON_DELETE_LOCATION:
-  sessionCount = COUNT sessions WHERE locationId = id
-
-  if sessionCount > 0:
-    SHOW error "Cannot delete location with existing sessions"
-  else:
-    SET location.isActive = false (soft delete)
-```
+Blocked if the location has any sessions. Soft delete via `isActive` field.
 
 ### Default Rate Application
 
-```
-ON_ADD_SESSION:
-  location selected → pre-fill rate from location.defaultRate
-  User can override rate for this session
-  "Use default rate" checkbox controls whether rate field is editable
-```
+When a location is selected on the session form, `ratePerKwh` is pre-filled from `location.defaultRate`. User can override.
 
----
+### Gas Comparison
 
-## Development Setup
+Compares EV charging costs to equivalent gas costs. Uses EPA standard (33.7 kWh = 1 gallon of gas) and configurable gas price / MPG values stored in settings. See [gas-comparison-design.md](./gas-comparison-design.md).
 
-### Create Project
+### Maintenance Tracking
 
-```bash
-npm create vite@latest ev-charge-tracker -- --template react-ts
-cd ev-charge-tracker
+Per-vehicle maintenance records with type categorization (tire rotation, brake service, battery service, software update, inspection, etc.), cost tracking, mileage, and next-due date/mileage scheduling. Dashboard shows upcoming maintenance summary.
 
-npm install dexie dexie-react-hooks
-npm install react-router-dom recharts date-fns
+### Backup & Restore
 
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
-
-npm install -D vite-plugin-pwa
-```
-
-### File Structure
-
-```
-src/
-  components/      # Shared UI: Button, EmptyState, Icon, SectionHeader, FullscreenLoader, RequireOnboarding
-  contexts/        # Context definitions: DatabaseContext, AppInitializationContext, ThemeContext, LayoutConfigContext
-  providers/       # Context providers: DatabaseProvider, AppInitializationProvider, ThemeProvider, LayoutConfigProvider
-  hooks/           # useDatabase, useAppInitialization, useVehicles, useSessions, useSettings, useLocations,
-                   # useStats, useTheme, useImmerState, usePageTitle, useLayoutConfig
-  data/            # db.ts, data-types.ts, constants.ts, repositories.ts
-  helpers/         # sessionHelpers.ts (session metadata, grouping, display name helpers)
-  utilities/       # dataUtils.ts (generateId), dateUtils.ts, formatUtils.ts, resultUtils.ts, themeUtils.ts
-  types/           # shared-types.ts
-  pages/
-    dashboard/     # Dashboard, DashboardStats, DashboardRecentSessions, DashboardStatCard
-    layout/        # Layout, AppHeader, NavigationDrawer, NavigationLinks, ThemeSelector, MenuOverlay
-    onboarding/    # Onboarding (3 steps + shared components)
-    sessions/      # SessionsList, SessionDetails, SessionItem, SessionForm, SessionsFilter, etc.
-    settings/      # Settings, LocationDetails, LocationItem, LocationForm
-    vehicles/      # VehiclesList, VehicleDetails, VehicleItem, VehicleForm
-    ErrorPage.tsx
-public/
-  icons/           # PWA icons (192, 512, etc.) - not yet generated
-  favicon.ico
-```
-
-### Deployment
-
-```
-BUILD:
-  Vite bundles app
-  PWA plugin generates service worker + manifest
-
-DEPLOY:
-  Any free static host (Vercel, Netlify, GitHub Pages)
-  Must be served over HTTPS for PWA features
-
-USER_INSTALL:
-  Visit URL in browser
-  Browser shows "Install" prompt (or use menu)
-  App added to home screen / app launcher
-```
+JSON export/import with Zod schema validation and database version checking. Configurable backup reminder intervals with dismissible notifications.
 
 ---
 
 ## Key Design Decisions
 
-| Decision                   | Rationale                                            |
-| -------------------------- | ---------------------------------------------------- |
-| Offline-only               | Privacy, no backend costs, instant performance       |
-| IndexedDB via Dexie        | Good DX, handles large datasets                      |
-| Result<T> pattern          | No exceptions for expected errors, predictable flow  |
-| Cost stored as cents       | Avoid floating point math issues                     |
-| Cost never recalculates    | Historical accuracy (learned from Tesla's mistakes)  |
-| Soft delete for vehicles   | Preserve session history integrity                   |
-| Soft delete for locations  | Preserve session history integrity                   |
-| Dynamic location store     | User can customize locations, rates, add new ones    |
-| Lucide icons               | Tree-shakeable SVG, consistent rendering, accessible |
-| Onboarding flow            | Ensure valid state before main app usage             |
-| Persistent storage request | Reduce chance of data loss                           |
-| Theme in localStorage      | Instant theme on load before IndexedDB is ready      |
-| Immer for form state       | Ergonomic nested state updates without spread clones |
+| Decision | Rationale |
+| --- | --- |
+| Offline-only | Privacy, no backend costs, instant performance |
+| IndexedDB via Dexie | Good DX, handles large datasets |
+| Zod schemas | Runtime validation for backup restore, type inference |
+| Result\<T\> pattern | No exceptions for expected errors, predictable flow |
+| Cost stored as cents | Avoid floating point math issues |
+| Cost never recalculates | Historical accuracy |
+| Soft delete for vehicles/locations | Preserve session history integrity |
+| Dynamic location store | User can customize locations, rates, add new ones |
+| Lucide icons | Tree-shakeable SVG, consistent rendering |
+| Immer for form state | Ergonomic nested state updates |
+| Theme in localStorage | Instant theme on load before IndexedDB is ready |
+| Persistent storage request | Reduce chance of data loss |
