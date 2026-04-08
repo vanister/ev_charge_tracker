@@ -47,7 +47,6 @@ export function OnboardingStep1Welcome(props: OnboardingStep1WelcomeProps) {
       </FormFooter>
 
       <div className="mt-4 flex flex-col items-center gap-2">
-        <p className="text-body-secondary">or</p>
         <RestoreBackupButton
           label="Restore from backup"
           skipConfirm={!onboardingComplete}
