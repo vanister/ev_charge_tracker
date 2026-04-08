@@ -31,16 +31,16 @@ export function MaintenanceItem(props: MaintenanceItemProps) {
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
         <span className="text-body-secondary">{date}</span>
-        {!!record.costCents && (
-          <>
-            <span className="text-body-tertiary">•</span>
-            <span className="text-body">{formatCost(record.costCents)}</span>
-          </>
-        )}
         {!!record.mileage && (
           <>
             <span className="text-body-tertiary">•</span>
             <span className="text-body-secondary">{record.mileage.toLocaleString()} mi</span>
+          </>
+        )}
+        {!!record.costCents && (
+          <>
+            <span className="text-body-tertiary">•</span>
+            <span className="text-body">{formatCost(record.costCents)}</span>
           </>
         )}
       </div>
