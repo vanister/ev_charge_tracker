@@ -1,20 +1,13 @@
-import { Icon } from '../../components/Icon';
+import { AboutContent } from './AboutContent';
+import { ResetAppPanel } from './ResetAppPanel';
+import { SettingsContentDivider } from './SettingsContentDivider';
 
 export function AboutSectionBody() {
   return (
     <>
-      <div className="mb-3 flex items-center gap-3">
-        <div className="bg-primary/10 rounded-lg p-2">
-          <Icon name="zap" size="md" className="text-primary" />
-        </div>
-        <div>
-          <p className="text-body text-base font-semibold">EV Charge Tracker</p>
-          <p className="text-body-secondary text-sm">Version {import.meta.env.VITE_APP_VERSION}</p>
-        </div>
-      </div>
-      <p className="text-body-secondary text-sm">
-        Track your electric vehicle charging sessions, costs, maintenance and usage across all your locations.
-      </p>
+      <AboutContent />
+      <SettingsContentDivider className="my-4" />
+      <ResetAppPanel />
     </>
   );
 }

@@ -15,7 +15,8 @@ type ButtonProps = {
 const VARIANTS = {
   primary: 'px-6 py-3 bg-primary text-white hover:bg-primary/90',
   secondary: 'px-6 py-3 bg-surface text-body border border-default hover:bg-background',
-  ghost: 'p-1.5 text-body-secondary hover:text-body hover:bg-background'
+  ghost: 'p-1.5 text-body-secondary hover:text-body hover:bg-background',
+  danger: 'px-6 py-3 bg-red-600 text-white hover:bg-red-700'
 };
 
 export function Button(props: ButtonProps) {
