@@ -96,14 +96,14 @@ export function ResetAppPanel() {
         <Button variant="secondary" fullWidth onClick={handleCancel} disabled={state.isResetting}>
           Cancel
         </Button>
-        <button
-          type="button"
+        <Button
+          variant="danger"
+          fullWidth
           disabled={state.confirmText.trim().toLowerCase() !== 'yes' || state.isResetting}
           onClick={handleReset}
-          className="w-full rounded-lg bg-red-600 px-6 py-3 font-medium text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {state.isResetting ? 'Resetting…' : 'Confirm Reset'}
-        </button>
+        </Button>
       </div>
     </div>
   );
