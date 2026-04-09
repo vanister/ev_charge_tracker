@@ -1,11 +1,12 @@
 import { AboutContent } from './AboutContent';
 import { ResetAppPanel } from './ResetAppPanel';
+import { SettingsContentDivider } from './SettingsContentDivider';
 
 export function AboutSectionBody() {
   return (
     <>
       <AboutContent />
-      <hr className="border-border my-4" />
+      <SettingsContentDivider className="my-4" />
       <ResetAppPanel />
     </>
   );

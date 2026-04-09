@@ -11,6 +11,7 @@ import { formatDistanceToNow } from '../../utilities/dateUtils';
 import { formatBackupReminderInterval } from '../../utilities/formatUtils';
 import { BACKUP_REMINDER_INTERVALS, type BackupReminderInterval } from '../../constants';
 import { NotificationPermissionRow } from './NotificationPermissionRow';
+import { SettingsContentDivider } from './SettingsContentDivider';
 
 export function BackupRestoreSectionBody() {
   const { showToast } = useToast();
@@ -99,7 +100,7 @@ export function BackupRestoreSectionBody() {
         {restoreError && <p className="text-sm text-red-600 dark:text-red-400">{restoreError}</p>}
       </div>
 
-      <hr className="border-border" />
+      <SettingsContentDivider />
 
       <div className="flex flex-col gap-2">
         <p className="text-body text-sm font-medium">Reminder Frequency</p>
