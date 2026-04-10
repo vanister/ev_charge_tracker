@@ -6,11 +6,8 @@ import { useImmerState } from '../../hooks/useImmerState';
 import { useToast } from '../../hooks/useToast';
 import { FormFooter } from '../../components/FormFooter';
 import { Button } from '../../components/Button';
-import {
-  GasComparisonForm,
-  DEFAULT_GAS_COMPARISON_FORM_DATA,
-  type GasComparisonFormData
-} from './GasComparisonForm';
+import { GasComparisonForm } from './GasComparisonForm';
+import { DEFAULT_GAS_COMPARISON_FORM_DATA, type GasComparisonFormData } from './gasComparisonHelpers';
 import { DEFAULT_GAS_PRICE_CENTS, DEFAULT_COMPARISON_MPG, DEFAULT_MI_PER_KWH } from '../../constants';
 
 type GasComparisonDetailsState = GasComparisonFormData & {
