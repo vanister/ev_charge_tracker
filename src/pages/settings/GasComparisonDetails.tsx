@@ -4,22 +4,20 @@ import { useSettings } from '../../hooks/useSettings';
 import { usePageConfig } from '../../hooks/usePageConfig';
 import { useImmerState } from '../../hooks/useImmerState';
 import { useToast } from '../../hooks/useToast';
-import { FormInput } from '../../components/FormInput';
 import { FormFooter } from '../../components/FormFooter';
 import { Button } from '../../components/Button';
+import { GasComparisonForm, type GasComparisonFormData } from './GasComparisonForm';
+import { DEFAULT_GAS_PRICE_CENTS, DEFAULT_COMPARISON_MPG, DEFAULT_MI_PER_KWH } from '../../constants';
 
-type GasComparisonDetailsState = {
-  gasPriceStr: string;
-  comparisonMpgStr: string;
-  defaultMiPerKwhStr: string;
+type GasComparisonDetailsState = GasComparisonFormData & {
   isLoading: boolean;
   isInitialized: boolean;
 };
 
 const DEFAULT_STATE: GasComparisonDetailsState = {
-  gasPriceStr: '',
-  comparisonMpgStr: '',
-  defaultMiPerKwhStr: '',
+  gasPriceStr: (DEFAULT_GAS_PRICE_CENTS / 100).toFixed(2),
+  comparisonMpgStr: `${DEFAULT_COMPARISON_MPG}`,
+  defaultMiPerKwhStr: `${DEFAULT_MI_PER_KWH}`,
   isLoading: false,
   isInitialized: false
 };
@@ -45,11 +43,16 @@ export function GasComparisonDetails() {
         return;
       }
 
-      const { gasPriceCents, comparisonMpg, defaultMiPerKwh } = result.data;
+      const {
+        gasPriceCents = DEFAULT_GAS_PRICE_CENTS,
+        comparisonMpg = DEFAULT_COMPARISON_MPG,
+        defaultMiPerKwh = DEFAULT_MI_PER_KWH
+      } = result.data;
+
       setFormState((draft) => {
-        draft.gasPriceStr = gasPriceCents != null ? (gasPriceCents / 100).toFixed(2) : '';
-        draft.comparisonMpgStr = comparisonMpg != null ? `${comparisonMpg}` : '';
-        draft.defaultMiPerKwhStr = defaultMiPerKwh != null ? `${defaultMiPerKwh}` : '';
+        draft.gasPriceStr = (gasPriceCents / 100).toFixed(2);
+        draft.comparisonMpgStr = `${comparisonMpg}`;
+        draft.defaultMiPerKwhStr = `${defaultMiPerKwh}`;
         draft.isInitialized = true;
       });
     };
@@ -57,15 +60,21 @@ export function GasComparisonDetails() {
     load();
   }, [formState.isInitialized, getSettings, setFormState]);
 
+  const handleFieldChange = (field: keyof GasComparisonFormData, value: string) => {
+    setFormState((draft) => {
+      draft[field] = value;
+    });
+  };
+
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormState((draft) => {
       draft.isLoading = true;
     });
 
-    const gasPriceCents = formState.gasPriceStr ? Math.round(+formState.gasPriceStr * 100) : undefined;
-    const comparisonMpg = formState.comparisonMpgStr ? +formState.comparisonMpgStr : undefined;
-    const defaultMiPerKwh = formState.defaultMiPerKwhStr ? +formState.defaultMiPerKwhStr : undefined;
+    const gasPriceCents = Math.round(+formState.gasPriceStr * 100);
+    const comparisonMpg = +formState.comparisonMpgStr;
+    const defaultMiPerKwh = +formState.defaultMiPerKwhStr;
 
     const result = await updateSettings({ gasPriceCents, comparisonMpg, defaultMiPerKwh });
 
@@ -93,61 +102,13 @@ export function GasComparisonDetails() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 pt-8 pb-20">
-      <form id="gas-comparison-form" onSubmit={handleSubmit} className="space-y-4">
-        <FormInput
-          id="average-gas-price"
-          label="Average Gas Price ($/gal)"
-          type="number"
-          step="0.01"
-          min="0"
-          placeholder="3.50"
-          required
-          value={formState.gasPriceStr}
-          disabled={formState.isLoading}
-          onChange={(e) =>
-            setFormState((draft) => {
-              draft.gasPriceStr = e.target.value;
-            })
-          }
-        />
-        <FormInput
-          id="target-mpg"
-          label="Target MPG"
-          type="number"
-          step="1"
-          min="1"
-          placeholder="40"
-          required
-          value={formState.comparisonMpgStr}
-          disabled={formState.isLoading}
-          onChange={(e) =>
-            setFormState((draft) => {
-              draft.comparisonMpgStr = e.target.value;
-            })
-          }
-        />
-        <div>
-          <FormInput
-            id="default-mi-per-kwh"
-            label="Default mi/kWh"
-            type="number"
-            step="0.1"
-            min="0.1"
-            placeholder="2.7"
-            required
-            value={formState.defaultMiPerKwhStr}
-            disabled={formState.isLoading}
-            onChange={(e) =>
-              setFormState((draft) => {
-                draft.defaultMiPerKwhStr = e.target.value;
-              })
-            }
-          />
-          <p className="text-body-secondary mt-3 text-xs italic">
-            Used as fallback when a vehicle doesn't have battery capacity and range set
-          </p>
-        </div>
-      </form>
+      <GasComparisonForm
+        id="gas-comparison-form"
+        formData={formState}
+        onChange={handleFieldChange}
+        onSubmit={handleSubmit}
+        isLoading={formState.isLoading}
+      />
 
       <FormFooter>
         <div className="flex gap-3">
