@@ -1,5 +1,10 @@
 import { FormInput } from '../../components/FormInput';
-import type { GasComparisonFormData } from './gasComparisonHelpers';
+
+export type GasComparisonFormData = {
+  gasPriceStr: string;
+  comparisonMpgStr: string;
+  defaultMiPerKwhStr: string;
+};
 
 type GasComparisonFormProps = {
   id?: string;

@@ -4,8 +4,7 @@ import { useImmerState } from '../../hooks/useImmerState';
 import { FormFooter } from '../../components/FormFooter';
 import { OnboardingHeader } from './OnboardingHeader';
 import { OnboardingNavigationButtons } from './OnboardingNavigationButtons';
-import { GasComparisonForm } from '../settings/GasComparisonForm';
-import { DEFAULT_GAS_COMPARISON_FORM_DATA, type GasComparisonFormData } from '../settings/gasComparisonHelpers';
+import { GasComparisonForm, type GasComparisonFormData } from '../settings/GasComparisonForm';
 import { DEFAULT_GAS_PRICE_CENTS, DEFAULT_COMPARISON_MPG, DEFAULT_MI_PER_KWH } from '../../constants';
 
 type Step4State = GasComparisonFormData & {
@@ -15,7 +14,9 @@ type Step4State = GasComparisonFormData & {
 };
 
 const DEFAULT_STATE: Step4State = {
-  ...DEFAULT_GAS_COMPARISON_FORM_DATA,
+  gasPriceStr: (DEFAULT_GAS_PRICE_CENTS / 100).toFixed(2),
+  comparisonMpgStr: `${DEFAULT_COMPARISON_MPG}`,
+  defaultMiPerKwhStr: `${DEFAULT_MI_PER_KWH}`,
   isInitialized: false,
   isLoading: false,
   error: ''
