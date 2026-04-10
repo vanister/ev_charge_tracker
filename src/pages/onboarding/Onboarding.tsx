@@ -4,6 +4,7 @@ import { OnboardingStepIndicator } from './OnboardingStepIndicator';
 import { OnboardingStep1Welcome } from './OnboardingStep1Welcome';
 import { OnboardingStep2Locations } from './OnboardingStep2Locations';
 import { OnboardingStep3Vehicle } from './OnboardingStep3Vehicle';
+import { OnboardingStep4GasComparison } from './OnboardingStep4GasComparison';
 import { useNavigate } from 'react-router-dom';
 
 export function Onboarding() {
@@ -11,14 +12,18 @@ export function Onboarding() {
   const { completeOnboarding } = useSettings();
   const navigate = useNavigate();
 
-  const handleComplete = async () => {
+  const handleFinish = async () => {
     await completeOnboarding();
     await navigate('/', { replace: true }); // Redirect to main app after onboarding
   };
 
+  const handleVehicleContinue = async () => {
+    setCurrentStep(4);
+  };
+
   return (
     <div className="bg-background flex min-h-screen items-center justify-center px-4 py-8">
-      <OnboardingStepIndicator currentStep={currentStep} totalSteps={3} />
+      <OnboardingStepIndicator currentStep={currentStep} totalSteps={4} />
 
       <div className="w-full max-w-2xl pt-16 pb-32">
         {/* Step 1: Welcome */}
@@ -30,7 +35,14 @@ export function Onboarding() {
         )}
 
         {/* Step 3: Create First Vehicle */}
-        {currentStep === 3 && <OnboardingStep3Vehicle onBack={() => setCurrentStep(2)} onComplete={handleComplete} />}
+        {currentStep === 3 && (
+          <OnboardingStep3Vehicle onBack={() => setCurrentStep(2)} onContinue={handleVehicleContinue} />
+        )}
+
+        {/* Step 4: Gas Comparison Settings */}
+        {currentStep === 4 && (
+          <OnboardingStep4GasComparison onBack={() => setCurrentStep(3)} onContinue={handleFinish} />
+        )}
       </div>
     </div>
   );

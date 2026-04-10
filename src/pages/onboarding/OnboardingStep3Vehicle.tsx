@@ -10,7 +10,7 @@ import { DEFAULT_VEHICLE_FORM_DATA, type VehicleFormData } from '../vehicles/veh
 
 type OnboardingStep3VehicleProps = {
   onBack: () => void;
-  onComplete: () => Promise<void>;
+  onContinue: () => Promise<void>;
 };
 
 type Step3State = VehicleFormData & {
@@ -75,7 +75,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
       return;
     }
 
-    await props.onComplete();
+    await props.onContinue();
   };
 
   // todo - DRY this up
@@ -109,7 +109,7 @@ export function OnboardingStep3Vehicle(props: OnboardingStep3VehicleProps) {
             onBack={props.onBack}
             continueLabel="Continue"
             type="button"
-            onContinue={props.onComplete}
+            onContinue={props.onContinue}
           />
         </FormFooter>
       </div>
