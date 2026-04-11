@@ -11,6 +11,25 @@ import { DATE_INPUT_FORMAT } from '../constants';
 import type { DateRange } from '../types/shared-types';
 import type { TimeFilterValue } from '../types/shared-types';
 
+// Detects whether the given locale renders time in 24-hour form by probing Intl output.
+export function detectIs24Hour(locale: string): boolean {
+  const sample = new Date(2000, 0, 1, 23, 0);
+  const formatted = new Intl.DateTimeFormat(locale, {
+    hour: 'numeric',
+    minute: 'numeric'
+  }).format(sample);
+  return /\b23\b/.test(formatted);
+}
+
+// Cache locale detection at module load; navigator.language is stable within a session.
+const SYSTEM_LOCALE =
+  typeof navigator !== 'undefined' && navigator.language ? navigator.language : 'en-US';
+const SYSTEM_IS_24H = detectIs24Hour(SYSTEM_LOCALE);
+
+const TIME_PATTERN = SYSTEM_IS_24H ? 'HH:mm' : 'h:mm a';
+const DATE_PATTERN = 'MMM dd, yyyy';
+const DATE_TIME_PATTERN = `${DATE_PATTERN} ${TIME_PATTERN}`;
+
 export function getDateRangeForTimeFilter(value: TimeFilterValue): DateRange | undefined {
   const end = Date.now();
 
@@ -32,16 +51,16 @@ export function getDateRangeForTimeFilter(value: TimeFilterValue): DateRange | u
   }
 }
 
-export function formatDate(timestamp: Date | number, formatStr = 'MMM dd, yyyy'): string {
+export function formatDate(timestamp: Date | number, formatStr = DATE_PATTERN): string {
   return format(timestamp, formatStr);
 }
 
 export function formatDateTime(timestamp: number): string {
-  return format(timestamp, 'MMM dd, yyyy h:mm a');
+  return format(timestamp, DATE_TIME_PATTERN);
 }
 
 export function formatTime(timestamp: number): string {
-  return format(timestamp, 'h:mm a');
+  return format(timestamp, TIME_PATTERN);
 }
 
 export function isSameDay(timestamp1: number, timestamp2: number): boolean {
