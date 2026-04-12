@@ -11,20 +11,12 @@ import {
 const SAMPLE = new Date(2026, 3, 11, 13, 30).getTime();
 
 describe('detectIs24Hour', () => {
-  it('returns false for en-US (12-hour locale)', () => {
-    expect(detectIs24Hour('en-US')).toBe(false);
-  });
-
-  it('returns true for en-GB (24-hour locale)', () => {
-    expect(detectIs24Hour('en-GB')).toBe(true);
-  });
-
-  it('returns true for de-DE (24-hour locale)', () => {
-    expect(detectIs24Hour('de-DE')).toBe(true);
-  });
-
-  it('returns true for ja-JP (24-hour locale)', () => {
-    expect(detectIs24Hour('ja-JP')).toBe(true);
+  it('returns a boolean matching the runtime default hour cycle', () => {
+    const result = detectIs24Hour();
+    expect(typeof result).toBe('boolean');
+    const resolved = new Intl.DateTimeFormat(undefined, { hour: 'numeric' }).resolvedOptions();
+    const expected = resolved.hourCycle === 'h23' || resolved.hourCycle === 'h24';
+    expect(result).toBe(expected);
   });
 });
 

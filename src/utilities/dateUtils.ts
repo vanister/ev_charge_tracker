@@ -11,22 +11,18 @@ import { DATE_INPUT_FORMAT } from '../constants';
 import type { DateRange } from '../types/shared-types';
 import type { TimeFilterValue } from '../types/shared-types';
 
-// Cache locale detection at module load; navigator.language is stable within a session.
-const SYSTEM_LOCALE =
-  typeof navigator !== 'undefined' && navigator.language ? navigator.language : 'en-US';
-const SYSTEM_IS_24H = detectIs24Hour(SYSTEM_LOCALE);
+// Resolve the runtime's default hour cycle once at module load. Passing `undefined`
+// as the locale lets the browser pull OS-level region/time-format preferences, which
+// `navigator.language` (the browser UI language) does not reflect.
+const SYSTEM_IS_24H = detectIs24Hour();
 
 const TIME_PATTERN = SYSTEM_IS_24H ? 'HH:mm' : 'h:mm a';
 const DATE_PATTERN = 'MMM dd, yyyy';
 const DATE_TIME_PATTERN = `${DATE_PATTERN} ${TIME_PATTERN}`;
 
-export function detectIs24Hour(locale: string): boolean {
-  const sample = new Date(2000, 0, 1, 23, 0);
-  const formatted = new Intl.DateTimeFormat(locale, {
-    hour: 'numeric',
-    minute: 'numeric'
-  }).format(sample);
-  return /\b23\b/.test(formatted);
+export function detectIs24Hour(): boolean {
+  const resolved = new Intl.DateTimeFormat(undefined, { hour: 'numeric' }).resolvedOptions();
+  return resolved.hourCycle === 'h23' || resolved.hourCycle === 'h24';
 }
 
 export function getDateRangeForTimeFilter(value: TimeFilterValue): DateRange | undefined {
