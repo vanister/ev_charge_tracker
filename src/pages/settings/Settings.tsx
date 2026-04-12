@@ -9,6 +9,7 @@ import { UpdateSectionBody } from './UpdateSectionBody';
 import { AboutSectionBody } from './AboutSectionBody';
 import { BackupRestoreSectionBody } from './BackupRestoreSectionBody';
 import { ThemeSectionBody } from './ThemeSectionBody';
+import { DateTimeSectionBody } from './DateTimeSectionBody';
 
 export function Settings() {
   usePageConfig('Settings');
@@ -19,6 +20,10 @@ export function Settings() {
       <div className="mx-auto max-w-2xl space-y-8">
         <Section title="Theme">
           <ThemeSectionBody />
+        </Section>
+
+        <Section title="Date & Time">
+          <DateTimeSectionBody />
         </Section>
 
         <Section title="Locations">

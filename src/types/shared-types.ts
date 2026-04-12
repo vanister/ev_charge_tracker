@@ -55,3 +55,11 @@ export type TimeFilterValue = '7d' | '14d' | '31d' | '3m' | '6m' | '12m' | 'all'
 export type TimeFilterOption = { label: string; value: TimeFilterValue };
 
 export type OAuthProvider = 'google';
+
+export type DateFormatValue = 'medium' | 'us-short' | 'eu-short' | 'iso';
+export type TimeFormatValue = 'auto' | '12h' | '24h' | '24h-seconds';
+
+export type DateTimeFormatPrefs = {
+  dateFormat?: DateFormatValue;
+  timeFormat?: TimeFormatValue;
+};

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useMaintenanceRecords } from '../../hooks/useMaintenanceRecords';
+import { useDateTimeFormat } from '../../hooks/useDateTimeFormat';
 import { formatDate, getDateRangeForTimeFilter } from '../../utilities/dateUtils';
 import { formatCost } from '../../utilities/formatUtils';
 import { DashboardStatCard } from './DashboardStatCard';
@@ -8,6 +9,7 @@ import { getMaintenanceTypeLabel } from '../vehicles/maintenance/maintenanceHelp
 
 export function MaintenanceSummary() {
   const { getMaintenanceRecordList } = useMaintenanceRecords();
+  const { prefs: dateTimePrefs } = useDateTimeFormat();
   const [filteredRecords, setFilteredRecords] = useState<MaintenanceRecord[]>([]);
 
   useEffect(() => {
@@ -31,7 +33,7 @@ export function MaintenanceSummary() {
   }, [getMaintenanceRecordList]);
 
   const lastRecord = filteredRecords[0] ?? null;
-  const lastServicedDate = lastRecord ? formatDate(lastRecord.servicedAt, 'MMM d, yyyy') : '—';
+  const lastServicedDate = lastRecord ? formatDate(lastRecord.servicedAt, dateTimePrefs) : '—';
   // format the service type to be human readable
   const lastServiceType = lastRecord ? getMaintenanceTypeLabel(lastRecord.type) : undefined;
   // only show cents if cost is less than 1000 dollars to avoid cluttering the UI with unnecessary detail for large costs

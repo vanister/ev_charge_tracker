@@ -8,21 +8,44 @@ import {
   subMonths as dateFnsSubMonths
 } from 'date-fns';
 import { DATE_INPUT_FORMAT } from '../constants';
-import type { DateRange } from '../types/shared-types';
+import type { DateFormatValue, DateRange, DateTimeFormatPrefs, TimeFormatValue } from '../types/shared-types';
 import type { TimeFilterValue } from '../types/shared-types';
-
-// Resolve the runtime's default hour cycle once at module load. Passing `undefined`
-// as the locale lets the browser pull OS-level region/time-format preferences, which
-// `navigator.language` (the browser UI language) does not reflect.
-const SYSTEM_IS_24H = detectIs24Hour();
-
-const TIME_PATTERN = SYSTEM_IS_24H ? 'HH:mm' : 'h:mm a';
-const DATE_PATTERN = 'MMM dd, yyyy';
-const DATE_TIME_PATTERN = `${DATE_PATTERN} ${TIME_PATTERN}`;
 
 export function detectIs24Hour(): boolean {
   const resolved = new Intl.DateTimeFormat(undefined, { hour: 'numeric' }).resolvedOptions();
   return resolved.hourCycle === 'h23' || resolved.hourCycle === 'h24';
+}
+
+// Cached once at module load — system hour cycle is stable for the page lifetime
+const SYSTEM_IS_24H = detectIs24Hour();
+const SYSTEM_TIME_PATTERN = SYSTEM_IS_24H ? 'HH:mm' : 'h:mm a';
+
+export function resolveDatePattern(pref?: DateFormatValue): string {
+  switch (pref) {
+    case 'us-short':
+      return 'MM/dd/yyyy';
+    case 'eu-short':
+      return 'dd/MM/yyyy';
+    case 'iso':
+      return 'yyyy-MM-dd';
+    case 'medium':
+    default:
+      return 'MMM dd, yyyy';
+  }
+}
+
+export function resolveTimePattern(pref?: TimeFormatValue): string {
+  switch (pref) {
+    case '12h':
+      return 'h:mm a';
+    case '24h':
+      return 'HH:mm';
+    case '24h-seconds':
+      return 'HH:mm:ss';
+    case 'auto':
+    default:
+      return SYSTEM_TIME_PATTERN;
+  }
 }
 
 export function getDateRangeForTimeFilter(value: TimeFilterValue): DateRange | undefined {
@@ -46,16 +69,26 @@ export function getDateRangeForTimeFilter(value: TimeFilterValue): DateRange | u
   }
 }
 
-export function formatDate(timestamp: Date | number, formatStr = DATE_PATTERN): string {
-  return format(timestamp, formatStr);
+export function formatDate(
+  timestamp: Date | number,
+  prefsOrFormat?: DateTimeFormatPrefs | string
+): string {
+  if (typeof prefsOrFormat === 'string') {
+    return format(timestamp, prefsOrFormat);
+  }
+  return format(timestamp, resolveDatePattern(prefsOrFormat?.dateFormat));
 }
 
-export function formatDateTime(timestamp: number): string {
-  return format(timestamp, DATE_TIME_PATTERN);
+export function formatDateTime(timestamp: number, prefs?: DateTimeFormatPrefs): string {
+  return format(timestamp, `${resolveDatePattern(prefs?.dateFormat)} ${resolveTimePattern(prefs?.timeFormat)}`);
 }
 
-export function formatTime(timestamp: number): string {
-  return format(timestamp, TIME_PATTERN);
+export function formatTime(timestamp: number, prefs?: DateTimeFormatPrefs): string {
+  return format(timestamp, resolveTimePattern(prefs?.timeFormat));
+}
+
+export function formatDateGroupHeader(timestamp: number, prefs?: DateTimeFormatPrefs): string {
+  return format(timestamp, `EEEE, ${resolveDatePattern(prefs?.dateFormat)}`);
 }
 
 export function isSameDay(timestamp1: number, timestamp2: number): boolean {

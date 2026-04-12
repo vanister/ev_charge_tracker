@@ -1,11 +1,13 @@
 import type { SessionWithMetadata } from '../../helpers/sessionHelpers';
+import type { DateTimeFormatPrefs } from '../../types/shared-types';
 import { SessionItem } from '../sessions/SessionItem';
 
 type DashboardRecentSessionsProps = {
   sessions: SessionWithMetadata[];
+  dateTimeFormatPrefs?: DateTimeFormatPrefs;
 };
 
-export function DashboardRecentSessions({ sessions }: DashboardRecentSessionsProps) {
+export function DashboardRecentSessions({ sessions, dateTimeFormatPrefs }: DashboardRecentSessionsProps) {
   if (sessions.length === 0) {
     return null;
   }
@@ -21,6 +23,7 @@ export function DashboardRecentSessions({ sessions }: DashboardRecentSessionsPro
           locationIcon={locationIcon}
           locationColor={locationColor}
           showFullDate
+          dateTimeFormatPrefs={dateTimeFormatPrefs}
         />
       ))}
     </div>

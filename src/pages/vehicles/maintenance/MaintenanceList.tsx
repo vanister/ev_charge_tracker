@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { usePageConfig } from '../../../hooks/usePageConfig';
+import { useDateTimeFormat } from '../../../hooks/useDateTimeFormat';
 import { useMaintenanceRecords } from '../../../hooks/useMaintenanceRecords';
 import { useVehicles } from '../../../hooks/useVehicles';
 import { useImmerState } from '../../../hooks/useImmerState';
@@ -27,6 +28,7 @@ export function MaintenanceList() {
   const { vehicleId } = useParams<{ vehicleId: string }>();
   const navigate = useNavigate();
   const { getMaintenanceRecordList, deleteMaintenanceRecord } = useMaintenanceRecords();
+  const { prefs: dateTimePrefs } = useDateTimeFormat();
   const { getVehicle } = useVehicles();
   const [state, setState] = useImmerState<MaintenanceListState>(DEFAULT_STATE);
 
@@ -106,7 +108,7 @@ export function MaintenanceList() {
             <h3 className="text-body-secondary mb-3 px-1 text-sm font-semibold">{group.label}</h3>
             <div className="space-y-3">
               {group.records.map((record) => (
-                <MaintenanceItem key={record.id} record={record} onEdit={handleEdit} onDelete={handleDelete} />
+                <MaintenanceItem key={record.id} record={record} onEdit={handleEdit} onDelete={handleDelete} dateTimeFormatPrefs={dateTimePrefs} />
               ))}
             </div>
           </div>
