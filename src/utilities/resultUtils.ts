@@ -1,6 +1,4 @@
-import type { Success, Failure, Result } from '../types/shared-types';
-
-export type { Success, Failure, Result };
+import type { Success, Failure } from '../types/shared-types';
 
 export function success(): Success<void>;
 export function success<T>(data: T): Success<T>;

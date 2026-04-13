@@ -2,7 +2,8 @@ import { OAUTH_PROVIDERS } from '../constants';
 import type { OAuthProvider } from '../types/shared-types';
 import type { OAuthTokensRecord } from '../data/data-types';
 import type { TokenExchangeConfig } from '../types/auth-types';
-import { type Result, success, failure } from './resultUtils';
+import { success, failure } from './resultUtils';
+import type { Result } from '../types/shared-types';
 
 const OAUTH_STATE_KEY = 'oauth_state';
 const OAUTH_CODE_VERIFIER_KEY = 'oauth_code_verifier';

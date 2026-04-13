@@ -1,4 +1,5 @@
-import { type Result, success, failure } from './resultUtils';
+import { success, failure } from './resultUtils';
+import type { Result } from '../types/shared-types';
 
 type PkcePair = {
   codeVerifier: string;

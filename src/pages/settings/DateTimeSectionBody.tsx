@@ -18,7 +18,9 @@ export function DateTimeSectionBody() {
 
   const handleDateFormatChange = async (label: string) => {
     const option = DATE_FORMAT_OPTIONS.find((o) => o.label === label);
-    if (!option) return;
+    if (!option) {
+      return;
+    }
     const result = await updateDateFormat(option.value);
     showToast(
       result.success
@@ -29,7 +31,9 @@ export function DateTimeSectionBody() {
 
   const handleTimeFormatChange = async (label: string) => {
     const option = TIME_FORMAT_OPTIONS.find((o) => o.label === label);
-    if (!option) return;
+    if (!option) {
+      return;
+    }
     const result = await updateTimeFormat(option.value);
     showToast(
       result.success

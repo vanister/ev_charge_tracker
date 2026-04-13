@@ -13,10 +13,10 @@ import { FormFooter } from '../../components/FormFooter';
 import { SessionForm } from './SessionForm';
 import type { SessionFormData } from './session-types';
 import { SessionFormEmptyStates } from './SessionFormEmptyStates';
+import { timestampToDatetimeLocal } from '../../utilities/dateUtils';
 import {
   calculateCostCents,
   getDefaultDateTime,
-  timestampToDatetimeLocal,
   datetimeLocalToTimestamp
 } from './sessionFormHelpers';
 

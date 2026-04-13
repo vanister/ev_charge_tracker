@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDatabase } from './useDatabase';
 import { success, failure } from '../utilities/resultUtils';
-import type { Result } from '../utilities/resultUtils';
+import type { Result } from '../types/shared-types';
 
 export function useResetApp() {
   const { db } = useDatabase();

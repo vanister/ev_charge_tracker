@@ -2,7 +2,8 @@ import { useCallback } from 'react';
 import { useDatabase } from './useDatabase';
 import type { SettingsRecord } from '../data/data-types';
 import { SETTINGS_KEY } from '../data/constants';
-import { success, failure, type Result } from '../utilities/resultUtils';
+import { success, failure } from '../utilities/resultUtils';
+import type { Result } from '../types/shared-types';
 
 export function useSettings() {
   const { db } = useDatabase();

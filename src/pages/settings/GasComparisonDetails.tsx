@@ -31,7 +31,9 @@ export function GasComparisonDetails() {
   const [formState, setFormState] = useImmerState<GasComparisonDetailsState>(DEFAULT_STATE);
 
   useEffect(() => {
-    if (formState.isInitialized) return;
+    if (formState.isInitialized) {
+      return;
+    }
 
     const load = async () => {
       const result = await getSettings();

@@ -32,7 +32,9 @@ export function OnboardingStep4GasComparison(props: OnboardingStep4GasComparison
   const [state, setState] = useImmerState<Step4State>(DEFAULT_STATE);
 
   useEffect(() => {
-    if (state.isInitialized) return;
+    if (state.isInitialized) {
+      return;
+    }
 
     const load = async () => {
       const result = await getSettings();

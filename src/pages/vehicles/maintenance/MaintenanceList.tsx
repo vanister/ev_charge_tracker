@@ -7,7 +7,7 @@ import { useVehicles } from '../../../hooks/useVehicles';
 import { useImmerState } from '../../../hooks/useImmerState';
 import { ItemListButton } from '../../../components/ItemListButton';
 import { groupRecordsByDate } from './maintenanceHelpers';
-import { getVehicleDisplayName } from '../vehicleHelpers';
+import { getVehicleDisplayName } from '../../../helpers/sessionHelpers';
 import { MaintenanceItem } from './MaintenanceItem';
 import { MaintenanceEmptyState } from './MaintenanceEmptyState';
 import type { MaintenanceRecord, VehicleRecord } from '../../../data/data-types';

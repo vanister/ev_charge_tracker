@@ -48,8 +48,8 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
               tickLine={false}
               axisLine={false}
               tickFormatter={(v: number) => {
-                if (v === 0) return '';
-                if (v >= 1000) return `${+(v / 1000).toFixed(1)}k`;
+                if (v === 0) { return ''; }
+                if (v >= 1000) { return `${+(v / 1000).toFixed(1)}k`; }
                 return `${Math.round(v)}`;
               }}
               width={44}

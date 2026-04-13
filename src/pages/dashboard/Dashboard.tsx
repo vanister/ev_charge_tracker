@@ -35,7 +35,9 @@ export function Dashboard() {
 
   // Pre-fill vehicleId from preferences once vehicle list first loads
   useEffect(() => {
-    if (vehicles.length === 0) return;
+    if (vehicles.length === 0) {
+      return;
+    }
     setFilter((draft) => {
       draft.vehicleId = vehicles.find((v) => v.id === preferences.dashboardFilterVehicleId)?.id;
     });
@@ -45,7 +47,9 @@ export function Dashboard() {
 
   // Pre-fill locationId from preferences once location list first loads
   useEffect(() => {
-    if (locations.length === 0) return;
+    if (locations.length === 0) {
+      return;
+    }
     setFilter((draft) => {
       draft.locationId = locations.find((l) => l.id === preferences.dashboardFilterLocationId)?.id;
     });
