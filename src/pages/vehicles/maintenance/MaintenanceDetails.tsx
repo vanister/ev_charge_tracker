@@ -8,8 +8,7 @@ import { useVehicles } from '../../../hooks/useVehicles';
 import { getVehicleDisplayName } from '../vehicleHelpers';
 import { Button } from '../../../components/Button';
 import { FormFooter } from '../../../components/FormFooter';
-import { formatDate } from '../../../utilities/dateUtils';
-import { DATE_INPUT_FORMAT } from '../../../constants';
+import { getDateGroupKey } from '../../../utilities/dateUtils';
 import { MaintenanceForm } from './MaintenanceForm';
 import { buildRecord, getDefaultDate } from './maintenanceFormHelpers';
 import type { MaintenanceFormData } from './maintenance-types';
@@ -107,11 +106,11 @@ export function MaintenanceDetails() {
       setFormState((draft) => {
         draft.type = record.type;
         draft.description = record.description ?? '';
-        draft.servicedAt = formatDate(record.servicedAt, DATE_INPUT_FORMAT);
+        draft.servicedAt = getDateGroupKey(record.servicedAt);
         draft.cost = !!record.costCents ? (record.costCents / 100).toFixed(2) : '';
         draft.mileage = !!record.mileage ? `${record.mileage}` : '';
         draft.serviceProvider = record.serviceProvider ?? '';
-        draft.nextDueDate = !!record.nextDueDate ? formatDate(record.nextDueDate, DATE_INPUT_FORMAT) : '';
+        draft.nextDueDate = !!record.nextDueDate ? getDateGroupKey(record.nextDueDate) : '';
         draft.nextDueMileage = !!record.nextDueMileage ? `${record.nextDueMileage}` : '';
         draft.notes = record.notes ?? '';
         draft.isInitialized = true;

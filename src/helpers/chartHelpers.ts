@@ -1,4 +1,14 @@
-import { subDays, startOfDay, formatDate, getDateGroupKey, startOfMonth, subMonths } from '../utilities/dateUtils';
+import {
+  subDays,
+  startOfDay,
+  getDateGroupKey,
+  getMonthKey,
+  formatChartDayLabel,
+  formatMonthLabel,
+  formatMonthLabelWithYear,
+  startOfMonth,
+  subMonths
+} from '../utilities/dateUtils';
 import type { ChargingSessionRecord, LocationRecord } from '../data/data-types';
 import type { ChartData, ChartBarData, LocationChartConfig } from '../pages/dashboard/chart-types';
 import { LOCATION_COLOR_HEX } from '../constants';
@@ -21,7 +31,7 @@ export function buildChartData(
     const date = subDays(now, numDays - 1 - i);
     const base: ChartBarData = {
       dateKey: getDateGroupKey(date),
-      label: formatDate(date, 'MM/dd')
+      label: formatChartDayLabel(date)
     };
 
     for (const loc of locations) {
@@ -72,10 +82,10 @@ export function buildMonthlyChartData(
   // Generate months oldest-first: numMonths ago → current month
   const bars: ChartBarData[] = Array.from({ length: numMonths }, (_, i) => {
     const monthDate = startOfMonth(subMonths(now, numMonths - 1 - i));
-    const monthKey = formatDate(monthDate, 'yyyy-MM');
+    const monthKey = getMonthKey(monthDate);
     // Show year only when it differs from the current year
     const label =
-      monthDate.getFullYear() === now.getFullYear() ? formatDate(monthDate, 'MMM') : formatDate(monthDate, "MMM ''yy");
+      monthDate.getFullYear() === now.getFullYear() ? formatMonthLabel(monthDate) : formatMonthLabelWithYear(monthDate);
 
     const base: ChartBarData = { dateKey: monthKey, label };
 
@@ -90,7 +100,7 @@ export function buildMonthlyChartData(
   const barIndex = new Map<string, ChartBarData>(bars.map((b) => [b.dateKey, b]));
 
   for (const session of sessions) {
-    const monthKey = formatDate(session.chargedAt, 'yyyy-MM');
+    const monthKey = getMonthKey(session.chargedAt);
     const bar = barIndex.get(monthKey);
 
     if (bar) {

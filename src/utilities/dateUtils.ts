@@ -8,8 +8,7 @@ import {
   subMonths as dateFnsSubMonths
 } from 'date-fns';
 import { DATE_INPUT_FORMAT } from '../constants';
-import type { DateFormatValue, DateRange, DateTimeFormatPrefs, TimeFormatValue } from '../types/shared-types';
-import type { TimeFilterValue } from '../types/shared-types';
+import type { DateFormatValue, DateRange, DateTimeFormatPrefs, TimeFilterValue, TimeFormatValue } from '../types/shared-types';
 
 export function detectIs24Hour(): boolean {
   const resolved = new Intl.DateTimeFormat(undefined, { hour: 'numeric' }).resolvedOptions();
@@ -69,14 +68,8 @@ export function getDateRangeForTimeFilter(value: TimeFilterValue): DateRange | u
   }
 }
 
-export function formatDate(
-  timestamp: Date | number,
-  prefsOrFormat?: DateTimeFormatPrefs | string
-): string {
-  if (typeof prefsOrFormat === 'string') {
-    return format(timestamp, prefsOrFormat);
-  }
-  return format(timestamp, resolveDatePattern(prefsOrFormat?.dateFormat));
+export function formatDate(timestamp: Date | number, prefs?: DateTimeFormatPrefs): string {
+  return format(timestamp, resolveDatePattern(prefs?.dateFormat));
 }
 
 export function formatDateTime(timestamp: number, prefs?: DateTimeFormatPrefs): string {
@@ -89,6 +82,26 @@ export function formatTime(timestamp: number, prefs?: DateTimeFormatPrefs): stri
 
 export function formatDateGroupHeader(timestamp: number, prefs?: DateTimeFormatPrefs): string {
   return format(timestamp, `EEEE, ${resolveDatePattern(prefs?.dateFormat)}`);
+}
+
+export function getMonthKey(timestamp: Date | number): string {
+  return format(timestamp, 'yyyy-MM');
+}
+
+export function formatMonthGroupLabel(date: Date): string {
+  return format(date, 'MMMM yyyy');
+}
+
+export function formatChartDayLabel(timestamp: number): string {
+  return format(timestamp, 'MM/dd');
+}
+
+export function formatMonthLabel(date: Date): string {
+  return format(date, 'MMM');
+}
+
+export function formatMonthLabelWithYear(date: Date): string {
+  return format(date, "MMM ''yy");
 }
 
 export function isSameDay(timestamp1: number, timestamp2: number): boolean {
