@@ -7,11 +7,12 @@ import { useLocations } from '../../hooks/useLocations';
 import { usePageConfig } from '../../hooks/usePageConfig';
 import { useImmerState } from '../../hooks/useImmerState';
 import { useUserPreferences } from '../../hooks/useUserPreferences';
+import { useDateTimeFormat } from '../../hooks/useDateTimeFormat';
 import { ItemListButton } from '../../components/ItemListButton';
 import { SessionsFilter } from '../../components/SessionsFilter';
 import { SessionDateGroup } from './SessionDateGroup';
 import { SessionsEmptyState } from './SessionsEmptyState';
-import { formatDate, getDateRangeForTimeFilter } from '../../utilities/dateUtils';
+import { formatDateGroupHeader, getDateRangeForTimeFilter } from '../../utilities/dateUtils';
 import { createVehicleMap, createLocationMap, groupSessionsByDate } from '../../helpers/sessionHelpers';
 import type { TimeFilterValue } from '../../types/shared-types';
 
@@ -42,6 +43,7 @@ export function SessionsList() {
 
   const navigate = useNavigate();
   const { preferences, updatePreferences } = useUserPreferences();
+  const { prefs: dateTimePrefs } = useDateTimeFormat();
   const [state, setState] = useImmerState<SessionsListState>({
     ...DEFAULT_STATE,
     selectedTimeRange: (preferences.sessionsFilterTimeRange as TimeFilterValue) ?? '7d'
@@ -259,10 +261,11 @@ export function SessionsList() {
             {sessionsByDate.map(([dateKey, sessionsInGroup]) => (
               <SessionDateGroup
                 key={dateKey}
-                date={formatDate(sessionsInGroup[0].session.chargedAt, 'EEEE, MMM dd, yyyy')}
+                date={formatDateGroupHeader(sessionsInGroup[0].session.chargedAt, dateTimePrefs)}
                 sessions={sessionsInGroup}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+                dateTimeFormatPrefs={dateTimePrefs}
               />
             ))}
           </div>

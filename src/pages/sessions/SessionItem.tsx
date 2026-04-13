@@ -1,5 +1,5 @@
 import type { ChargingSessionRecord } from '../../data/data-types';
-import type { IconName } from '../../types/shared-types';
+import type { DateTimeFormatPrefs, IconName } from '../../types/shared-types';
 import { Icon } from '../../components/Icon';
 import { formatTime, formatDateTime } from '../../utilities/dateUtils';
 import { formatCost, formatEnergy } from '../../utilities/formatUtils';
@@ -14,6 +14,7 @@ type SessionItemProps = {
   onEdit?: (id: string) => void;
   onDelete?: (id: string) => void;
   showFullDate?: boolean;
+  dateTimeFormatPrefs?: DateTimeFormatPrefs;
 };
 
 export function SessionItem(props: SessionItemProps) {
@@ -25,10 +26,13 @@ export function SessionItem(props: SessionItemProps) {
     locationColor,
     onEdit,
     onDelete,
-    showFullDate: showDate
+    showFullDate: showDate,
+    dateTimeFormatPrefs
   } = props;
 
-  const timestamp = showDate ? formatDateTime(session.chargedAt) : formatTime(session.chargedAt);
+  const timestamp = showDate
+    ? formatDateTime(session.chargedAt, dateTimeFormatPrefs)
+    : formatTime(session.chargedAt, dateTimeFormatPrefs);
 
   return (
     <div className="bg-surface border-default rounded-lg border p-4">

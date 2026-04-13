@@ -1,4 +1,5 @@
 import type { MaintenanceRecord } from '../../../data/data-types';
+import type { DateTimeFormatPrefs } from '../../../types/shared-types';
 import { Icon } from '../../../components/Icon';
 import { formatDate } from '../../../utilities/dateUtils';
 import { formatCost } from '../../../utilities/formatUtils';
@@ -9,13 +10,14 @@ type MaintenanceItemProps = {
   record: MaintenanceRecord;
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
+  dateTimeFormatPrefs?: DateTimeFormatPrefs;
 };
 
 export function MaintenanceItem(props: MaintenanceItemProps) {
-  const { record, onEdit, onDelete } = props;
+  const { record, onEdit, onDelete, dateTimeFormatPrefs } = props;
 
   const typeLabel = getMaintenanceTypeLabel(record.type);
-  const date = formatDate(record.servicedAt, 'MMM d, yyyy');
+  const date = formatDate(record.servicedAt, dateTimeFormatPrefs);
 
   return (
     <div className="bg-surface border-default rounded-lg border p-4">

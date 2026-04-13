@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { usePageConfig } from '../../hooks/usePageConfig';
 import { useUserPreferences } from '../../hooks/useUserPreferences';
+import { useDateTimeFormat } from '../../hooks/useDateTimeFormat';
 import { useImmerState } from '../../hooks/useImmerState';
 import { useDashboardData } from './useDashboardData';
 import { EmptyState } from '../../components/EmptyState';
@@ -20,6 +21,7 @@ export function Dashboard() {
 
   const navigate = useNavigate();
   const { preferences, updatePreferences } = useUserPreferences();
+  const { prefs: dateTimePrefs } = useDateTimeFormat();
   const [filtersIsOpen, setFiltersIsOpen] = useState(preferences.dashboardFilterIsOpen ?? true);
 
   const [filter, setFilter] = useImmerState<DashboardFilter>({
@@ -163,7 +165,7 @@ export function Dashboard() {
             }
             noCard
           >
-            <DashboardRecentSessions sessions={recentSessions} />
+            <DashboardRecentSessions sessions={recentSessions} dateTimeFormatPrefs={dateTimePrefs} />
           </Section>
         )}
       </div>

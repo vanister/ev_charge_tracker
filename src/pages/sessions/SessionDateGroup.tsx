@@ -1,4 +1,5 @@
 import type { SessionWithMetadata } from '../../helpers/sessionHelpers';
+import type { DateTimeFormatPrefs } from '../../types/shared-types';
 import { SessionItem } from './SessionItem';
 
 type SessionDateGroupProps = {
@@ -6,10 +7,11 @@ type SessionDateGroupProps = {
   sessions: SessionWithMetadata[];
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
+  dateTimeFormatPrefs?: DateTimeFormatPrefs;
 };
 
 export function SessionDateGroup(props: SessionDateGroupProps) {
-  const { date, sessions, onEdit, onDelete } = props;
+  const { date, sessions, onEdit, onDelete, dateTimeFormatPrefs } = props;
 
   return (
     <div className="mb-6">
@@ -25,6 +27,7 @@ export function SessionDateGroup(props: SessionDateGroupProps) {
             locationColor={item.locationColor}
             onEdit={onEdit}
             onDelete={onDelete}
+            dateTimeFormatPrefs={dateTimeFormatPrefs}
           />
         ))}
       </div>

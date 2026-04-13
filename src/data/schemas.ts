@@ -59,7 +59,10 @@ export const SettingsRecordSchema = z.object({
   // gas comparison settings — undefined until user configures them
   gasPriceCents: z.number().int().optional(),
   comparisonMpg: z.number().optional(),
-  defaultMiPerKwh: z.number().optional()
+  defaultMiPerKwh: z.number().optional(),
+  // date & time display format — undefined falls back to defaults (medium date, auto time)
+  dateFormat: z.enum(['medium', 'us-short', 'eu-short', 'iso']).optional(),
+  timeFormat: z.enum(['auto', '12h', '24h', '24h-seconds']).optional()
 });
 
 export const MaintenanceRecordSchema = z.object({
