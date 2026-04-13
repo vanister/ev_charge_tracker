@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSettings } from './useSettings';
-import type { Result } from '../types/shared-types';
-import type { DateFormatValue, DateTimeFormatPrefs, TimeFormatValue } from '../types/shared-types';
+import type { Result, DateFormatValue, DateTimeFormatPrefs, TimeFormatValue } from '../types/shared-types';
 
 export function useDateTimeFormat() {
   const { getSettings, updateSettings } = useSettings();

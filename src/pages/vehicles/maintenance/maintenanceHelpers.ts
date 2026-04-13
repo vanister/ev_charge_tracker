@@ -1,6 +1,6 @@
 import type { MaintenanceType } from '../../../constants';
 import type { MaintenanceRecord } from '../../../data/data-types';
-import { formatDate } from '../../../utilities/dateUtils';
+import { getMonthKey, formatMonthGroupLabel } from '../../../utilities/dateUtils';
 import type { MaintenanceGroup } from './maintenance-types';
 
 export function getMaintenanceTypeLabel(type: MaintenanceType): string {
@@ -37,7 +37,7 @@ export function groupRecordsByDate(records: MaintenanceRecord[]): MaintenanceGro
 
   // yyyy-MM key preserves correct sort order when comparing month strings
   const grouped = sorted.reduce((map, record) => {
-    const key = formatDate(record.servicedAt, 'yyyy-MM');
+    const key = getMonthKey(record.servicedAt);
     const existing = map.get(key);
 
     if (existing) {
@@ -55,7 +55,7 @@ export function groupRecordsByDate(records: MaintenanceRecord[]): MaintenanceGro
       // Construct local-time date to avoid UTC parsing shifting the month back by one day
       const [year, month] = key.split('-').map(Number);
       return {
-        label: formatDate(new Date(year, month - 1, 1), 'MMMM yyyy'),
+        label: formatMonthGroupLabel(new Date(year, month - 1, 1)),
         records: recs
       };
     });

@@ -151,7 +151,7 @@ export function Dashboard() {
             }
             noCard
           >
-            <MaintenanceSummary />
+            <MaintenanceSummary dateTimeFormatPrefs={dateTimePrefs} />
           </Section>
         )}
 

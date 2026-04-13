@@ -1,5 +1,4 @@
-import { formatDate, dateInputToTimestamp } from '../../../utilities/dateUtils';
-import { DATE_INPUT_FORMAT } from '../../../constants';
+import { getDateGroupKey, dateInputToTimestamp } from '../../../utilities/dateUtils';
 import type { MaintenanceRecord } from '../../../data/data-types';
 import type { MaintenanceFormData } from './maintenance-types';
 
@@ -22,5 +21,5 @@ export function buildRecord(
 }
 
 export function getDefaultDate(): string {
-  return formatDate(Date.now(), DATE_INPUT_FORMAT);
+  return getDateGroupKey(Date.now());
 }

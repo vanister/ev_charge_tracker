@@ -75,9 +75,6 @@ describe('formatDate', () => {
     expect(formatDate(SAMPLE, { dateFormat: 'eu-short' })).toBe('11/04/2026');
   });
 
-  it('still accepts a raw format string for backwards compatibility', () => {
-    expect(formatDate(SAMPLE, 'EEEE, MMM dd, yyyy')).toBe('Saturday, Apr 11, 2026');
-  });
 });
 
 describe('formatDateTime', () => {
