@@ -2,10 +2,9 @@ import { useCallback } from 'react';
 import { useDatabase } from './useDatabase';
 import type { VehicleRecord } from '../data/data-types';
 import { generateId } from '../utilities/dataUtils';
-import { success, failure, type Result } from '../utilities/resultUtils';
+import { success, failure } from '../utilities/resultUtils';
+import type { Result } from '../types/shared-types';
 import type { CreateVehicleInput, UpdateVehicleInput } from '../pages/vehicles/vehicle-types';
-
-export type { CreateVehicleInput, UpdateVehicleInput };
 
 export function useVehicles() {
   const { db } = useDatabase();

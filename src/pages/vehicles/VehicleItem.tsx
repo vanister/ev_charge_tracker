@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import type { VehicleRecord } from '../../data/data-types';
 import { Icon } from '../../components/Icon';
-import { getVehicleDisplayName } from './vehicleHelpers';
+import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
 
 type VehicleItemProps = {
   vehicle: VehicleRecord;

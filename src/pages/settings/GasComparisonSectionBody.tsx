@@ -10,7 +10,7 @@ type GasComparisonValues = {
 };
 
 function formatGasPrice(cents: number | undefined): string {
-  if (cents == null) {
+  if (cents === undefined) {
     return '--';
   }
 
@@ -18,7 +18,7 @@ function formatGasPrice(cents: number | undefined): string {
 }
 
 function formatMpg(mpg: number | undefined): string {
-  if (mpg == null) {
+  if (mpg === undefined) {
     return '--';
   }
 
@@ -26,7 +26,7 @@ function formatMpg(mpg: number | undefined): string {
 }
 
 function formatMiPerKwh(miPerKwh: number | undefined): string {
-  if (miPerKwh == null) {
+  if (miPerKwh === undefined) {
     return '--';
   }
 
@@ -45,7 +45,9 @@ export function GasComparisonSectionBody() {
   useEffect(() => {
     const load = async () => {
       const result = await getSettings();
-      if (!result.success || !result.data) return;
+      if (!result.success || !result.data) {
+        return;
+      }
 
       const { gasPriceCents, comparisonMpg, defaultMiPerKwh } = result.data;
       setValues({ gasPriceCents, comparisonMpg, defaultMiPerKwh });

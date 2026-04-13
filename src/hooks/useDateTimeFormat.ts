@@ -9,7 +9,9 @@ export function useDateTimeFormat() {
   useEffect(() => {
     const load = async () => {
       const result = await getSettings();
-      if (!result.success || !result.data) return;
+      if (!result.success || !result.data) {
+        return;
+      }
 
       setPrefs({
         dateFormat: result.data.dateFormat,

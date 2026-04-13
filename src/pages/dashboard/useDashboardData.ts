@@ -71,9 +71,9 @@ export function useDashboardData(filter: DashboardFilter): UseDashboardDataResul
       // Filter sessions in-memory so recentSessions can use the unfiltered list
       const dateRange = getDateRangeForTimeFilter(filter.timeRange);
       const filtered = allSessions.filter((s) => {
-        if (filter.vehicleId && s.vehicleId !== filter.vehicleId) return false;
-        if (filter.locationId && s.locationId !== filter.locationId) return false;
-        if (dateRange && (s.chargedAt < dateRange.start || s.chargedAt > dateRange.end)) return false;
+        if (filter.vehicleId && s.vehicleId !== filter.vehicleId) { return false; }
+        if (filter.locationId && s.locationId !== filter.locationId) { return false; }
+        if (dateRange && (s.chargedAt < dateRange.start || s.chargedAt > dateRange.end)) { return false; }
         return true;
       });
 

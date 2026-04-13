@@ -125,7 +125,7 @@ export function OnboardingStep2Locations(props: OnboardingStep2LocationsProps) {
         <div className="mb-6 space-y-4">
           {state.locationForms.map((form, index) => {
             const location = state.locations.find((loc) => loc.id === form.id);
-            if (!location) return null;
+            if (!location) { return null; }
 
             return (
               <div key={form.id} className="bg-background border-default rounded-lg border p-4">

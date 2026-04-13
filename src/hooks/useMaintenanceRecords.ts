@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
 import { useDatabase } from './useDatabase';
 import type { MaintenanceRecord } from '../data/data-types';
-import { success, failure, type Result } from '../utilities/resultUtils';
+import { success, failure } from '../utilities/resultUtils';
+import type { Result } from '../types/shared-types';
 import { generateId } from '../utilities/dataUtils';
 
 type CreateMaintenanceRecordInput = Omit<MaintenanceRecord, 'id' | 'createdAt'>;

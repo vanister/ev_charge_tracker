@@ -1,6 +1,6 @@
 import { exportBackup, restoreBackup } from './backupUtils';
 import { failure, success } from './resultUtils';
-import type { Result } from './resultUtils';
+import type { Result } from '../types/shared-types';
 import type { EvChargTrackerDb } from '../data/data-types';
 import type { BackupFile } from '../pages/settings/settings-types';
 import { SyncFileSchema } from '../data/sync-schema';

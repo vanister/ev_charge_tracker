@@ -1,5 +1,5 @@
 import { failure, success } from './resultUtils';
-import type { Result } from './resultUtils';
+import type { Result } from '../types/shared-types';
 import type {
   ChargingSessionRecord,
   EvChargTrackerDb,

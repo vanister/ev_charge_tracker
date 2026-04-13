@@ -1,4 +1,5 @@
-import { success, failure, type Result } from './resultUtils';
+import { success, failure } from './resultUtils';
+import type { Result } from '../types/shared-types';
 
 // Requires both Notification API and service worker — SW is needed for
 // registration.showNotification() and notificationclick handling

@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
-import { failure, success, type Result } from '../utilities/resultUtils';
+import { failure, success } from '../utilities/resultUtils';
+import type { Result } from '../types/shared-types';
 import { useDatabase } from './useDatabase';
 import type { OAuthTokensRecord, ProviderConfigRecord } from '../data/data-types';
 import type { OAuthProvider } from '../types/shared-types';

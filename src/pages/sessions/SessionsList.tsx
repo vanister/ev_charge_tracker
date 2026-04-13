@@ -8,6 +8,7 @@ import { usePageConfig } from '../../hooks/usePageConfig';
 import { useImmerState } from '../../hooks/useImmerState';
 import { useUserPreferences } from '../../hooks/useUserPreferences';
 import { useDateTimeFormat } from '../../hooks/useDateTimeFormat';
+import { useToast } from '../../hooks/useToast';
 import { ItemListButton } from '../../components/ItemListButton';
 import { SessionsFilter } from '../../components/SessionsFilter';
 import { SessionDateGroup } from './SessionDateGroup';
@@ -51,6 +52,7 @@ export function SessionsList() {
   const [filtersIsOpen, setFiltersIsOpen] = useState(preferences.sessionsFilterIsOpen ?? true);
   const { getLocationList } = useLocations();
   const { getVehicleList } = useVehicles();
+  const { showToast } = useToast();
   const { getSessionList, deleteSession, hasAnySessions } = useSessions();
   const vehicleMap = useMemo(() => createVehicleMap(state.vehicles), [state.vehicles]);
   const locationMap = useMemo(() => createLocationMap(state.locations), [state.locations]);
@@ -170,7 +172,7 @@ export function SessionsList() {
     const result = await deleteSession(id);
 
     if (!result.success) {
-      alert(`Failed to delete session: ${result.error}`);
+      showToast({ message: `Failed to delete session: ${result.error}`, variant: 'error' });
       return;
     }
 

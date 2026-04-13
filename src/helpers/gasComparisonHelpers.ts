@@ -3,9 +3,7 @@ import type { VehicleRecord, SettingsRecord } from '../data/data-types';
 import type { GasComparisonStats } from '../pages/dashboard/dashboard-types';
 
 export function getMiPerKwh(vehicle: VehicleRecord | null | undefined, defaultMiPerKwh?: number): number {
-  // != null to avoid treating 0 as missing
-  // a vehicle with 0 range/capacity is invalid anyway, but keeps intent explicit
-  if (vehicle?.range != null && vehicle?.batteryCapacity != null) {
+  if (!!vehicle?.range && !!vehicle?.batteryCapacity) {
     return vehicle.range / vehicle.batteryCapacity;
   }
 
@@ -38,8 +36,7 @@ export function computeGasComparison(
 ): GasComparisonStats | null {
   const { gasPriceCents, comparisonMpg, defaultMiPerKwh } = settings;
 
-  // == null rather than !value so a gasPriceCents of 0 (free gas) doesn't short-circuit
-  if (gasPriceCents == null || comparisonMpg == null) {
+  if (gasPriceCents === undefined || comparisonMpg === undefined) {
     return null;
   }
 

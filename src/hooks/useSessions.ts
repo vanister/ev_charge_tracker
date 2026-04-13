@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
 import { useDatabase } from './useDatabase';
 import type { ChargingSessionRecord } from '../data/data-types';
-import { success, failure, type Result } from '../utilities/resultUtils';
+import { success, failure } from '../utilities/resultUtils';
+import type { Result } from '../types/shared-types';
 import { generateId } from '../utilities/dataUtils';
 
 type SessionFilters = {
@@ -136,7 +137,7 @@ export function useSessions() {
   const hasAnySessions = useCallback(async (): Promise<Result<boolean>> => {
     try {
       const session = await db.sessions.limit(1).first();
-      return success(session != null);
+      return success(!!session);
     } catch (err) {
       console.error('Failed to check for sessions:', err);
       return failure('Failed to check for sessions');

@@ -5,7 +5,7 @@ import { useImmerState } from '../../../hooks/useImmerState';
 import { useToast } from '../../../hooks/useToast';
 import { useMaintenanceRecords } from '../../../hooks/useMaintenanceRecords';
 import { useVehicles } from '../../../hooks/useVehicles';
-import { getVehicleDisplayName } from '../vehicleHelpers';
+import { getVehicleDisplayName } from '../../../helpers/sessionHelpers';
 import { Button } from '../../../components/Button';
 import { FormFooter } from '../../../components/FormFooter';
 import { getDateGroupKey } from '../../../utilities/dateUtils';
