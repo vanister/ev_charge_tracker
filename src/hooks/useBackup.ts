@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useDatabase } from './useDatabase';
+import { useUserPreferences } from './useUserPreferences';
 import {
   exportBackup as exportBackupUtil,
   readBackupFile as readBackupFileUtil,
@@ -9,8 +10,12 @@ import type { BackupFile } from '../pages/settings/settings-types';
 
 export function useBackup() {
   const { db } = useDatabase();
+  const { preferences } = useUserPreferences();
 
-  const exportBackup = useCallback(() => exportBackupUtil(db), [db]);
+  const exportBackup = useCallback(
+    () => exportBackupUtil(db, { recentSessionsLimit: preferences.recentSessionsLimit }),
+    [db, preferences.recentSessionsLimit]
+  );
 
   const readBackupFile = useCallback((file: File) => readBackupFileUtil(file), []);
 

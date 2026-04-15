@@ -21,5 +21,7 @@ export const BackupFileSchema = z.object({
   timestamp: z.number(),
   // Preserved so restoring a backup also recovers the device's sync identity
   deviceId: z.string().optional(),
-  data: z.array(StoreExportSchema).min(4)
+  data: z.array(StoreExportSchema).min(4),
+  // Optional so older backup files without preferences remain valid
+  preferences: z.object({ recentSessionsLimit: z.number().int().positive() }).optional()
 });

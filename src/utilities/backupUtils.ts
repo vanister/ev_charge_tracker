@@ -12,8 +12,12 @@ import type { BackupFile } from '../pages/settings/settings-types';
 import { BACKUP_FILE_VERSION } from '../data/constants';
 import { BackupFileSchema } from '../data/backup-schema';
 import { BACKUP_REMINDER_INTERVAL_MS, type BackupReminderInterval } from '../constants';
+import { readPreferences, writePreferences } from '../helpers/preferenceHelpers';
 
-export async function exportBackup(db: EvChargTrackerDb): Promise<Result<BackupFile>> {
+export async function exportBackup(
+  db: EvChargTrackerDb,
+  preferences?: { recentSessionsLimit: number }
+): Promise<Result<BackupFile>> {
   try {
     const [vehicles, sessions, locations, settings, maintenanceRecords] = await Promise.all([
       db.vehicles.toArray(),
@@ -33,7 +37,8 @@ export async function exportBackup(db: EvChargTrackerDb): Promise<Result<BackupF
         { store: 'locations' as const, records: locations },
         { store: 'settings' as const, records: settings },
         { store: 'maintenanceRecords' as const, records: maintenanceRecords }
-      ]
+      ],
+      preferences
     });
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Failed to export backup data.';
@@ -59,7 +64,11 @@ export function readBackupFile(file: File): Promise<Result<BackupFile>> {
   });
 }
 
-export async function restoreBackup(db: EvChargTrackerDb, backup: BackupFile): Promise<Result<void>> {
+export async function restoreBackup(
+  db: EvChargTrackerDb,
+  backup: BackupFile,
+  storage: Storage = localStorage
+): Promise<Result<void>> {
   if (backup.dbVersion > db.verno) {
     return failure(
       `Backup was created with a newer version of the app (v${backup.dbVersion}) and cannot be restored here (v${db.verno}). Please update the app first.`
@@ -91,6 +100,10 @@ export async function restoreBackup(db: EvChargTrackerDb, backup: BackupFile): P
         db.maintenanceRecords.bulkAdd(getRecords<MaintenanceRecord>('maintenanceRecords'))
       ]);
     });
+
+    if (backup.preferences) {
+      writePreferences({ ...readPreferences(storage), ...backup.preferences }, storage);
+    }
 
     return success();
   } catch (err) {

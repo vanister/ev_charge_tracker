@@ -199,6 +199,22 @@ describe('exportBackup', () => {
     expect(result.data.data).toHaveLength(5);
   });
 
+  it('includes recentSessionsLimit in preferences when provided', async () => {
+    const db = makeDb();
+    const result = await exportBackup(db as unknown as EvChargTrackerDb, { recentSessionsLimit: 25 });
+    expect(result.success).toBe(true);
+    if (!result.success) return;
+    expect(result.data.preferences).toEqual({ recentSessionsLimit: 25 });
+  });
+
+  it('omits preferences when not provided', async () => {
+    const db = makeDb();
+    const result = await exportBackup(db as unknown as EvChargTrackerDb);
+    expect(result.success).toBe(true);
+    if (!result.success) return;
+    expect(result.data.preferences).toBeUndefined();
+  });
+
   it('returns failure when the db throws', async () => {
     const db = makeDb({
       vehicles: { toArray: vi.fn().mockRejectedValue(new Error('db read error')) }
@@ -210,11 +226,23 @@ describe('exportBackup', () => {
   });
 });
 
+const makeStorage = (initial: Record<string, string> = {}): Storage => {
+  const store = { ...initial };
+  return {
+    getItem: (key: string) => store[key] ?? null,
+    setItem: (key: string, value: string) => { store[key] = value; },
+    removeItem: (key: string) => { delete store[key]; },
+    clear: () => { Object.keys(store).forEach((k) => delete store[k]); },
+    get length() { return Object.keys(store).length; },
+    key: (index: number) => Object.keys(store)[index] ?? null
+  } as Storage;
+};
+
 describe('restoreBackup', () => {
   it('returns failure when backup dbVersion is newer than db.verno', async () => {
     // Fixture has dbVersion: 2; db.verno: 1 — backup is newer, should fail
     const db = makeDb({ verno: 1 });
-    const result = await restoreBackup(db as unknown as EvChargTrackerDb, BACKUP_FIXTURE as unknown as BackupFile);
+    const result = await restoreBackup(db as unknown as EvChargTrackerDb, BACKUP_FIXTURE as unknown as BackupFile, makeStorage());
     expect(result.success).toBe(false);
     if (result.success) return;
     expect(result.error).toMatch(/newer version/i);
@@ -222,7 +250,7 @@ describe('restoreBackup', () => {
 
   it('clears all stores and bulk-adds records when versions match', async () => {
     const db = makeDb({ verno: 2 }); // matches fixture dbVersion: 2
-    const result = await restoreBackup(db as unknown as EvChargTrackerDb, BACKUP_FIXTURE as unknown as BackupFile);
+    const result = await restoreBackup(db as unknown as EvChargTrackerDb, BACKUP_FIXTURE as unknown as BackupFile, makeStorage());
     expect(result.success).toBe(true);
     expect(db.vehicles.clear).toHaveBeenCalled();
     expect(db.sessions.clear).toHaveBeenCalled();
@@ -237,7 +265,7 @@ describe('restoreBackup', () => {
   it('succeeds restoring an older backup into a newer db version', async () => {
     // v2 fixture into v3 db — maintenanceRecords missing from backup, restored as empty
     const db = makeDb(); // verno: 3
-    const result = await restoreBackup(db as unknown as EvChargTrackerDb, BACKUP_FIXTURE as unknown as BackupFile);
+    const result = await restoreBackup(db as unknown as EvChargTrackerDb, BACKUP_FIXTURE as unknown as BackupFile, makeStorage());
     expect(result.success).toBe(true);
     expect(db.maintenanceRecords.clear).toHaveBeenCalled();
     expect(db.maintenanceRecords.bulkAdd).toHaveBeenCalledWith([]);
@@ -247,10 +275,29 @@ describe('restoreBackup', () => {
     const db = makeDb({
       transaction: vi.fn().mockRejectedValue(new Error('transaction failed'))
     });
-    const result = await restoreBackup(db as unknown as EvChargTrackerDb, BACKUP_FIXTURE as unknown as BackupFile);
+    const result = await restoreBackup(db as unknown as EvChargTrackerDb, BACKUP_FIXTURE as unknown as BackupFile, makeStorage());
     expect(result.success).toBe(false);
     if (result.success) return;
     expect(result.error).toMatch(/transaction failed/);
+  });
+
+  it('writes recentSessionsLimit to storage when backup includes preferences', async () => {
+    const db = makeDb({ verno: 2 });
+    const storage = makeStorage();
+    const backup = { ...BACKUP_FIXTURE, preferences: { recentSessionsLimit: 25 } } as unknown as BackupFile;
+    const result = await restoreBackup(db as unknown as EvChargTrackerDb, backup, storage);
+    expect(result.success).toBe(true);
+    const stored = JSON.parse(storage.getItem('ev-charge-tracker-preferences') ?? '{}');
+    expect(stored.recentSessionsLimit).toBe(25);
+  });
+
+  it('does not modify storage when backup has no preferences', async () => {
+    const db = makeDb({ verno: 2 });
+    const storage = makeStorage({ 'ev-charge-tracker-preferences': JSON.stringify({ recentSessionsLimit: 50 }) });
+    const result = await restoreBackup(db as unknown as EvChargTrackerDb, BACKUP_FIXTURE as unknown as BackupFile, storage);
+    expect(result.success).toBe(true);
+    const stored = JSON.parse(storage.getItem('ev-charge-tracker-preferences') ?? '{}');
+    expect(stored.recentSessionsLimit).toBe(50);
   });
 });
 
