@@ -22,11 +22,9 @@ export function DateTimeSectionBody() {
       return;
     }
     const result = await updateDateFormat(option.value);
-    showToast(
-      result.success
-        ? { message: 'Preferences saved', variant: 'success' }
-        : { message: 'Failed to save preference', variant: 'error' }
-    );
+    if (!result.success) {
+      showToast({ message: 'Failed to save preference', variant: 'error' });
+    }
   };
 
   const handleTimeFormatChange = async (label: string) => {
@@ -35,11 +33,9 @@ export function DateTimeSectionBody() {
       return;
     }
     const result = await updateTimeFormat(option.value);
-    showToast(
-      result.success
-        ? { message: 'Preferences saved', variant: 'success' }
-        : { message: 'Failed to save preference', variant: 'error' }
-    );
+    if (!result.success) {
+      showToast({ message: 'Failed to save preference', variant: 'error' });
+    }
   };
 
   const preview = formatDateTime(Date.now(), prefs);

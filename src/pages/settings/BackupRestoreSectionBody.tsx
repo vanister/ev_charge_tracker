@@ -46,13 +46,11 @@ export function BackupRestoreSectionBody() {
     setIsExporting(false);
     await updateSettings({ lastBackupAt: Date.now() });
     setLastBackupAt(Date.now());
-    showToast({ message: 'Backup exported successfully.', variant: 'success' });
   };
 
   const handleRestoreSuccess = async () => {
     setIsRestoring(false);
     await updateSettings({ lastBackupAt: Date.now() });
-    showToast({ message: 'Restore completed successfully.', variant: 'success' });
     location.replace(location.pathname);
   };
 

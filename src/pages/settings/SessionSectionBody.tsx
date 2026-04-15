@@ -1,16 +1,13 @@
 import { useUserPreferences } from '../../hooks/useUserPreferences';
-import { useToast } from '../../hooks/useToast';
 import { ButtonRow } from '../../components/ButtonRow';
 
 const RECENT_SESSIONS_LIMIT_OPTIONS = ['5', '10', '15', '25', '50', '100'] as const;
 
 export function SessionSectionBody() {
   const { preferences, updatePreferences } = useUserPreferences();
-  const { showToast } = useToast();
 
   const handleLimitChange = (value: string) => {
     updatePreferences({ recentSessionsLimit: +value });
-    showToast({ message: 'Preferences saved', variant: 'success' });
   };
 
   return (
