@@ -52,14 +52,14 @@ export const LOCATION_COLOR_OPTIONS: LocationColorOption[] = [
 
 // Date & time format
 export const DATE_FORMAT_OPTIONS = [
-  { label: 'Medium', value: 'medium' },
+  { label: 'Default', value: 'medium' },
   { label: 'US', value: 'us-short' },
   { label: 'EU', value: 'eu-short' },
   { label: 'ISO', value: 'iso' }
 ] as const;
 
 export const TIME_FORMAT_OPTIONS = [
-  { label: 'System', value: 'auto' },
+  { label: 'Default', value: 'auto' },
   { label: '12h', value: '12h' },
   { label: '24h', value: '24h' },
   { label: '24h:ss', value: '24h-seconds' }
