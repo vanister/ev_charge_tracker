@@ -1,5 +1,5 @@
 ---
-name: task
+name: evs-task
 description: Implement a task from a task list. Use when picking up a new task or feature to implement.
 ---
 
@@ -25,11 +25,11 @@ While implementing:
 - Return `Result<T>` instead of throwing
 - `Result<T>` is defined in `src/types/shared-types.ts` — use that, don't redefine it
 - No default exports, no barrel files
-- Use `/component` to scaffold any new React components
+- Use `/evs-component` to scaffold any new React components
 - Run `npm run build` to verify no build errors after major changes
 
 When done:
-- Run `/review` on all changed code before considering the task complete
+- Run `/evs-review` on all changed code before considering the task complete
 - Summarize what changed and why
 - Mark the task complete in the task list
 - Flag anything left incomplete or any follow-up tasks worth adding to task list

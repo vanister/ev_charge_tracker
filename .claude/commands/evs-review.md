@@ -1,5 +1,5 @@
 ---
-name: review
+name: evs-review
 description: Review code for correctness, style, and project conventions before considering it done. Use after implementing any feature or fix.
 ---
 

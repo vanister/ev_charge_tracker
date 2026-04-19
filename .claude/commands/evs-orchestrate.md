@@ -1,5 +1,5 @@
 ---
-name: orchestrate
+name: evs-orchestrate
 description: Run the architect → coder → review pipeline for a feature. Optionally pass a feature name, or pick from available design docs.
 ---
 

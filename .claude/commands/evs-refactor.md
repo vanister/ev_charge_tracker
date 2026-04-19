@@ -1,5 +1,5 @@
 ---
-name: refactor
+name: evs-refactor
 description: Refactor code to follow project conventions. Use when cleaning up components, helpers, or utilities.
 ---
 

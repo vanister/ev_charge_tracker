@@ -1,5 +1,5 @@
 ---
-name: component
+name: evs-component
 description: Scaffold a new React component following project conventions. Use when creating a new component, page, or feature.
 ---
 

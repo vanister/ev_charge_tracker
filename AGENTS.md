@@ -71,8 +71,8 @@ Mobile-focused, fully offline with IndexedDB via Dexie.js. Deployed to Cloudflar
 - Run `npm run build` after major changes to verify no build errors
 
 ## Key Conventions
-- **ALWAYS run `/review` after every code change before considering it complete — no exceptions**
-- Use `/component` to scaffold a React component
+- **ALWAYS run `evs-review` after every code change before considering it complete — no exceptions**
+- Use `evs-component` to scaffold a React component
 
 ## Task Rules
 - Complete one task at a time before asking for next (unless told otherwise)
