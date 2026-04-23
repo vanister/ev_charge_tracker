@@ -7,7 +7,7 @@ import { useImmerState } from '../../hooks/useImmerState';
 import { useDashboardData } from './useDashboardData';
 import { EmptyState } from '../../components/EmptyState';
 import { Section } from '../../components/Section';
-import { SessionsFilter } from '../../components/SessionsFilter';
+import { FilterPanel } from '../../components/FilterPanel';
 import { ChargeStats } from './ChargeStats';
 import { GasComparison } from './GasComparison';
 import { ChargeSessionsCharts } from './ChargeSessionsCharts';
@@ -122,7 +122,7 @@ export function Dashboard() {
       <div className="mx-auto max-w-2xl space-y-8">
         <Section title="Charge Stats" noCard>
           {/* todo - clean the da up by wrapping SessionFilter in a DashboardSessionFilter component */}
-          <SessionsFilter
+          <FilterPanel
             vehicles={vehicles}
             locations={locations}
             selectedVehicleId={filter.vehicleId}
