@@ -7,7 +7,7 @@ import { getVehicleDisplayName } from '../helpers/sessionHelpers';
 import { TIME_FILTER_OPTIONS } from '../constants';
 import type { TimeFilterValue } from '../types/shared-types';
 
-type SessionsFilterProps = {
+type FilterPanelProps = {
   vehicles: VehicleRecord[];
   locations: LocationRecord[];
   selectedVehicleId: string | undefined;
@@ -22,7 +22,7 @@ type SessionsFilterProps = {
   className?: string;
 };
 
-export function SessionsFilter(props: SessionsFilterProps) {
+export function FilterPanel(props: FilterPanelProps) {
   const {
     vehicles,
     locations,
@@ -39,6 +39,7 @@ export function SessionsFilter(props: SessionsFilterProps) {
   } = props;
 
   const hasActiveFilters = !!(selectedVehicleId || selectedLocationId);
+  const timeRangeLabel = TIME_FILTER_OPTIONS.find((o) => o.value === selectedTimeRange)?.label ?? '';
 
   const handleVehicleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -58,7 +59,9 @@ export function SessionsFilter(props: SessionsFilterProps) {
     <div className={clsx('bg-surface border-default rounded-lg border p-4', className ?? 'mb-6')}>
       <button type="button" className="flex w-full items-center gap-2 text-left" onClick={onToggle}>
         <Icon name="filter" size="sm" className="text-body-secondary" />
-        <h2 className="text-body flex-1 text-sm font-semibold">Filters</h2>
+        <h2 className="text-body flex-1 text-sm font-semibold">
+          Filters {timeRangeLabel && `(${timeRangeLabel})`}
+        </h2>
         <Icon
           name="chevron-down"
           size="sm"

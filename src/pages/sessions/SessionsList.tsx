@@ -10,7 +10,7 @@ import { useUserPreferences } from '../../hooks/useUserPreferences';
 import { useDateTimeFormat } from '../../hooks/useDateTimeFormat';
 import { useToast } from '../../hooks/useToast';
 import { ItemListButton } from '../../components/ItemListButton';
-import { SessionsFilter } from '../../components/SessionsFilter';
+import { FilterPanel } from '../../components/FilterPanel';
 import { SessionDateGroup } from './SessionDateGroup';
 import { SessionsEmptyState } from './SessionsEmptyState';
 import { formatDateGroupHeader, getDateRangeForTimeFilter } from '../../utilities/dateUtils';
@@ -235,7 +235,7 @@ export function SessionsList() {
   return (
     <div className="bg-background px-4 py-6">
       <div className="mx-auto max-w-2xl">
-        <SessionsFilter
+        <FilterPanel
           vehicles={state.vehicles}
           locations={state.locations}
           selectedVehicleId={state.selectedVehicleId}
