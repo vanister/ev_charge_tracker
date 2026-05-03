@@ -84,7 +84,7 @@ export function useDashboardData(filter: DashboardFilter): UseDashboardDataResul
         : null;
       const computedGasComparison =
         settingsResult.success && settingsResult.data
-          ? computeGasComparison(computedStats.totalKwh, computedStats.totalCostCents, selectedVehicle, settingsResult.data)
+          ? computeGasComparison(filtered, selectedVehicle, settingsResult.data)
           : null;
 
       // When filtering by location, only show that location in the chart
