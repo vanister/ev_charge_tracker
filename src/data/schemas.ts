@@ -43,7 +43,8 @@ export const ChargingSessionRecordSchema = z.object({
   ratePerKwh: z.number(),
   costCents: z.number(),
   chargedAt: z.number(),
-  notes: z.string().optional()
+  notes: z.string().optional(),
+  gasPriceCents: z.number().int().optional()
 });
 
 export const SettingsRecordSchema = z.object({

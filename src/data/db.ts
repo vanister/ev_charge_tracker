@@ -1,6 +1,7 @@
 import Dexie from 'dexie';
 import type { EvChargTrackerDb } from './data-types';
-import { DB_NAME } from './constants';
+import { DB_NAME, SETTINGS_KEY } from './constants';
+import { DEFAULT_GAS_PRICE_CENTS } from '../constants';
 
 export const db = new Dexie(DB_NAME) as EvChargTrackerDb;
 
@@ -21,4 +22,18 @@ db.version(3).stores({
 
 db.version(4).stores({
   maintenanceRecords: 'id, vehicleId, servicedAt, [vehicleId+servicedAt]'
+});
+
+db.version(5).upgrade(async (tx) => {
+  const settings = await tx.table('settings').get(SETTINGS_KEY);
+  const gasPriceCents = (settings?.gasPriceCents as number | undefined) ?? DEFAULT_GAS_PRICE_CENTS;
+
+  await tx
+    .table('sessions')
+    .toCollection()
+    .modify((session: Record<string, unknown>) => {
+      if (session['gasPriceCents'] === undefined) {
+        session['gasPriceCents'] = gasPriceCents;
+      }
+    });
 });
