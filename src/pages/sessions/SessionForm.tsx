@@ -74,6 +74,18 @@ export function SessionForm(props: SessionFormProps) {
       />
 
       <FormInput
+        id="gas-price"
+        label="Gas Price ($/gal)"
+        type="number"
+        step="0.01"
+        min="0"
+        value={props.formData.gasPriceStr}
+        onChange={(e) => props.onChange('gasPriceStr', e.target.value)}
+        placeholder="3.50"
+        disabled={props.isLoading}
+      />
+
+      <FormInput
         id="charged-at"
         label="Charged At"
         type="datetime-local"

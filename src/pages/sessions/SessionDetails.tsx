@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useSessions } from '../../hooks/useSessions';
 import { useVehicles } from '../../hooks/useVehicles';
 import { useLocations } from '../../hooks/useLocations';
+import { useSettings } from '../../hooks/useSettings';
 import { useUserPreferences } from '../../hooks/useUserPreferences';
 import type { VehicleRecord, LocationRecord as AppLocation } from '../../data/data-types';
 import { usePageConfig } from '../../hooks/usePageConfig';
@@ -19,6 +20,7 @@ import {
   getDefaultDateTime,
   datetimeLocalToTimestamp
 } from './sessionFormHelpers';
+import { DEFAULT_GAS_PRICE_CENTS } from '../../constants';
 
 type SessionPageState = SessionFormData & {
   hasManualRate: boolean;
@@ -33,6 +35,7 @@ const NEW_SESSION: Omit<SessionPageState, 'isInitialized' | 'chargedAt'> = {
   locationId: '',
   energyKwh: '',
   ratePerKwh: '',
+  gasPriceStr: '',
   notes: '',
   hasManualRate: false,
   isLoading: false,
@@ -48,6 +51,7 @@ export function SessionDetails() {
   usePageConfig(isEditMode ? 'Edit Session' : 'Add Session', true);
 
   const { getSession, createSession, updateSession } = useSessions();
+  const { getSettings } = useSettings();
   const { showToast } = useToast();
   const { getVehicleList } = useVehicles();
   const [vehicles, setVehicles] = useState<VehicleRecord[]>([]);
@@ -108,6 +112,28 @@ export function SessionDetails() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditMode, locations]);
 
+  useEffect(() => {
+    if (isEditMode) {
+      return;
+    }
+
+    const loadGasPrice = async () => {
+      const result = await getSettings();
+      const priceCents =
+        result.success && result.data?.gasPriceCents != null
+          ? result.data.gasPriceCents
+          : DEFAULT_GAS_PRICE_CENTS;
+
+      setFormState((draft) => {
+        draft.gasPriceStr = (priceCents / 100).toFixed(2);
+      });
+    };
+
+    loadGasPrice();
+    // Run once on mount for new sessions; getSettings is stable
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditMode]);
+
   // Initialize form with session data in edit mode
   useEffect(() => {
     if (!isEditMode || formState.isInitialized) {
@@ -150,6 +176,7 @@ export function SessionDetails() {
         draft.locationId = session.locationId;
         draft.energyKwh = session.energyKwh.toFixed(2);
         draft.ratePerKwh = session.ratePerKwh.toFixed(2);
+        draft.gasPriceStr = ((session.gasPriceCents ?? DEFAULT_GAS_PRICE_CENTS) / 100).toFixed(2);
         draft.chargedAt = timestampToDatetimeLocal(session.chargedAt);
         draft.notes = session.notes || '';
         draft.hasManualRate = true;
@@ -207,6 +234,7 @@ export function SessionDetails() {
         locationId: formState.locationId,
         energyKwh: +formState.energyKwh,
         ratePerKwh: +formState.ratePerKwh,
+        gasPriceCents: formState.gasPriceStr ? Math.round(+formState.gasPriceStr * 100) : undefined,
         chargedAt: datetimeLocalToTimestamp(formState.chargedAt),
         notes: formState.notes.trim() || undefined
       };

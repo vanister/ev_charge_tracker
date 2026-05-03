@@ -3,6 +3,7 @@ export type SessionFormData = {
   locationId: string;
   energyKwh: string;
   ratePerKwh: string;
+  gasPriceStr: string;
   chargedAt: string;
   notes: string;
 };
