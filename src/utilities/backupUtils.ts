@@ -11,7 +11,7 @@ import type {
 import type { BackupFile } from '../pages/settings/settings-types';
 import { BACKUP_FILE_VERSION } from '../data/constants';
 import { BackupFileSchema } from '../data/backup-schema';
-import { BACKUP_REMINDER_INTERVAL_MS, type BackupReminderInterval } from '../constants';
+import { BACKUP_REMINDER_INTERVAL_MS, DEFAULT_GAS_PRICE_CENTS, type BackupReminderInterval } from '../constants';
 
 export async function exportBackup(db: EvChargTrackerDb): Promise<Result<BackupFile>> {
   try {
@@ -71,6 +71,15 @@ export async function restoreBackup(db: EvChargTrackerDb, backup: BackupFile): P
     return (entry?.records ?? []) as T[];
   };
 
+  // Use the backup's own configured gas price for backfilling sessions that predate
+  // per-session gas price tracking (e.g. a v4 backup restored onto a v5 DB).
+  const backupSettings = getRecords<SettingsRecord>('settings').find((s) => s.key === 'app-settings');
+  const fallbackGasPriceCents = backupSettings?.gasPriceCents ?? DEFAULT_GAS_PRICE_CENTS;
+
+  const sessions = getRecords<ChargingSessionRecord>('sessions').map((s) =>
+    s.gasPriceCents !== undefined ? s : { ...s, gasPriceCents: fallbackGasPriceCents }
+  );
+
   try {
     const tables = [db.vehicles, db.sessions, db.locations, db.settings, db.maintenanceRecords];
 
@@ -85,7 +94,7 @@ export async function restoreBackup(db: EvChargTrackerDb, backup: BackupFile): P
 
       await Promise.all([
         db.vehicles.bulkAdd(getRecords<VehicleRecord>('vehicles')),
-        db.sessions.bulkAdd(getRecords<ChargingSessionRecord>('sessions')),
+        db.sessions.bulkAdd(sessions),
         db.locations.bulkAdd(getRecords<LocationRecord>('locations')),
         db.settings.bulkAdd(getRecords<SettingsRecord>('settings')),
         db.maintenanceRecords.bulkAdd(getRecords<MaintenanceRecord>('maintenanceRecords'))
