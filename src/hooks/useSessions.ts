@@ -4,8 +4,6 @@ import type { ChargingSessionRecord } from '../data/data-types';
 import { success, failure } from '../utilities/resultUtils';
 import type { Result } from '../types/shared-types';
 import { generateId } from '../utilities/dataUtils';
-import { SETTINGS_KEY } from '../data/constants';
-import { DEFAULT_GAS_PRICE_CENTS } from '../constants';
 
 type SessionFilters = {
   vehicleId?: string;
@@ -74,17 +72,10 @@ export function useSessions() {
     async (input: CreateSessionInput): Promise<Result<ChargingSessionRecord>> => {
       const costCents = Math.round(input.energyKwh * input.ratePerKwh * 100);
 
-      let gasPriceCents = input.gasPriceCents;
-      if (gasPriceCents === undefined) {
-        const settings = await db.settings.get(SETTINGS_KEY);
-        gasPriceCents = settings?.gasPriceCents ?? DEFAULT_GAS_PRICE_CENTS;
-      }
-
       const session: ChargingSessionRecord = {
         ...input,
         id: generateId(),
-        costCents,
-        gasPriceCents
+        costCents
       };
 
       try {
