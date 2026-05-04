@@ -1,8 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { readFileSync } from 'node:fs';
-import type { EvChargTrackerDb } from '../../src/data/data-types';
+import type { ChargingSessionRecord, EvChargTrackerDb } from '../../src/data/data-types';
 import type { BackupFile } from '../../src/pages/settings/settings-types';
 import { exportBackup, isBackupOverdue, readBackupFile, restoreBackup } from '../../src/utilities/backupUtils';
+import { DEFAULT_GAS_PRICE_CENTS } from '../../src/constants';
 
 const BACKUP_FIXTURE = JSON.parse(
   readFileSync(new URL('../__test_data__/backup-v2.json', import.meta.url), 'utf-8')
@@ -251,6 +252,65 @@ describe('restoreBackup', () => {
     expect(result.success).toBe(false);
     if (result.success) return;
     expect(result.error).toMatch(/transaction failed/);
+  });
+
+  it('backfills gasPriceCents with DEFAULT_GAS_PRICE_CENTS when backup settings has no gas price', async () => {
+    // Simulates restoring a v4 backup where sessions predate per-session gas price tracking
+    // and the user never configured a gas price in settings
+    const db = makeDb({ verno: 5 });
+    const backup: BackupFile = {
+      ...(BACKUP_FIXTURE as unknown as BackupFile),
+      dbVersion: 5
+    };
+    await restoreBackup(db as unknown as EvChargTrackerDb, backup);
+
+    const insertedSessions = (db.sessions.bulkAdd as ReturnType<typeof vi.fn>).mock.calls[0][0] as ChargingSessionRecord[];
+    expect(insertedSessions.length).toBeGreaterThan(0);
+    expect(insertedSessions.every((s) => s.gasPriceCents === DEFAULT_GAS_PRICE_CENTS)).toBe(true);
+  });
+
+  it('backfills gasPriceCents with the configured value from backup settings', async () => {
+    const db = makeDb({ verno: 5 });
+    const backup: BackupFile = {
+      ...(BACKUP_FIXTURE as unknown as BackupFile),
+      dbVersion: 5,
+      data: (BACKUP_FIXTURE as unknown as BackupFile).data.map((store) =>
+        store.store === 'settings'
+          ? { store: 'settings' as const, records: [{ key: 'app-settings' as const, onboardingComplete: true, backupReminderInterval: '3d' as const, gasPriceCents: 425 }] }
+          : store
+      )
+    };
+    await restoreBackup(db as unknown as EvChargTrackerDb, backup);
+
+    const insertedSessions = (db.sessions.bulkAdd as ReturnType<typeof vi.fn>).mock.calls[0][0] as ChargingSessionRecord[];
+    expect(insertedSessions.every((s) => s.gasPriceCents === 425)).toBe(true);
+  });
+
+  it('preserves existing gasPriceCents on sessions that already have it', async () => {
+    const db = makeDb({ verno: 5 });
+    const sessionWithPrice = {
+      id: 'sess-with-price',
+      vehicleId: 'v1',
+      locationId: 'l1',
+      energyKwh: 20,
+      ratePerKwh: 0.15,
+      costCents: 300,
+      chargedAt: 0,
+      gasPriceCents: 399
+    };
+    const backup: BackupFile = {
+      ...(BACKUP_FIXTURE as unknown as BackupFile),
+      dbVersion: 5,
+      data: (BACKUP_FIXTURE as unknown as BackupFile).data.map((store) =>
+        store.store === 'sessions'
+          ? { store: 'sessions' as const, records: [sessionWithPrice] }
+          : store
+      )
+    };
+    await restoreBackup(db as unknown as EvChargTrackerDb, backup);
+
+    const insertedSessions = (db.sessions.bulkAdd as ReturnType<typeof vi.fn>).mock.calls[0][0] as ChargingSessionRecord[];
+    expect(insertedSessions[0].gasPriceCents).toBe(399);
   });
 });
 
