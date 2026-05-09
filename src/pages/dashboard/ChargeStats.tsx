@@ -1,5 +1,5 @@
 import type { SessionStats } from './dashboard-types';
-import { formatEnergy, formatCost, formatRate, formatCostPerMile, formatMiPerKwh } from '../../utilities/formatUtils';
+import { formatEnergy, formatCost, formatRate, formatCostPerMile } from '../../utilities/formatUtils';
 import { DashboardStatCard } from './DashboardStatCard';
 
 type ChargeStatsProps = {
@@ -8,7 +8,7 @@ type ChargeStatsProps = {
 
 export function ChargeStats({ stats }: ChargeStatsProps) {
   const costPerMileSubtitle = stats.milesIncludeEstimates ? 'includes estimated miles' : undefined;
-  const costSubtitle = stats.totalKwh > 0 ? `avg ${formatMiPerKwh(stats.avgMiPerKwh)}` : undefined;
+  const costSubtitle = stats.totalKwh > 0 ? `avg ${formatRate(stats.avgRatePerKwh)}` : undefined;
 
   return (
     <div className="space-y-3">
