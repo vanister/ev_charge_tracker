@@ -103,6 +103,8 @@ function attributeMiles(
 
   const priorOdometer = priorOdometerById.get(session.id);
 
+  // Use `!= null` so both null and undefined narrow out, while still accepting
+  // 0 — odometer === 0 is a valid reading per the schema's min(0) constraint.
   if (session.odometer != null && priorOdometer != null) {
     return { miles: session.odometer - priorOdometer, estimated: false };
   }
@@ -128,16 +130,29 @@ function buildPriorOdometerMap(
 function collectPriorOdometerEntries(
   sorted: readonly ChargingSessionRecord[]
 ): readonly (readonly [string, number])[] {
-  return sorted.reduce<{
+  type Acc = {
     lastOdometer: number | undefined;
     entries: readonly (readonly [string, number])[];
-  }>(
-    ({ lastOdometer, entries }, session) => ({
-      lastOdometer: session.odometer != null ? session.odometer : lastOdometer,
-      entries: lastOdometer != null ? [...entries, [session.id, lastOdometer]] : entries
-    }),
-    { lastOdometer: undefined, entries: [] }
-  ).entries;
+  };
+
+  const seed: Acc = { lastOdometer: undefined, entries: [] };
+
+  const result = sorted.reduce<Acc>((acc, session) => {
+    const { lastOdometer, entries } = acc;
+    const nextLastOdometer = session.odometer != null ? session.odometer : lastOdometer;
+
+    if (lastOdometer == null) {
+      return { lastOdometer: nextLastOdometer, entries };
+    }
+
+    const nextEntries: readonly (readonly [string, number])[] = [
+      ...entries,
+      [session.id, lastOdometer]
+    ];
+    return { lastOdometer: nextLastOdometer, entries: nextEntries };
+  }, seed);
+
+  return result.entries;
 }
 
 function buildAbsorbedSessionIds(
@@ -154,33 +169,44 @@ function findAbsorbedIds(
   sorted: readonly ChargingSessionRecord[],
   priorOdometerById: ReadonlyMap<string, number>
 ): readonly string[] {
-  return sorted.reduceRight<{ hasFutureOdo: boolean; ids: readonly string[] }>(
-    ({ hasFutureOdo, ids }, session) => {
-      const isAbsorbed =
-        session.odometer == null && hasFutureOdo && priorOdometerById.has(session.id);
-      return {
-        hasFutureOdo: hasFutureOdo || session.odometer != null,
-        ids: isAbsorbed ? [session.id, ...ids] : ids
-      };
-    },
-    { hasFutureOdo: false, ids: [] }
-  ).ids;
+  type Acc = { hasFutureOdo: boolean; ids: readonly string[] };
+
+  const seed: Acc = { hasFutureOdo: false, ids: [] };
+
+  const result = sorted.reduceRight<Acc>((acc, session) => {
+    const { hasFutureOdo, ids } = acc;
+    const sessionHasOdometer = session.odometer != null;
+    const isAbsorbed = !sessionHasOdometer && hasFutureOdo && priorOdometerById.has(session.id);
+    const nextHasFutureOdo = hasFutureOdo || sessionHasOdometer;
+    const nextIds = isAbsorbed ? [session.id, ...ids] : ids;
+
+    return { hasFutureOdo: nextHasFutureOdo, ids: nextIds };
+  }, seed);
+
+  return result.ids;
 }
 
 function groupByVehicle(
   sessions: readonly ChargingSessionRecord[]
 ): ReadonlyMap<string, readonly ChargingSessionRecord[]> {
-  return sessions.reduce<Map<string, ChargingSessionRecord[]>>((acc, session) => {
-    const list = acc.get(session.vehicleId) ?? [];
-    acc.set(session.vehicleId, [...list, session]);
+  const seed = new Map<string, ChargingSessionRecord[]>();
+
+  const grouped = sessions.reduce<Map<string, ChargingSessionRecord[]>>((acc, session) => {
+    const existing = acc.get(session.vehicleId) ?? [];
+    const next = [...existing, session];
+    acc.set(session.vehicleId, next);
     return acc;
-  }, new Map());
+  }, seed);
+
+  return grouped;
 }
 
 function sortByChargedAt(
   sessions: readonly ChargingSessionRecord[]
 ): readonly ChargingSessionRecord[] {
-  return [...sessions].sort((a, b) => a.chargedAt - b.chargedAt);
+  const copy = [...sessions];
+  const sorted = copy.sort((a, b) => a.chargedAt - b.chargedAt);
+  return sorted;
 }
 
 export function buildRecentSessions(
