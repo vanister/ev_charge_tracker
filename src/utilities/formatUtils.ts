@@ -24,6 +24,10 @@ export function formatRate(ratePerKwh: number, decimalPlaces: number = 2): strin
   return `$${ratePerKwh.toFixed(decimalPlaces)}/kWh`;
 }
 
+export function formatMiPerKwh(miPerKwh: number): string {
+  return `${miPerKwh.toFixed(1)} mi/kWh`;
+}
+
 export function formatGasPrice(cents: number): string {
   return `$${(cents / 100).toFixed(2)}/gal`;
 }

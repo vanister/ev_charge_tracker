@@ -25,11 +25,13 @@ export function computeStats(
     vehicleMap,
     settings
   );
+  const avgMiPerKwh = totalKwh > 0 ? totalMiles / totalKwh : 0;
 
   return {
     totalKwh,
     totalCostCents,
     avgRatePerKwh,
+    avgMiPerKwh,
     sessionCount: sessions.length,
     totalMiles,
     milesIncludeEstimates,

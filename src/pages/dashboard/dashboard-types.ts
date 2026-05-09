@@ -18,6 +18,7 @@ export type SessionStats = {
   totalKwh: number;
   totalCostCents: number;
   avgRatePerKwh: number;
+  avgMiPerKwh: number;
   sessionCount: number;
   totalMiles: number;
   milesIncludeEstimates: boolean;
