@@ -29,4 +29,5 @@ export type GasComparisonStats = {
   mpge: number;
   gasCostCents: number;
   savingsCents: number;
+  avgGasPriceCents: number;
 };

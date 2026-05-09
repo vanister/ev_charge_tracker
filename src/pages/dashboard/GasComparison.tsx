@@ -1,5 +1,6 @@
 import type { GasComparisonStats } from './dashboard-types';
-import { formatCost } from '../../utilities/formatUtils';
+import { formatCost, formatGasPrice } from '../../utilities/formatUtils';
+import { isGasMateriallyCheaper } from '../../helpers/gasComparisonHelpers';
 import { DashboardStatCard } from './DashboardStatCard';
 
 type GasComparisonProps = {
@@ -18,14 +19,22 @@ export function GasComparison({ gasComparison }: GasComparisonProps) {
     );
   }
 
+  const savingsSubtitle = isGasMateriallyCheaper(gasComparison) ? 'gas would be cheaper' : 'vs gas';
+  const gasEquivSubtitle = `avg ${formatGasPrice(gasComparison.avgGasPriceCents)}`;
+
   return (
     <div className="grid grid-cols-2 gap-3">
-      <DashboardStatCard label="Gas Equiv." value={formatCost(gasComparison.gasCostCents)} icon="dollar-sign" />
+      <DashboardStatCard
+        label="Gas Equiv."
+        value={formatCost(gasComparison.gasCostCents)}
+        icon="dollar-sign"
+        subtitle={gasEquivSubtitle}
+      />
       <DashboardStatCard
         label="Savings"
         value={formatCost(gasComparison.savingsCents)}
         icon="trending-up"
-        subtitle={gasComparison.savingsCents >= 0 ? 'vs gas' : 'gas would be cheaper'}
+        subtitle={savingsSubtitle}
       />
     </div>
   );
