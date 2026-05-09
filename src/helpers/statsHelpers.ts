@@ -2,7 +2,7 @@ import type { ChargingSessionRecord, VehicleRecord, LocationRecord, SettingsReco
 import { getVehicleDisplayName } from './sessionHelpers';
 import type { SessionWithMetadata } from './sessionHelpers';
 import type { SessionStats, LocationStat } from '../pages/dashboard/dashboard-types';
-import { RECENT_SESSIONS_LIMIT } from '../constants';
+import { LOCATION_COLOR_HEX, RECENT_SESSIONS_LIMIT } from '../constants';
 import { getMiPerKwh } from './gasComparisonHelpers';
 
 type MilesContribution = { miles: number; estimated: boolean };
@@ -58,7 +58,7 @@ function aggregateByLocation(
       locationId: session.locationId,
       name: location?.name ?? 'Unknown',
       // 'Other' fallback color
-      color: location?.color ?? '#c084fc',
+      color: location?.color ?? LOCATION_COLOR_HEX.purple,
       totalKwh: session.energyKwh,
       totalCostCents: session.costCents
     });
@@ -103,7 +103,7 @@ function attributeMiles(
 
   const priorOdometer = priorOdometerById.get(session.id);
 
-  if (session.odometer !== undefined && priorOdometer !== undefined) {
+  if (session.odometer != null && priorOdometer != null) {
     return { miles: session.odometer - priorOdometer, estimated: false };
   }
 
@@ -133,8 +133,8 @@ function collectPriorOdometerEntries(
     entries: readonly (readonly [string, number])[];
   }>(
     ({ lastOdometer, entries }, session) => ({
-      lastOdometer: session.odometer !== undefined ? session.odometer : lastOdometer,
-      entries: lastOdometer !== undefined ? [...entries, [session.id, lastOdometer]] : entries
+      lastOdometer: session.odometer != null ? session.odometer : lastOdometer,
+      entries: lastOdometer != null ? [...entries, [session.id, lastOdometer]] : entries
     }),
     { lastOdometer: undefined, entries: [] }
   ).entries;
@@ -157,9 +157,9 @@ function findAbsorbedIds(
   return sorted.reduceRight<{ hasFutureOdo: boolean; ids: readonly string[] }>(
     ({ hasFutureOdo, ids }, session) => {
       const isAbsorbed =
-        session.odometer === undefined && hasFutureOdo && priorOdometerById.has(session.id);
+        session.odometer == null && hasFutureOdo && priorOdometerById.has(session.id);
       return {
-        hasFutureOdo: hasFutureOdo || session.odometer !== undefined,
+        hasFutureOdo: hasFutureOdo || session.odometer != null,
         ids: isAbsorbed ? [session.id, ...ids] : ids
       };
     },

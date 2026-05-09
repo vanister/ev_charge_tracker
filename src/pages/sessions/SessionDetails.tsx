@@ -180,7 +180,7 @@ export function SessionDetails() {
         draft.gasPriceStr = ((session.gasPriceCents ?? DEFAULT_GAS_PRICE_CENTS) / 100).toFixed(2);
         draft.chargedAt = timestampToDatetimeLocal(session.chargedAt);
         draft.notes = session.notes || '';
-        draft.odometerStr = session.odometer !== undefined ? `${session.odometer}` : '';
+        draft.odometerStr = session.odometer != null ? `${session.odometer}` : '';
         draft.hasManualRate = true;
         draft.isInitialized = true;
       });
