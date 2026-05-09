@@ -1,5 +1,5 @@
 import type { SessionStats } from './dashboard-types';
-import { formatEnergy, formatCost, formatCostPerMile } from '../../utilities/formatUtils';
+import { formatEnergy, formatCost, formatCostPerMile, formatRate } from '../../utilities/formatUtils';
 import { DashboardStatCard } from './DashboardStatCard';
 
 type ChargeStatsProps = {
