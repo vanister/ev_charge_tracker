@@ -7,7 +7,7 @@ type ChargeStatsProps = {
 };
 
 export function ChargeStats({ stats }: ChargeStatsProps) {
-  const costPerMileSubtitle = stats.milesIncludeEstimates ? '* includes estimated miles' : undefined;
+  const costPerMileSubtitle = stats.milesIncludeEstimates ? 'includes estimated miles' : undefined;
 
   return (
     <div className="space-y-3">
