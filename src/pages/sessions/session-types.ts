@@ -6,6 +6,7 @@ export type SessionFormData = {
   gasPriceStr: string;
   chargedAt: string;
   notes: string;
+  odometerStr: string;
 };
 
 export type SessionInputData = {
@@ -15,4 +16,5 @@ export type SessionInputData = {
   ratePerKwh: number;
   chargedAt: number;
   notes: string;
+  odometer?: number;
 };

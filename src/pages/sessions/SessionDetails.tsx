@@ -37,6 +37,7 @@ const NEW_SESSION: Omit<SessionPageState, 'isInitialized' | 'chargedAt'> = {
   ratePerKwh: '',
   gasPriceStr: '',
   notes: '',
+  odometerStr: '',
   hasManualRate: false,
   isLoading: false,
   error: '',
@@ -179,6 +180,7 @@ export function SessionDetails() {
         draft.gasPriceStr = ((session.gasPriceCents ?? DEFAULT_GAS_PRICE_CENTS) / 100).toFixed(2);
         draft.chargedAt = timestampToDatetimeLocal(session.chargedAt);
         draft.notes = session.notes || '';
+        draft.odometerStr = session.odometer !== undefined ? `${session.odometer}` : '';
         draft.hasManualRate = true;
         draft.isInitialized = true;
       });
@@ -236,7 +238,8 @@ export function SessionDetails() {
         ratePerKwh: +formState.ratePerKwh,
         gasPriceCents: formState.gasPriceStr ? Math.round(+formState.gasPriceStr * 100) : undefined,
         chargedAt: datetimeLocalToTimestamp(formState.chargedAt),
-        notes: formState.notes.trim() || undefined
+        notes: formState.notes.trim() || undefined,
+        odometer: formState.odometerStr ? Math.round(+formState.odometerStr) : undefined
       };
 
       const result = isEditMode ? await updateSession(id, input) : await createSession(input);

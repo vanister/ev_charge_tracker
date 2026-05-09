@@ -37,3 +37,9 @@ db.version(5).upgrade(async (tx) => {
       }
     });
 });
+
+// Opens the new optional `odometer` field on sessions; existing rows are left untouched
+// and computeStats() falls back to derived miles when `odometer` is missing.
+db.version(6).stores({
+  sessions: 'id, vehicleId, locationId, chargedAt, [vehicleId+chargedAt]'
+});

@@ -74,6 +74,18 @@ export function SessionForm(props: SessionFormProps) {
       />
 
       <FormInput
+        id="odometer"
+        label="Odometer (mi)"
+        type="number"
+        step="1"
+        min="0"
+        value={props.formData.odometerStr}
+        onChange={(e) => props.onChange('odometerStr', e.target.value)}
+        placeholder="Optional — current odometer reading"
+        disabled={props.isLoading}
+      />
+
+      <FormInput
         id="charged-at"
         label="Charged At"
         type="datetime-local"

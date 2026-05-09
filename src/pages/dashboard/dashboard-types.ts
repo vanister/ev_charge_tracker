@@ -19,6 +19,9 @@ export type SessionStats = {
   totalCostCents: number;
   avgRatePerKwh: number;
   sessionCount: number;
+  totalMiles: number;
+  costPerMileCents: number;
+  milesIncludeEstimates: boolean;
   byLocation: LocationStat[];
 };
 

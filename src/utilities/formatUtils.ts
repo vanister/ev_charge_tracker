@@ -24,6 +24,15 @@ export function formatRate(ratePerKwh: number, decimalPlaces: number = 2): strin
   return `$${ratePerKwh.toFixed(decimalPlaces)}/kWh`;
 }
 
+export function formatCostPerMile(costCents: number, miles: number): string {
+  if (miles <= 0) {
+    return '—';
+  }
+
+  const dollarsPerMile = costCents / 100 / miles;
+  return `$${dollarsPerMile.toFixed(2)}/mi`;
+}
+
 export function formatMpge(mpge: number): string {
   return `${Math.round(mpge)} MPGe`;
 }

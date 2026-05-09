@@ -44,7 +44,8 @@ export const ChargingSessionRecordSchema = z.object({
   costCents: z.number(),
   chargedAt: z.number(),
   notes: z.string().optional(),
-  gasPriceCents: z.number().int().optional()
+  gasPriceCents: z.number().int().optional(),
+  odometer: z.number().int().min(0).optional()
 });
 
 export const SettingsRecordSchema = z.object({
