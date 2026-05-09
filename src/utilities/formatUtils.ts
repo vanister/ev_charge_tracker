@@ -41,6 +41,10 @@ export function formatMpge(mpge: number): string {
   return `${Math.round(mpge)} MPGe`;
 }
 
+export function formatMpg(mpg: number): string {
+  return `${Math.round(mpg)} MPG`;
+}
+
 export function formatBytes(bytes: number, decimalPlaces: number = 1): string {
   if (bytes < 1024 * 1024) {
     return `${(bytes / 1024).toFixed(decimalPlaces)} KB`;

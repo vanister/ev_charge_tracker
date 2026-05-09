@@ -27,6 +27,7 @@ export type SessionStats = {
 export type GasComparisonStats = {
   miPerKwh: number;
   mpge: number;
+  comparisonMpg: number;
   gasCostCents: number;
   savingsCents: number;
   avgGasPriceCents: number;

@@ -63,7 +63,15 @@ export function computeGasComparison(
   const threshold = settings.gasSavingsThreshold ?? DEFAULT_GAS_SAVINGS_THRESHOLD;
   const isGasMateriallyCheaper = computeIsGasMateriallyCheaper(gasCostCents, savingsCents, threshold);
 
-  return { miPerKwh, mpge, gasCostCents, savingsCents, avgGasPriceCents, isGasMateriallyCheaper };
+  return {
+    miPerKwh,
+    mpge,
+    comparisonMpg,
+    gasCostCents,
+    savingsCents,
+    avgGasPriceCents,
+    isGasMateriallyCheaper
+  };
 }
 
 // Returns true only when gas would have been more than the threshold fraction
