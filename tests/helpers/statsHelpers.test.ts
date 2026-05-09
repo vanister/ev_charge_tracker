@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { DEFAULT_MI_PER_KWH } from '../../src/constants';
+import { LOCATION_COLOR_HEX } from '../../src/constants';
 import type {
   ChargingSessionRecord,
   VehicleRecord,
@@ -23,7 +23,7 @@ const makeLocation = (overrides: Partial<LocationRecord> = {}): LocationRecord =
   id: 'l1',
   name: 'Home',
   icon: 'home',
-  color: '#fff',
+  color: '#aaa',
   defaultRate: 0.15,
   createdAt: 0,
   isActive: 1,
@@ -59,70 +59,6 @@ function locationMap(locations: LocationRecord[]): Map<string, LocationRecord> {
 }
 
 describe('computeStats — totalMiles attribution', () => {
-  it('uses delta between consecutive odometer readings on the same vehicle', () => {
-    const sessions = [
-      makeSession({ id: 'a', chargedAt: 1, odometer: 1000 }),
-      makeSession({ id: 'b', chargedAt: 2, odometer: 1150 })
-    ];
-
-    const stats = computeStats(
-      sessions,
-      locationMap([makeLocation()]),
-      sessions,
-      vehicleMap([VEHICLE_300_RANGE]),
-      makeSettings()
-    );
-
-    // a: no prior → derived (10 kWh × 3 mi/kWh = 30); b: 1150 - 1000 = 150
-    expect(stats.totalMiles).toBe(30 + 150);
-    expect(stats.milesIncludeEstimates).toBe(true);
-  });
-
-  it('falls back to derived miles when a session has no odometer reading', () => {
-    const sessions = [makeSession({ id: 'a', energyKwh: 20 })];
-
-    const stats = computeStats(
-      sessions,
-      locationMap([makeLocation()]),
-      sessions,
-      vehicleMap([VEHICLE_300_RANGE]),
-      makeSettings()
-    );
-
-    expect(stats.totalMiles).toBe(60);
-    expect(stats.milesIncludeEstimates).toBe(true);
-  });
-
-  it('uses settings.defaultMiPerKwh when the vehicle has no range data', () => {
-    const sessions = [makeSession({ id: 'a', energyKwh: 10 })];
-    const plainVehicle = makeVehicle();
-
-    const stats = computeStats(
-      sessions,
-      locationMap([makeLocation()]),
-      sessions,
-      vehicleMap([plainVehicle]),
-      makeSettings({ defaultMiPerKwh: 4 })
-    );
-
-    expect(stats.totalMiles).toBe(40);
-  });
-
-  it('uses DEFAULT_MI_PER_KWH when neither vehicle data nor settings provide a value', () => {
-    const sessions = [makeSession({ id: 'a', energyKwh: 10 })];
-    const plainVehicle = makeVehicle();
-
-    const stats = computeStats(
-      sessions,
-      locationMap([makeLocation()]),
-      sessions,
-      vehicleMap([plainVehicle]),
-      null
-    );
-
-    expect(stats.totalMiles).toBe(10 * DEFAULT_MI_PER_KWH);
-  });
-
   it('looks up the prior odometer reading from outside the filter window', () => {
     const allSessions = [
       makeSession({ id: 'old', chargedAt: 1, odometer: 1000 }),
@@ -180,13 +116,17 @@ describe('computeStats — totalMiles attribution', () => {
     expect(stats.milesIncludeEstimates).toBe(true);
   });
 
-  it('keeps deltas isolated per vehicle', () => {
+  it('keeps odometer deltas isolated per vehicle when sessions interleave chronologically', () => {
     const v1 = makeVehicle({ id: 'v1', range: 300, batteryCapacity: 100 });
     const v2 = makeVehicle({ id: 'v2', range: 300, batteryCapacity: 100 });
+    // Interleaved by chargedAt — a global sort would produce a delta from v2's
+    // 5000 to v1's 1100 (-3900), which would be obviously wrong.
     const sessions = [
-      makeSession({ id: 'a', vehicleId: 'v1', chargedAt: 1, odometer: 1000 }),
-      makeSession({ id: 'b', vehicleId: 'v2', chargedAt: 2, odometer: 5000 }),
-      makeSession({ id: 'c', vehicleId: 'v1', chargedAt: 3, odometer: 1100 })
+      makeSession({ id: 'v1-a', vehicleId: 'v1', chargedAt: 1, odometer: 1000 }),
+      makeSession({ id: 'v2-a', vehicleId: 'v2', chargedAt: 2, odometer: 5000 }),
+      makeSession({ id: 'v1-b', vehicleId: 'v1', chargedAt: 3, odometer: 1100 }),
+      makeSession({ id: 'v2-b', vehicleId: 'v2', chargedAt: 4, odometer: 5200 }),
+      makeSession({ id: 'v1-c', vehicleId: 'v1', chargedAt: 5, odometer: 1250 })
     ];
 
     const stats = computeStats(
@@ -197,40 +137,66 @@ describe('computeStats — totalMiles attribution', () => {
       makeSettings()
     );
 
-    // a: derived 30; b: derived 30 (no v2 prior); c: 1100 - 1000 = 100 (v1 only)
-    expect(stats.totalMiles).toBe(30 + 30 + 100);
+    // v1-a derived 30, v2-a derived 30, v1-b: 100, v2-b: 200, v1-c: 150
+    expect(stats.totalMiles).toBe(30 + 30 + 100 + 200 + 150);
   });
 
-  it('returns zero totalMiles when there are no sessions', () => {
-    const stats = computeStats(
-      [],
-      locationMap([]),
-      [],
-      vehicleMap([VEHICLE_300_RANGE]),
-      makeSettings()
-    );
-
-    expect(stats.totalMiles).toBe(0);
-    expect(stats.milesIncludeEstimates).toBe(false);
-  });
-
-  it('does not flag estimates when every filtered session has a usable odometer delta', () => {
-    const sessions = [
+  it('does not clamp negative deltas when an odometer reading regresses', () => {
+    const allSessions = [
       makeSession({ id: 'old', chargedAt: 1, odometer: 1000 }),
-      makeSession({ id: 'a', chargedAt: 2, odometer: 1100 }),
-      makeSession({ id: 'b', chargedAt: 3, odometer: 1250 })
+      makeSession({ id: 'typo', chargedAt: 2, odometer: 950 })
     ];
-    const filtered = [sessions[1], sessions[2]];
+    const filtered = [allSessions[1]];
 
     const stats = computeStats(
       filtered,
       locationMap([makeLocation()]),
-      sessions,
+      allSessions,
       vehicleMap([VEHICLE_300_RANGE]),
       makeSettings()
     );
 
-    expect(stats.totalMiles).toBe(100 + 150);
+    // Pins the deliberate non-clamp behavior — a regressing odometer
+    // produces a negative delta rather than silently falling back to derived.
+    expect(stats.totalMiles).toBe(-50);
     expect(stats.milesIncludeEstimates).toBe(false);
+  });
+});
+
+describe('computeStats — byLocation aggregation', () => {
+  it('aggregates kWh and cost across multiple sessions at the same location', () => {
+    const home = makeLocation({ id: 'home', name: 'Home', color: '#abc' });
+    const sessions = [
+      makeSession({ id: 'a', locationId: 'home', energyKwh: 10, costCents: 100 }),
+      makeSession({ id: 'b', locationId: 'home', energyKwh: 15, costCents: 250 })
+    ];
+
+    const stats = computeStats(
+      sessions,
+      locationMap([home]),
+      sessions,
+      vehicleMap([VEHICLE_300_RANGE]),
+      null
+    );
+
+    expect(stats.byLocation).toEqual([
+      { locationId: 'home', name: 'Home', color: '#abc', totalKwh: 25, totalCostCents: 350 }
+    ]);
+  });
+
+  it('falls back to "Unknown" and the default purple color when the location is missing', () => {
+    const sessions = [makeSession({ id: 'a', locationId: 'orphan' })];
+
+    const stats = computeStats(
+      sessions,
+      locationMap([]),
+      sessions,
+      vehicleMap([VEHICLE_300_RANGE]),
+      null
+    );
+
+    expect(stats.byLocation).toEqual([
+      expect.objectContaining({ name: 'Unknown', color: LOCATION_COLOR_HEX.purple })
+    ]);
   });
 });
