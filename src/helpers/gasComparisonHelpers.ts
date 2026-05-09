@@ -2,7 +2,7 @@ import {
   KWH_PER_GALLON,
   DEFAULT_MI_PER_KWH,
   DEFAULT_GAS_PRICE_CENTS,
-  GAS_SAVINGS_INDICATOR_THRESHOLD
+  DEFAULT_GAS_SAVINGS_THRESHOLD
 } from '../constants';
 import type { ChargingSessionRecord, VehicleRecord, SettingsRecord } from '../data/data-types';
 import type { GasComparisonStats } from '../pages/dashboard/dashboard-types';
@@ -60,15 +60,21 @@ export function computeGasComparison(
 
   const savingsCents = gasCostCents - totalCostCents;
   const avgGasPriceCents = sessions.length > 0 ? Math.round(gasPriceTotalCents / sessions.length) : 0;
+  const threshold = settings.gasSavingsThreshold ?? DEFAULT_GAS_SAVINGS_THRESHOLD;
+  const isGasMateriallyCheaper = computeIsGasMateriallyCheaper(gasCostCents, savingsCents, threshold);
 
-  return { miPerKwh, mpge, gasCostCents, savingsCents, avgGasPriceCents };
+  return { miPerKwh, mpge, gasCostCents, savingsCents, avgGasPriceCents, isGasMateriallyCheaper };
 }
 
-// Returns true only when gas would have been more than the configured fraction
+// Returns true only when gas would have been more than the threshold fraction
 // cheaper than the actual EV cost. Small gaps aren't meaningful to surface.
-export function isGasMateriallyCheaper(stats: GasComparisonStats): boolean {
-  if (stats.gasCostCents <= 0 || stats.savingsCents >= 0) {
+export function computeIsGasMateriallyCheaper(
+  gasCostCents: number,
+  savingsCents: number,
+  threshold: number
+): boolean {
+  if (gasCostCents <= 0 || savingsCents >= 0) {
     return false;
   }
-  return Math.abs(stats.savingsCents) / stats.gasCostCents > GAS_SAVINGS_INDICATOR_THRESHOLD;
+  return Math.abs(savingsCents) / gasCostCents > threshold;
 }

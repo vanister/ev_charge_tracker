@@ -30,4 +30,5 @@ export type GasComparisonStats = {
   gasCostCents: number;
   savingsCents: number;
   avgGasPriceCents: number;
+  isGasMateriallyCheaper: boolean;
 };
