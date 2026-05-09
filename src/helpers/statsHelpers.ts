@@ -5,6 +5,8 @@ import type { SessionStats, LocationStat } from '../pages/dashboard/dashboard-ty
 import { RECENT_SESSIONS_LIMIT } from '../constants';
 import { getMiPerKwh } from './gasComparisonHelpers';
 
+type MilesContribution = { miles: number; estimated: boolean };
+
 export function computeStats(
   sessions: ChargingSessionRecord[],
   locationMap: Map<string, LocationRecord>,
@@ -14,60 +16,15 @@ export function computeStats(
 ): SessionStats {
   const totalKwh = sessions.reduce((sum, s) => sum + s.energyKwh, 0);
   const totalCostCents = sessions.reduce((sum, s) => sum + s.costCents, 0);
-
-  // group by location
-  const byLocation = Array.from(
-    sessions
-      .reduce((group, s) => {
-        const existing = group.get(s.locationId);
-
-        if (existing) {
-          existing.totalKwh += s.energyKwh;
-          existing.totalCostCents += s.costCents;
-        } else {
-          const location = locationMap.get(s.locationId);
-          group.set(s.locationId, {
-            locationId: s.locationId,
-            name: location?.name ?? 'Unknown',
-            color: location?.color ?? '#c084fc', // other color
-            totalKwh: s.energyKwh,
-            totalCostCents: s.costCents
-          });
-        }
-
-        return group;
-      }, new Map<string, LocationStat>())
-      .values()
-  );
-
   // Avoid divide-by-zero when no sessions have energy recorded
   const avgRatePerKwh = totalKwh > 0 ? totalCostCents / 100 / totalKwh : 0;
-
-  const priorOdometerById = buildPriorOdometerMap(allSessions);
-  const absorbedIds = buildAbsorbedSessionIds(sessions, priorOdometerById);
-  const defaultMiPerKwh = settings?.defaultMiPerKwh;
-
-  let totalMiles = 0;
-  let milesIncludeEstimates = false;
-
-  for (const session of sessions) {
-    // No-odo sessions sitting between two odometer readings have their miles
-    // already counted in the next reading's delta — skip them to avoid double counting.
-    if (absorbedIds.has(session.id)) {
-      continue;
-    }
-
-    const priorOdometer = priorOdometerById.get(session.id);
-
-    if (session.odometer !== undefined && priorOdometer !== undefined) {
-      totalMiles += session.odometer - priorOdometer;
-      continue;
-    }
-
-    const vehicle = vehicleMap.get(session.vehicleId) ?? null;
-    totalMiles += session.energyKwh * getMiPerKwh(vehicle, defaultMiPerKwh);
-    milesIncludeEstimates = true;
-  }
+  const byLocation = aggregateByLocation(sessions, locationMap);
+  const { totalMiles, milesIncludeEstimates } = computeMilesTotals(
+    sessions,
+    allSessions,
+    vehicleMap,
+    settings
+  );
 
   return {
     totalKwh,
@@ -80,73 +37,150 @@ export function computeStats(
   };
 }
 
-// Sessions without an odometer reading that sit between a prior odometer reading and a
-// future in-filter odometer reading are "absorbed": their miles are already counted in
-// the future delta, so they must contribute zero to the total.
-function buildAbsorbedSessionIds(
-  filtered: ChargingSessionRecord[],
-  priorOdometerById: Map<string, number>
-): Set<string> {
-  const byVehicle = new Map<string, ChargingSessionRecord[]>();
+function aggregateByLocation(
+  sessions: readonly ChargingSessionRecord[],
+  locationMap: ReadonlyMap<string, LocationRecord>
+): LocationStat[] {
+  const grouped = sessions.reduce<Map<string, LocationStat>>((acc, session) => {
+    const existing = acc.get(session.locationId);
 
-  for (const session of filtered) {
-    const list = byVehicle.get(session.vehicleId) ?? [];
-    list.push(session);
-    byVehicle.set(session.vehicleId, list);
-  }
-
-  const absorbed = new Set<string>();
-
-  for (const list of byVehicle.values()) {
-    list.sort((a, b) => a.chargedAt - b.chargedAt);
-
-    let hasFutureOdo = false;
-    for (let i = list.length - 1; i >= 0; i--) {
-      const session = list[i];
-      const hasPrior = priorOdometerById.has(session.id);
-
-      if (session.odometer === undefined && hasFutureOdo && hasPrior) {
-        absorbed.add(session.id);
-      }
-
-      if (session.odometer !== undefined) {
-        hasFutureOdo = true;
-      }
+    if (existing) {
+      acc.set(session.locationId, {
+        ...existing,
+        totalKwh: existing.totalKwh + session.energyKwh,
+        totalCostCents: existing.totalCostCents + session.costCents
+      });
+      return acc;
     }
+
+    const location = locationMap.get(session.locationId);
+    acc.set(session.locationId, {
+      locationId: session.locationId,
+      name: location?.name ?? 'Unknown',
+      // 'Other' fallback color
+      color: location?.color ?? '#c084fc',
+      totalKwh: session.energyKwh,
+      totalCostCents: session.costCents
+    });
+    return acc;
+  }, new Map());
+
+  return Array.from(grouped.values());
+}
+
+function computeMilesTotals(
+  filtered: readonly ChargingSessionRecord[],
+  allSessions: readonly ChargingSessionRecord[],
+  vehicleMap: ReadonlyMap<string, VehicleRecord>,
+  settings: SettingsRecord | null
+): { totalMiles: number; milesIncludeEstimates: boolean } {
+  const priorOdometerById = buildPriorOdometerMap(allSessions);
+  const absorbedIds = buildAbsorbedSessionIds(filtered, priorOdometerById);
+  const defaultMiPerKwh = settings?.defaultMiPerKwh;
+
+  const contributions = filtered.map((session) =>
+    attributeMiles(session, priorOdometerById, absorbedIds, vehicleMap, defaultMiPerKwh)
+  );
+
+  return {
+    totalMiles: contributions.reduce((sum, c) => sum + c.miles, 0),
+    milesIncludeEstimates: contributions.some((c) => c.estimated)
+  };
+}
+
+function attributeMiles(
+  session: ChargingSessionRecord,
+  priorOdometerById: ReadonlyMap<string, number>,
+  absorbedIds: ReadonlySet<string>,
+  vehicleMap: ReadonlyMap<string, VehicleRecord>,
+  defaultMiPerKwh: number | undefined
+): MilesContribution {
+  // A no-odo session sitting between two odometer readings is already covered
+  // by the next reading's delta, so it must contribute zero.
+  if (absorbedIds.has(session.id)) {
+    return { miles: 0, estimated: false };
   }
 
-  return absorbed;
+  const priorOdometer = priorOdometerById.get(session.id);
+
+  if (session.odometer !== undefined && priorOdometer !== undefined) {
+    return { miles: session.odometer - priorOdometer, estimated: false };
+  }
+
+  const vehicle = vehicleMap.get(session.vehicleId) ?? null;
+  return {
+    miles: session.energyKwh * getMiPerKwh(vehicle, defaultMiPerKwh),
+    estimated: true
+  };
 }
 
 // Maps each session id to the most recent prior odometer reading for the same vehicle,
 // looked up across ALL sessions so a filter window doesn't lose the immediately preceding reading.
-function buildPriorOdometerMap(allSessions: ChargingSessionRecord[]): Map<string, number> {
-  const sortedByVehicle = new Map<string, ChargingSessionRecord[]>();
+function buildPriorOdometerMap(
+  allSessions: readonly ChargingSessionRecord[]
+): ReadonlyMap<string, number> {
+  const entries = Array.from(groupByVehicle(allSessions).values()).flatMap((list) =>
+    collectPriorOdometerEntries(sortByChargedAt(list))
+  );
+  return new Map(entries);
+}
 
-  for (const session of allSessions) {
-    const list = sortedByVehicle.get(session.vehicleId) ?? [];
-    list.push(session);
-    sortedByVehicle.set(session.vehicleId, list);
-  }
+function collectPriorOdometerEntries(
+  sorted: readonly ChargingSessionRecord[]
+): readonly (readonly [string, number])[] {
+  return sorted.reduce<{
+    lastOdometer: number | undefined;
+    entries: readonly (readonly [string, number])[];
+  }>(
+    ({ lastOdometer, entries }, session) => ({
+      lastOdometer: session.odometer !== undefined ? session.odometer : lastOdometer,
+      entries: lastOdometer !== undefined ? [...entries, [session.id, lastOdometer]] : entries
+    }),
+    { lastOdometer: undefined, entries: [] }
+  ).entries;
+}
 
-  const result = new Map<string, number>();
+function buildAbsorbedSessionIds(
+  filtered: readonly ChargingSessionRecord[],
+  priorOdometerById: ReadonlyMap<string, number>
+): ReadonlySet<string> {
+  const ids = Array.from(groupByVehicle(filtered).values()).flatMap((list) =>
+    findAbsorbedIds(sortByChargedAt(list), priorOdometerById)
+  );
+  return new Set(ids);
+}
 
-  for (const list of sortedByVehicle.values()) {
-    list.sort((a, b) => a.chargedAt - b.chargedAt);
+function findAbsorbedIds(
+  sorted: readonly ChargingSessionRecord[],
+  priorOdometerById: ReadonlyMap<string, number>
+): readonly string[] {
+  return sorted.reduceRight<{ hasFutureOdo: boolean; ids: readonly string[] }>(
+    ({ hasFutureOdo, ids }, session) => {
+      const isAbsorbed =
+        session.odometer === undefined && hasFutureOdo && priorOdometerById.has(session.id);
+      return {
+        hasFutureOdo: hasFutureOdo || session.odometer !== undefined,
+        ids: isAbsorbed ? [session.id, ...ids] : ids
+      };
+    },
+    { hasFutureOdo: false, ids: [] }
+  ).ids;
+}
 
-    let lastOdometer: number | undefined = undefined;
+function groupByVehicle(
+  sessions: readonly ChargingSessionRecord[]
+): ReadonlyMap<string, readonly ChargingSessionRecord[]> {
+  return sessions.reduce<Map<string, ChargingSessionRecord[]>>((acc, session) => {
+    const list = acc.get(session.vehicleId) ?? [];
+    acc.set(session.vehicleId, [...list, session]);
+    return acc;
+  }, new Map());
+}
 
-    for (const session of list) {
-      if (lastOdometer !== undefined) {
-        result.set(session.id, lastOdometer);
-      }
-      if (session.odometer !== undefined) {
-        lastOdometer = session.odometer;
-      }
-    }
-  }
-
-  return result;
+function sortByChargedAt(
+  sessions: readonly ChargingSessionRecord[]
+): readonly ChargingSessionRecord[] {
+  return [...sessions].sort((a, b) => a.chargedAt - b.chargedAt);
 }
 
 export function buildRecentSessions(
