@@ -58,10 +58,9 @@ export function computeStats(
     }
 
     const priorOdometer = priorOdometerById.get(session.id);
-    const hasDelta = session.odometer !== undefined && priorOdometer !== undefined;
 
-    if (hasDelta) {
-      totalMiles += session.odometer! - priorOdometer!;
+    if (session.odometer !== undefined && priorOdometer !== undefined) {
+      totalMiles += session.odometer - priorOdometer;
       continue;
     }
 
@@ -70,15 +69,12 @@ export function computeStats(
     milesIncludeEstimates = true;
   }
 
-  const costPerMileCents = totalMiles > 0 ? totalCostCents / totalMiles : 0;
-
   return {
     totalKwh,
     totalCostCents,
     avgRatePerKwh,
     sessionCount: sessions.length,
     totalMiles,
-    costPerMileCents,
     milesIncludeEstimates,
     byLocation
   };
