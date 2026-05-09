@@ -10,7 +10,7 @@ import { Section } from '../../components/Section';
 import { FilterPanel } from '../../components/FilterPanel';
 import { ChargeStats } from './ChargeStats';
 import { GasComparison } from './GasComparison';
-import { ChargeSessionsCharts } from './ChargeSessionsCharts';
+import { ChargeSessionsCharts } from './charts/ChargeSessionsCharts';
 import { DashboardRecentSessions } from './DashboardRecentSessions';
 import { MaintenanceSummary } from './MaintenanceSummary';
 import type { DashboardFilter } from './dashboard-types';

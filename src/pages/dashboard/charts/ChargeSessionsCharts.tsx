@@ -1,9 +1,10 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import type { ChartData } from './chart-types';
-import type { SessionStats } from './dashboard-types';
-import { ChartTooltip } from './ChartTooltip';
-import { formatCost } from '../../utilities/formatUtils';
+import type { ChartData } from '../chart-types';
+import type { SessionStats } from '../dashboard-types';
+import { ChartTooltip } from '../ChartTooltip';
+import { LocationLegend } from './LocationLegend';
+import { LocationKwhStats } from './LocationKwhStats';
 
 type ChargeSessionsChartProps = {
   data: ChartData;
@@ -18,7 +19,18 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
     () => locationConfigs.filter((loc) => bars.some((bar) => (bar[loc.locationId] as number) > 0)),
     [locationConfigs, bars]
   );
+
   const sortedByKwh = useMemo(() => [...stats.byLocation].sort((a, b) => b.totalKwh - a.totalKwh), [stats.byLocation]);
+
+  const yAxisFormatter = useCallback((v: number) => {
+    if (v === 0) {
+      return '';
+    }
+    if (v >= 1000) {
+      return `${+(v / 1000).toFixed(1)}k`;
+    }
+    return `${Math.round(v)}`;
+  }, []);
 
   if (activeLocations.length === 0) {
     return (
@@ -32,7 +44,12 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
     <div>
       <div className="bg-surface border-default rounded-xl border px-2 pt-4 pb-3">
         <ResponsiveContainer width="100%" height={180}>
-          <BarChart data={bars} barCategoryGap="35%" margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
+          <BarChart
+            data={bars}
+            accessibilityLayer={false}
+            barCategoryGap="35%"
+            margin={{ top: 4, right: 8, left: -16, bottom: 0 }}
+          >
             <CartesianGrid vertical={false} stroke="currentColor" strokeOpacity={0.08} />
 
             <XAxis
@@ -47,11 +64,7 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
               tick={{ fontSize: 10, fill: 'currentColor', opacity: 0.5 }}
               tickLine={false}
               axisLine={false}
-              tickFormatter={(v: number) => {
-                if (v === 0) { return ''; }
-                if (v >= 1000) { return `${+(v / 1000).toFixed(1)}k`; }
-                return `${Math.round(v)}`;
-              }}
+              tickFormatter={yAxisFormatter}
               width={44}
             />
 
@@ -64,6 +77,7 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
 
             {activeLocations.map((loc) => (
               <Bar
+                focusable={false}
                 key={loc.locationId}
                 dataKey={loc.locationId}
                 stackId="stack"
@@ -75,40 +89,10 @@ export function ChargeSessionsCharts({ data, stats }: ChargeSessionsChartProps) 
           </BarChart>
         </ResponsiveContainer>
 
-        <div className="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-1.5 px-2">
-          {activeLocations.map((loc) => (
-            <div key={loc.locationId} className="flex items-center gap-1.5">
-              <span className="inline-block h-2.5 w-2.5 shrink-0 rounded-sm" style={{ backgroundColor: loc.color }} />
-              <span className="text-body-secondary text-xs">{loc.name}</span>
-            </div>
-          ))}
-        </div>
+        <LocationLegend activeLocations={activeLocations} />
       </div>
 
-      {stats.totalKwh > 0 && sortedByKwh.length > 0 && (
-        <div className="bg-surface border-default mt-4 space-y-3 rounded-xl border px-4 py-4">
-          {sortedByKwh.map((loc) => {
-            const pct = Math.round((loc.totalKwh / stats.totalKwh) * 100);
-            return (
-              <div key={loc.locationId}>
-                <div className="mb-1 flex items-baseline justify-between gap-2">
-                  <span className="text-sm">{loc.name}</span>
-                  <span className="text-body-secondary shrink-0 text-xs">
-                    {Math.round(loc.totalKwh)} kWh · {formatCost(loc.totalCostCents)} · {pct}%
-                  </span>
-                </div>
-                <div className="relative h-1.5 w-full overflow-hidden rounded-full">
-                  <div className="absolute inset-0 rounded-full bg-current opacity-10" />
-                  <div
-                    className="absolute inset-y-0 left-0 rounded-full"
-                    style={{ width: `${pct}%`, backgroundColor: loc.color }}
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+      <LocationKwhStats sortedByKwh={sortedByKwh} totalKwh={stats.totalKwh} />
     </div>
   );
 }

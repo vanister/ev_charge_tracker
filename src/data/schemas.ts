@@ -44,7 +44,8 @@ export const ChargingSessionRecordSchema = z.object({
   costCents: z.number(),
   chargedAt: z.number(),
   notes: z.string().optional(),
-  gasPriceCents: z.number().int().optional()
+  gasPriceCents: z.number().int().optional(),
+  odometer: z.number().int().min(0).optional()
 });
 
 export const SettingsRecordSchema = z.object({
@@ -61,6 +62,10 @@ export const SettingsRecordSchema = z.object({
   gasPriceCents: z.number().int().optional(),
   comparisonMpg: z.number().optional(),
   defaultMiPerKwh: z.number().optional(),
+  // Fraction of gas-equivalent cost below which the "gas would be cheaper"
+  // indicator stays hidden. Falls back to DEFAULT_GAS_SAVINGS_THRESHOLD when
+  // unset. Not exposed in settings UI yet — internal-only for now.
+  gasSavingsThreshold: z.number().min(0).optional(),
   // date & time display format — undefined falls back to defaults (medium date, auto time)
   dateFormat: z.enum(['medium', 'us-short', 'eu-short', 'iso']).optional(),
   timeFormat: z.enum(['auto', '12h', '24h', '24h-seconds']).optional()

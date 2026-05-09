@@ -331,7 +331,7 @@ getVehicleDisplayName(vehicle: Vehicle): string
 groupSessionsByDate(sessions, vehicleMap, locationMap): SessionsByDate
 
 // statsHelpers.ts
-computeStats(sessions: ChargingSession[], locationMap: Map<string, Location>): SessionStats
+computeStats(sessions, locationMap, allSessions, vehicleMap, settings): SessionStats
 buildRecentSessions(sessions, vehicleMap, locationMap, limit?): SessionWithMetadata[]
 
 // chartHelpers.ts

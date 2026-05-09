@@ -18,13 +18,19 @@ export type SessionStats = {
   totalKwh: number;
   totalCostCents: number;
   avgRatePerKwh: number;
+  avgMiPerKwh: number;
   sessionCount: number;
+  totalMiles: number;
+  milesIncludeEstimates: boolean;
   byLocation: LocationStat[];
 };
 
 export type GasComparisonStats = {
   miPerKwh: number;
   mpge: number;
+  comparisonMpg: number;
   gasCostCents: number;
   savingsCents: number;
+  avgGasPriceCents: number;
+  isGasMateriallyCheaper: boolean;
 };

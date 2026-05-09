@@ -39,6 +39,14 @@
 - `clsx` for conditional class names
 - Named exports only — no default exports
 - No index barrel files
+- There must be a component-level `className` that is the component name in kebab format that is the first item:
+```tsx
+  export function MyComponent(props: MyComponentProps) {
+    //...
+    //...
+    return <div className="my-component other-classes space-y-3 etc">{...}</div>
+  }
+```
 
 ### Helpers & Utilities
 - Named function declarations (not arrow functions) for standalone helpers/utilities

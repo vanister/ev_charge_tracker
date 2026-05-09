@@ -77,7 +77,8 @@ export function useDashboardData(filter: DashboardFilter): UseDashboardDataResul
         return true;
       });
 
-      const computedStats = computeStats(filtered, locationMap);
+      const settings = settingsResult.success ? settingsResult.data ?? null : null;
+      const computedStats = computeStats(filtered, locationMap, allSessions, vehicleMap, settings);
 
       const selectedVehicle = filter.vehicleId
         ? vehicleResult.data.find((v) => v.id === filter.vehicleId) ?? null
