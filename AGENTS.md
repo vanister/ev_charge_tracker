@@ -13,7 +13,9 @@
 - No JSDocs or XML comments unless explicitly asked
 - Simple, concise, single-purpose code
 - KISS and DRY principles
-- Return `Result<T>` instead of throwing exceptions
+- Use functional paradigms over imperative ones
+- Write loops as functional pipelines
+- Favor immutability and determinism over pure performance
 
 ## Project Rules
 
@@ -48,6 +50,7 @@
 ### Data Conventions
 - Dates stored as epoch ms (`number`), displayed via `dateUtils.ts` wrappers — never use `date-fns` directly
 - Cost stored as `costCents` (integer), displayed with `formatCost()`
+- Return `Result<T>` instead of throwing exceptions
 
 ### General
 - App-level constants in `src/constants.ts`
