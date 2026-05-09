@@ -23,6 +23,7 @@
 - `type` for typing, `interface` for true interfaces
 - No primitive constructors: use `+value`, `!!value`, `` `${value}` ``
 - Avoid explicit `!== null` or `!== undefined` — use `!!value` for non-falsy checks
+- Use `!= null` to check for `null` or `undefined` when `0` or empty strings are valid
 - Keep types close to where they're used in the feature; move to [shared-types](./src/types/shared-types.ts) only if used across features
 - Feature-specific types go in `<feature>-types.ts` files next to the feature
 - No implicit `any`
