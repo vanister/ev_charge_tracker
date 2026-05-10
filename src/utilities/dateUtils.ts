@@ -47,8 +47,8 @@ export function resolveTimePattern(pref?: TimeFormatValue): string {
   }
 }
 
-export function getDateRangeForTimeFilter(value: TimeFilterValue): DateRange | undefined {
-  const end = Date.now();
+export function getDateRangeForTimeFilter(value: TimeFilterValue, now = Date.now()): DateRange | undefined {
+  const end = now;
 
   switch (value) {
     case '7d':
