@@ -52,11 +52,11 @@ export function getDateRangeForTimeFilter(value: TimeFilterValue): DateRange | u
 
   switch (value) {
     case '7d':
-      return { start: dateFnsSubDays(end, 7).getTime(), end };
+      return { start: dateFnsStartOfDay(dateFnsSubDays(end, 6)).getTime(), end };
     case '14d':
-      return { start: dateFnsSubDays(end, 14).getTime(), end };
+      return { start: dateFnsStartOfDay(dateFnsSubDays(end, 13)).getTime(), end };
     case '31d':
-      return { start: dateFnsSubDays(end, 31).getTime(), end };
+      return { start: dateFnsStartOfDay(dateFnsSubDays(end, 30)).getTime(), end };
     case '3m':
       return { start: dateFnsSubMonths(end, 3).getTime(), end };
     case '6m':
