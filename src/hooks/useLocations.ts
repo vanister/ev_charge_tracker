@@ -14,8 +14,10 @@ export function useLocations() {
   const getLocationList = useCallback(
     async (all = false): Promise<Result<LocationRecord[]>> => {
       try {
+        // orderBy('order') uses the IndexedDB index and excludes records where `order`
+        // is undefined (user-created locations). Sort in-memory to include all records.
         const locations = all
-          ? await db.locations.orderBy('order').toArray()
+          ? (await db.locations.toArray()).sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity))
           : await db.locations.where('isActive').equals(1).sortBy('order');
 
         return success(locations);
