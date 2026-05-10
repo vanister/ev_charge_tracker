@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import {
   detectIs24Hour,
   resolveDatePattern,
@@ -7,7 +7,10 @@ import {
   formatDateTime,
   formatTime,
   formatDateGroupHeader,
-  getDateGroupKey
+  getDateGroupKey,
+  getDateRangeForTimeFilter,
+  startOfDay,
+  subDays
 } from '../../src/utilities/dateUtils';
 
 // Fixed timestamp: Saturday, April 11, 2026 13:30:45 local time
@@ -118,5 +121,40 @@ describe('formatDateGroupHeader', () => {
 describe('getDateGroupKey', () => {
   it('produces a stable ISO date key regardless of preferences', () => {
     expect(getDateGroupKey(SAMPLE)).toBe('2026-04-11');
+  });
+});
+
+describe('getDateRangeForTimeFilter', () => {
+  const FIXED_NOW = new Date(2026, 3, 11, 13, 30, 45).getTime();
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(FIXED_NOW);
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('returns undefined for "all"', () => {
+    expect(getDateRangeForTimeFilter('all')).toBeUndefined();
+  });
+
+  it('7d: start is midnight 6 days ago, end is now', () => {
+    const range = getDateRangeForTimeFilter('7d');
+    expect(range?.start).toBe(startOfDay(subDays(FIXED_NOW, 6)));
+    expect(range?.end).toBe(FIXED_NOW);
+  });
+
+  it('14d: start is midnight 13 days ago, end is now', () => {
+    const range = getDateRangeForTimeFilter('14d');
+    expect(range?.start).toBe(startOfDay(subDays(FIXED_NOW, 13)));
+    expect(range?.end).toBe(FIXED_NOW);
+  });
+
+  it('31d: start is midnight 30 days ago, end is now', () => {
+    const range = getDateRangeForTimeFilter('31d');
+    expect(range?.start).toBe(startOfDay(subDays(FIXED_NOW, 30)));
+    expect(range?.end).toBe(FIXED_NOW);
   });
 });

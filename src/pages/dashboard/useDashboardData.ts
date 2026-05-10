@@ -68,8 +68,11 @@ export function useDashboardData(filter: DashboardFilter): UseDashboardDataResul
       const vehicleMap = createVehicleMap(vehicleResult.data);
       const locationMap = createLocationMap(locationResult.data);
 
+      // Capture once so filter and chart use the same reference instant
+      const now = Date.now();
+
       // Filter sessions in-memory so recentSessions can use the unfiltered list
-      const dateRange = getDateRangeForTimeFilter(filter.timeRange);
+      const dateRange = getDateRangeForTimeFilter(filter.timeRange, now);
       const filtered = allSessions.filter((s) => {
         if (filter.vehicleId && s.vehicleId !== filter.vehicleId) { return false; }
         if (filter.locationId && s.locationId !== filter.locationId) { return false; }
@@ -96,7 +99,7 @@ export function useDashboardData(filter: DashboardFilter): UseDashboardDataResul
       const isMonthly = MONTHLY_TIME_RANGES.has(filter.timeRange);
       const computedChartData = isMonthly
         ? buildMonthlyChartData(filtered, locationsForChart, getChartNumMonths(filter.timeRange, filtered))
-        : buildChartData(filtered, locationsForChart, getChartNumDays(filter.timeRange));
+        : buildChartData(filtered, locationsForChart, getChartNumDays(filter.timeRange), now);
 
       const computedRecentSessions = buildRecentSessions(
         allSessions,

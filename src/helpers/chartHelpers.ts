@@ -21,9 +21,9 @@ const costKey = (locationId: string) => `${locationId}__cost`;
 export function buildChartData(
   sessions: ChargingSessionRecord[],
   locations: LocationRecord[],
-  numDays: number = 31
+  numDays: number = 31,
+  now = Date.now()
 ): ChartData {
-  const now = Date.now();
   const startTimestamp = startOfDay(subDays(now, numDays - 1));
 
   // Generate all days in range, oldest first
