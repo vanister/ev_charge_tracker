@@ -1,0 +1,3567 @@
+{
+  "dbVersion": 5,
+  "fileVersion": 1,
+  "timestamp": 1778348175745,
+  "data": [
+    {
+      "store": "vehicles",
+      "records": [
+        {
+          "id": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "name": "Red Stallion",
+          "make": "Ford",
+          "model": "Mustang Mach-E",
+          "year": 2022,
+          "trim": "Premium Extended Range AWD",
+          "batteryCapacity": 91,
+          "range": 290,
+          "icon": "🚗",
+          "createdAt": 1772753801190,
+          "isActive": 1
+        }
+      ]
+    },
+    {
+      "store": "sessions",
+      "records": [
+        {
+          "id": "00a2803d-60d6-43dd-98b5-b9077e18fc9b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 21,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1751702400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "01b49d4d-a90c-4b84-a311-f1caa7bff973",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 41,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1751356800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "0327a1e4-5dc6-4e24-9332-2cf15c9efc64",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 54,
+          "ratePerKwh": 0.28,
+          "costCents": 1512,
+          "chargedAt": 1771747200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "032d3ecf-078c-4ff5-8481-a53fd3aeba7d",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 19,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1758009600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "03882307-b014-41f8-a5d0-661ac04ad3db",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 12,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1748592000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "04539b54-eb6b-4906-8517-0e92ceaa2e96",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 13,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1762848000000,
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 39,
+          "ratePerKwh": 0.42,
+          "chargedAt": 1777820580000,
+          "id": "05a6a7b6-45f0-4d4a-a825-c7ca5e5cc673",
+          "costCents": 1638,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "06b65858-c310-4314-b41c-fa3cdcf33e48",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 7,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1750320000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "0830ff81-478f-444e-968d-10a7eb2441b4",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 67,
+          "ratePerKwh": 0.15,
+          "costCents": 1005,
+          "chargedAt": 1737273600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "0870b14e-a6f1-43fd-a5a3-4c2979c52450",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 25,
+          "ratePerKwh": 0.12,
+          "costCents": 300,
+          "chargedAt": 1722585600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "087b6944-99a8-4b72-b4e5-fe4c9893f633",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 18,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1764489600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "08d8f689-07aa-480f-a328-55cd4aaf57ff",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1756627200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "0a29c163-7f71-4afb-b4ab-31d739c2cccc",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0.15,
+          "costCents": 210,
+          "chargedAt": 1735804800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "0ae380ab-d8ad-4b57-9203-986b0261c991",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15.2,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1773424560000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "0b70db56-05b0-4f06-9647-bdc9404c667d",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 23,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1757232000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "0de203d7-38e7-4ff2-bb8b-c21849582004",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 34,
+          "ratePerKwh": 0.12,
+          "costCents": 408,
+          "chargedAt": 1719820800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "0ed42961-c1ff-49a5-a357-69a829636549",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 37,
+          "ratePerKwh": 0.12,
+          "costCents": 444,
+          "chargedAt": 1731225600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "0f0851a8-7274-4dd9-bfa4-5eb140cc1d46",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1754640000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "10d4cfe6-390b-410c-94a4-bef288e258a1",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 16,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1754467200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "11d96563-cbb9-4085-93dd-3a03c4ba7af0",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 11,
+          "ratePerKwh": 0.15,
+          "costCents": 165,
+          "chargedAt": 1746950400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "124084a2-dbd9-4c8c-a77d-0e1728968bb1",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "energyKwh": 16,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1737360000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "1387e8c8-777a-4f5b-b62d-36b56fd44c83",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 37,
+          "ratePerKwh": 0.12,
+          "costCents": 444,
+          "chargedAt": 1714723200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "14feba5b-7f2e-4114-aa97-2da1522f022b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 35,
+          "ratePerKwh": 0.12,
+          "costCents": 420,
+          "chargedAt": 1734422400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "16432125-b014-499c-a48e-cf17a87b3692",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 36,
+          "ratePerKwh": 0.15,
+          "costCents": 540,
+          "chargedAt": 1740729600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "16a21e1b-9b69-4faa-b7fe-ca5c6f8cd5cf",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "energyKwh": 16,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1719907200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "1729ca10-77b7-4f95-bfe4-3bfc37fd9f77",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 31,
+          "ratePerKwh": 0.15,
+          "costCents": 465,
+          "chargedAt": 1744790400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "17ed0259-1f03-4a34-9780-811d94b5efa1",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 32,
+          "ratePerKwh": 0.15,
+          "costCents": 480,
+          "chargedAt": 1746604800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "1a24489b-1dd7-401b-9ec6-7ee713be599f",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 16,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1763712000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "1aa327f7-d72a-4a48-a822-14bf60f46da7",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 9,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1765267200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "1bbf4d88-f7d3-4af0-afed-7cfb17063e66",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 31,
+          "ratePerKwh": 0.12,
+          "costCents": 372,
+          "chargedAt": 1714118400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "1bffa13a-69c1-4dab-80ab-328a02be5323",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 21,
+          "ratePerKwh": 0.15,
+          "costCents": 315,
+          "chargedAt": 1742630400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "1d602e3c-6492-4186-a958-440956a230b1",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 11,
+          "ratePerKwh": 0.15,
+          "costCents": 165,
+          "chargedAt": 1746777600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "1dce1bb3-1d2b-4be8-a8b6-d2b657356324",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 49,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1753776000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "1ef03d72-35b2-468c-ad9d-b74b3d573c7c",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 38,
+          "ratePerKwh": 0.15,
+          "costCents": 570,
+          "chargedAt": 1736409600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "1f55a7d9-9751-4f93-989f-51d3a24d0a04",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 22,
+          "ratePerKwh": 0.15,
+          "costCents": 330,
+          "chargedAt": 1740470400000,
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "energyKwh": 38.2,
+          "ratePerKwh": 0.37,
+          "chargedAt": 1776525240000,
+          "notes": "EV Passport",
+          "id": "1fb114c4-5742-4c1c-a92f-0a3f7c527dc3",
+          "costCents": 1413,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "1ff4cdc4-60a0-406f-b472-528bc1d7f82b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 30,
+          "ratePerKwh": 0.12,
+          "costCents": 360,
+          "chargedAt": 1729497600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "2010ff1b-6d9e-4f9c-b66d-88e52b937d2e",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 47,
+          "ratePerKwh": 0.12,
+          "costCents": 564,
+          "chargedAt": 1725177600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "20c1c080-74f3-4071-a119-0104eb371d94",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 13,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1749888000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "214ce83d-b85a-4996-867b-da0b0322d1c3",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 22,
+          "ratePerKwh": 0.15,
+          "costCents": 330,
+          "chargedAt": 1737187200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "24c30735-706d-40dd-afa9-7679b4e63851",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 34,
+          "ratePerKwh": 0.12,
+          "costCents": 408,
+          "chargedAt": 1733817600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "2697426f-17d9-497d-8d5c-fb7f81bc95b7",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 19,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1753430400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "26b93228-9cf3-4a30-93cb-55aed1ecc675",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 26,
+          "ratePerKwh": 0.42,
+          "costCents": 1092,
+          "chargedAt": 1771747200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "26c96ac5-1aa7-485f-b4f8-19bc46bd545a",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "energyKwh": 47.9,
+          "ratePerKwh": 0.37,
+          "costCents": 1772,
+          "chargedAt": 1774789560000,
+          "notes": "EV Passport",
+          "gasPriceCents": 500
+        },
+        {
+          "id": "26ed539e-d880-4f5b-8889-680cff865ca3",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 27,
+          "ratePerKwh": 0.12,
+          "costCents": 324,
+          "chargedAt": 1723276800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "274d1a2e-9661-46cf-a18c-1f363f642ecc",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 39,
+          "ratePerKwh": 0.12,
+          "costCents": 468,
+          "chargedAt": 1719302400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "2808b319-c709-48b6-8dfd-db080b61b540",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 36,
+          "ratePerKwh": 0.15,
+          "costCents": 540,
+          "chargedAt": 1740988800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "28503d5f-3707-43d0-9dde-a6f400c8025f",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 23,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1770710400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "28af7658-4f25-406f-b962-fddeb7b1bb20",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 40,
+          "ratePerKwh": 0.62,
+          "costCents": 2480,
+          "chargedAt": 1771574400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "2a299812-e2e8-4b0d-94c6-41704c9a4380",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 34,
+          "ratePerKwh": 0.15,
+          "costCents": 510,
+          "chargedAt": 1745395200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "2a2d29dd-1c1f-478b-8979-3652cee09a30",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 34,
+          "ratePerKwh": 0.12,
+          "costCents": 408,
+          "chargedAt": 1734076800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "2ae02225-038c-4fc0-8794-d3f96ca33568",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 10,
+          "ratePerKwh": 0.19,
+          "costCents": 190,
+          "chargedAt": 1753430400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "2c81ac9c-70f8-4f86-8cdc-0ffc15a9ec5e",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 46,
+          "ratePerKwh": 0.15,
+          "costCents": 690,
+          "chargedAt": 1739433600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "2ca68f27-de79-4c0b-816b-c6c25ad5b087",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 18,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1753862400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "2e02dcea-b9b3-43b1-83ab-660129d5794b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 2,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1754294400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "2f443b02-2739-43b5-b87c-760e44e3770b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 16,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1763020800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "2fcbeff3-6aa5-4217-bd44-96f68b015ad5",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 16.9,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1774642800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "3109b18c-562a-4026-b288-e50655371ad8",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1757664000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "313bc153-935f-48ef-bb0f-c2b914dc8c0d",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 3,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1756195200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "3208b8f8-4cac-4320-b385-44277d77acd0",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 51,
+          "ratePerKwh": 0.12,
+          "costCents": 612,
+          "chargedAt": 1727078400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "32cd7334-9a69-468a-bcb8-9162cc8c6a4d",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 30,
+          "ratePerKwh": 0.15,
+          "costCents": 450,
+          "chargedAt": 1743148800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "33e51cb1-1a07-40b7-94e7-796fd6b46c90",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0.12,
+          "costCents": 180,
+          "chargedAt": 1733040000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "340a120d-6df8-492f-b61e-cc524b41ce46",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 38.2,
+          "ratePerKwh": 0.62,
+          "costCents": 2368,
+          "chargedAt": 1773435720000,
+          "notes": "EVgo",
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15.1,
+          "ratePerKwh": 0,
+          "chargedAt": 1775228340000,
+          "id": "342570e6-d2e6-4a3a-a669-f0d28433ccfe",
+          "costCents": 0,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "348e1954-cfed-452f-859f-69524bf40b97",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 14,
+          "ratePerKwh": 0.35,
+          "costCents": 490,
+          "chargedAt": 1753430400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "34e29f09-575d-4c68-8cb3-4cd6e0c78cb4",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 29,
+          "ratePerKwh": 0.12,
+          "costCents": 348,
+          "chargedAt": 1722758400000,
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 7.7,
+          "ratePerKwh": 0,
+          "chargedAt": 1775137560000,
+          "id": "34f9154c-73ee-4c9b-b619-d3fe0eedbe1c",
+          "costCents": 0,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "35519898-aa5b-4127-a23f-335e4fd3a67b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 6,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1749628800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "3788740d-0ad8-4c8d-9dad-469bc1c4089f",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 27,
+          "ratePerKwh": 0.15,
+          "costCents": 405,
+          "chargedAt": 1737619200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "3937b176-5107-43d0-a2e8-20a0b7b4a692",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 47,
+          "ratePerKwh": 0.12,
+          "costCents": 564,
+          "chargedAt": 1717401600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "3b3eb77a-b31e-4500-959d-8c283e956a3e",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 13,
+          "ratePerKwh": 0.12,
+          "costCents": 156,
+          "chargedAt": 1730534400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "3b7af1fd-44d1-4980-a159-4e94864a1563",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 35,
+          "ratePerKwh": 0.27,
+          "costCents": 945,
+          "chargedAt": 1768118400000,
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 6.4,
+          "ratePerKwh": 0,
+          "chargedAt": 1777419360000,
+          "id": "3bf7f2e2-737f-482e-b920-2c613c1b25ab",
+          "costCents": 0,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "3c66725b-d271-456e-a630-4220f0602fc9",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 37,
+          "ratePerKwh": 0.12,
+          "costCents": 444,
+          "chargedAt": 1726819200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "3d4f5cf1-d0a8-4db9-a6f0-fc29962d79c6",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 38,
+          "ratePerKwh": 0.12,
+          "costCents": 456,
+          "chargedAt": 1721289600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "3ef1ab8d-e610-4b2e-b3f4-de5cd2ecc3ed",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 24,
+          "ratePerKwh": 0.15,
+          "costCents": 360,
+          "chargedAt": 1741420800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "3f5a0de0-fe1f-41dd-9b8a-2099787f66f0",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 20,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1759046400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "406f5e11-dec8-4534-9111-d3a3805e7a93",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 25,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1766995200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "40db32fa-7569-47c1-a385-e3433e5be7c3",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 38,
+          "ratePerKwh": 0.12,
+          "costCents": 456,
+          "chargedAt": 1725955200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "41115e8a-3bf9-402d-965a-f687a4c6e377",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15.1,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1773937620000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "415da1af-f37e-448f-9119-00813e08efb2",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0.12,
+          "costCents": 168,
+          "chargedAt": 1715500800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "4189a1ed-069a-4bb8-9d8e-2282a701a540",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 9,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1760688000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "421823aa-6b27-413d-a5cd-932bda2243ce",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1760428800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "42541963-bfd1-48eb-a5ed-b71c7764743b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 43,
+          "ratePerKwh": 0.12,
+          "costCents": 516,
+          "chargedAt": 1719043200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "441a603f-81f5-48f7-a40b-9955d100f269",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 25,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1769587200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "458e9e3d-c384-456f-9d00-52d02fa4bf9f",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1762329600000,
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 12.2,
+          "ratePerKwh": 0,
+          "chargedAt": 1776274560000,
+          "id": "4654e12a-5142-47bb-af25-b5715f755c62",
+          "costCents": 0,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "46d64b9e-d611-4d6c-978d-c625b0ea23e3",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1765699200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "47d35bf1-008f-4a4f-9167-dcfb2d664a5d",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 9,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1763280000000,
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 7.8,
+          "ratePerKwh": 0,
+          "chargedAt": 1776387600000,
+          "id": "482ca72f-e618-41f3-8229-f61550d7d3b5",
+          "costCents": 0,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "487a0a37-b558-44bc-bcfb-6b25fc6ab014",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 7,
+          "ratePerKwh": 0.15,
+          "costCents": 105,
+          "chargedAt": 1738396800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "496191de-71bb-4436-b45d-86ee9d4fae10",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1759910400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "4c7fe90f-42d3-4477-b936-e891cf5b58c7",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1757836800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "4ce6a74c-a100-4446-a368-209ca23ebf1d",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 36,
+          "ratePerKwh": 0.15,
+          "costCents": 540,
+          "chargedAt": 1745136000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "4e43ea2d-7b4e-45ce-afc2-1fd15e1e24b7",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 32,
+          "ratePerKwh": 0.56,
+          "costCents": 1792,
+          "chargedAt": 1766649600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "4e7ab7e0-e2d5-4146-bb7d-815d6de3cbfa",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 39,
+          "ratePerKwh": 0.12,
+          "costCents": 468,
+          "chargedAt": 1725091200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "50884301-9952-4068-b881-2502c4abc120",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "energyKwh": 9,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1753516800000,
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 9.2,
+          "ratePerKwh": 0,
+          "chargedAt": 1776733560000,
+          "id": "52547dbb-d4f4-435e-8d01-f6e49c0e1e31",
+          "costCents": 0,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "52eb6764-7471-4670-a6c8-384455c4f663",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 13.3,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1774454220000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "558024a7-9d84-44a4-af47-f693b4a83583",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 24,
+          "ratePerKwh": 0.15,
+          "costCents": 360,
+          "chargedAt": 1736755200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "55f63275-2995-4aa1-9271-6da214c31a20",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 9,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1756022400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "55f6a87e-81f7-4a01-ab65-44ac1ffc79a3",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 43,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1766390400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "5646e896-1f1b-43b0-952e-3d70647e87cc",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 54,
+          "ratePerKwh": 0.15,
+          "costCents": 810,
+          "chargedAt": 1737446400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "56df1fdc-1619-4601-a2df-c9908f482880",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 33,
+          "ratePerKwh": 0.15,
+          "costCents": 495,
+          "chargedAt": 1745654400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "57077690-16a5-4aaf-93c3-c1c22f4be26a",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1769760000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "578d3a21-19ee-41c1-b740-a9b383a5cce1",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 38,
+          "ratePerKwh": 0.12,
+          "costCents": 456,
+          "chargedAt": 1730448000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "57b926f9-4f24-44be-9343-22d8141b7af4",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1765008000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "586d4e2b-4e35-4980-9fae-d18242a681ee",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 24,
+          "ratePerKwh": 0.12,
+          "costCents": 288,
+          "chargedAt": 1732521600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "5974af0f-75c2-462b-b379-c40229bca160",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 8,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1763452800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "5a9b93de-743e-426b-af1b-213aba9ea620",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 25,
+          "ratePerKwh": 0.15,
+          "costCents": 375,
+          "chargedAt": 1746086400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "5ad628df-eec5-4f6b-9736-4ba6fe1d6468",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1753344000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "5bfcee90-65d7-4270-b65e-da59639ec6f1",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 26,
+          "ratePerKwh": 0.12,
+          "costCents": 312,
+          "chargedAt": 1730880000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "5d45d738-d5b8-48fe-9e27-c1bf13dcc807",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 27,
+          "ratePerKwh": 0.12,
+          "costCents": 324,
+          "chargedAt": 1731744000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "5de4bca8-54fb-4c57-b242-cec862e6edba",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "energyKwh": 7,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1754294400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "5fe8092d-bfcb-4d45-b7eb-382e1c85b43f",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 25,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1756454400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "6005599e-c980-40de-9722-fb6958a2c142",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 45,
+          "ratePerKwh": 0.15,
+          "costCents": 675,
+          "chargedAt": 1744704000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "602bc906-2e09-4588-a206-31e77a1ed797",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 45,
+          "ratePerKwh": 0.12,
+          "costCents": 540,
+          "chargedAt": 1725523200000,
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 15.9,
+          "ratePerKwh": 0.42,
+          "chargedAt": 1776573720000,
+          "notes": "EV Connect",
+          "id": "603bb380-8b2f-4a63-909b-4f014f15fb15",
+          "costCents": 668,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "6046274b-579e-418d-8b62-f795abc37cb5",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 13.9,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1773240480000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "60fa3c26-7e53-453b-87de-62a11f335eb1",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 36,
+          "ratePerKwh": 0.12,
+          "costCents": 432,
+          "chargedAt": 1716364800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "6170b6ba-6515-4e26-bd17-010fbdd61a17",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 9,
+          "ratePerKwh": 0.12,
+          "costCents": 108,
+          "chargedAt": 1729324800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "632d3996-f8c1-4c63-86a6-f554b0e566f1",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1766476800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "6362eac9-b3ad-4c08-810d-73c14f726035",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 41,
+          "ratePerKwh": 0.12,
+          "costCents": 492,
+          "chargedAt": 1730620800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "638be881-f614-4a73-8160-af07db9cda91",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 24,
+          "ratePerKwh": 0.41,
+          "costCents": 984,
+          "chargedAt": 1767513600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "6394e2f6-0b4f-45ec-8f72-a38957dfa106",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 19,
+          "ratePerKwh": 0.15,
+          "costCents": 285,
+          "chargedAt": 1746259200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "67942a66-d1dd-4ccc-aa57-ebd458edd506",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 24,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1748937600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "67f80e34-73bb-4eab-9059-a852313b82be",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 47,
+          "ratePerKwh": 0.15,
+          "costCents": 705,
+          "chargedAt": 1737964800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "6a251229-4594-4486-b5da-52d6d8889de4",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 8,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1771488000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "6bb5b66f-0c0e-4672-90ab-8de00a5f5fc8",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 32,
+          "ratePerKwh": 0.12,
+          "costCents": 384,
+          "chargedAt": 1723017600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "6bc26ddf-87b1-4b56-bb72-e4165ee78d01",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 39,
+          "ratePerKwh": 0.15,
+          "costCents": 585,
+          "chargedAt": 1739606400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "6c62d5db-c61b-403b-8819-a276f7960e2d",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 8,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1750579200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "6ebd285a-704c-44de-8ffe-2b9602d65bf2",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0.12,
+          "costCents": 168,
+          "chargedAt": 1725696000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "6eefe415-68c3-4294-bf70-8543eddffb21",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 17,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1752912000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "6fcecbc2-1e16-4c7a-81cf-dd49ce314a69",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1749196800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "70218f78-64b5-409b-bdd5-b394bfd60bbd",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 6.6,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1774568340000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "71fda79f-80ad-40a9-8704-457a3ce83d5a",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 16,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1765440000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "72b76204-09a4-4bb3-a20b-e056ab9e3f12",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 41,
+          "ratePerKwh": 0.12,
+          "costCents": 492,
+          "chargedAt": 1730188800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "737373ab-83ca-4e41-91f9-cc0bf4c1f251",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 30,
+          "ratePerKwh": 0.55,
+          "costCents": 1650,
+          "chargedAt": 1748505600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "73982ca4-a15a-4819-940e-374ec211e526",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 18,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1771228800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "73d8c2f6-cc74-4ea5-99ba-2ece55141402",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1770192000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "73f073a7-d818-41ba-bb82-030b1803c767",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 9,
+          "ratePerKwh": 0.12,
+          "costCents": 108,
+          "chargedAt": 1722240000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "75e3e78a-01f7-40cf-9ffe-25ede25a1a2d",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 29,
+          "ratePerKwh": 0.15,
+          "costCents": 435,
+          "chargedAt": 1736582400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "75fc3561-1579-47dc-80d8-94a81ac64a5c",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 39,
+          "ratePerKwh": 0.15,
+          "costCents": 585,
+          "chargedAt": 1739952000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "78600894-4689-4ee4-a1d8-c831929e5164",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "energyKwh": 16,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1754035200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "7945e2e2-a979-4035-b6a0-70b7c0b8edd8",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0.12,
+          "costCents": 168,
+          "chargedAt": 1720080000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "7a97e98c-c4da-4a82-9f2f-a0f0a77d5a25",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 17,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1753171200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "7b5abad2-5df4-4ca0-8a19-a3e2f5e6cc6c",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1752048000000,
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 13.4,
+          "ratePerKwh": 0,
+          "chargedAt": 1776438780000,
+          "id": "7c4382a2-8656-4ef9-b02d-9a943a73a09b",
+          "costCents": 0,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "7cb7b87c-5986-40b8-9016-6a0253704cd3",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1764835200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "7fc56613-eb9d-45cb-bfaa-830868c4978e",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 30,
+          "ratePerKwh": 0.15,
+          "costCents": 450,
+          "chargedAt": 1747900800000,
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 16.6,
+          "ratePerKwh": 0,
+          "chargedAt": 1776789540000,
+          "id": "7ffc858f-84dd-4063-9c23-dc0c2a626a75",
+          "costCents": 0,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "8077ea1b-78a5-4c4b-af6d-cabef1b89cc2",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 17,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1759996800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "816786ea-eedd-43c6-87ca-ad49c5a38b1b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 22,
+          "ratePerKwh": 0.15,
+          "costCents": 330,
+          "chargedAt": 1741248000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "81ae5fa6-5b16-4f41-a8bb-f0c0ac66a523",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 35,
+          "ratePerKwh": 0.12,
+          "costCents": 420,
+          "chargedAt": 1723536000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "81b41275-abcf-4cec-b7c7-8864a2f149ae",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 33,
+          "ratePerKwh": 0.15,
+          "costCents": 495,
+          "chargedAt": 1743580800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "81df25c8-1532-456c-89d4-dee1fd500f8a",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 40,
+          "ratePerKwh": 0.12,
+          "costCents": 480,
+          "chargedAt": 1729929600000,
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 11.31,
+          "ratePerKwh": 0.42,
+          "chargedAt": 1777428060000,
+          "id": "8504d538-96f4-4752-86eb-e8c68035f25b",
+          "costCents": 475,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "854241f5-7295-4d73-b320-60fafad1f96a",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 19,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1770537600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "856522b2-3f25-4bb7-bf58-5f9ff4529093",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 38,
+          "ratePerKwh": 0.12,
+          "costCents": 456,
+          "chargedAt": 1724313600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "87b21cdf-6e9d-43de-8708-5b15b262b8c0",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1756281600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "87e55422-52ca-4256-916a-a03c2b90e65f",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 8,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1749110400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "87f0cc6b-6b0d-41ee-b7d8-0bd5e16b247c",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 43,
+          "ratePerKwh": 0.56,
+          "costCents": 2408,
+          "chargedAt": 1768723200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "8876977f-1b6f-4f0a-818c-69bda450afb8",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0.12,
+          "costCents": 180,
+          "chargedAt": 1721462400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "89cfb236-62bc-4b22-83e1-5577a0d765cb",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0.12,
+          "costCents": 180,
+          "chargedAt": 1719648000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "8bdd898b-5e5b-4908-875c-174302f7d138",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 28,
+          "ratePerKwh": 0.15,
+          "costCents": 420,
+          "chargedAt": 1745740800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "8c2787f3-1f90-40c5-a608-d5716e9419ff",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 56,
+          "ratePerKwh": 0.15,
+          "costCents": 840,
+          "chargedAt": 1738915200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "8c427978-6a30-4b6c-b0f4-7f5ccb53cbe4",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "energyKwh": 22,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1740902400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "8ca3e431-4e1f-47a4-8b52-2937b0e18703",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 10,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1765180800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "8cf02be7-57b0-4ad0-85ec-84bf1aaa2246",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 9,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1755936000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "8d2cddce-e2ba-41a0-b5ef-e5313b324561",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 5,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1768204800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "8ddec0e2-c132-45b7-ad6a-845d98045474",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 4,
+          "ratePerKwh": 0.15,
+          "costCents": 60,
+          "chargedAt": 1738742400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "8e144e5f-5fc1-4e76-a4fc-4e478cc99631",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 17,
+          "ratePerKwh": 0.15,
+          "costCents": 255,
+          "chargedAt": 1737014400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "8f1f605c-2096-41d5-a732-84a26f9f1481",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 50,
+          "ratePerKwh": 0.48,
+          "costCents": 2400,
+          "chargedAt": 1732089600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "8f2ebe5e-bc71-4a24-a5ad-ee67bba76445",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 39,
+          "ratePerKwh": 0.15,
+          "costCents": 585,
+          "chargedAt": 1736668800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "908287a9-0cee-4cd9-a6cd-1ada86390140",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1755244800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "90901b0f-3720-4ace-bb41-fa7dd0bff4f8",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 38,
+          "ratePerKwh": 0.12,
+          "costCents": 456,
+          "chargedAt": 1727510400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "92080739-6d26-4444-ad71-2111629f9e57",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 21,
+          "ratePerKwh": 0.12,
+          "costCents": 252,
+          "chargedAt": 1714809600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "9247dedf-39e0-4d4e-b907-1ba7cbc4e911",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 20,
+          "ratePerKwh": 0.12,
+          "costCents": 240,
+          "chargedAt": 1721635200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "926935a9-8b7b-41d9-a1aa-f10dc500fe3f",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 29,
+          "ratePerKwh": 0.15,
+          "costCents": 435,
+          "chargedAt": 1742198400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "92fc1e9c-3f06-4d64-ae21-ea1819b502a7",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 43,
+          "ratePerKwh": 0.29,
+          "costCents": 1247,
+          "chargedAt": 1774712280000,
+          "notes": "Tesla",
+          "gasPriceCents": 500
+        },
+        {
+          "id": "93262108-c72d-4b30-93b0-e176466814ae",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 27,
+          "ratePerKwh": 0.41,
+          "costCents": 1107,
+          "chargedAt": 1766822400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "93ab1613-bfa3-46b0-9e0c-d008b6525156",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 17,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1752998400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "93ee5a90-184d-4541-b9e4-c4eb56020d09",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1754553600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "941e3a4d-8adb-4740-9c60-24a43032a9d0",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 26.7,
+          "ratePerKwh": 0.64,
+          "costCents": 1709,
+          "chargedAt": 1774041060000,
+          "notes": "Electrify America",
+          "gasPriceCents": 500
+        },
+        {
+          "id": "950dcefe-5589-49b1-a9ab-784110dad7fa",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 20,
+          "ratePerKwh": 0.12,
+          "costCents": 240,
+          "chargedAt": 1732262400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "970b5bd2-1c40-4f4f-921e-a234ef48a629",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 8,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1750492800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "97372e7d-fd4e-4d0a-8901-51becd3a31d9",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 35,
+          "ratePerKwh": 0.12,
+          "costCents": 420,
+          "chargedAt": 1734681600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "982aefc7-fcd7-49a0-a846-4079ff2d6649",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 40,
+          "ratePerKwh": 0.12,
+          "costCents": 480,
+          "chargedAt": 1718352000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "99bfe798-c0e6-4532-937f-820375e14fa4",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 49,
+          "ratePerKwh": 0.12,
+          "costCents": 588,
+          "chargedAt": 1735200000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "99f3cd4a-229e-4c15-b5a7-6464eddd7b69",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 20,
+          "ratePerKwh": 0.12,
+          "costCents": 240,
+          "chargedAt": 1720252800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "9a34a7be-f42b-4bd4-b0e2-745cdfa1f837",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 43,
+          "ratePerKwh": 0.12,
+          "costCents": 516,
+          "chargedAt": 1731916800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "9aad6902-754c-4130-8a2d-6a0dd45aa427",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 27,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1764662400000,
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 17.8,
+          "ratePerKwh": 0.42,
+          "gasPriceCents": 500,
+          "chargedAt": 1778167740000,
+          "id": "9b73bf0d-9b78-4a43-986d-7be7eb539506",
+          "costCents": 748
+        },
+        {
+          "id": "9bcd53a3-9c98-43a8-9139-c045af1ac554",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 9,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1765872000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "9c3dd8bc-de46-485f-8789-3a2bd6cd3965",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1767945600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "9cc99314-6092-471b-baf9-3507d84bf1de",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 12,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1759305600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "9cd25e1f-d5be-4c45-b1b5-d381dbfa70a0",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 11,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1770969600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "9dcd88c0-8b50-47ff-b66f-fe02aa08dbcd",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 47,
+          "ratePerKwh": 0.12,
+          "costCents": 564,
+          "chargedAt": 1734854400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "9f14c200-0d3b-4a35-9672-e9f01f724593",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 11.7,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1774968780000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "9f5e1ab3-d49f-4135-825f-19da8abb9265",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 39,
+          "ratePerKwh": 0.15,
+          "costCents": 585,
+          "chargedAt": 1737878400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "9f6132a3-faa0-47e6-9551-ff0127f0c2e6",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1766131200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "9fde8ed9-c3e3-4304-b02e-831cdc40b193",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 26,
+          "ratePerKwh": 0.12,
+          "costCents": 312,
+          "chargedAt": 1735372800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "a04450f7-46a3-4753-a1d2-980c9e4d5a55",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 24,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1767686400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "a0b93181-543e-4ad5-820d-7406bb57eaaa",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 36,
+          "ratePerKwh": 0.12,
+          "costCents": 432,
+          "chargedAt": 1733644800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "a14a96d0-83f7-45b5-9d94-7fed9b876065",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 49,
+          "ratePerKwh": 0.15,
+          "costCents": 735,
+          "chargedAt": 1742976000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "a15b0680-53b8-4115-b62c-d423cd3965fa",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "energyKwh": 12,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1732176000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "a35a0337-d47c-4b8f-b500-611ff1c8c963",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 34,
+          "ratePerKwh": 0.12,
+          "costCents": 408,
+          "chargedAt": 1715587200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "a45d4be7-d978-4ada-a3f4-2fb4111f09b8",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 9,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1764144000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "a551461f-2b3e-43ff-b86d-e470892ac619",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1770278400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "a6162ea5-8d23-4e4c-a592-7fde50a106f5",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 63,
+          "ratePerKwh": 0.15,
+          "costCents": 945,
+          "chargedAt": 1738483200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "a628a33e-ea7c-422f-a9ad-c4a8d77a9f84",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 52,
+          "ratePerKwh": 0.15,
+          "costCents": 780,
+          "chargedAt": 1738310400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "a7369955-2814-4593-baad-804ef9d0c6ad",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 30,
+          "ratePerKwh": 0.42,
+          "costCents": 1260,
+          "chargedAt": 1753948800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "a7d2aa35-19cb-4b2f-b9e6-fd83f011f683",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 35.3,
+          "ratePerKwh": 0.42,
+          "costCents": 1483,
+          "chargedAt": 1773600720000,
+          "notes": "EVConnect",
+          "gasPriceCents": 500
+        },
+        {
+          "id": "a8591c07-4fbd-49f2-974c-59e416584c7b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 24,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1755331200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "a8c582ed-b98a-46a4-bfd5-5ec810fbe870",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 35,
+          "ratePerKwh": 0.12,
+          "costCents": 420,
+          "chargedAt": 1732780800000,
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 24.1,
+          "ratePerKwh": 0.62,
+          "chargedAt": 1776099240000,
+          "notes": "EVgo",
+          "id": "a9af8770-9960-4a5b-aa6f-b08f2abab826",
+          "costCents": 1494,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ab994afc-8845-42a2-8804-11a862127a88",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 18,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1758528000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ac03bc8a-a485-4f55-b44e-fe12b53e9ed4",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 10,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1770796800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ae735268-c729-45d6-9c39-66d6db8a1d42",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 11,
+          "ratePerKwh": 0.15,
+          "costCents": 165,
+          "chargedAt": 1742112000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "aea73fad-2158-4d92-b061-9e3d30c81a67",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 29,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1750752000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "afa0698f-57cf-4327-b2e9-3170d2f99f92",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 44,
+          "ratePerKwh": 0.12,
+          "costCents": 528,
+          "chargedAt": 1717833600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b03b33a8-dc8c-415c-a610-3ebc33e6c7fe",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 38,
+          "ratePerKwh": 0.12,
+          "costCents": 456,
+          "chargedAt": 1722931200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b0803d32-d6d1-4835-b13d-b099c9ce416c",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 13,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1770019200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b0ae2aab-8acd-4068-a70c-ea07fa98088a",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 20,
+          "ratePerKwh": 0.12,
+          "costCents": 240,
+          "chargedAt": 1726214400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b0bbe39f-1b64-4cc9-a049-4171b5fdefae",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 13,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1761292800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b12d38c8-99e4-4b85-92c5-f0e7611aefe9",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 25,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1748764800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b1ee4913-6e3b-4eb8-a263-2d99a6cf561c",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 13,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1765872000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b23c9a47-ca38-4ffe-a09c-747c3b419f2e",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1719129600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b396620a-dd9a-4829-9d14-3bd71679441d",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1762243200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b3d90671-a0fc-4e6e-b46c-e1b321075b1b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 53,
+          "ratePerKwh": 0.15,
+          "costCents": 795,
+          "chargedAt": 1747555200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b3dd7286-3f86-48a3-9da6-a83ddd6f8e11",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 4,
+          "ratePerKwh": 0.56,
+          "costCents": 224,
+          "chargedAt": 1770451200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b41f073c-6383-4467-8937-5f3d09844da9",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1748505600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b437dcbb-12b1-4d71-bb5a-3ff43435999b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1762156800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b583c417-6d7b-4338-87d4-33cdae0fc45f",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 23,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1751097600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b59bf294-9a82-4225-8b79-3d36eb3faa5a",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 44,
+          "ratePerKwh": 0.12,
+          "costCents": 528,
+          "chargedAt": 1723968000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b5eee09c-c5d2-459f-9a86-326340e65b4a",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 36,
+          "ratePerKwh": 0.44,
+          "costCents": 1584,
+          "chargedAt": 1753344000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b677153f-32b4-45c5-b9dd-c0303e3128f3",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 53,
+          "ratePerKwh": 0.12,
+          "costCents": 636,
+          "chargedAt": 1728028800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b8eddbb0-ecc1-4712-ad3b-3c3d1dfad0e2",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1768032000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "b9aa242b-fa26-4aef-bdaa-f929db087ab0",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 38,
+          "ratePerKwh": 0.12,
+          "costCents": 456,
+          "chargedAt": 1724572800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ba32201b-6a11-42b4-8088-64910e95ca55",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 12,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1753257600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ba789e08-9928-44b8-be3e-074724f45c0a",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 37,
+          "ratePerKwh": 0.12,
+          "costCents": 444,
+          "chargedAt": 1732953600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "bab1f48d-2c73-4a68-b0c8-c4d5f17c4177",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 2,
+          "ratePerKwh": 0.52,
+          "costCents": 104,
+          "chargedAt": 1746518400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "bac9b1ce-0027-40f4-b9a7-732763634db5",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1759564800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "bb1fed48-62b2-462a-97a4-51ad55088e54",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 20,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1767168000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "bd8bf02f-574b-48ce-85ef-f6544ed7e66c",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 13,
+          "ratePerKwh": 0.25,
+          "costCents": 325,
+          "chargedAt": 1769414400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "bd924db5-68fc-43a7-9fb1-2ec2ab2e3df5",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 23,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1768291200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "bd9639b0-8c1a-471b-a8e6-4df9c67dfa07",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 20.4,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1773860580000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "bdae05af-f233-412c-b609-edbd10b04015",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1755590400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "be413140-8ad8-40e6-8a3c-18a909ac2a2f",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 50,
+          "ratePerKwh": 0.15,
+          "costCents": 750,
+          "chargedAt": 1747468800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "c001fea1-1192-4f96-a9de-009bba75a35d",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 5,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1750147200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "c0860d6d-0869-43f9-852e-491b6ed3ed61",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 30,
+          "ratePerKwh": 0.15,
+          "costCents": 450,
+          "chargedAt": 1745827200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "c0fd4384-dc94-42e3-84aa-bd0eba6aa55b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 18,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1768464000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "c13c72ee-f8cc-49f0-a2bc-f9a38fb1dfda",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0.12,
+          "costCents": 168,
+          "chargedAt": 1714377600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "c34a0a29-eae0-4b42-a4ea-5a87428499cd",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 12,
+          "ratePerKwh": 0.12,
+          "costCents": 144,
+          "chargedAt": 1717315200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "c38df932-9fc4-4b21-aefa-6bf78dc141e4",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 46,
+          "ratePerKwh": 0.12,
+          "costCents": 552,
+          "chargedAt": 1733126400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "c681694e-aaf5-4458-8017-256f0d5298a2",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 27,
+          "ratePerKwh": 0.15,
+          "costCents": 405,
+          "chargedAt": 1743840000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "c95f2102-ad6f-4a83-92a7-41bfa73135c1",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 7,
+          "ratePerKwh": 0.12,
+          "costCents": 84,
+          "chargedAt": 1726992000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "c9bad564-fe36-4866-bc58-61fba81c2268",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 23,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1757059200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "c9c1a743-8834-4fca-ba95-1712107fbb3a",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 7,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1768636800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ca37ed29-771f-4550-aeec-2aad2eecf193",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1761552000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ca7aaec6-4e32-4131-af38-bbbcaf5df8bf",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 16,
+          "ratePerKwh": 0.12,
+          "costCents": 192,
+          "chargedAt": 1735027200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "cab3e919-7312-40be-99eb-a3244e9fa569",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 35,
+          "ratePerKwh": 0.12,
+          "costCents": 420,
+          "chargedAt": 1733472000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "cabb9c43-86e8-4cb0-9cbe-223db278f498",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 46,
+          "ratePerKwh": 0.12,
+          "costCents": 552,
+          "chargedAt": 1735113600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "cb8cf67a-c8cf-49bf-8183-9d588e422bfc",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "energyKwh": 11,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1728201600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "cbea2dca-3b64-4d0b-9eca-54313c74b67a",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "energyKwh": 3,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1754208000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ccc8776f-1cbf-4d10-bc39-a1323fd2f584",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 36,
+          "ratePerKwh": 0.41,
+          "costCents": 1476,
+          "chargedAt": 1769328000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "cdea50bd-c59d-486a-8a6c-e1cca5d98bce",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1772006400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ce04ed1d-2670-4a61-ab48-72dff1760e2f",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 24,
+          "ratePerKwh": 0.12,
+          "costCents": 288,
+          "chargedAt": 1725350400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ce3c2381-6339-4ee1-bb1a-67c5a9211323",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 11,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1749542400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "d020726b-3ec9-4e87-ac35-a65adb654e82",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1758614400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "d061c2df-b532-463c-a342-44bc1572783d",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 16,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1751011200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "d0f8eb96-919b-4475-ac64-8ef959966488",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 19,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1763193600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "d1aeb0a9-a2b5-4fa1-9f23-d661ea08e840",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 13,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1767600000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "d29f0a04-d7c4-4c6f-aee8-54470b57b9b4",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 5,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1753084800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "d2e05ed0-9392-4b77-a4f9-fb1151c50044",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 8,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1749715200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "d4011fbb-72c0-41da-9a28-6597f9200460",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 41,
+          "ratePerKwh": 0.15,
+          "costCents": 615,
+          "chargedAt": 1743235200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "d456c403-d361-4b2f-aec7-59f51a0e02e5",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 37,
+          "ratePerKwh": 0.12,
+          "costCents": 444,
+          "chargedAt": 1717228800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "d476dde1-4f0c-4ded-99a3-5e8e4738a077",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 38,
+          "ratePerKwh": 0.15,
+          "costCents": 570,
+          "chargedAt": 1741680000000,
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 13.4,
+          "ratePerKwh": 0,
+          "chargedAt": 1775321580000,
+          "id": "d58440c5-437c-460e-b9e7-94c41f55f981",
+          "costCents": 0,
+          "gasPriceCents": 500
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14.2,
+          "ratePerKwh": 0,
+          "chargedAt": 1776697620000,
+          "id": "d5b2b204-ec67-45f4-a730-9324004fc1b1",
+          "costCents": 0,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "d5bd9716-c166-46a0-94c2-f4740ae08533",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 41,
+          "ratePerKwh": 0.12,
+          "costCents": 492,
+          "chargedAt": 1714896000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "d61d8063-7421-49e7-8d45-a54df1938661",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 40,
+          "ratePerKwh": 0.12,
+          "costCents": 480,
+          "chargedAt": 1731484800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "d694e226-6b42-454f-9667-3191244a95ba",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "energyKwh": 20,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1754121600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "d82f3ba5-e23f-4090-b287-8fc373c79a9c",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 38,
+          "ratePerKwh": 0.12,
+          "costCents": 456,
+          "chargedAt": 1727596800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "daa87356-01b8-4c7f-97ba-7091aae94ebb",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 39,
+          "ratePerKwh": 0.12,
+          "costCents": 468,
+          "chargedAt": 1728288000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "dbdfd889-ca39-441a-add2-169217661147",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 17,
+          "ratePerKwh": 0.12,
+          "costCents": 204,
+          "chargedAt": 1717142400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "dc481ffc-78ef-49ee-94c2-83614663c6c4",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 18,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1756540800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "dc6b282b-e6eb-45a6-8721-c1aec05f098c",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 2,
+          "ratePerKwh": 0.15,
+          "costCents": 30,
+          "chargedAt": 1740816000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "dcce29bf-814f-419e-bf2b-d2df3b03f352",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 28,
+          "ratePerKwh": 0.12,
+          "costCents": 336,
+          "chargedAt": 1731139200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "dda52b1c-79da-4012-b458-939fab324109",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15.9,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1774282680000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "df438c4e-96f0-41aa-924c-fa05d24384e5",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 23,
+          "ratePerKwh": 0.44,
+          "costCents": 1012,
+          "chargedAt": 1751097600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "dfe36110-de4b-4f81-8cf4-24a4ab439069",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 33,
+          "ratePerKwh": 0.15,
+          "costCents": 495,
+          "chargedAt": 1748246400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "dff08caf-22e0-4db8-be6f-5a1215039790",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 17,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1763452800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "e02fe505-7257-4fca-aac0-949f59b237bc",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1768377600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "e11a40a7-d1cd-4ad1-82ea-d8f62a0e6cc3",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 33,
+          "ratePerKwh": 0.12,
+          "costCents": 396,
+          "chargedAt": 1716019200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "e13581ce-f1f3-46a3-addb-ac7bd48ae3f6",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 42,
+          "ratePerKwh": 0.12,
+          "costCents": 504,
+          "chargedAt": 1722067200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "e19f341d-f43a-4795-b8de-397c1ae4108a",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 21,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1753948800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "e2bd1132-8d74-4f63-918e-443b6d97dcf5",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 7.5,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1775062260000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "e313ca02-6978-41ca-bb94-97558bf830ad",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 52,
+          "ratePerKwh": 0.56,
+          "costCents": 2912,
+          "chargedAt": 1771228800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "e3ba34fa-7d75-44e4-bb53-c846b3048498",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 40,
+          "ratePerKwh": 0.12,
+          "costCents": 480,
+          "chargedAt": 1729152000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "e3c27d98-748c-410e-b1b3-e2467db937b6",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 21,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1762675200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "e3c77a1d-535e-48f5-9208-aecb8e1035cb",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 11.2,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1773587340000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "e41ccd99-0e33-497f-b97b-dd94c3ccdb01",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 31,
+          "ratePerKwh": 0.12,
+          "costCents": 372,
+          "chargedAt": 1713859200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "e45d3da3-bd9e-4a43-b287-69db2bea3426",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 26,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1754380800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "e533d711-3d04-42d4-b053-81af88ac00be",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 20,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1758873600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "e5a41b4c-0f16-459e-a066-aa4e47cc22bf",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 32,
+          "ratePerKwh": 0.12,
+          "costCents": 384,
+          "chargedAt": 1719993600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "e8a7d59e-b11c-414b-8b82-890268f8fb0c",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 2,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1752825600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "e9b8faef-40af-44a7-86c3-6329625e5e8d",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 19,
+          "ratePerKwh": 0.56,
+          "costCents": 1064,
+          "chargedAt": 1771315200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ea76876b-130e-4e78-ba19-b143f00fb544",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 19,
+          "ratePerKwh": 0.15,
+          "costCents": 285,
+          "chargedAt": 1747641600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ebc02148-7d7a-46a6-8e12-b4cfa4d16b44",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 52,
+          "ratePerKwh": 0.15,
+          "costCents": 780,
+          "chargedAt": 1740038400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ed33131e-9b94-452d-a79d-8a532b42183d",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 52,
+          "ratePerKwh": 0.15,
+          "costCents": 780,
+          "chargedAt": 1742025600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ef608f09-b787-4573-938e-eedc917f522b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1761120000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ef63e0ef-a180-48e3-96a8-3c9f6a448d44",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 23,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1749283200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "ef7ecb95-e4e4-408c-9ee6-27a753242e3b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 41,
+          "ratePerKwh": 0.15,
+          "costCents": 615,
+          "chargedAt": 1742544000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f16c1ec4-7b49-4171-bbdd-365c97421e21",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0.12,
+          "costCents": 180,
+          "chargedAt": 1730966400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f1eb575e-e518-47a2-8b38-0d60e0938ffd",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 13,
+          "ratePerKwh": 0.12,
+          "costCents": 156,
+          "chargedAt": 1720166400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f250bc06-0f88-4de4-b28d-830a6709bc0b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1732262400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f363ed63-2490-41f6-979f-94635c2c4d60",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 46,
+          "ratePerKwh": 0.15,
+          "costCents": 690,
+          "chargedAt": 1739692800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f4189005-6bb4-4176-9551-7f2854e6264e",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1752739200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f51f5350-6a9c-4453-ad64-9f69c3cb8702",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 41,
+          "ratePerKwh": 0.15,
+          "costCents": 615,
+          "chargedAt": 1746518400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f56d5679-9ce9-442f-a229-1c7aea28478c",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 9,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1754812800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f57ce371-2042-432b-8143-8c11bbe39284",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 16,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1758355200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f5f76d01-07f3-45db-9198-8305c6f38a6b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 45,
+          "ratePerKwh": 0.12,
+          "costCents": 540,
+          "chargedAt": 1716278400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f6360aaa-6c74-4582-af7d-b0c6fc241ef2",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 49,
+          "ratePerKwh": 0.12,
+          "costCents": 588,
+          "chargedAt": 1735459200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f6a23754-ba34-4100-9c89-f1cd66d50852",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 21,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1752480000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f77d59df-8fc0-491c-8e4a-d2614db18ea0",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "energyKwh": 22,
+          "ratePerKwh": 0.42,
+          "costCents": 924,
+          "chargedAt": 1768636800000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f7aeec00-6921-4bb6-afd9-db19a13e22f4",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 16,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1753603200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f8056477-8385-40e4-b3a3-1e6d5d6263b8",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0.15,
+          "costCents": 225,
+          "chargedAt": 1740211200000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f8626d78-8cde-4125-9301-e6a1f4797b07",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 32,
+          "ratePerKwh": 0.12,
+          "costCents": 384,
+          "chargedAt": 1718784000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "f992daac-5eb4-4c79-a92c-80169ab5f354",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 27,
+          "ratePerKwh": 0.15,
+          "costCents": 405,
+          "chargedAt": 1747209600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "fa26c42f-29e1-4d42-b169-1ec41d4453b1",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1760774400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "fb119730-8f55-4936-891a-90acc89d167e",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 14,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1750233600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "fbcd50af-3897-4de0-8af3-fd402b8006a5",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 42,
+          "ratePerKwh": 0.12,
+          "costCents": 504,
+          "chargedAt": 1723881600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "fc16cf12-13fb-4ef4-b8cc-14242d5a7adf",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 12,
+          "ratePerKwh": 0.12,
+          "costCents": 144,
+          "chargedAt": 1713513600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "fc1c2fb4-652a-4d56-b059-261b4e8a9a4c",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 42,
+          "ratePerKwh": 0.12,
+          "costCents": 504,
+          "chargedAt": 1728720000000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "fc34ffc5-3c88-4aa4-9c5e-94b8673e0844",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1765094400000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "fc70c06c-e6fb-412c-901a-019930e08f83",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 30,
+          "ratePerKwh": 0.12,
+          "costCents": 360,
+          "chargedAt": 1719561600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "fcc01557-d5a5-4f37-ad5c-49e67509f28b",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 35,
+          "ratePerKwh": 0.15,
+          "costCents": 525,
+          "chargedAt": 1742025600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "fd330eb9-6716-47fa-84d7-88b2316812e8",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 24,
+          "ratePerKwh": 0.12,
+          "costCents": 288,
+          "chargedAt": 1733385600000,
+          "gasPriceCents": 500
+        },
+        {
+          "id": "fe54b2d8-d1bb-4399-9fcc-855c87d9416e",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "locationId": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "energyKwh": 15,
+          "ratePerKwh": 0,
+          "costCents": 0,
+          "chargedAt": 1764057600000,
+          "gasPriceCents": 500
+        }
+      ]
+    },
+    {
+      "store": "locations",
+      "records": [
+        {
+          "id": "173a87ac-a585-489b-9c6f-cc1795f6004a",
+          "name": "Home",
+          "icon": "home",
+          "color": "#14b8a6",
+          "defaultRate": 0.13,
+          "createdAt": 1772706226473,
+          "isActive": 1,
+          "order": 0
+        },
+        {
+          "id": "2029dd2d-cd98-44c3-80da-a65a038cfe9e",
+          "name": "DC Fast Charger",
+          "icon": "zap",
+          "color": "#fb923c",
+          "defaultRate": 0.32,
+          "createdAt": 1772706226473,
+          "isActive": 1,
+          "order": 1
+        },
+        {
+          "id": "324e99a7-7579-42f9-9097-613cb55f2c1f",
+          "name": "Work",
+          "icon": "building",
+          "color": "#64748b",
+          "defaultRate": 0.17,
+          "createdAt": 1772706226473,
+          "isActive": 1,
+          "order": 3
+        },
+        {
+          "id": "aff62986-de8b-4294-8806-bd033b7e4d46",
+          "name": "Other",
+          "icon": "map-pin",
+          "color": "#c084fc",
+          "defaultRate": 0,
+          "createdAt": 1772706226473,
+          "isActive": 1,
+          "order": 2
+        }
+      ]
+    },
+    {
+      "store": "settings",
+      "records": [
+        {
+          "key": "app-settings",
+          "onboardingComplete": true,
+          "backupReminderInterval": "3d",
+          "gasPriceCents": 525,
+          "comparisonMpg": 36,
+          "defaultMiPerKwh": 3,
+          "timeFormat": "24h",
+          "dateFormat": "medium"
+        }
+      ]
+    },
+    {
+      "store": "maintenanceRecords",
+      "records": [
+        {
+          "id": "1fea2662-c1c9-45d1-9fb5-f95eb1d5b840",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "type": "tire_rotation",
+          "costCents": 3741,
+          "mileage": 18373,
+          "serviceProvider": "Ford",
+          "servicedAt": 1716361200000,
+          "createdAt": 1774830543863
+        },
+        {
+          "id": "2d82cb40-2969-47fd-b9c6-12ad4d084e0a",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "type": "tire_rotation",
+          "description": "Tire rotation and balancing",
+          "costCents": 6400,
+          "mileage": 9415,
+          "serviceProvider": "Les Schwab",
+          "servicedAt": 1690095600000,
+          "notes": "Rip off",
+          "createdAt": 1774830434574
+        },
+        {
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "type": "cabin_filter",
+          "servicedAt": 1776495600000,
+          "costCents": 1711,
+          "mileage": 38436,
+          "nextDueDate": 1808031600000,
+          "id": "77ff4758-a0da-4363-9169-5b594fef4126",
+          "createdAt": 1776546392751
+        },
+        {
+          "id": "8071b04e-a978-495a-b035-d2884fddf8fe",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "type": "tire_rotation",
+          "costCents": 4385,
+          "mileage": 34321,
+          "serviceProvider": "Ford",
+          "servicedAt": 1760079600000,
+          "createdAt": 1774830794732
+        },
+        {
+          "id": "90506f72-ed70-414c-9e2f-54bc994ad46e",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "type": "software_update",
+          "description": "Powertrain module software update 25S65",
+          "costCents": 0,
+          "mileage": 34231,
+          "serviceProvider": "Ford",
+          "servicedAt": 1760079600000,
+          "notes": "Recall campaign covered under warranty",
+          "createdAt": 1774831163905
+        },
+        {
+          "id": "dca5e608-d329-46cb-89c2-9e3e9592a20c",
+          "vehicleId": "f10c3a0e-ddac-41fa-ba61-ceee0fcb21f7",
+          "type": "cabin_filter",
+          "costCents": 2400,
+          "mileage": 18000,
+          "serviceProvider": "Home",
+          "servicedAt": 1713423600000,
+          "createdAt": 1774830491961
+        }
+      ]
+    }
+  ]
+}
