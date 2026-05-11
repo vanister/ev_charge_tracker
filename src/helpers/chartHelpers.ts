@@ -14,10 +14,9 @@ import type { ChartData, ChartBarData, LocationChartConfig } from '../pages/dash
 import { LOCATION_COLOR_HEX } from '../constants';
 import type { TimeFilterValue } from '../types/shared-types';
 
-// Cost and count keys are stored alongside energy keys so the tooltip can look
-// them up from the raw bar payload without needing a separate data structure.
+// Cost keys are stored alongside energy keys so the tooltip can look them up
+// from the raw bar payload without needing a separate data structure.
 const costKey = (locationId: string) => `${locationId}__cost`;
-const countKey = (locationId: string) => `${locationId}__count`;
 
 export function buildChartData(
   sessions: ChargingSessionRecord[],
@@ -38,7 +37,6 @@ export function buildChartData(
     for (const loc of locations) {
       base[loc.id] = 0;
       base[costKey(loc.id)] = 0;
-      base[countKey(loc.id)] = 0;
     }
 
     return base;
@@ -47,7 +45,7 @@ export function buildChartData(
   // Index bars by dateKey for O(1) lookup
   const barIndex = new Map<string, ChartBarData>(bars.map((d) => [d.dateKey, d]));
 
-  // Aggregate session energy, cost, and count into the correct day/location bucket
+  // Aggregate session energy and cost into the correct day/location bucket
   for (const session of sessions) {
     if (session.chargedAt < startTimestamp) {
       continue;
@@ -59,7 +57,6 @@ export function buildChartData(
     if (bar) {
       bar[session.locationId] = ((bar[session.locationId] as number) ?? 0) + session.energyKwh;
       bar[costKey(session.locationId)] = ((bar[costKey(session.locationId)] as number) ?? 0) + session.costCents;
-      bar[countKey(session.locationId)] = ((bar[countKey(session.locationId)] as number) ?? 0) + 1;
     }
   }
 
@@ -95,7 +92,6 @@ export function buildMonthlyChartData(
     for (const loc of locations) {
       base[loc.id] = 0;
       base[costKey(loc.id)] = 0;
-      base[countKey(loc.id)] = 0;
     }
 
     return base;
@@ -110,7 +106,6 @@ export function buildMonthlyChartData(
     if (bar) {
       bar[session.locationId] = ((bar[session.locationId] as number) ?? 0) + session.energyKwh;
       bar[costKey(session.locationId)] = ((bar[costKey(session.locationId)] as number) ?? 0) + session.costCents;
-      bar[countKey(session.locationId)] = ((bar[countKey(session.locationId)] as number) ?? 0) + 1;
     }
   }
 

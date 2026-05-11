@@ -12,6 +12,7 @@ export type LocationStat = {
   color: string;
   totalKwh: number;
   totalCostCents: number;
+  sessionCount: number;
 };
 
 export type SessionStats = {

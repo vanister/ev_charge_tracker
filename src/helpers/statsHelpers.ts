@@ -50,7 +50,8 @@ function aggregateByLocation(
       acc.set(session.locationId, {
         ...existing,
         totalKwh: existing.totalKwh + session.energyKwh,
-        totalCostCents: existing.totalCostCents + session.costCents
+        totalCostCents: existing.totalCostCents + session.costCents,
+        sessionCount: existing.sessionCount + 1
       });
       return acc;
     }
@@ -62,7 +63,8 @@ function aggregateByLocation(
       // 'Other' fallback color
       color: location?.color ?? LOCATION_COLOR_HEX.purple,
       totalKwh: session.energyKwh,
-      totalCostCents: session.costCents
+      totalCostCents: session.costCents,
+      sessionCount: 1
     });
     return acc;
   }, new Map());
