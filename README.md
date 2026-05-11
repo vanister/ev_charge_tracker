@@ -4,6 +4,8 @@ An offline, mobile-optimized Progressive Web App for tracking electric vehicle c
 
 **Live app**: [EV Charge Tracker](https://evchargetracker.vanister.workers.dev)
 
+Sample restorable dataset: [sample-v5-restorable-backup.json](./data/sample-v5-restorable-backup.json)
+
 ## Features
 
 - Offline-first -- works completely without an internet connection
