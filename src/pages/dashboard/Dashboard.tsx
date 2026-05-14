@@ -137,11 +137,11 @@ export function Dashboard() {
             className="mb-4"
           />
           <div className="space-y-4">
+            <ChargeSessionsCharts data={chartData} stats={stats} />
             <div className="space-y-3">
               <ChargeStats stats={stats} />
               <GasComparison gasComparison={gasComparison} />
             </div>
-            <ChargeSessionsCharts data={chartData} stats={stats} />
           </div>
         </Section>
 
