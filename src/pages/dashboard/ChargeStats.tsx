@@ -28,14 +28,14 @@ export function ChargeStats({ stats, gasComparison }: ChargeStatsProps) {
       </div>
       <div className="grid grid-cols-2 gap-3">
         <DashboardStatCard label="Avg Rate" value={formatRate(stats.avgRatePerKwh)} icon="trending-up" />
+        <DashboardStatCard label="Energy" value={formatEnergy(stats.totalKwh, 0)} icon="zap" />
+      </div>
+      <div className="grid grid-cols-2 gap-3">
         {gasComparison ? (
           <DashboardStatCard label="Savings" value={formatCost(gasComparison.savingsCents)} icon="trending-up" subtitle={savingsSubtitle} />
         ) : (
           <DashboardStatCard label="Savings" value="--" icon="trending-up" />
         )}
-      </div>
-      <div className="grid grid-cols-2 gap-3">
-        <DashboardStatCard label="Energy" value={formatEnergy(stats.totalKwh, 0)} icon="zap" />
         <DashboardStatCard label="Sessions" value={`${stats.sessionCount}`} icon="activity" />
       </div>
       <DashboardStatCard
