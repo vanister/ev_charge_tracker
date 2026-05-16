@@ -9,7 +9,6 @@ import { EmptyState } from '../../components/EmptyState';
 import { Section } from '../../components/Section';
 import { FilterPanel } from '../../components/FilterPanel';
 import { ChargeStats } from './ChargeStats';
-import { GasComparison } from './GasComparison';
 import { ChargeSessionsCharts } from './charts/ChargeSessionsCharts';
 import { DashboardRecentSessions } from './DashboardRecentSessions';
 import { MaintenanceSummary } from './MaintenanceSummary';
@@ -138,10 +137,7 @@ export function Dashboard() {
           />
           <div className="space-y-4">
             <ChargeSessionsCharts data={chartData} stats={stats} />
-            <div className="space-y-3">
-              <ChargeStats stats={stats} />
-              <GasComparison gasComparison={gasComparison} />
-            </div>
+            <ChargeStats stats={stats} gasComparison={gasComparison} />
           </div>
         </Section>
 
