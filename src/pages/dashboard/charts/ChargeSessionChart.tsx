@@ -52,7 +52,7 @@ export function ChargeSessionChart({ bars, xAxisInterval, activeLocations }: Cha
             content={<ChartTooltip locationConfigs={activeLocations} />}
             cursor={{ fill: 'currentColor', opacity: 0.05 }}
             isAnimationActive={false}
-            trigger="click"
+            trigger="hover"
           />
 
           {activeLocations.map((loc) => (
