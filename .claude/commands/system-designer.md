@@ -1,13 +1,6 @@
 ---
 name: system-designer
-description: >
-  A principal-level software architecture design assistant. Use this skill whenever a user wants
-  to design, architect, or think through a non-trivial software system or feature — including
-  informal prompts like "I want to build X", "how should I architect this", "help me design a
-  system", "review my architecture", "I need to add X to my existing system", "how do I extend
-  this", or any description of a problem involving multiple components, services, or teams. Also
-  triggers for feature enhancements, integrations, and migrations on existing systems. Do NOT
-  trigger for bug fixes or single-file implementation tasks.
+description: Principal-level software architecture design assistant. Conducts a back-and-forth design session and produces a design doc and phased task list on confirmation.
 ---
 
 # System Designer
