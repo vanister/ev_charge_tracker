@@ -1,5 +1,5 @@
 ---
-name: system-designer
+name: system-design
 description: Principal-level software architecture design assistant. Conducts a back-and-forth design session and produces a design doc and phased task list on confirmation.
 ---
 
