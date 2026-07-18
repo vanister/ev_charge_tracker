@@ -82,12 +82,13 @@
 - Mark completed tasks in the relevant task list file
 
 ## Design or Plan Mode
-- Keep plans concise with a sentence or two for description and bulletpoints for details
-- Designs should be high-level with pseudocode. No implemenation details
-- Do not include length explanation of the "Context" or reasons why this plan was created
-- Plans or designs must be written in a way Sonnet-level model can implement cleanly
-- When planning or designing is done, two files should be created with the user's confirmation:
-  - The concise, high-level, deisgn doc
-  - A phase numbered checklist of tasks to implement the design
-- Place the two files in the projects `docs/<feature-design>.md` and `docs/<feature-task-list>.md
+- Keep the plan concise: a sentence or two of description, bullet points for details
+- Designs are high-level with pseudocode only — no implementation details (no concrete class names, CSS, or full code)
+- Do not include a lengthy "Context" section or reasons why the plan was created
+- Plans and designs must be written so a Sonnet-level model can implement them cleanly
+- While planning, show only the design — do not write the task checklist yet
+- On the user's confirmation, produce two files:
+  - The concise, high-level design doc
+  - A phase-numbered checklist of tasks to implement the design
+- Place them in the project's `docs/` folder as `docs/<feature>-design.md` and `docs/<feature>-tasks.md`
 
