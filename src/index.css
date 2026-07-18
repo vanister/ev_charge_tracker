@@ -52,6 +52,14 @@
   --color-location-orange: oklch(0.75 0.15 50.5); /* orange-400 */
 }
 
+.dark .liquid-glass {
+  background-color: color-mix(in oklab, var(--color-surface) 68%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-border) 50%, transparent);
+  box-shadow:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.08),
+    0 8px 32px -8px rgb(0 0 0 / 0.5);
+}
+
 /* Smooth theme transitions - in base layer so utilities can override transition-property */
 @layer base {
   /* color-scheme tells the browser which mode to use for native controls (inputs, scrollbars, etc.) */
@@ -169,5 +177,21 @@
   }
   .hover\:text-primary-hover:hover {
     color: var(--color-primary-hover);
+  }
+
+  .liquid-glass {
+    background-color: color-mix(in oklab, var(--color-surface) 72%, transparent);
+    border: 1px solid color-mix(in oklab, var(--color-border) 60%, transparent);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 255 255 / 0.5),
+      0 8px 32px -8px rgb(0 0 0 / 0.18);
+  }
+
+  @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .liquid-glass {
+      background-color: var(--color-surface);
+    }
   }
 }

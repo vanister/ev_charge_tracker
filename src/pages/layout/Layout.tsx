@@ -21,7 +21,7 @@ export function Layout() {
     <div className="bg-background flex min-h-screen flex-col">
       <AppHeader title={title} />
 
-      <main className="flex-1 pt-14 pb-24">
+      <main className="flex-1 pt-14 pb-28">
         <LayoutConfigProvider value={{ title, setTitle, hideTabBar, setHideTabBar }}>
           <div
             key={location.key}
