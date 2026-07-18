@@ -71,6 +71,7 @@
 - Toasts via `useToast().showToast()` for mutation feedback
 - Detail pages handle both create and edit — `:id` param presence determines mode
 - Run `npm run build` after major changes to verify no build errors
+- After implementation of a feature or major refactor, update the `architecture.md` file to reflect the current state of the app
 
 ## Key Conventions
 - **ALWAYS run `evs-review` after every code change before considering it complete — no exceptions**
