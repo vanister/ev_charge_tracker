@@ -82,6 +82,11 @@
 
 ## Design or Plan Mode
 - Keep plans concise with a sentence or two for description and bulletpoints for details
+- Designs should be high-level with pseudocode. No implemenation details
 - Do not include length explanation of the "Context" or reasons why this plan was created
-- Plans or designs must be written in a way Sonnet-level agent can implement cleanly
+- Plans or designs must be written in a way Sonnet-level model can implement cleanly
+- When planning or designing is done, two files should be created with the user's confirmation:
+  - The concise, high-level, deisgn doc
+  - A phase numbered checklist of tasks to implement the design
+- Place the two files in the projects `docs/<feature-design>.md` and `docs/<feature-task-list>.md
 
