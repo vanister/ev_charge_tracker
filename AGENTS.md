@@ -1,15 +1,18 @@
 ## Stack
+
 - React 19, TypeScript, Vite, Tailwind CSS, clsx
 - Dexie.js (IndexedDB), date-fns, Cloudflare/Wrangler
 
 ## Project Structure
+
 - `src/` — application source code
 - `tests/` — Vitest unit tests (mirrors `src/` structure)
 
 ## Universal Rules
+
 - Guard clauses, early returns, avoid deep nesting
 - `if` statements must have bodies
-- Comment the *why* not the *how*
+- Comment the _why_ not the _how_
 - No JSDocs or XML comments unless explicitly asked
 - Simple, concise, single-purpose code
 - KISS and DRY principles
@@ -20,6 +23,7 @@
 ## Project Rules
 
 ### TypeScript
+
 - `type` for typing, `interface` for true interfaces
 - No primitive constructors: use `+value`, `!!value`, `` `${value}` ``
 - Avoid explicit `!== null` or `!== undefined` — use `!!value` for non-falsy checks
@@ -31,6 +35,7 @@
 - Components never import `db` directly — all data access through hooks that leverage the `useDatabase` hook
 
 ### Components
+
 - Signature: `export function Component(props: ComponentProps) {...}`
 - Props type defined in the same file
 - Arrow functions for event handlers, callbacks, and internal functions
@@ -40,6 +45,7 @@
 - Named exports only — no default exports
 - No index barrel files
 - There must be a component-level `className` that is the component name in kebab format that is the first item:
+
 ```tsx
   export function MyComponent(props: MyComponentProps) {
     //...
@@ -49,20 +55,24 @@
 ```
 
 ### Helpers & Utilities
+
 - Named function declarations (not arrow functions) for standalone helpers/utilities
 - Single responsibility
 - `Result<T>` returned for fallible operations from the [shared-types](./src/types/shared-types.ts)
 
 ### Formatting
+
 - Follow formatting rules in [.prettierrc](./.prettierrc)
 - Import order: CSS → external deps → internal deps
 
 ### Data Conventions
+
 - Dates stored as epoch ms (`number`), displayed via `dateUtils.ts` wrappers — never use `date-fns` directly
 - Cost stored as `costCents` (integer), displayed with `formatCost()`
 - Return `Result<T>` instead of throwing exceptions
 
 ### General
+
 - App-level constants in `src/constants.ts`
 - `React.FormEvent` is deprecated — use `React.SubmitEvent<T>` for form submit handlers
 - `usePageConfig(title)` at the top of every page component
@@ -74,14 +84,17 @@
 - After implementation of a feature or major refactor, update the `architecture.md` file to reflect the current state of the app
 
 ## Key Conventions
+
 - **ALWAYS run `evs-review` after every code change before considering it complete — no exceptions**
 - Use `evs-component` to scaffold a React component
 
 ## Task Rules
+
 - Complete one task at a time before asking for next (unless told otherwise)
 - Mark completed tasks in the relevant task list file
 
 ## Design or Plan Mode
+
 - Keep the plan concise: a sentence or two of description, bullet points for details
 - Designs are high-level with pseudocode only — no implementation details (no concrete class names, CSS, or full code)
 - Do not include a lengthy "Context" section or reasons why the plan was created
@@ -91,4 +104,3 @@
   - The concise, high-level design doc
   - A phase-numbered checklist of tasks to implement the design
 - Place them in the project's `docs/` folder as `docs/<feature>-design.md` and `docs/<feature>-tasks.md`
-

@@ -19,7 +19,9 @@ export function Section({ title, children, action, cardClassName, noCard, id }: 
       {noCard ? (
         children
       ) : (
-        <div className={clsx('bg-surface border-default rounded-lg border p-4', cardClassName)}>{children}</div>
+        <div className={clsx('bg-surface border-default rounded-lg border p-4', cardClassName)}>
+          {children}
+        </div>
       )}
     </section>
   );
