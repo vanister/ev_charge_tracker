@@ -79,3 +79,9 @@
 ## Task Rules
 - Complete one task at a time before asking for next (unless told otherwise)
 - Mark completed tasks in the relevant task list file
+
+## Design or Plan Mode
+- Keep plans concise with a sentence or two for description and bulletpoints for details
+- Do not include length explanation of the "Context" or reasons why this plan was created
+- Plans or designs must be written in a way Sonnet-level agent can implement cleanly
+
