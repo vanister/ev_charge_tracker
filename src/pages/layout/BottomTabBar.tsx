@@ -36,7 +36,7 @@ export function BottomTabBar(props: BottomTabBarProps) {
       className={clsx('bottom-tab-bar pointer-events-none fixed inset-x-0 bottom-0 z-10 flex justify-center px-4', {
         hidden
       })}
-      style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 24px)' }}
+      style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}
     >
       <nav className="liquid-glass pointer-events-auto relative flex items-center gap-1 rounded-full p-1.5">
         <span
