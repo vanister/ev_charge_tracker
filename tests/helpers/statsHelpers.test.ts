@@ -180,7 +180,7 @@ describe('computeStats — byLocation aggregation', () => {
     );
 
     expect(stats.byLocation).toEqual([
-      { locationId: 'home', name: 'Home', color: '#abc', totalKwh: 25, totalCostCents: 350 }
+      { locationId: 'home', name: 'Home', color: '#abc', totalKwh: 25, totalCostCents: 350, sessionCount: 2 }
     ]);
   });
 
