@@ -2,8 +2,8 @@
 
 @theme {
   /* Clean Eco - Light Mode Colors */
-  --color-primary: oklch(0.62 0.19 180.79); /* teal-500 #14b8a6 */
-  --color-primary-hover: oklch(0.54 0.19 180.79); /* teal-600 #0d9488 */
+  --color-primary: oklch(0.36 0.08 270.19); /* deep blue #2C3968 */
+  --color-primary-hover: oklch(0.31 0.08 270.19); /* darker blue */
   --color-secondary: oklch(0.71 0.19 142.5); /* green-500 #22c55e */
   --color-accent: oklch(0.75 0.15 50.5); /* orange-500 #f97316 */
 
@@ -30,8 +30,8 @@
 
 .dark {
   /* Clean Eco - Dark Mode Colors */
-  --color-primary: oklch(0.62 0.19 180.79); /* teal-500 #14b8a6 */
-  --color-primary-hover: oklch(0.7 0.19 180.79); /* teal-400 #2dd4bf */
+  --color-primary: oklch(0.36 0.08 270.19); /* deep blue #2C3968 */
+  --color-primary-hover: oklch(0.45 0.08 270.19); /* lighter blue */
   --color-secondary: oklch(0.71 0.19 142.5); /* green-500 #22c55e */
   --color-accent: oklch(0.75 0.15 50.5); /* orange-500 #f97316 */
 
