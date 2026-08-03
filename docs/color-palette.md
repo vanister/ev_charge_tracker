@@ -2,21 +2,21 @@
 
 ## Overview
 
-The EV Charge Tracker uses the **Clean Eco** theme - an environmental, calming color palette with ocean teal as the primary color, complemented by green and orange accents. Full dark/light mode support is included with smooth transitions.
+The EV Charge Tracker uses the **Clean Eco** theme - a calming color palette with deep blue as the primary color, complemented by green and orange accents. Full dark/light mode support is included with smooth transitions.
 
 ## Core Colors
 
 ### Light Mode
 
-- **Primary**: `#14b8a6` (teal-500) - Ocean Teal - Main brand color, CTAs, active states
-- **Primary Hover**: `#0d9488` (teal-600) - Darker teal for hover states
+- **Primary**: `#2C3968` (deep blue) - Main brand color, CTAs, active states
+- **Primary Hover**: Darker blue for hover states
 - **Secondary**: `#22c55e` (green-500) - Forest Green - Secondary actions
 - **Accent**: `#f97316` (orange-500) - Sunrise Orange - Highlights, alerts
 
 ### Dark Mode
 
-- **Primary**: `#14b8a6` (teal-500) - Ocean Teal (same as light)
-- **Primary Hover**: `#2dd4bf` (teal-400) - Lighter teal for hover states
+- **Primary**: `#2C3968` (deep blue) - same as light
+- **Primary Hover**: Lighter blue for hover states
 - **Secondary**: `#22c55e` (green-500) - Forest Green (same as light)
 - **Accent**: `#f97316` (orange-500) - Sunrise Orange (same as light)
 
@@ -24,7 +24,7 @@ The EV Charge Tracker uses the **Clean Eco** theme - an environmental, calming c
 
 These colors categorize charging locations and remain consistent across themes:
 
-- **Home** 🏠: `#14b8a6` (teal-500) - Teal
+- **Home** 🏠: `#3b82f6` (blue-500) - Blue
 - **Work** 🏢: `#64748b` (slate-500) - Slate
 - **Other** 📍: `#c084fc` (purple-400) - Purple
 - **DC Fast Charger** ⚡: `#fb923c` (orange-400) - Orange

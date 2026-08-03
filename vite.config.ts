@@ -42,7 +42,7 @@ export default defineConfig({
         name: 'EV Charge Tracker',
         short_name: 'Charge Tracker',
         description: 'Track your electric vehicle charging sessions',
-        theme_color: '#14b8a6',
+        theme_color: '#2C3968',
         background_color: '#ffffff',
         display: 'standalone',
         icons: [

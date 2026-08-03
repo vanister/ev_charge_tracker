@@ -1,7 +1,10 @@
 import Dexie from 'dexie';
 import type { EvChargTrackerDb } from './data-types';
 import { DB_NAME, SETTINGS_KEY } from './constants';
-import { DEFAULT_GAS_PRICE_CENTS } from '../constants';
+import { DEFAULT_GAS_PRICE_CENTS, LOCATION_COLOR_HEX } from '../constants';
+
+// The teal that was the app's primary color before the move to blue.
+const LEGACY_TEAL_LOCATION_COLOR = '#14b8a6';
 
 export const db = new Dexie(DB_NAME) as EvChargTrackerDb;
 
@@ -34,6 +37,18 @@ db.version(5).upgrade(async (tx) => {
     .modify((session: Record<string, unknown>) => {
       if (session['gasPriceCents'] === undefined) {
         session['gasPriceCents'] = gasPriceCents;
+      }
+    });
+});
+
+// Retire the old teal location color in favor of blue after the theme moved off teal.
+db.version(6).upgrade(async (tx) => {
+  await tx
+    .table('locations')
+    .toCollection()
+    .modify((location: Record<string, unknown>) => {
+      if (location['color'] === LEGACY_TEAL_LOCATION_COLOR) {
+        location['color'] = LOCATION_COLOR_HEX.blue;
       }
     });
 });

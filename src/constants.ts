@@ -37,14 +37,14 @@ export const LOCATION_ICON_OPTIONS: IconName[] = ['home', 'building', 'map-pin',
 
 // Hex values matching the CSS custom properties in index.css
 export const LOCATION_COLOR_HEX = {
-  teal: '#14b8a6', // teal-500
+  blue: '#3b82f6', // blue-500
   slate: '#64748b', // slate-500
   purple: '#c084fc', // purple-400
   orange: '#fb923c' // orange-400
 } as const;
 
 export const LOCATION_COLOR_OPTIONS: LocationColorOption[] = [
-  { value: LOCATION_COLOR_HEX.teal, label: 'Teal', bgClass: 'bg-teal-500' },
+  { value: LOCATION_COLOR_HEX.blue, label: 'Blue', bgClass: 'bg-blue-500' },
   { value: LOCATION_COLOR_HEX.slate, label: 'Slate', bgClass: 'bg-slate-500' },
   { value: LOCATION_COLOR_HEX.purple, label: 'Purple', bgClass: 'bg-purple-400' },
   { value: LOCATION_COLOR_HEX.orange, label: 'Orange', bgClass: 'bg-orange-400' }

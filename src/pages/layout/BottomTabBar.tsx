@@ -40,7 +40,7 @@ export function BottomTabBar(props: BottomTabBarProps) {
     >
       <nav className="liquid-glass pointer-events-auto relative flex items-center gap-1 rounded-full p-1.5">
         <span
-          className="bg-primary/15 absolute top-0 left-0 z-0 rounded-full transition-[transform,width,height] duration-200 ease-out"
+          className="bg-primary absolute top-0 left-0 z-0 rounded-full transition-[transform,width,height] duration-200 ease-out"
           style={{
             transform: `translate(${highlight.left}px, ${highlight.top}px)`,
             width: highlight.width,
@@ -61,7 +61,7 @@ export function BottomTabBar(props: BottomTabBarProps) {
               className={clsx(
                 'relative z-10 flex flex-col items-center justify-center gap-0.5 rounded-full px-4 py-2 transition-colors',
                 {
-                  'text-primary': isActive,
+                  'text-white': isActive,
                   'text-body-secondary': !isActive
                 }
               )}
