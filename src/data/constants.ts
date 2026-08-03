@@ -7,7 +7,7 @@ export const DEFAULT_LOCATIONS: Omit<LocationRecord, 'id' | 'createdAt' | 'isAct
   {
     name: 'Home',
     icon: 'home',
-    color: LOCATION_COLOR_HEX.teal,
+    color: LOCATION_COLOR_HEX.blue,
     defaultRate: 0.15,
     order: 0
   },

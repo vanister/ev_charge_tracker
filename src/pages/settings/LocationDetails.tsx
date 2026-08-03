@@ -103,7 +103,7 @@ export function LocationDetails() {
     const locationInput = {
       name: formState.name.trim(),
       icon: (formState.icon as IconName) || 'map-pin',
-      color: migrateColorToHex(formState.color || LOCATION_COLOR_HEX.teal),
+      color: migrateColorToHex(formState.color || LOCATION_COLOR_HEX.blue),
       defaultRate: +formState.defaultRate || 0
     };
     const result = isEditMode ? await updateLocation(id!, locationInput) : await createLocation(locationInput);
