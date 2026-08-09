@@ -4,6 +4,9 @@
   /* Clean Eco - Light Mode Colors */
   --color-primary: oklch(0.36 0.08 270.19); /* deep blue #2C3968 */
   --color-primary-hover: oklch(0.31 0.08 270.19); /* darker blue */
+  /* Icon/accent text color — matches the home/location blue (blue-500 #3b82f6) */
+  --color-primary-accent: oklch(0.62 0.21 259.8); /* blue-500 #3b82f6 */
+  --color-primary-accent-hover: oklch(0.55 0.24 262.88); /* blue-600 #2563eb */
   --color-secondary: oklch(0.71 0.19 142.5); /* green-500 #22c55e */
   --color-accent: oklch(0.75 0.15 50.5); /* orange-500 #f97316 */
 
@@ -32,6 +35,9 @@
   /* Clean Eco - Dark Mode Colors */
   --color-primary: oklch(0.36 0.08 270.19); /* deep blue #2C3968 */
   --color-primary-hover: oklch(0.45 0.08 270.19); /* lighter blue */
+  /* Icon/accent text color — matches the home/location blue (blue-500 #3b82f6) */
+  --color-primary-accent: oklch(0.62 0.21 259.8); /* blue-500 #3b82f6 */
+  --color-primary-accent-hover: oklch(0.71 0.16 254.6); /* blue-400 #60a5fa */
   --color-secondary: oklch(0.71 0.19 142.5); /* green-500 #22c55e */
   --color-accent: oklch(0.75 0.15 50.5); /* orange-500 #f97316 */
 
@@ -141,10 +147,10 @@
   }
 
   .text-primary {
-    color: var(--color-primary);
+    color: var(--color-primary-accent);
   }
   .text-primary-hover {
-    color: var(--color-primary-hover);
+    color: var(--color-primary-accent-hover);
   }
   .text-secondary {
     color: var(--color-secondary);
@@ -176,7 +182,7 @@
     background-color: var(--color-primary-hover);
   }
   .hover\:text-primary-hover:hover {
-    color: var(--color-primary-hover);
+    color: var(--color-primary-accent-hover);
   }
 
   .liquid-glass {
