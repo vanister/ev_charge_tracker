@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useVehicles } from '../../hooks/useVehicles';
-import { usePageConfig } from '../../hooks/usePageConfig';
-import { useImmerState } from '../../hooks/useImmerState';
-import { useToast } from '../../hooks/useToast';
-import { Button } from '../../components/Button';
-import { FormFooter } from '../../components/FormFooter';
+import { useVehicles } from '../../../hooks/useVehicles';
+import { usePageConfig } from '../../../hooks/usePageConfig';
+import { useImmerState } from '../../../hooks/useImmerState';
+import { useToast } from '../../../hooks/useToast';
+import { Button } from '../../../components/Button';
+import { FormFooter } from '../../../components/FormFooter';
 import { VehicleForm } from './VehicleForm';
 import { DEFAULT_VEHICLE_FORM_DATA, type VehicleFormData } from './vehicleHelpers';
 
@@ -128,11 +128,11 @@ export function VehicleDetails() {
     }
 
     showToast({ message: isEditMode ? 'Vehicle updated' : 'Vehicle added', variant: 'success' });
-    navigate('/vehicles');
+    navigate('/settings#vehicles');
   };
 
   const handleCancel = () => {
-    navigate('/vehicles');
+    navigate('/settings#vehicles');
   };
 
   if (!formState.isInitialized) {
@@ -149,7 +149,7 @@ export function VehicleDetails() {
         <div className="bg-surface border-default rounded-lg border p-6 text-center">
           <p className="text-body-secondary mb-4">Vehicle not found</p>
           <button onClick={handleCancel} className="text-primary hover:text-primary-hover font-medium">
-            Back to Vehicles
+            Back to Settings
           </button>
         </div>
       </div>

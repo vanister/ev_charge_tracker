@@ -5,7 +5,7 @@ import type { DateTimeFormatPrefs } from '../../types/shared-types';
 import { formatCost } from '../../utilities/formatUtils';
 import { DashboardStatCard } from './DashboardStatCard';
 import type { MaintenanceRecord } from '../../data/data-types';
-import { getMaintenanceTypeLabel } from '../vehicles/maintenance/maintenanceHelpers';
+import { getMaintenanceTypeLabel } from '../maintenance/maintenanceHelpers';
 
 type MaintenanceSummaryProps = {
   dateTimeFormatPrefs?: DateTimeFormatPrefs;
@@ -44,7 +44,7 @@ export function MaintenanceSummary({ dateTimeFormatPrefs }: MaintenanceSummaryPr
   const totalCostLabel = filteredRecords.length > 0 ? formatCost(totalCostCents) : '—';
 
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="maintenance-summary grid grid-cols-2 gap-3">
       <DashboardStatCard label="Last Serviced" value={lastServicedDate} icon="calendar" subtitle={lastServiceType} />
       <DashboardStatCard label="Total Cost" value={totalCostLabel} icon="wrench" />
     </div>

@@ -10,4 +10,5 @@ export type UserPreferences = {
   dashboardFilterVehicleId?: string;
   dashboardFilterLocationId?: string;
   dashboardFilterIsOpen?: boolean;
+  maintenanceFilterVehicleId?: string;
 };

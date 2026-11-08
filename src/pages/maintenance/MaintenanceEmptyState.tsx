@@ -1,4 +1,4 @@
-import { EmptyState } from '../../../components/EmptyState';
+import { EmptyState } from '../../components/EmptyState';
 
 type MaintenanceEmptyStateProps = {
   onAdd: () => void;
@@ -10,8 +10,8 @@ export function MaintenanceEmptyState(props: MaintenanceEmptyStateProps) {
   return (
     <EmptyState
       icon="wrench"
-      title="No maintenance records"
-      message="Log the first service record for this vehicle."
+      title="No service records"
+      message="Log your first service record."
       actionLabel="Add Record"
       onAction={onAdd}
     />

@@ -5,8 +5,8 @@ import { useImmerState } from '../../hooks/useImmerState';
 import { OnboardingHeader } from './OnboardingHeader';
 import { FormFooter } from '../../components/FormFooter';
 import { OnboardingNavigationButtons } from './OnboardingNavigationButtons';
-import { VehicleForm } from '../vehicles/VehicleForm';
-import { DEFAULT_VEHICLE_FORM_DATA, type VehicleFormData } from '../vehicles/vehicleHelpers';
+import { VehicleForm } from '../settings/vehicles/VehicleForm';
+import { DEFAULT_VEHICLE_FORM_DATA, type VehicleFormData } from '../settings/vehicles/vehicleHelpers';
 
 type OnboardingStep3VehicleProps = {
   onBack: () => void;

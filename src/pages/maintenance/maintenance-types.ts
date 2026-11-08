@@ -1,5 +1,5 @@
-import type { MaintenanceType } from '../../../constants';
-import type { MaintenanceRecord } from '../../../data/data-types';
+import type { MaintenanceType } from '../../constants';
+import type { MaintenanceRecord } from '../../data/data-types';
 
 export type MaintenanceGroup = {
   label: string;
@@ -7,6 +7,7 @@ export type MaintenanceGroup = {
 };
 
 export type MaintenanceFormData = {
+  vehicleId: string;
   type: MaintenanceType;
   description: string;
   servicedAt: string;

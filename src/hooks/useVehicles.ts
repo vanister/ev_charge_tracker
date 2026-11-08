@@ -4,7 +4,7 @@ import type { VehicleRecord } from '../data/data-types';
 import { generateId } from '../utilities/dataUtils';
 import { success, failure } from '../utilities/resultUtils';
 import type { Result } from '../types/shared-types';
-import type { CreateVehicleInput, UpdateVehicleInput } from '../pages/vehicles/vehicle-types';
+import type { CreateVehicleInput, UpdateVehicleInput } from '../pages/settings/vehicles/vehicle-types';
 
 export function useVehicles() {
   const { db } = useDatabase();

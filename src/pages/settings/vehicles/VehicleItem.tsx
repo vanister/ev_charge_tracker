@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import type { VehicleRecord } from '../../data/data-types';
-import { Icon } from '../../components/Icon';
-import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
+import type { VehicleRecord } from '../../../data/data-types';
+import { Icon } from '../../../components/Icon';
+import { getVehicleDisplayName } from '../../../helpers/sessionHelpers';
+import { withVehicleQuery } from '../../maintenance/maintenanceHelpers';
 
 type VehicleItemProps = {
   vehicle: VehicleRecord;
@@ -28,14 +29,14 @@ export function VehicleItem(props: VehicleItemProps) {
 
         <div className="flex items-center gap-2">
           <Link
-            to={`/vehicles/${vehicle.id}/maintenance`}
+            to={withVehicleQuery('/maintenance', vehicle.id)}
             className="text-body-secondary hover:text-body hover:bg-background rounded-lg p-2 transition-colors"
-            aria-label="View maintenance records"
+            aria-label="View service records"
           >
             <Icon name="wrench" size="sm" />
           </Link>
           <Link
-            to={`/vehicles/${vehicle.id}/edit`}
+            to={`/settings/vehicles/${vehicle.id}/edit`}
             className="text-body-secondary hover:text-body hover:bg-background rounded-lg p-2 transition-colors"
             aria-label="Edit vehicle"
           >

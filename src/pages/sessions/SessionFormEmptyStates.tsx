@@ -33,7 +33,7 @@ export function SessionFormEmptyStates({
         title="No Vehicles Found"
         message="You need to add a vehicle before creating a charging session."
         actionLabel="Add Your First Vehicle"
-        onAction={() => onNavigate('/vehicles/add')}
+        onAction={() => onNavigate('/settings/vehicles/add')}
       />
     );
   }

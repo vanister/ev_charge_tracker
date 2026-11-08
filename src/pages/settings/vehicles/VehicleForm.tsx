@@ -1,5 +1,5 @@
-import { FormInput } from '../../components/FormInput';
-import { FormTextarea } from '../../components/FormTextarea';
+import { FormInput } from '../../../components/FormInput';
+import { FormTextarea } from '../../../components/FormTextarea';
 import type { VehicleFormData } from './vehicleHelpers';
 
 type VehicleFormProps = {
