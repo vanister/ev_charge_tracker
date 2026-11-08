@@ -1,16 +1,16 @@
 import { useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { usePageConfig } from '../../../hooks/usePageConfig';
-import { useDateTimeFormat } from '../../../hooks/useDateTimeFormat';
-import { useMaintenanceRecords } from '../../../hooks/useMaintenanceRecords';
-import { useVehicles } from '../../../hooks/useVehicles';
-import { useImmerState } from '../../../hooks/useImmerState';
-import { ItemListButton } from '../../../components/ItemListButton';
+import { usePageConfig } from '../../hooks/usePageConfig';
+import { useDateTimeFormat } from '../../hooks/useDateTimeFormat';
+import { useMaintenanceRecords } from '../../hooks/useMaintenanceRecords';
+import { useVehicles } from '../../hooks/useVehicles';
+import { useImmerState } from '../../hooks/useImmerState';
+import { ItemListButton } from '../../components/ItemListButton';
 import { groupRecordsByDate } from './maintenanceHelpers';
-import { getVehicleDisplayName } from '../../../helpers/sessionHelpers';
+import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
 import { MaintenanceItem } from './MaintenanceItem';
 import { MaintenanceEmptyState } from './MaintenanceEmptyState';
-import type { MaintenanceRecord, VehicleRecord } from '../../../data/data-types';
+import type { MaintenanceRecord, VehicleRecord } from '../../data/data-types';
 
 type MaintenanceListState = {
   records: MaintenanceRecord[];

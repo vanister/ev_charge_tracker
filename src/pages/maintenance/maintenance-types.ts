@@ -1,5 +1,5 @@
-import type { MaintenanceType } from '../../../constants';
-import type { MaintenanceRecord } from '../../../data/data-types';
+import type { MaintenanceType } from '../../constants';
+import type { MaintenanceRecord } from '../../data/data-types';
 
 export type MaintenanceGroup = {
   label: string;

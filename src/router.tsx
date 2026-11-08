@@ -10,8 +10,8 @@ import { Dashboard } from './pages/dashboard/Dashboard';
 import { SessionsList } from './pages/sessions/SessionsList';
 import { SessionDetails } from './pages/sessions/SessionDetails';
 import { VehicleDetails } from './pages/settings/vehicles/VehicleDetails';
-import { MaintenanceList } from './pages/vehicles/maintenance/MaintenanceList';
-import { MaintenanceDetails } from './pages/vehicles/maintenance/MaintenanceDetails';
+import { MaintenanceList } from './pages/maintenance/MaintenanceList';
+import { MaintenanceDetails } from './pages/maintenance/MaintenanceDetails';
 import { Settings } from './pages/settings/Settings';
 import { LocationDetails } from './pages/settings/LocationDetails';
 import { GasComparisonDetails } from './pages/settings/GasComparisonDetails';
@@ -33,9 +33,9 @@ export const router = createBrowserRouter([
               { path: '/sessions', element: <SessionsList /> },
               { path: '/sessions/add', element: <SessionDetails /> },
               { path: '/sessions/:id/edit', element: <SessionDetails /> },
-              { path: '/vehicles/:vehicleId/maintenance', element: <MaintenanceList /> },
-              { path: '/vehicles/:vehicleId/maintenance/add', element: <MaintenanceDetails /> },
-              { path: '/vehicles/:vehicleId/maintenance/:id/edit', element: <MaintenanceDetails /> },
+              { path: '/maintenance', element: <MaintenanceList /> },
+              { path: '/maintenance/add', element: <MaintenanceDetails /> },
+              { path: '/maintenance/:id/edit', element: <MaintenanceDetails /> },
               { path: '/settings', element: <Settings /> },
               { path: '/settings/vehicles/add', element: <VehicleDetails /> },
               { path: '/settings/vehicles/:id/edit', element: <VehicleDetails /> },

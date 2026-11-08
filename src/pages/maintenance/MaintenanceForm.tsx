@@ -1,7 +1,7 @@
-import { MAINTENANCE_TYPES } from '../../../constants';
-import { FormInput } from '../../../components/FormInput';
-import { FormTextarea } from '../../../components/FormTextarea';
-import { FormSelect } from '../../../components/FormSelect';
+import { MAINTENANCE_TYPES } from '../../constants';
+import { FormInput } from '../../components/FormInput';
+import { FormTextarea } from '../../components/FormTextarea';
+import { FormSelect } from '../../components/FormSelect';
 import { getMaintenanceTypeLabel } from './maintenanceHelpers';
 import type { MaintenanceFormData } from './maintenance-types';
 

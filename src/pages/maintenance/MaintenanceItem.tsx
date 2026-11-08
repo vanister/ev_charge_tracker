@@ -1,8 +1,8 @@
-import type { MaintenanceRecord } from '../../../data/data-types';
-import type { DateTimeFormatPrefs } from '../../../types/shared-types';
-import { Icon } from '../../../components/Icon';
-import { formatDate } from '../../../utilities/dateUtils';
-import { formatCost } from '../../../utilities/formatUtils';
+import type { MaintenanceRecord } from '../../data/data-types';
+import type { DateTimeFormatPrefs } from '../../types/shared-types';
+import { Icon } from '../../components/Icon';
+import { formatDate } from '../../utilities/dateUtils';
+import { formatCost } from '../../utilities/formatUtils';
 import { getMaintenanceTypeLabel } from './maintenanceHelpers';
 import { MaintenanceItemActions } from './MaintenanceItemActions';
 

@@ -5,7 +5,7 @@ import type { DateTimeFormatPrefs } from '../../types/shared-types';
 import { formatCost } from '../../utilities/formatUtils';
 import { DashboardStatCard } from './DashboardStatCard';
 import type { MaintenanceRecord } from '../../data/data-types';
-import { getMaintenanceTypeLabel } from '../vehicles/maintenance/maintenanceHelpers';
+import { getMaintenanceTypeLabel } from '../maintenance/maintenanceHelpers';
 
 type MaintenanceSummaryProps = {
   dateTimeFormatPrefs?: DateTimeFormatPrefs;

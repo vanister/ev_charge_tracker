@@ -1,6 +1,6 @@
-import type { MaintenanceType } from '../../../constants';
-import type { MaintenanceRecord } from '../../../data/data-types';
-import { getMonthKey, formatMonthGroupLabel } from '../../../utilities/dateUtils';
+import type { MaintenanceType } from '../../constants';
+import type { MaintenanceRecord } from '../../data/data-types';
+import { getMonthKey, formatMonthGroupLabel } from '../../utilities/dateUtils';
 import type { MaintenanceGroup } from './maintenance-types';
 
 export function getMaintenanceTypeLabel(type: MaintenanceType): string {

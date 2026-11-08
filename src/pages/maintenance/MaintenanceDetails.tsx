@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { usePageConfig } from '../../../hooks/usePageConfig';
-import { useImmerState } from '../../../hooks/useImmerState';
-import { useToast } from '../../../hooks/useToast';
-import { useMaintenanceRecords } from '../../../hooks/useMaintenanceRecords';
-import { useVehicles } from '../../../hooks/useVehicles';
-import { getVehicleDisplayName } from '../../../helpers/sessionHelpers';
-import { Button } from '../../../components/Button';
-import { FormFooter } from '../../../components/FormFooter';
-import { getDateGroupKey } from '../../../utilities/dateUtils';
+import { usePageConfig } from '../../hooks/usePageConfig';
+import { useImmerState } from '../../hooks/useImmerState';
+import { useToast } from '../../hooks/useToast';
+import { useMaintenanceRecords } from '../../hooks/useMaintenanceRecords';
+import { useVehicles } from '../../hooks/useVehicles';
+import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
+import { Button } from '../../components/Button';
+import { FormFooter } from '../../components/FormFooter';
+import { getDateGroupKey } from '../../utilities/dateUtils';
 import { MaintenanceForm } from './MaintenanceForm';
 import { buildRecord, getDefaultDate } from './maintenanceFormHelpers';
 import type { MaintenanceFormData } from './maintenance-types';
-import type { MaintenanceType } from '../../../constants';
+import type { MaintenanceType } from '../../constants';
 
 type MaintenanceDetailsState = MaintenanceFormData & {
   isLoading: boolean;

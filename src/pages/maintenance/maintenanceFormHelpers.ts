@@ -1,5 +1,5 @@
-import { getDateGroupKey, dateInputToTimestamp } from '../../../utilities/dateUtils';
-import type { MaintenanceRecord } from '../../../data/data-types';
+import { getDateGroupKey, dateInputToTimestamp } from '../../utilities/dateUtils';
+import type { MaintenanceRecord } from '../../data/data-types';
 import type { MaintenanceFormData } from './maintenance-types';
 
 export function buildRecord(
