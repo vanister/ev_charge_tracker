@@ -213,7 +213,7 @@ export function MaintenanceDetails() {
         <div className="bg-surface border-default rounded-lg border p-6 text-center">
           <p className="text-body-secondary mb-4">Record not found</p>
           <Button variant="secondary" onClick={handleCancel}>
-            Back to Maintenance
+            Back to Service
           </Button>
         </div>
       </div>

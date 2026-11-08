@@ -31,7 +31,7 @@ export function VehicleItem(props: VehicleItemProps) {
           <Link
             to={withVehicleQuery('/maintenance', vehicle.id)}
             className="text-body-secondary hover:text-body hover:bg-background rounded-lg p-2 transition-colors"
-            aria-label="View maintenance records"
+            aria-label="View service records"
           >
             <Icon name="wrench" size="sm" />
           </Link>

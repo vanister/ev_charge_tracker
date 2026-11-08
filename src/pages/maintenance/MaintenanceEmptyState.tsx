@@ -10,7 +10,7 @@ export function MaintenanceEmptyState(props: MaintenanceEmptyStateProps) {
   return (
     <EmptyState
       icon="wrench"
-      title="No maintenance records"
+      title="No service records"
       message="Log your first service record."
       actionLabel="Add Record"
       onAction={onAdd}

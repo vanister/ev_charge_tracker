@@ -96,7 +96,7 @@ export function MaintenanceList() {
   };
 
   const handleDelete = async (id: string) => {
-    const confirmed = confirm('Are you sure you want to delete this maintenance record?');
+    const confirmed = confirm('Are you sure you want to delete this service record?');
 
     if (!confirmed) {
       return;
@@ -141,7 +141,7 @@ export function MaintenanceList() {
         <ItemListButton className="mb-6" label="Add Record" onClick={handleAdd} />
         {!state.isLoading && visibleRecords.length === 0 && (
           <p className="text-body-secondary text-center text-sm">
-            No maintenance records for this vehicle.
+            No service records for this vehicle.
           </p>
         )}
         {groups.map((group) => (

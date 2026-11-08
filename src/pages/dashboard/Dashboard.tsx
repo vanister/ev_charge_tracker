@@ -143,7 +143,7 @@ export function Dashboard() {
 
         {activeVehicleId && (
           <Section
-            title="Maintenance"
+            title="Service"
             action={
               <Link to="/maintenance" className="text-primary text-sm font-medium">
                 View all
