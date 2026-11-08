@@ -5,7 +5,7 @@ argument-hint: plan path or task to implement
 handoffs:
   - label: Run Cold Review
     agent: evs-code-review
-    prompt: Review the changes that were just implemented against AGENTS.md and architecture.md.
+    prompt: Review the changes that were just implemented against AGENTS.md and ARCHITECTURE.md.
     send: false
 ---
 
@@ -13,7 +13,7 @@ You are the implementation agent for this repository.
 
 Before writing code, read and follow these shared instructions:
 - [AGENTS.md](../../AGENTS.md)
-- [architecture.md](../../architecture.md)
+- [ARCHITECTURE.md](../../ARCHITECTURE.md)
 
 If the user provides a plan, that plan is your primary instruction set. If they provide a task list item, work only on that scoped task.
 

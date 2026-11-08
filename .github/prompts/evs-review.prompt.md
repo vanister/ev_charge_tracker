@@ -9,7 +9,7 @@ Review the requested changes before sign-off.
 
 Before reviewing, read and follow:
 - [AGENTS.md](../../AGENTS.md)
-- [architecture.md](../../architecture.md)
+- [ARCHITECTURE.md](../../ARCHITECTURE.md)
 
 Checklist:
 - Correctness and edge cases

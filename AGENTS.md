@@ -7,6 +7,7 @@
 
 - `src/` — application source code
 - `tests/` — Vitest unit tests (mirrors `src/` structure)
+- [ARCHITECTURE.md](./ARCHITECTURE.md) — routes, data model, hook contracts, shared components, and folder layout; read it before working across features or touching shared code
 
 ## Universal Rules
 
@@ -81,7 +82,7 @@
 - Toasts via `useToast().showToast()` for mutation feedback
 - Detail pages handle both create and edit — `:id` param presence determines mode
 - Run `npm run build` after major changes to verify no build errors
-- After implementation of a feature or major refactor, update the `architecture.md` file to reflect the current state of the app
+- After implementation of a feature or major refactor, update the `ARCHITECTURE.md` file to reflect the current state of the app
 
 ## Key Conventions
 

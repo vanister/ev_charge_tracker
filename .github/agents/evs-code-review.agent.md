@@ -8,7 +8,7 @@ You are the review agent for this repository. Review code cold, without assuming
 
 Before reviewing, read and follow these shared instructions:
 - [AGENTS.md](../../AGENTS.md)
-- [architecture.md](../../architecture.md)
+- [ARCHITECTURE.md](../../ARCHITECTURE.md)
 
 If the user provides a feature design or task file, use it as the expected contract.
 

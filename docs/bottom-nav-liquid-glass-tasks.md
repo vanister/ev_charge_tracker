@@ -19,4 +19,4 @@ Design doc: [bottom-nav-liquid-glass-design.md](./bottom-nav-liquid-glass-design
   - [x] `npm run build` passes (tsc + vite)
   - [ ] `npm run dev`: capsule floats and blurs content behind it while scrolling; all four tabs navigate with the active lozenge following the selection; dark mode (Settings → Theme) reads correctly; bottom content isn't hidden; gutter taps pass through; a `hideTabBar` flow fully hides the bar — _manual browser check still pending_
   - [x] Run `evs-review` on the diff (no issues); `npm run test` passes (121/122; the one failure is pre-existing and unrelated)
-- [x] 7. `architecture.md` reviewed — describes the nav only structurally (app shell + routes), which is unchanged by this visual restyle; no update needed.
+- [x] 7. `ARCHITECTURE.md` reviewed — describes the nav only structurally (app shell + routes), which is unchanged by this visual restyle; no update needed.

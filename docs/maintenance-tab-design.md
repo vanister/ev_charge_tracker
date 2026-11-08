@@ -74,5 +74,5 @@ remove standalone vehicle-name header line
 
 ## Docs + tests
 
-- Update `architecture.md`: routes, folder tree, tab bar, Settings sections, preference field
+- Update `ARCHITECTURE.md`: routes, folder tree, tab bar, Settings sections, preference field
 - Unit test for `buildRecord` (vehicleId sourced from form data)

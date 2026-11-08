@@ -9,7 +9,7 @@ Refactor the code in scope to match this repository's conventions without changi
 
 Before making changes, read and follow:
 - [AGENTS.md](../../AGENTS.md)
-- [architecture.md](../../architecture.md)
+- [ARCHITECTURE.md](../../ARCHITECTURE.md)
 
 Focus on:
 - Guard clauses and early returns

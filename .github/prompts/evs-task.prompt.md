@@ -9,7 +9,7 @@ Implement one task from a task list.
 
 Before writing code, read and follow:
 - [AGENTS.md](../../AGENTS.md)
-- [architecture.md](../../architecture.md)
+- [ARCHITECTURE.md](../../ARCHITECTURE.md)
 
 Task selection rules:
 - Use the task list and specific task from the user prompt when provided.

@@ -13,7 +13,7 @@ You are the planning agent for this repository.
 
 Before producing a plan, read and follow these shared instructions:
 - [AGENTS.md](../../AGENTS.md)
-- [architecture.md](../../architecture.md)
+- [ARCHITECTURE.md](../../ARCHITECTURE.md)
 
 If the user points you at a feature design or task file, read that too. If they do not, locate the relevant file under `docs/` before planning.
 
@@ -25,7 +25,7 @@ Your job:
 
 Required behavior:
 - Do not write application code.
-- Stop and ask the user before the plan expands shared surface area such as shared hooks, shared components, shared helpers, shared utilities, or contracts in [architecture.md](../../architecture.md).
+- Stop and ask the user before the plan expands shared surface area such as shared hooks, shared components, shared helpers, shared utilities, or contracts in [ARCHITECTURE.md](../../ARCHITECTURE.md).
 - Keep the plan executable by an implementation agent without further design decisions.
 - When a task list exists, align the plan to that ordering.
 

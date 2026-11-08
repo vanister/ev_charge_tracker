@@ -9,7 +9,7 @@ Create a new React component from the user request.
 
 Before writing code, read and follow:
 - [AGENTS.md](../../AGENTS.md)
-- [architecture.md](../../architecture.md)
+- [ARCHITECTURE.md](../../ARCHITECTURE.md)
 
 Required workflow:
 1. State the component name, target file path, and props shape before writing code.

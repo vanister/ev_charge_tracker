@@ -39,7 +39,7 @@ Design doc: [maintenance-tab-design.md](./maintenance-tab-design.md)
 ## Phase 6: Tests, docs, verification
 
 - [x] 20. Add a unit test for `buildRecord` covering `vehicleId` sourced from form data.
-- [x] 21. Update `architecture.md`: routes, folder tree, tab bar, Settings sections, new preference field.
+- [x] 21. Update `ARCHITECTURE.md`: routes, folder tree, tab bar, Settings sections, new preference field.
 - [ ] 22. Verify:
   - [x] `npm run build` passes
   - [x] `npm run test` passes
