@@ -34,7 +34,7 @@ Design doc: [maintenance-tab-design.md](./maintenance-tab-design.md)
 ## Phase 5: Dashboard links
 
 - [x] 18. Point the Dashboard Maintenance "View all" link to `/maintenance`.
-- [x] 19. Make the `MaintenanceSummary` stat cards link to `/maintenance`.
+- [x] 19. ~~Make the `MaintenanceSummary` stat cards link to `/maintenance`.~~ Dropped: "View all" already covers it.
 
 ## Phase 6: Tests, docs, verification
 

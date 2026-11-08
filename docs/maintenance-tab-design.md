@@ -68,7 +68,7 @@ remove standalone vehicle-name header line
 
 ## Other link updates
 
-- Dashboard Maintenance section "View all" -> `/maintenance`; summary cards link to `/maintenance`
+- Dashboard Maintenance section "View all" -> `/maintenance`
 - Sessions empty state "Add vehicle" -> `/settings/vehicles/add`
 - `MaintenanceSummary` import path updated for `getMaintenanceTypeLabel`
 
