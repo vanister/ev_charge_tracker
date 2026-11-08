@@ -27,7 +27,7 @@ Design doc: [maintenance-tab-design.md](./maintenance-tab-design.md)
 ## Phase 4: Maintenance list with vehicle filter
 
 - [x] 14. Add `maintenanceFilterVehicleId?: string` to `UserPreferences`.
-- [x] 15. Update `MaintenanceList`: load all records and active vehicles; initial filter from `?vehicleId=` then preference; persist filter changes; filter records by selected vehicle; show filter only when more than one vehicle; page title "Maintenance".
+- [x] 15. Update `MaintenanceList`: load all records and active vehicles; initial filter from `?vehicleId=` then preference; persist filter changes; filter records by selected vehicle; show filter only when more than one vehicle; page title "Service".
 - [x] 16. Show the vehicle name on each `MaintenanceItem` when viewing all vehicles (pass a vehicle name map or name prop).
 - [x] 17. Update add/edit navigation to the new routes, carrying `?vehicleId=` when filtered.
 

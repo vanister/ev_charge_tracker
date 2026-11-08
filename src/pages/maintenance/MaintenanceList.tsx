@@ -33,7 +33,7 @@ const DEFAULT_STATE: MaintenanceListState = {
 };
 
 export function MaintenanceList() {
-  usePageConfig('Maintenance');
+  usePageConfig('Service');
 
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
