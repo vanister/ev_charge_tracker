@@ -58,7 +58,7 @@ See the [docs/](docs/) directory for detailed design and architecture informatio
 - [Design Outline](docs/design-outline.md) -- high-level design, data model, and app flow
 - [Technical Architecture](docs/technical-design.md) -- detailed technical specifications
 - [Architecture Contracts](ARCHITECTURE.md) -- shared contracts, patterns, and hook APIs
-- [Color Palette](color-palette.md) -- theme colors and design tokens
+- [Color Palette](COLOR_PALETTE.md) -- theme colors and design tokens
 - [Gas Comparison Design](docs/gas-comparison-design.md) -- gas cost comparison feature
 
 ## Contributing
