@@ -1,5 +1,5 @@
 import type { MaintenanceType } from '../../constants';
-import type { MaintenanceRecord } from '../../data/data-types';
+import type { MaintenanceRecord, VehicleRecord } from '../../data/data-types';
 import { getMonthKey, formatMonthGroupLabel } from '../../utilities/dateUtils';
 import type { MaintenanceGroup } from './maintenance-types';
 
@@ -63,4 +63,23 @@ export function groupRecordsByDate(records: MaintenanceRecord[]): MaintenanceGro
 
 export function withVehicleQuery(path: string, vehicleId?: string | null): string {
   return vehicleId ? `${path}?vehicleId=${encodeURIComponent(vehicleId)}` : path;
+}
+
+// A stale or missing vehicle id falls back to showing all vehicles
+export function resolveVehicleFilter(
+  activeVehicles: VehicleRecord[],
+  candidateId?: string | null
+): string | undefined {
+  if (activeVehicles.length <= 1 || !candidateId) {
+    return undefined;
+  }
+
+  return activeVehicles.some((v) => v.id === candidateId) ? candidateId : undefined;
+}
+
+export function filterRecordsByVehicle(
+  records: MaintenanceRecord[],
+  vehicleId?: string
+): MaintenanceRecord[] {
+  return vehicleId ? records.filter((r) => r.vehicleId === vehicleId) : records;
 }

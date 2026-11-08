@@ -1,56 +1,77 @@
 import { useEffect, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { usePageConfig } from '../../hooks/usePageConfig';
 import { useDateTimeFormat } from '../../hooks/useDateTimeFormat';
 import { useMaintenanceRecords } from '../../hooks/useMaintenanceRecords';
 import { useVehicles } from '../../hooks/useVehicles';
 import { useImmerState } from '../../hooks/useImmerState';
+import { useUserPreferences } from '../../hooks/useUserPreferences';
 import { ItemListButton } from '../../components/ItemListButton';
-import { groupRecordsByDate } from './maintenanceHelpers';
-import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
+import {
+  filterRecordsByVehicle,
+  groupRecordsByDate,
+  resolveVehicleFilter,
+  withVehicleQuery
+} from './maintenanceHelpers';
+import { createVehicleMap, getVehicleDisplayName } from '../../helpers/sessionHelpers';
 import { MaintenanceItem } from './MaintenanceItem';
 import { MaintenanceEmptyState } from './MaintenanceEmptyState';
+import { MaintenanceVehicleFilter } from './MaintenanceVehicleFilter';
 import type { MaintenanceRecord, VehicleRecord } from '../../data/data-types';
 
 type MaintenanceListState = {
   records: MaintenanceRecord[];
-  vehicle: VehicleRecord | undefined;
+  vehicles: VehicleRecord[];
   isLoading: boolean;
 };
 
 const DEFAULT_STATE: MaintenanceListState = {
   records: [],
-  vehicle: undefined,
+  vehicles: [],
   isLoading: true
 };
 
 export function MaintenanceList() {
-  const { vehicleId } = useParams<{ vehicleId: string }>();
+  usePageConfig('Maintenance');
+
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { preferences, updatePreferences } = useUserPreferences();
   const { getMaintenanceRecordList, deleteMaintenanceRecord } = useMaintenanceRecords();
   const { prefs: dateTimePrefs } = useDateTimeFormat();
-  const { getVehicle } = useVehicles();
+  const { getVehicleList } = useVehicles();
   const [state, setState] = useImmerState<MaintenanceListState>(DEFAULT_STATE);
 
-  const vehicleName = state.vehicle ? getVehicleDisplayName(state.vehicle) : undefined;
-  usePageConfig(vehicleName ? `${vehicleName} Maintenance` : 'Maintenance', false);
+  const activeVehicles = useMemo(
+    () => state.vehicles.filter((v) => v.isActive === 1),
+    [state.vehicles]
+  );
+  const vehicleMap = useMemo(() => createVehicleMap(state.vehicles), [state.vehicles]);
+  // The query param wins so deep links from a vehicle open on that vehicle
+  const selectedVehicleId = resolveVehicleFilter(
+    activeVehicles,
+    searchParams.get('vehicleId') ?? preferences.maintenanceFilterVehicleId
+  );
+  const showVehicleFilter = activeVehicles.length > 1;
+  const showVehicleNames = showVehicleFilter && !selectedVehicleId;
 
-  const groups = useMemo(() => groupRecordsByDate(state.records), [state.records]);
+  const visibleRecords = useMemo(
+    () => filterRecordsByVehicle(state.records, selectedVehicleId),
+    [state.records, selectedVehicleId]
+  );
+  const groups = useMemo(() => groupRecordsByDate(visibleRecords), [visibleRecords]);
 
   useEffect(() => {
-    if (!vehicleId) {
-      return;
-    }
-
     const load = async () => {
-      const [vehicleResult, recordsResult] = await Promise.all([
-        getVehicle(vehicleId),
-        getMaintenanceRecordList(vehicleId)
+      // Include inactive vehicles so records of soft-deleted vehicles still show a name
+      const [vehiclesResult, recordsResult] = await Promise.all([
+        getVehicleList(false),
+        getMaintenanceRecordList()
       ]);
 
       setState((draft) => {
-        if (vehicleResult.success) {
-          draft.vehicle = vehicleResult.data;
+        if (vehiclesResult.success) {
+          draft.vehicles = vehiclesResult.data;
         }
 
         if (recordsResult.success) {
@@ -62,14 +83,19 @@ export function MaintenanceList() {
     };
 
     load();
-  }, [vehicleId, getVehicle, getMaintenanceRecordList, setState]);
+  }, [getVehicleList, getMaintenanceRecordList, setState]);
+
+  const handleVehicleChange = (vehicleId: string | undefined) => {
+    updatePreferences({ maintenanceFilterVehicleId: vehicleId });
+    setSearchParams(vehicleId ? { vehicleId } : {}, { replace: true });
+  };
 
   const handleAdd = () => {
-    navigate(`/vehicles/${vehicleId}/maintenance/add`);
+    navigate(withVehicleQuery('/maintenance/add', selectedVehicleId));
   };
 
   const handleEdit = (id: string) => {
-    navigate(`/vehicles/${vehicleId}/maintenance/${id}/edit`);
+    navigate(withVehicleQuery(`/maintenance/${id}/edit`, selectedVehicleId));
   };
 
   const handleDelete = async (id: string) => {
@@ -91,24 +117,49 @@ export function MaintenanceList() {
     });
   };
 
+  const getRecordVehicleName = (record: MaintenanceRecord) => {
+    const vehicle = vehicleMap.get(record.vehicleId);
+    return showVehicleNames && vehicle ? getVehicleDisplayName(vehicle) : undefined;
+  };
+
   if (!state.isLoading && state.records.length === 0) {
     return (
-      <div className="bg-background flex flex-1 flex-col py-6">
+      <div className="maintenance-list bg-background flex flex-1 flex-col py-6">
         <MaintenanceEmptyState onAdd={handleAdd} />
       </div>
     );
   }
 
   return (
-    <div className="bg-background px-4 py-6">
+    <div className="maintenance-list bg-background px-4 py-6">
       <div className="mx-auto max-w-2xl">
+        {showVehicleFilter && (
+          <MaintenanceVehicleFilter
+            className="mb-4"
+            vehicles={activeVehicles}
+            selectedVehicleId={selectedVehicleId}
+            onChange={handleVehicleChange}
+          />
+        )}
         <ItemListButton className="mb-6" label="Add Record" onClick={handleAdd} />
+        {!state.isLoading && visibleRecords.length === 0 && (
+          <p className="text-body-secondary text-center text-sm">
+            No maintenance records for this vehicle.
+          </p>
+        )}
         {groups.map((group) => (
           <div key={group.label} className="mb-6">
             <h3 className="text-body-secondary mb-3 px-1 text-sm font-semibold">{group.label}</h3>
             <div className="space-y-3">
               {group.records.map((record) => (
-                <MaintenanceItem key={record.id} record={record} onEdit={handleEdit} onDelete={handleDelete} dateTimeFormatPrefs={dateTimePrefs} />
+                <MaintenanceItem
+                  key={record.id}
+                  record={record}
+                  vehicleName={getRecordVehicleName(record)}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                  dateTimeFormatPrefs={dateTimePrefs}
+                />
               ))}
             </div>
           </div>
