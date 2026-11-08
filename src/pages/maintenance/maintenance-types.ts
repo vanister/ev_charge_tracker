@@ -7,6 +7,7 @@ export type MaintenanceGroup = {
 };
 
 export type MaintenanceFormData = {
+  vehicleId: string;
   type: MaintenanceType;
   description: string;
   servicedAt: string;

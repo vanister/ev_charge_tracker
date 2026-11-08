@@ -60,3 +60,7 @@ export function groupRecordsByDate(records: MaintenanceRecord[]): MaintenanceGro
       };
     });
 }
+
+export function withVehicleQuery(path: string, vehicleId?: string | null): string {
+  return vehicleId ? `${path}?vehicleId=${encodeURIComponent(vehicleId)}` : path;
+}

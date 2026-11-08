@@ -1,18 +1,19 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { usePageConfig } from '../../hooks/usePageConfig';
 import { useImmerState } from '../../hooks/useImmerState';
 import { useToast } from '../../hooks/useToast';
 import { useMaintenanceRecords } from '../../hooks/useMaintenanceRecords';
 import { useVehicles } from '../../hooks/useVehicles';
-import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
 import { Button } from '../../components/Button';
 import { FormFooter } from '../../components/FormFooter';
 import { getDateGroupKey } from '../../utilities/dateUtils';
 import { MaintenanceForm } from './MaintenanceForm';
-import { buildRecord, getDefaultDate } from './maintenanceFormHelpers';
+import { buildRecord, getDefaultDate, getDefaultVehicleId, getSelectableVehicles } from './maintenanceFormHelpers';
+import { withVehicleQuery } from './maintenanceHelpers';
 import type { MaintenanceFormData } from './maintenance-types';
 import type { MaintenanceType } from '../../constants';
+import type { VehicleRecord } from '../../data/data-types';
 
 type MaintenanceDetailsState = MaintenanceFormData & {
   isLoading: boolean;
@@ -22,6 +23,7 @@ type MaintenanceDetailsState = MaintenanceFormData & {
 };
 
 const DEFAULT_FORM_DATA: MaintenanceFormData = {
+  vehicleId: '',
   type: '' as MaintenanceType,
   description: '',
   servicedAt: '',
@@ -34,32 +36,19 @@ const DEFAULT_FORM_DATA: MaintenanceFormData = {
 };
 
 export function MaintenanceDetails() {
-  const { vehicleId, id } = useParams<{ vehicleId: string; id: string }>();
+  const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
+  const requestedVehicleId = searchParams.get('vehicleId');
   const navigate = useNavigate();
   const isEditMode = !!id;
+  const listPath = withVehicleQuery('/maintenance', requestedVehicleId);
 
   usePageConfig(isEditMode ? 'Edit Service Record' : 'Add Service Record', true);
 
   const { getMaintenanceRecord, createMaintenanceRecord, updateMaintenanceRecord } = useMaintenanceRecords();
-  const { getVehicle } = useVehicles();
+  const { getVehicleList } = useVehicles();
   const { showToast } = useToast();
-  const [vehicleName, setVehicleName] = useState<string | undefined>(undefined);
-
-  useEffect(() => {
-    if (!vehicleId) {
-      return;
-    }
-
-    const loadVehicle = async () => {
-      const result = await getVehicle(vehicleId);
-
-      if (result.success && result.data) {
-        setVehicleName(getVehicleDisplayName(result.data));
-      }
-    };
-
-    loadVehicle();
-  }, [vehicleId, getVehicle]);
+  const [vehicles, setVehicles] = useState<VehicleRecord[]>([]);
 
   const [formState, setFormState] = useImmerState<MaintenanceDetailsState>({
     ...DEFAULT_FORM_DATA,
@@ -69,6 +58,34 @@ export function MaintenanceDetails() {
     isInitialized: !isEditMode,
     recordNotFound: false
   });
+
+  const selectableVehicles = useMemo(
+    () => getSelectableVehicles(vehicles, formState.vehicleId),
+    [vehicles, formState.vehicleId]
+  );
+
+  useEffect(() => {
+    const loadVehicles = async () => {
+      // Include inactive vehicles so an edited record's soft-deleted vehicle stays selectable
+      const result = await getVehicleList(false);
+
+      if (!result.success) {
+        return;
+      }
+
+      setVehicles(result.data);
+
+      if (isEditMode) {
+        return;
+      }
+
+      setFormState((draft) => {
+        draft.vehicleId = draft.vehicleId || getDefaultVehicleId(result.data, requestedVehicleId);
+      });
+    };
+
+    loadVehicles();
+  }, [getVehicleList, isEditMode, requestedVehicleId, setFormState]);
 
   useEffect(() => {
     if (!isEditMode || formState.isInitialized) {
@@ -104,6 +121,7 @@ export function MaintenanceDetails() {
       }
 
       setFormState((draft) => {
+        draft.vehicleId = record.vehicleId;
         draft.type = record.type;
         draft.description = record.description ?? '';
         draft.servicedAt = getDateGroupKey(record.servicedAt);
@@ -129,7 +147,10 @@ export function MaintenanceDetails() {
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!vehicleId) {
+    if (!formState.vehicleId) {
+      setFormState((draft) => {
+        draft.error = 'Please select a vehicle';
+      });
       return;
     }
 
@@ -138,7 +159,7 @@ export function MaintenanceDetails() {
       draft.error = '';
     });
 
-    const input = buildRecord(formState, vehicleId);
+    const input = buildRecord(formState);
     const result =
       isEditMode && id
         ? await updateMaintenanceRecord(id, input)
@@ -153,11 +174,11 @@ export function MaintenanceDetails() {
     }
 
     showToast({ message: isEditMode ? 'Record updated' : 'Record added', variant: 'success' });
-    navigate(`/vehicles/${vehicleId}/maintenance`);
+    navigate(listPath);
   };
 
   const handleCancel = () => {
-    navigate(`/vehicles/${vehicleId}/maintenance`);
+    navigate(listPath);
   };
 
   if (!formState.isInitialized) {
@@ -182,11 +203,11 @@ export function MaintenanceDetails() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 pt-8 pb-20">
-      {vehicleName && <p className="text-body-secondary mb-4 text-sm">{vehicleName}</p>}
+    <div className="maintenance-details mx-auto max-w-2xl px-4 pt-8 pb-20">
       <MaintenanceForm
         id="maintenance-form"
         formData={formState}
+        vehicles={selectableVehicles}
         onChange={handleChange}
         onSubmit={handleSubmit}
         isLoading={formState.isLoading}

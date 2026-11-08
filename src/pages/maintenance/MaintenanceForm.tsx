@@ -2,12 +2,15 @@ import { MAINTENANCE_TYPES } from '../../constants';
 import { FormInput } from '../../components/FormInput';
 import { FormTextarea } from '../../components/FormTextarea';
 import { FormSelect } from '../../components/FormSelect';
+import { getVehicleDisplayName } from '../../helpers/sessionHelpers';
 import { getMaintenanceTypeLabel } from './maintenanceHelpers';
 import type { MaintenanceFormData } from './maintenance-types';
+import type { VehicleRecord } from '../../data/data-types';
 
 type MaintenanceFormProps = {
   id?: string;
   formData: MaintenanceFormData;
+  vehicles: VehicleRecord[];
   onChange: (field: keyof MaintenanceFormData, value: string) => void;
   onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void;
   isLoading: boolean;
@@ -15,10 +18,23 @@ type MaintenanceFormProps = {
 };
 
 export function MaintenanceForm(props: MaintenanceFormProps) {
-  const { id, formData, onChange, onSubmit, isLoading, error } = props;
+  const { id, formData, vehicles, onChange, onSubmit, isLoading, error } = props;
 
   return (
-    <form id={id} onSubmit={onSubmit} className="space-y-4">
+    <form id={id} onSubmit={onSubmit} className="maintenance-form space-y-4">
+      <FormSelect
+        id="vehicle"
+        label="Vehicle"
+        required
+        value={formData.vehicleId}
+        onChange={(e) => onChange('vehicleId', e.target.value)}
+        disabled={isLoading}
+        options={[
+          { value: '', text: 'Select a vehicle' },
+          ...vehicles.map((v) => ({ value: v.id, text: getVehicleDisplayName(v) }))
+        ]}
+      />
+
       <FormSelect
         id="type"
         label="Service Type"
