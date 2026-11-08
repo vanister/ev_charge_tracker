@@ -2,6 +2,7 @@ import { usePageConfig } from '../../hooks/usePageConfig';
 import { useScrollToHash } from '../../hooks/useScrollToHash';
 import { Section } from '../../components/Section';
 import { LocationsSectionBody } from './LocationsSection';
+import { VehiclesSectionBody } from './vehicles/VehiclesSectionBody';
 import { SessionSectionBody } from './SessionSectionBody';
 import { GasComparisonSectionBody } from './GasComparisonSectionBody';
 import { StorageSectionBody } from './StorageSectionBody';
@@ -24,6 +25,10 @@ export function Settings() {
 
         <Section title="Date & Time">
           <DateTimeSectionBody />
+        </Section>
+
+        <Section title="Vehicles" id="vehicles">
+          <VehiclesSectionBody />
         </Section>
 
         <Section title="Locations">
