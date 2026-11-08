@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useMaintenanceRecords } from '../../hooks/useMaintenanceRecords';
 import { formatDate, getDateRangeForTimeFilter } from '../../utilities/dateUtils';
 import type { DateTimeFormatPrefs } from '../../types/shared-types';
@@ -44,9 +45,9 @@ export function MaintenanceSummary({ dateTimeFormatPrefs }: MaintenanceSummaryPr
   const totalCostLabel = filteredRecords.length > 0 ? formatCost(totalCostCents) : '—';
 
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <Link to="/maintenance" className="maintenance-summary grid grid-cols-2 gap-3">
       <DashboardStatCard label="Last Serviced" value={lastServicedDate} icon="calendar" subtitle={lastServiceType} />
       <DashboardStatCard label="Total Cost" value={totalCostLabel} icon="wrench" />
-    </div>
+    </Link>
   );
 }
