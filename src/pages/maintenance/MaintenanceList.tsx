@@ -9,6 +9,7 @@ import { useUserPreferences } from '../../hooks/useUserPreferences';
 import { ItemListButton } from '../../components/ItemListButton';
 import {
   filterRecordsByVehicle,
+  getActiveVehicles,
   groupRecordsByDate,
   resolveVehicleFilter,
   withVehicleQuery
@@ -42,16 +43,12 @@ export function MaintenanceList() {
   const { getVehicleList } = useVehicles();
   const [state, setState] = useImmerState<MaintenanceListState>(DEFAULT_STATE);
 
-  const activeVehicles = useMemo(
-    () => state.vehicles.filter((v) => v.isActive === 1),
-    [state.vehicles]
-  );
+  const activeVehicles = useMemo(() => getActiveVehicles(state.vehicles), [state.vehicles]);
   const vehicleMap = useMemo(() => createVehicleMap(state.vehicles), [state.vehicles]);
-  // The query param wins so deep links from a vehicle open on that vehicle
-  const selectedVehicleId = resolveVehicleFilter(
-    activeVehicles,
-    searchParams.get('vehicleId') ?? preferences.maintenanceFilterVehicleId
-  );
+  // The query param wins so deep links from a vehicle open on that vehicle; a stale one falls back to the saved filter
+  const selectedVehicleId =
+    resolveVehicleFilter(activeVehicles, searchParams.get('vehicleId')) ??
+    resolveVehicleFilter(activeVehicles, preferences.maintenanceFilterVehicleId);
   const showVehicleFilter = activeVehicles.length > 1;
   const showVehicleNames = showVehicleFilter && !selectedVehicleId;
 

@@ -65,6 +65,10 @@ export function withVehicleQuery(path: string, vehicleId?: string | null): strin
   return vehicleId ? `${path}?vehicleId=${encodeURIComponent(vehicleId)}` : path;
 }
 
+export function getActiveVehicles(vehicles: VehicleRecord[]): VehicleRecord[] {
+  return vehicles.filter((v) => v.isActive === 1);
+}
+
 // A stale or missing vehicle id falls back to showing all vehicles
 export function resolveVehicleFilter(
   activeVehicles: VehicleRecord[],

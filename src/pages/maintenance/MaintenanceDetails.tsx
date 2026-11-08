@@ -7,6 +7,7 @@ import { useMaintenanceRecords } from '../../hooks/useMaintenanceRecords';
 import { useVehicles } from '../../hooks/useVehicles';
 import { Button } from '../../components/Button';
 import { FormFooter } from '../../components/FormFooter';
+import { EmptyState } from '../../components/EmptyState';
 import { getDateGroupKey } from '../../utilities/dateUtils';
 import { MaintenanceForm } from './MaintenanceForm';
 import { buildRecord, getDefaultDate, getDefaultVehicleId, getSelectableVehicles } from './maintenanceFormHelpers';
@@ -41,14 +42,14 @@ export function MaintenanceDetails() {
   const requestedVehicleId = searchParams.get('vehicleId');
   const navigate = useNavigate();
   const isEditMode = !!id;
-  const listPath = withVehicleQuery('/maintenance', requestedVehicleId);
 
   usePageConfig(isEditMode ? 'Edit Service Record' : 'Add Service Record', true);
 
   const { getMaintenanceRecord, createMaintenanceRecord, updateMaintenanceRecord } = useMaintenanceRecords();
   const { getVehicleList } = useVehicles();
   const { showToast } = useToast();
-  const [vehicles, setVehicles] = useState<VehicleRecord[]>([]);
+  // undefined until loaded so the no-vehicles state doesn't flash
+  const [vehicles, setVehicles] = useState<VehicleRecord[] | undefined>(undefined);
 
   const [formState, setFormState] = useImmerState<MaintenanceDetailsState>({
     ...DEFAULT_FORM_DATA,
@@ -60,7 +61,7 @@ export function MaintenanceDetails() {
   });
 
   const selectableVehicles = useMemo(
-    () => getSelectableVehicles(vehicles, formState.vehicleId),
+    () => getSelectableVehicles(vehicles ?? [], formState.vehicleId),
     [vehicles, formState.vehicleId]
   );
 
@@ -174,11 +175,16 @@ export function MaintenanceDetails() {
     }
 
     showToast({ message: isEditMode ? 'Record updated' : 'Record added', variant: 'success' });
-    navigate(listPath);
+    // Follow the saved vehicle so the record is visible when the list was filtered
+    navigate(withVehicleQuery('/maintenance', requestedVehicleId && formState.vehicleId));
   };
 
   const handleCancel = () => {
-    navigate(listPath);
+    navigate(withVehicleQuery('/maintenance', requestedVehicleId));
+  };
+
+  const handleAddVehicle = () => {
+    navigate('/settings/vehicles/add');
   };
 
   if (!formState.isInitialized) {
@@ -186,6 +192,18 @@ export function MaintenanceDetails() {
       <div className="flex min-h-100 items-center justify-center">
         <div className="text-body-secondary">Loading...</div>
       </div>
+    );
+  }
+
+  if (!isEditMode && !!vehicles && selectableVehicles.length === 0) {
+    return (
+      <EmptyState
+        icon="car"
+        title="No Vehicles Found"
+        message="You need to add a vehicle before logging a service record."
+        actionLabel="Add Your First Vehicle"
+        onAction={handleAddVehicle}
+      />
     );
   }
 

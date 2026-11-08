@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import type { VehicleRecord } from '../../../data/data-types';
 import { Icon } from '../../../components/Icon';
 import { getVehicleDisplayName } from '../../../helpers/sessionHelpers';
+import { withVehicleQuery } from '../../maintenance/maintenanceHelpers';
 
 type VehicleItemProps = {
   vehicle: VehicleRecord;
@@ -28,7 +29,7 @@ export function VehicleItem(props: VehicleItemProps) {
 
         <div className="flex items-center gap-2">
           <Link
-            to={`/maintenance?vehicleId=${vehicle.id}`}
+            to={withVehicleQuery('/maintenance', vehicle.id)}
             className="text-body-secondary hover:text-body hover:bg-background rounded-lg p-2 transition-colors"
             aria-label="View maintenance records"
           >

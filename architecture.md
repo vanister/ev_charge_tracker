@@ -2,7 +2,7 @@
 
 Living document of shared contracts, patterns, and structure for the EV Charge Tracker codebase. Agents and contributors use this to understand what exists and how to integrate with it.
 
-Last updated: 2026-04-08
+Last updated: 2026-11-08
 
 ---
 
@@ -132,7 +132,7 @@ function useVehicles(): {
 }
 // CreateVehicleInput = Omit<Vehicle, 'id' | 'createdAt' | 'isActive'>
 // UpdateVehicleInput = Partial<Omit<Vehicle, 'id' | 'createdAt'>>
-// Input types defined in src/pages/vehicles/vehicle-types.ts
+// Input types defined in src/pages/settings/vehicles/vehicle-types.ts
 ```
 
 ### useSessions
@@ -217,6 +217,7 @@ type UserPreferences = {
   dashboardFilterVehicleId?: string;
   dashboardFilterLocationId?: string;
   dashboardFilterIsOpen?: boolean;
+  maintenanceFilterVehicleId?: string;
 };
 ```
 
@@ -273,19 +274,20 @@ React Router v7 with this route tree:
     /sessions                         → SessionsList
     /sessions/add                     → SessionDetails (create mode)
     /sessions/:id/edit                → SessionDetails (edit mode)
-    /vehicles                         → VehiclesList
-    /vehicles/add                     → VehicleDetails (create mode)
-    /vehicles/:id/edit                → VehicleDetails (edit mode)
-    /vehicles/:vehicleId/maintenance  → MaintenanceList
-    /vehicles/:vehicleId/maintenance/add        → MaintenanceDetails (create)
-    /vehicles/:vehicleId/maintenance/:id/edit   → MaintenanceDetails (edit)
-    /settings                         → Settings
+    /maintenance                      → MaintenanceList (optional ?vehicleId= filter)
+    /maintenance/add                  → MaintenanceDetails (create, optional ?vehicleId= pre-select)
+    /maintenance/:id/edit             → MaintenanceDetails (edit)
+    /settings                         → Settings (includes Vehicles section, #vehicles)
+    /settings/vehicles/add            → VehicleDetails (create mode)
+    /settings/vehicles/:id/edit       → VehicleDetails (edit mode)
     /settings/locations/:id/edit      → LocationDetails
     /settings/gas-comparison/edit     → GasComparisonDetails
     *                                 → NotFoundPage
 ```
 
 **Pattern:** Detail pages handle both create and edit. Presence of `:id` param determines the mode.
+
+**Bottom tabs:** Dashboard (`/`), Sessions (`/sessions`), Service (`/maintenance`), Settings (`/settings`). Vehicles are managed in the Settings Vehicles section. The maintenance list filter is remembered in `maintenanceFilterVehicleId`; a `?vehicleId=` query param takes precedence (used by the wrench link on each vehicle).
 
 ---
 
@@ -382,9 +384,9 @@ src/
 │   ├── layout/       ← app shell (header, bottom tab bar)
 │   ├── dashboard/    ← stats, charts, recent sessions, gas comparison, maintenance summary
 │   ├── sessions/     ← session list, details/form, date grouping
-│   ├── vehicles/     ← vehicle list, details/form
-│   │   └── maintenance/  ← maintenance records (nested under vehicles)
+│   ├── maintenance/  ← maintenance records list (vehicle filter), details/form
 │   ├── settings/     ← settings, locations, backup, theme, gas comparison, notifications
+│   │   └── vehicles/ ← vehicles settings section, details/form
 │   ├── onboarding/   ← 3-step wizard
 │   └── auth/         ← OAuth callback (infrastructure only)
 ├── App.tsx           ← root component (init check + ToastProvider)

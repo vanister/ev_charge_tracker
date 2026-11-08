@@ -1,6 +1,7 @@
 import { getDateGroupKey, dateInputToTimestamp } from '../../utilities/dateUtils';
 import type { MaintenanceRecord, VehicleRecord } from '../../data/data-types';
 import type { MaintenanceFormData } from './maintenance-types';
+import { getActiveVehicles } from './maintenanceHelpers';
 
 export function buildRecord(formData: MaintenanceFormData): Omit<MaintenanceRecord, 'id' | 'createdAt'> {
   return {
@@ -27,7 +28,7 @@ export function getSelectableVehicles(vehicles: VehicleRecord[], currentVehicleI
 }
 
 export function getDefaultVehicleId(vehicles: VehicleRecord[], requestedVehicleId?: string | null): string {
-  const activeVehicles = vehicles.filter((v) => v.isActive === 1);
+  const activeVehicles = getActiveVehicles(vehicles);
 
   if (requestedVehicleId && activeVehicles.some((v) => v.id === requestedVehicleId)) {
     return requestedVehicleId;
